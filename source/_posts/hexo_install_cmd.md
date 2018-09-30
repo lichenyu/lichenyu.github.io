@@ -61,3 +61,23 @@ tags:
 - hexo deploy
 
 deploy步骤，如有必要需设置一下git的代理
+
+## [添加Latex公式支持] ##
+
+- npm install hexo-math --save
+- npm install hexo-renderer-mathjax --save
+- 配置 _config.yml 文件
+
+内容如下
+
+    math:
+      engine: 'mathjax' # or 'katex'
+      mathjax:
+    src: "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    config:
+      # MathJax config
+      katex:
+    css: #custom_css_source
+    js: #custom_js_source # not used
+    config:
+      # KaTeX config
