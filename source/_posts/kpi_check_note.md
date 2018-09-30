@@ -30,7 +30,14 @@ tags:
 - 滑动平均 Moving Average
   - 某点的值为该点前面一个窗口的平均值，迭代滑动窗口。
 - 指数平滑 Exponential Smoothing
-  - 一次指数平滑：适用于趋势无明显变化的时间序列<img src="exponential_smoothing.svg" width=600 />
+  - 一次指数平滑：适用于趋势无明显变化的时间序列
+{% math %}
+\begin{aligned}
+s_t &= \alpha x_{t} + (1-\alpha)s_{t-1}\\
+&= \alpha x_{t} + \alpha (1-\alpha)x_{t-1} + (1 - \alpha)^2 s_{t-2}\\
+&= \alpha \left[x_{t} + (1-\alpha)x_{t-1} + (1-\alpha)^2 x_{t-2} + (1-\alpha)^3 x_{t-3} + \cdots + (1-\alpha)^{t-1} x_{1} \right] + (1-\alpha)^{t} x_0
+\end{aligned}
+{% endmath %}
   - 二次指数平滑：适用于线性趋势的时间序列
 - 卡尔曼滤波 Kalman Filter
 
