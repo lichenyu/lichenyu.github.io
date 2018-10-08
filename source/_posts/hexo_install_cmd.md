@@ -81,3 +81,14 @@ deploy步骤，如有必要需设置一下git的代理
     js: #custom_js_source # not used
     config:
       # KaTeX config
+
+## [代码高亮] ##
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+- 相应themes目录的head.ejs中添加highlight.js相关配置。
+- 相应themes目录的highlight.styl，`highlight-background = #f6f8fa`。
+- _config.yml中关闭highlight相关选项。
+
