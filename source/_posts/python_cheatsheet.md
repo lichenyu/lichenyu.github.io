@@ -171,3 +171,33 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
   - `from module1 import func1`，使用函数：`func1()`。
   - `from module1 import *`，使用函数：`func1()`。
 
+
+## 3.1. 面向对象 ##
+
+### 创建类 ###
+
+    #!/usr/bin/python
+    # -*- coding: UTF-8 -*-
+     
+    class Employee:
+    	'所有员工的基类'
+    	empCount = 0
+    
+    	def __init__(self, name, salary):
+    		self.name = name
+    		self.salary = salary
+    		Employee.empCount += 1
+    
+    	def displayCount(self):
+    		print "Total Employee %d" % Employee.empCount
+    
+    	def displayEmployee(self):
+    		print "Name : ", self.name,  ", Salary: ", self.salary
+
+- `empCount`变量是一个类变量，它的值将在这个类的所有实例之间共享。在内部类或外部类使用`Employee.empCount`访问。
+- 方法`__init__()`是构造函数。
+- `self`代表类的实例，`self`在定义类的方法时是必须有的，但在调用时不必传入相应的参数。
+  - 类的方法与普通的函数只有一个特别的区别——它们必须有一个额外的第一个参数名称, 按照惯例它的名称是`self`。
+
+
+### 创建实例 ###
