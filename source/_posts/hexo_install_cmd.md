@@ -82,6 +82,20 @@ deploy步骤，如有必要需设置一下git的代理
     config:
       # KaTeX config
 
+支持行内公式
+
+ - npm uninstall hexo-renderer-marked --save
+ - npm install hexo-renderer-kramed --save
+ - node_modules\kramed\lib\rules\inline.js，把第11、20行的escape变量的值做相应修改
+
+内容如下
+
+    //escape: /^\\([\\`*{}\[\]()#$+\-.!_>])/,
+    escape: /^\\([`*\[\]()#$+\-.!_>])/
+
+    //em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+    em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/
+
 ## [代码高亮] ##
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
