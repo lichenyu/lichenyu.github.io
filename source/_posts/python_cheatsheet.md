@@ -228,16 +228,20 @@ NumPy的主要操作对象是同类型的多维数组。
 
 |常用方法|说明|备注|
 |---|---|---|
+|ndarray.ndim|获取数组的维度数量||
 |ndarray.shape|获取数组各维度的大小|获取新的使用reshape；直接修改数组本身使用resize|
-|ndarray.size|获取元素个数||
+|ndarray.size|获取元素个数|可指定axis，计算某维度的大小|
 |ndarray.sum/max/min(axis)|按axis统计|即其他axes不变，指定axis遍历计算（沿着某轴进行操作）|
 |numpy.empty(shape, dtype = float, order = 'C')|创建一个未初始化的数组|数组元素为随机值，因为它们未初始化。eg:np.empty((3, 4))|
 |numpy.zeros(shape, dtype = float, order = 'C')|创建一个0填充的数组|eg:np.zeros((3, 4))|
 |numpy.asarray(a, dtype = None, order = None)|通过a创建数组||
 |numpy.arange(start, stop, step, dtype)|根据间隔创建数组|默认[start, stop)，步长为1|
-|高级索引|y = x[rows,cols]|下标各自设定|
+|索引|y = x[1, :]||
+||y = x[1, ...]|对于多维，如3darray，x[1, ...] == x[1, :, :]|
+|高级索引|y = x[rows,cols]|rows、cols为array，下标各自设定|
 ||y = x[x > 5]|取值限制布尔表达式|
 ||x = x[~np.isnan(x)]|非空过滤|
-|numpy.transpose(arr, axes)|转置数组，axes指定转置后的维度下标顺序||
+|numpy.transpose(arr, axes)|转置数组，axes指定转置后的维度下标顺序|如3darray，默认axes为[0, 1, 2]，当指定为[1, 0, 2]时，所有元素第一下标和第二下标互换位置。|
+||x[[4,2,1,7]]|（花式索引）索引为数组。如果目标是一维数组，那么索引的结果就是对应位置的元素；如果目标是二维数组，那么就是对应下标的行。|
 
 - 切片数组返回一个view，而非copy。
