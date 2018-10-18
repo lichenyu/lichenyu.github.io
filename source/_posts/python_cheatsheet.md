@@ -99,12 +99,14 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ## 2.2. 条件控制 ##
 
-    if expression : 
-       suite 
-    elif expression :  
-       suite  
-    else :  
-       suite
+```python
+if expression : 
+    suite 
+elif expression :  
+    suite  
+else :  
+    suite
+```
 
 
 ## 2.3. 循环 ##
@@ -115,20 +117,24 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ### while循环 ###
 
-    while expression : 
-       suite 
-    else :  
-       suite
+```python
+while expression : 
+    suite 
+else :  
+    suite
+```
 
 - `else`为非`break`退出循环的分支。
 
 
 ### for循环 ###
 
-    for iterating_var in sequence:
-       suite
-    else :  
-       suite
+```python
+for iterating_var in sequence:
+    suite
+else :  
+    suite
+```
 
 - 直接迭代元素：`for letter in 'Python'`；或迭代下标：`for index in range(0， 10)`。
 - 使用`for index, item in enumerate(sequence)`，同时获取下标和值。
@@ -136,10 +142,12 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ## 2.4. 函数 ##
 
-    def functionname( parameters ):
-       "函数_文档字符串"
-       function_suite
-       return [expression]
+```python
+def functionname( parameters ):
+    "函数_文档字符串"
+    function_suite
+    return [expression]
+```
 
 - 参数传递
   - 数字、字符串、元组是不可变类型，而列表、字典等则是可变类型。参数传递时，不可变类型的对象传值，可变类型的对象传引用。
@@ -153,15 +161,17 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ## 2.5. 异常处理 ##
 
-	raise [Exception [, args [, traceback]]]
-    try:
-    	<语句>
-    except：
-    	<语句>
-    else:
-    	<语句>
-    finally:
-    	<语句>
+```python
+raise [Exception [, args [, traceback]]]
+try:
+    <语句>
+except：
+    <语句>
+else:
+    <语句>
+finally:
+    <语句>
+```
 
 
 ## 2.6. 模块 ##
@@ -176,23 +186,25 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ### 定义类 ###
 
-    #!/usr/bin/python
-    # -*- coding: UTF-8 -*-
-     
-    class Employee:
-    	'所有员工的基类'
-    	empCount = 0
-    
-    	def __init__(self, name, salary):
-    		self.name = name
-    		self.salary = salary
-    		Employee.empCount += 1
-    
-    	def displayCount(self):
-    		print "Total Employee %d" % Employee.empCount
-    
-    	def displayEmployee(self):
-    		print "Name : ", self.name,  ", Salary: ", self.salary
+```python
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+ 
+class Employee:
+    '所有员工的基类'
+    empCount = 0
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.empCount += 1
+
+    def displayCount(self):
+        print "Total Employee %d" % Employee.empCount
+
+    def displayEmployee(self):
+        print "Name : ", self.name,  ", Salary: ", self.salary
+```
 
 - `empCount`变量是一个类变量，它的值将在这个类的所有实例之间共享。在内部类或外部类使用`Employee.empCount`访问。
 - 方法`__init__()`是构造函数。
@@ -202,9 +214,11 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ### 使用实例 ###
 
-    emp1 = Employee("Zara", 2000)
-    emp1.displayEmployee()
-    print "Total Employee %d" % Employee.empCount
+```python
+emp1 = Employee("Zara", 2000)
+emp1.displayEmployee()
+print "Total Employee %d" % Employee.empCount
+```
 
 - 无`new`关键字，使用的是构造函数`__init__`。
 - 用点号`.`访问属性、方法。
@@ -212,8 +226,10 @@ Python的代码块不使用大括号`{}`来控制类，函数以及其他逻辑�
 
 ### 继承 ###
 
-    class SubClassName (ParentClass1[, ParentClass2, ...]):
-        ...
+```python
+class SubClassName (ParentClass1[, ParentClass2, ...]):
+    ...
+```
 
 - 在调用基类的方法时，需要加上基类的类名前缀，且需要带上`self`参数变量。
 - 调用方法时，先在本类中查找调用的方法，找不到才去基类中逐个查找。

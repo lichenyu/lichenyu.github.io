@@ -38,10 +38,12 @@ tags:
 
 配置 _config.yml 文件
 
-    deploy:
-      type: git
-      repo: https://github.com/lichenyu/lichenyu.github.io.git
-      branch: master
+```
+deploy:
+  type: git
+  repo: https://github.com/lichenyu/lichenyu.github.io.git
+  branch: master
+```
 
 ## [测试] ##
 
@@ -54,7 +56,9 @@ tags:
 
 安装 hexo-deployer-git 插件
 
-	npm install hexo-deployer-git --save
+```
+npm install hexo-deployer-git --save
+```
 
 - hexo clean
 - hexo generate
@@ -70,17 +74,19 @@ deploy步骤，如有必要需设置一下git的代理
 
 内容如下
 
-    math:
-      engine: 'mathjax' # or 'katex'
-      mathjax:
-    src: "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
-    config:
-      # MathJax config
-      katex:
-    css: #custom_css_source
-    js: #custom_js_source # not used
-    config:
-      # KaTeX config
+```
+math:
+  engine: 'mathjax' # or 'katex'
+  mathjax:
+src: "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+config:
+  # MathJax config
+  katex:
+css: #custom_css_source
+js: #custom_js_source # not used
+config:
+  # KaTeX config
+```
 
 支持行内公式
 
@@ -90,19 +96,23 @@ deploy步骤，如有必要需设置一下git的代理
 
 内容如下
 
-    //escape: /^\\([\\`*{}\[\]()#$+\-.!_>])/,
-    escape: /^\\([`*\[\]()#$+\-.!_>])/
+```
+//escape: /^\\([\\`*{}\[\]()#$+\-.!_>])/,
+escape: /^\\([`*\[\]()#$+\-.!_>])/
 
-    //em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
-    em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/
+//em: /^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/
+```
 
 ## [代码高亮] ##
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+```javascript
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+```
 
 - 相应themes目录的head.ejs中添加highlight.js相关配置。
-- 相应themes目录的highlight.styl，`highlight-background = #f6f8fa`。
-- _config.yml中关闭highlight相关选项。
+- (相应themes目录的highlight.styl，`highlight-background = #f6f8fa`。)
+- (_config.yml中关闭highlight相关选项。)
 
