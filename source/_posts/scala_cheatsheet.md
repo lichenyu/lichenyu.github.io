@@ -7,6 +7,21 @@ tags:
 ---
 
 
+## 1.1. 变量 ##
+
+使用关键词`var`声明变量，使用关键词`val`声明常量。
+
+```scala
+var myVar : String = "aaa"
+val myVal : String = "bbb"
+```
+
+
+## 1.2. 运算符 ##
+
+基本与java相同，但无`++`。
+
+
 ## 2.1. 条件控制 ##
 
 ### 2.1.1. if条件 ###
@@ -130,6 +145,7 @@ class Test{
 - 可变参数，在参数的类型之后放一个星号来设置，`def printStrings(args: String*)`。
 - 函数中可以嵌套函数。
 - 在Scala中无法直接操作方法，如果要操作方法，必须先将其转换成函数。方法转函数：`val f1 = m _`。
+- 如果函数不带参数，可以不写括号。
 
 
 ### 3.1.1. 函数传值/传名调用 ###
@@ -533,6 +549,15 @@ object Account {
 trait Equal {
     def isEqual(x: Any): Boolean
     def isNotEqual(x: Any): Boolean = !isEqual(x)
+}
+```
+
+通过`with`关键字，一个类可以扩展多个特质：
+
+```scala
+class BMW extends Car with Shiny {
+    val brand = "BMW"
+    val shineRefraction = 12
 }
 ```
 
