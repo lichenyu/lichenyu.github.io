@@ -41,7 +41,7 @@ val rdd = sc.parallelize(array)
 |---|---|
 |filter(func)|筛选出满足函数func的元素，并返回一个新的数据集|
 |map(func)|将每个元素传递到函数func中，并将结果返回为一个新的数据集|
-|flatMap(func)|与map()相似，但每个输入元素都可以映射到0或多个输出结果|
+|flatMap(func)|与map()相似，但每个输入元素都可以映射到0或多个输出结果（因此func应该返回一个序列，而不是单一元素），例如`rdd.flatMap(x => x.split(" ")).collect`|
 |groupByKey()|应用于(K,V)键值对的数据集时，返回一个新的(K, Iterable)形式的数据集|
 |reduceByKey(func)|应用于(K,V)键值对的数据集时，返回一个新的(K, V)形式的数据集，其中的每个值是将每个key传递到函数func中进行聚合|
 
@@ -90,8 +90,15 @@ println(rdd.collect().mkString(","))   //第二次行动操作，不需要触发
 |mapValues(func)|pairRDD.mapValues(x => x+1)只会对键值对RDD中的每个value都应用一个函数，而key不会发生变化。比如输入四个键值对(“spark”,1)、(“spark”,2)、(“hadoop”,3)和(“hadoop”,5)；输出(“spark”,2)、(“spark”,3)、(“hadoop”,4)和(“hadoop”,6)|
 |join|pairRDD1.join(pairRDD2)表示内连接，即对于给定的两个输入数据集(K,V1)和(K,V2)，只有在两个数据集中都存在的key才会被输出，最终得到一个(K,(V1,V2))类型的数据集。|
 
+- 注意: 当使用定制对象作为键时，必须保证`equals()`和`hashCode()`方法一致。
+
 
 ## 1.2. 共享变量 ##
+
+一般情况下，当一个传递给Spark操作（如map或reduce）的函数在远程节点上面运行时，Spark操作实际上操作的是这个函数所用变量的一个独立副本。
+这些变量被复制到每台机器上，并且这些变量在远程机器上的所有更新都不会传递回驱动程序。
+通常跨任务的读写变量是低效的，但是Spark还是为两种常见的使用模式提供了两种有限的共享变量：广播变量（broadcast variable）和累加器（accumulator）。
+
 
 ### 1.2.1. 广播变量 ###
 
@@ -117,4 +124,94 @@ res1: Long = 10
 ```
 
 
+## 2.1. 在spark中传递函数 ##
 
+Spark API非常依赖在集群中运行的驱动程序中传递function， 对于Scala来说有两种方式实现:
+
+- 匿名函数语法（Anonymous function syntax）, 可以用作简短的代码。
+- 全局单例对象的静态方法（Static methods in a global singleton object）。
+
+```scala
+object MyFunctions {
+    def func1(s: String): String = { ... }
+}
+myRdd.map(MyFunctions.func1)
+```
+
+
+## 3.1. spark ml ##
+
+### 3.1.1. ML Pipelines ###
+
+几个重要概念：
+
+- **DataFrame**：使用Spark SQL中的DataFrame作为数据集，它可以容纳各种数据类型。 较之 RDD，包含了schema信息，更类似传统数据库中的二维表格。
+- **Transformer**：将一个DataFrame转换为另一个DataFrame的算法，是特征变换和机器学习**模型**的抽象。比如一个模型就是一个Transformer，它可以把一个不包含预测标签的测试数据集DataFrame打上标签，转化成另一个包含预测标签的DataFrame。技术上，Transformer实现了一个方法`transform()`，它通过附加一个或多个列将一个DataFrame转换为另一个DataFrame。
+- **Estimator**：模型学习器是**训练**模型的机器学习算法或者其他算法的抽象。在Pipeline里通常是被用来操作DataFrame数据并生产一个Transformer。从技术上讲，Estimator实现了一个方法`fit()`，它接受一个DataFrame并产生一个Transformer。
+- **Parameter**：用来设置Transformer或者Estimator的参数。现在，所有转换器和估计器可共享用于指定参数的公共API。ParamMap是一组（参数，值）对。
+- **PipeLine**：将多个工作流阶段（转换器和估计器）连接在一起，形成机器学习的工作流，并获得结果输出。
+
+```scala
+import org.apache.spark.ml.classification.LogisticRegression
+import org.apache.spark.ml.linalg.{Vector, Vectors}
+import org.apache.spark.ml.param.ParamMap
+import org.apache.spark.sql.Row
+ 
+// Prepare training data from a list of (label, features) tuples.
+val training = spark.createDataFrame(Seq(
+    (1.0, Vectors.dense(0.0, 1.1, 0.1)),
+    (0.0, Vectors.dense(2.0, 1.0, -1.0)),
+    (0.0, Vectors.dense(2.0, 1.3, 1.0)),
+    (1.0, Vectors.dense(0.0, 1.2, -0.5))
+)).toDF("label", "features")
+ 
+// Create a LogisticRegression instance. This instance is an Estimator.
+val lr = new LogisticRegression()
+// Print out the parameters, documentation, and any default values.
+println("LogisticRegression parameters:\n" + lr.explainParams() + "\n")
+ 
+// We may set parameters using setter methods.
+lr.setMaxIter(10)
+    .setRegParam(0.01)
+ 
+// Learn a LogisticRegression model. This uses the parameters stored in lr.
+val model1 = lr.fit(training)
+// Since model1 is a Model (i.e., a Transformer produced by an Estimator),
+// we can view the parameters it used during fit().
+// This prints the parameter (name: value) pairs, where names are unique IDs for this
+// LogisticRegression instance.
+println("Model 1 was fit using parameters: " + model1.parent.extractParamMap)
+ 
+// We may alternatively specify parameters using a ParamMap,
+// which supports several methods for specifying parameters.
+val paramMap = ParamMap(lr.maxIter -> 20)
+    .put(lr.maxIter, 30)    // Specify 1 Param. This overwrites the original maxIter.
+    .put(lr.regParam -> 0.1, lr.threshold -> 0.55)    // Specify multiple Params.
+ 
+// One can also combine ParamMaps.
+val paramMap2 = ParamMap(lr.probabilityCol -> "myProbability")    // Change output column name.
+val paramMapCombined = paramMap ++ paramMap2
+ 
+// Now learn a new model using the paramMapCombined parameters.
+// paramMapCombined overrides all parameters set earlier via lr.set* methods.
+val model2 = lr.fit(training, paramMapCombined)
+println("Model 2 was fit using parameters: " + model2.parent.extractParamMap)
+ 
+// Prepare test data.
+val test = spark.createDataFrame(Seq(
+    (1.0, Vectors.dense(-1.0, 1.5, 1.3)),
+    (0.0, Vectors.dense(3.0, 2.0, -0.1)),
+    (1.0, Vectors.dense(0.0, 2.2, -1.5))
+)).toDF("label", "features")
+ 
+// Make predictions on test data using the Transformer.transform() method.
+// LogisticRegression.transform will only use the 'features' column.
+// Note that model2.transform() outputs a 'myProbability' column instead of the usual
+// 'probability' column since we renamed the lr.probabilityCol parameter previously.
+model2.transform(test)
+    .select("features", "label", "myProbability", "prediction")
+    .collect()
+    .foreach { case Row(features: Vector, label: Double, prob: Vector, prediction: Double) =>
+        println(s"($features, $label) -> prob=$prob, prediction=$prediction")
+    }
+```
