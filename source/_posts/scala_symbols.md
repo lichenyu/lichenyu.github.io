@@ -11,13 +11,13 @@ tags:
 
 ### `<-` ###
 
+for循环中
+
 ```scala
 for (arg <- args)
 
 for (i <- 0 until 10) 
 ```
-
-for循环中
 
 
 ### `->` ###

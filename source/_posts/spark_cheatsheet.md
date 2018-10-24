@@ -215,3 +215,81 @@ model2.transform(test)
         println(s"($features, $label) -> prob=$prob, prediction=$prediction")
     }
 ```
+
+
+## 3.2. spark sql ##
+
+### 3.2.1. DataFrame ###
+
+DataFrame是一种以RDD为基础的分布式数据集，也就是分布式的Row对象的集合（每个Row对象代表一行记录），提供了详细的结构信息，也就是我们经常说的模式（schema），Spark SQL可以清楚地知道该数据集中包含哪些列、每列的名称和类型。
+
+**RDD转DataFrame**：
+
+- 第一种方法是，利用反射来推断包含特定类型对象的RDD的schema，适用对已知数据结构的RDD转换。**需要定义一个case class**
+
+```scala
+scala> case class Person(name: String, age: Long)  //定义一个case class
+ 
+scala> val peopleDF = spark.sparkContext.textFile("file:///usr/local/spark/examples/src/main/resources/people.txt")
+                        .map(_.split(","))
+                        .map(attributes => Person(attributes(0), attributes(1).trim.toInt))
+                        .toDF()
+```
+
+- 第二种方法是，使用编程接口，构造一个schema并将其应用在已知的RDD上。
+
+```scala
+//生成 RDD
+val lines = spark.sparkContext.textFile("hdfs://10.30.30.146:9000/input/emp.csv").map(_.split(","))
+//定义schema：StructType
+val myschema = StructType(List(StructField("empno", DataTypes.IntegerType)
+                                ,StructField("ename", DataTypes.StringType, nullable = true)
+                                ,StructField("job", DataTypes.StringType)
+                                ,StructField("mgr", DataTypes.StringType)
+                                ,StructField("hiredate", DataTypes.StringType)
+                                ,StructField("sal", DataTypes.IntegerType)
+                                ,StructField("comm", DataTypes.StringType)
+                                ,StructField("deptno", DataTypes.IntegerType)))
+//把读入的每一行数据映射成一个个Row
+val rowRDD = lines.map(x=>Row(x(0).toInt,x(1),x(2),x(3),x(4),x(5).toInt,x(6),x(7).toInt))
+//使用SparkSession.createDataFrame创建表
+val df = spark.createDataFrame(rowRDD,myschema)
+
+```
+
+**DataFrame存取**：
+
+```scala
+val peopleDF = spark.read.format("json").load("file:///usr/local/spark/examples/src/main/resources/people.json")
+peopleDF.select("name", "age").write.format("csv").save("file:///usr/local/spark/mycode/newpeople.csv")
+```
+
+保存文件内容类似
+> Michael,
+> Andy,30
+> Justin,19
+
+
+### 3.2.2. SQL操作DataFrame ###
+
+1. 先把DataFrame注册成是一个Table或View
+2. 使用SparkSession执行从查询
+
+```scala
+scala>empDF.createOrReplaceTempView("emp")
+scala>spark.sql("select * from emp").show
+scala>spark.sql("select * from emp where deptno=10").show
+```
+
+
+### 3.2.3. DSL操作DataFrame ###
+
+```scala
+val df = spark.read.json("examples/src/main/resources/people.json")
+df.select("name")
+df.select($"name", $"age" + 1)
+df.filter($"age" > 21)
+df.groupBy("age").count()
+```
+
+- `$"name"`即`Column("name")`。注意，例如select函数，接受`String`或`Column`多种类型参数。
