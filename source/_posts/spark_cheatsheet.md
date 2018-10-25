@@ -293,3 +293,53 @@ df.groupBy("age").count()
 ```
 
 - `$"name"`即`Column("name")`。注意，例如select函数，接受`String`或`Column`多种类型参数。
+
+
+### 3.2.4. DataSet的一些操作 ###
+
+DataFrame其实就是DataSet[Row]。
+
+- To select a column from the Dataset, use `apply` method.
+
+```scala
+val ageCol = people("age")
+val futureAgeCol = people("age") + 10
+```
+
+Columnd的获取：
+
+```scala
+df("columnName")            // On a specific `df` DataFrame.
+col("columnName")           // A generic column no yet associated with a DataFrame.
+col("columnName.field")     // Extracting a struct field
+col("`a.column.with.dots`") // Escape `.` in column names.
+$"columnName"               // Scala short hand for a named column.
+```
+
+注意：`$"columnName"`是DataFrame中获取named column，`$(paraName)`是通过Param中通过paraName来getOrDefault其paraValue。
+
+- 一些DataSet API进行SQL操纵。
+
+```scala
+people.filter(people.col("age").gt(30))
+    .join(department, people.col("deptId").equalTo(department.col("id")))
+    .groupBy(department.col("name"), people.col("gender"))
+    .agg(avg(people.col("salary")), max(people.col("age")));
+```
+
+- 一些常用的API
+
+|||
+|---|---|
+|`def collect(): Array[T]`|Returns an array that contains all rows in this Dataset.|
+|`def count(): Long`|Returns the number of rows in the Dataset.|
+|`def distinct(): Dataset[T]`|Returns a new Dataset that contains only the unique rows from this Dataset.|
+|`def filter(func: (T) ⇒ Boolean): Dataset[T]`|Returns a new Dataset that only contains elements where `func` returns `true`.|
+|`def where(condition: Column): Dataset[T]`|Filters rows using the given condition. This is an alias for `filter`.|
+|`def select[U1](c1: TypedColumn[T, U1]): Dataset[U1]`|Returns a new Dataset by computing the given Column expression for each element. 对相应Column进行计算。|
+|`def select(cols: Column*): DataFrame`|Selects a set of column based expressions.|
+|`def select(col: String, cols: String*): DataFrame`|Selects a set of columns using column names. |
+|`def sort(sortExprs: Column*): Dataset[T]`|Returns a new Dataset sorted by the given expressions. 根据指定列（表达式）排序。|
+
+
+
