@@ -228,12 +228,15 @@ DataFrame是一种以RDD为基础的分布式数据集，也就是分布式的Ro
 - 第一种方法是，利用反射来推断包含特定类型对象的RDD的schema，适用对已知数据结构的RDD转换。**需要定义一个case class**
 
 ```scala
-scala> case class Person(name: String, age: Long)  //定义一个case class
- 
-scala> val peopleDF = spark.sparkContext.textFile("file:///usr/local/spark/examples/src/main/resources/people.txt")
-                        .map(_.split(","))
-                        .map(attributes => Person(attributes(0), attributes(1).trim.toInt))
-                        .toDF()
+val spark = SparkSession.builder().appName("any").getOrCreate()
+import spark.implicits._  //必须导入隐式转换
+
+case class Person(name: String, age: Long)  //定义一个case class
+
+val peopleDF = spark.sparkContext.textFile("file:///usr/local/spark/examples/src/main/resources/people.txt")
+                                .map(_.split(","))
+                                .map(attributes => Person(attributes(0), attributes(1).trim.toInt))
+                                .toDF()
 ```
 
 - 第二种方法是，使用编程接口，构造一个schema并将其应用在已知的RDD上。
