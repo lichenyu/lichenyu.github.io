@@ -99,6 +99,14 @@ s_t &= \alpha x_{t} + (1-\alpha)s_{t-1}\\
 ### [统计] ###
 
 - k-sigma准则选取阈值，[常用场景shape=(时刻, 单指标)]
+  - $\mu$为均值、$\sigma$为标准差。
+  - k-sigma准则：在$(\mu - k \times \sigma, \mu + k \times \sigma)$范围外的数值为outlier。
+  - $k = 3$：在正态分布中，数值分布在$(\mu - 3\sigma, \mu + 3\sigma)$中的概率约为0.9974。
+- Tukey Fences选取阈值，[常用场景shape=(时刻, 单指标)]
+  - When there are no outliers in a sample, the mean and standard deviation are used to summarize a typical value and the variability in the sample, respectively.  When there are outliers in a sample, the median and interquartile range are used to summarize a typical value and the variability in the sample, respectively.
+  - Interquartile Range $ IQR = Q3 - Q1$
+  - Tukey Fences: Outliers are values below $Q1 - k \times IQR$ or above $Q3 + k \times IQR$, where $k = 1.5$ indicates an "outlier", and $k = 3$ indicates data that is "far out".
+  - Q3 is positioned at $0.675\sigma$ for a normal distribution. The $IQR$ represents $2 \times 0.675\sigma = 1.35\sigma$. The outlier fence is determined by adding $Q3$ to $1.5 \times IQR = 0.675\sigma + 1.5 \times 1.35\sigma = 2.7\sigma$. This level would declare 0.7% of the measurements to be outliers.
 - $\chi^{2}$检测分布变动，[常用场景shape=(时刻, 多指标)]
   - 检测各指标出现频次的分布，相较于（训练）基线数据，是否产生了变动。如果某时刻的指标分布与基线不符，则该时刻异常。
   - {% post_link chi2_test 代码示例 %}给出了计算各个指标的卡方值，将卡方值较大的指标判定为异常的指标。此外，也可以累加了各个指标的卡方值，这样不关注哪个指标是异常的，而是关注哪个（按行累加的行）时刻是异常的。
