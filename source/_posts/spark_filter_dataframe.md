@@ -54,3 +54,10 @@ def filterOutliers(featureVecDf: DataFrame, quantileThrArr: Array[Double]): Data
     newDf
 }
 ```
+
+
+## 使用filter，多条件 ##
+
+```scala
+featureDf = featureDf.filter(featureList.map(f => col(f) >= 0.001).reduce(_ or _))
+```

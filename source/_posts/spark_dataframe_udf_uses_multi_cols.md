@@ -1,28 +1,11 @@
-title: Spark - DataFrame UDF返回多个col
-date: 2018/11/12
+title: Spark - DataFrame UDF使用多个col
+date: 2018/11/19
 categories:
 - Program Development
 tags:
 - Spark
 ---
 
-- 使用Array
-
-```scala
-def addClusteringCols(featureVecSepDf: DataFrame, model: KMeansModel): DataFrame = {
-    val clusteringUdf = udf((featureVec: Vector) => {
-        //(label, distance)
-        val rtv = KpiClusteringThreshold.calDist2Center(featureVec, model.clusterCenters)
-        Array(rtv._1, rtv._2)   // same type
-    })
-    featureVecSepDf.withColumn("udfResult", clusteringUdf(col($(featureVecCol)))).cache
-            .withColumn("label", col("udfResult")(0))
-            .withColumn("distance", col("udfResult")(1))
-            .drop("udfResult")
-}
-```
-
-- 使用Tuple
 ```scala
 val calUdf = udf((r: Row) => {
     val chi2 = KpiChiSquareThreshold.calChiSquareValue(baseline, r.toSeq.toList.asInstanceOf[List[Long]])
