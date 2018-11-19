@@ -7,7 +7,6 @@ tags:
 ---
 
 - 使用Array
-
 ```scala
 def addClusteringCols(featureVecSepDf: DataFrame, model: KMeansModel): DataFrame = {
     val clusteringUdf = udf((featureVec: Vector) => {
