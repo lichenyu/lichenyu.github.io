@@ -23,14 +23,14 @@ tags:
 
 管理员打开cmd
 
-- （如需代理）npm config set proxy http://l00429910:password@proxycn2.huawei.com:8080
-- （国内加速）npm config set registry "https://registry.npm.taobao.org"
-- npm install -g hexo-cli
+- （如需代理）`npm config set proxy http://l00429910:password@proxycn2.huawei.com:8080`
+- （国内加速）`npm config set registry "https://registry.npm.taobao.org"`
+- `npm install -g hexo-cli`
 
 进入本地username.github.io目录
 
-- （如需代理）git config --global http.proxy http://l00429910:password@proxycn2.huawei.com:8080
-- （如需代理）git config --global http.sslverify false
+- （如需代理）`git config --global http.proxy http://l00429910:password@proxycn2.huawei.com:8080`
+- （如需代理）`git config --global http.sslverify false`
 - hexo init
 - npm install
 
@@ -68,8 +68,8 @@ deploy步骤，如有必要需设置一下git的代理
 
 ## [添加Latex公式支持] ##
 
-- npm install hexo-math --save
-- npm install hexo-renderer-mathjax --save
+- `npm install hexo-math --save`
+- `npm install hexo-renderer-mathjax --save`
 - 配置 _config.yml 文件
 
 内容如下
@@ -90,8 +90,8 @@ config:
 
 支持行内公式
 
- - npm uninstall hexo-renderer-marked --save
- - npm install hexo-renderer-kramed --save
+ - `npm uninstall hexo-renderer-marked --save`
+ - `npm install hexo-renderer-kramed --save`
  - node_modules\kramed\lib\rules\inline.js，把第11、20行的escape变量的值做相应修改
 
 内容如下
