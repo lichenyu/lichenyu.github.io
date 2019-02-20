@@ -104,6 +104,8 @@ escape: /^\\([`*\[\]()#$+\-.!_>])/,
 em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
 ```
 
+此外，若想把mathjax的CDN设为国内的，需修改`_config.yml`配置、（以及渲染所用工具包文件`node_modules/hexo-renderer-mathjax/mathjax.html`）。
+
 ## [代码高亮] ##
 
 ```javascript
