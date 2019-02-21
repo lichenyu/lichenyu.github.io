@@ -118,3 +118,7 @@ em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
 - (相应themes目录的highlight.styl，`highlight-background = #f6f8fa`。)
 - (_config.yml中关闭highlight相关选项。)
 
+## [CDN优化] ##
+
+- mathjax相关，上文已经说了
+- `themes/landscape/layout/_partial/after-footer.ejs`中的`jquery.min.js`
