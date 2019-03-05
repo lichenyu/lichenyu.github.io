@@ -32,7 +32,7 @@ class Singleton(object):
         return class_._instance
 
 """
-单例模式，适应程序中有多个入口，只进行一次配置。
+单例模式，以适配场景：程序中有多个模块有main入口，都会import本模块；而当这些模块相互import时，logger只应进行一次配置。
 """
 class Logger(Singleton):
     def __init__(self):
@@ -151,7 +151,7 @@ class Singleton(object):
         return class_._instance
 
 """
-单例模式，适应程序中有多个入口，只进行一次配置。
+单例模式，以适配场景：程序中有多个模块有main入口，都会import本模块；而当这些模块相互import时，logger只应进行一次配置。
 """
 class Logger(Singleton):
     def __init__(self):
