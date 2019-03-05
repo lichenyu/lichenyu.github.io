@@ -7,7 +7,7 @@ tags:
 ---
 
 
-## 日志配置直接写在代码中 ##
+## 1. 日志配置直接写在代码中 ##
 
 ### 日志模块 ###
 
@@ -15,6 +15,7 @@ tags:
 # -*- coding: UTF-8 -*-
 
 import logging
+import logging.config
 import sys
 import os
 
@@ -42,12 +43,13 @@ class Logger(Singleton):
 
         stream_handler = logging.StreamHandler(sys.stdout)
         stream_handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter(fmt="%(message)s", datefmt="%Y/%m/%d %H:%M:%S")
+        formatter = logging.Formatter("%(message)s")
         stream_handler.setFormatter(formatter)
         self.logger.addHandler(stream_handler)
 
-        import config.global_config as gc
-        file_handler = logging.FileHandler(os.path.join(gc.run_dir, "log", "argogo.log"))
+        log_dir = os.path.dirname(__file__)
+        log_file_path = os.path.join(log_dir, "argogo.log")
+        file_handler = logging.FileHandler(log_file_path)
         file_handler.setLevel(logging.DEBUG)
         formatter = logging.Formatter(fmt="%(asctime)s | %(levelname)s | %(message)s", datefmt="%Y/%m/%d %H:%M:%S")
         file_handler.setFormatter(formatter)
@@ -73,4 +75,93 @@ import detector_info as di
 log = logging.getLogger(di.name)
 ```
 
-## 日志配置写在配置文件中 ##
+## 2. 日志配置写在配置文件中 ##
+
+### 配置文件 ###
+
+```plain
+#--------------------------------------------------
+
+[loggers]
+keys=root, dlog
+
+[logger_root]
+level=DEBUG
+handlers=console_handler
+
+[logger_dlog]
+level=DEBUG
+handlers=console_handler, file_handler
+# to avoid duplicated log with root logger
+propagate=0
+qualname=%(logger_name)s
+
+#--------------------------------------------------
+
+[handlers]
+keys=console_handler, file_handler
+
+[handler_console_handler]
+class=StreamHandler
+level=DEBUG
+formatter=simple_format
+args=(sys.stdout,)
+
+[handler_file_handler]
+class=FileHandler
+level=DEBUG
+formatter=detailed_format
+args=(r"%(log_file_path)s",)
+
+#--------------------------------------------------
+
+[formatters]
+keys=detailed_format, simple_format
+
+[formatter_detailed_format]
+format=%(asctime)s | %(levelname)s | %(message)s
+datefmt=%Y/%m/%d %H:%M:%S
+
+[formatter_simple_format]
+format=%(message)s
+
+#--------------------------------------------------
+```
+
+### 日志模块 ###
+
+```python
+# -*- coding: UTF-8 -*-
+
+import logging
+import logging.config
+import sys
+import os
+
+"""
+Python中，类实例化的过程是先执行Singleton.__new__生成instance，
+然后执行instance.__init__进行初始化的。
+所以通过重写__new__可以达到所有调用Singleton()的地方都返回同一个对象。
+"""
+class Singleton(object):
+    _instance = None
+    def __new__(class_, *args, **kwargs):
+        if not isinstance(class_._instance, class_):
+            class_._instance = object.__new__(class_, *args, **kwargs)
+        return class_._instance
+
+"""
+单例模式，适应程序中有多个入口，只进行一次配置。
+"""
+class Logger(Singleton):
+    def __init__(self):
+        log_dir = os.path.dirname(__file__)
+        log_config_path = os.path.join(log_dir, "log_config")
+        log_file_path = os.path.join(log_dir, "argogo.log")
+        import detector_info as di
+        logging.config.fileConfig(log_config_path, defaults={"logger_name": di.name, "log_file_path": log_file_path})
+        self.logger = logging.getLogger(di.name)
+
+```
+
+### 初始化及引入方式不变 ###
