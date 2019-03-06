@@ -47,7 +47,7 @@ class Logger(Singleton):
         stream_handler.setFormatter(formatter)
         self.logger.addHandler(stream_handler)
 
-        log_dir = os.path.dirname(__file__)
+        log_dir = os.path.dirname(os.path.realpath(__file__))
         log_file_path = os.path.join(log_dir, "argogo.log")
         file_handler = logging.FileHandler(log_file_path)
         file_handler.setLevel(logging.DEBUG)
