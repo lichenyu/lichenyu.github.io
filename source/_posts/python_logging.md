@@ -83,50 +83,52 @@ log = logging.getLogger(di.name)
 #--------------------------------------------------
 
 [loggers]
-keys=root, dlog
+keys = root, dlog
 
 [logger_root]
-level=DEBUG
-handlers=console_handler
+level = DEBUG
+handlers = console_handler
 
 [logger_dlog]
-level=DEBUG
-handlers=console_handler, file_handler
+level = DEBUG
+handlers = console_handler, file_handler
 # to avoid duplicated log with root logger
-propagate=0
-qualname=%(logger_name)s
+propagate = 0
+qualname = %(logger_name)s
 
 #--------------------------------------------------
 
 [handlers]
-keys=console_handler, file_handler
+keys = console_handler, file_handler
 
 [handler_console_handler]
-class=StreamHandler
-level=DEBUG
-formatter=simple_format
-args=(sys.stdout,)
+class = StreamHandler
+level = DEBUG
+formatter = simple_format
+args = (sys.stdout,)
 
 [handler_file_handler]
-class=FileHandler
-level=DEBUG
-formatter=detailed_format
-args=(r"%(log_file_path)s",)
+class = FileHandler
+level = DEBUG
+formatter = detailed_format
+args = (r"%(log_file_path)s",)
 
 #--------------------------------------------------
 
 [formatters]
-keys=detailed_format, simple_format
+keys = detailed_format, simple_format
 
 [formatter_detailed_format]
-format=%(asctime)s | %(levelname)s | %(message)s
-datefmt=%Y/%m/%d %H:%M:%S
+format = %(asctime)s | %(levelname)s | %(message)s
+datefmt = %Y/%m/%d %H:%M:%S
 
 [formatter_simple_format]
-format=%(message)s
+format = %(message)s
 
 #--------------------------------------------------
 ```
+
+使用标准config file格式，注意`=`周围的空格会被忽略。
 
 ### 日志模块 ###
 
@@ -156,7 +158,7 @@ class Singleton(object):
 class Logger(Singleton):
     def __init__(self):
         log_dir = os.path.dirname(__file__)
-        log_config_path = os.path.join(log_dir, "log_config")
+        log_config_path = os.path.join(log_dir, "log.config")
         log_file_path = os.path.join(log_dir, "argogo.log")
         import detector_info as di
         logging.config.fileConfig(log_config_path, defaults={"logger_name": di.name, "log_file_path": log_file_path})
