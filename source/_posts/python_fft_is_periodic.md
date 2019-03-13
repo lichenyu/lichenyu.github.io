@@ -26,7 +26,7 @@ import random
 def is_periodic(arr, z_value, frac_thr):
     starttime = time.time()
     f_arr = fft(arr)
-    f_arr = 2.0 / n * np.abs(f_arr)
+    f_arr = 2.0 / len(arr) * np.abs(f_arr)
     idx_z = np.where(f_arr <= z_value)
     print("idx_z count: %d, f_arr len: %d" % (len(idx_z[0]), len(f_arr)))
     endtime = time.time()
@@ -37,7 +37,7 @@ def is_periodic(arr, z_value, frac_thr):
 def is_periodic2(arr, thr=10):
     starttime = time.time()
     f_arr = fft(arr)
-    f_arr = 2.0 / n * np.abs(f_arr)
+    f_arr = 2.0 / len(arr) * np.abs(f_arr)
     median = np.median(f_arr)
     max = np.max(f_arr)
     print("median: %f, max: %f" % (median, max))
