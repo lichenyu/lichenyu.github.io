@@ -59,13 +59,28 @@ if __name__ == '__main__':
 
     # ---------- 生成一段周期性数据 ----------
     # 周期性冲击
-    y1 = np.zeros(n)
-    for i in range(0, n, 6):
-        y1[i] = random.randint(8, 12) * 1.0 / 10
+    # y1 = np.zeros(n)
+    # for i in range(0, n, 6):
+    #     y1[i] = random.randint(8, 12) * 1.0 / 10
+
+    # 周期性冲击 Type2
+    full_list = []
+    sub_list = [1, 0, 0, 1, 0]
+    T = len(sub_list)
+    T_count = n // T
+    for _ in range(0, T_count):
+        sub_list[0] = random.randint(8, 12) * 2.0 / 10
+        sub_list[3] = random.randint(8, 12) * 2.0 / 10
+        full_list = full_list + sub_list
+    if len(full_list) > n:
+        full_list = full_list[: n]
+    else:
+        full_list = full_list + [0] * (n - len(full_list))
+    y1 = np.array(full_list)
 
     # 正弦波 （相比而言，冲击总是正信号，有直流分量，频域0处会有较大值）
     # y1 = np.sin(2 * np.pi * 0.1 * x) + 2 * np.sin(2 * np.pi * 0.2 * x)
-    
+
     # 近似周期性冲击
     # full_list = []
     # T = 7
@@ -89,7 +104,7 @@ if __name__ == '__main__':
     # ---------- 画图 ----------
     plt.figure(figsize=(15, 6))
     plt.subplot(231)
-    plt.plot(x[0:], y1[0:])
+    plt.plot(x[0:50], y1[0:50])
     plt.title('Original Signal (Periodic)', fontsize=9)
     plt.ylim((-1, 10))
     plt.subplot(234)
@@ -144,6 +159,5 @@ if __name__ == '__main__':
     plt.ylim((0, 1))
 
     plt.show()
-
 
 ```
