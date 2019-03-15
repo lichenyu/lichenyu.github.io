@@ -23,7 +23,7 @@ import time
 import random
 
 
-def is_periodic(arr, z_value, frac_thr):
+def is_periodic(arr, z_value=0.02, frac_thr=0.5):
     starttime = time.time()
     f_arr = fft(arr)
     f_arr = 2.0 / len(arr) * np.abs(f_arr)
@@ -34,16 +34,65 @@ def is_periodic(arr, z_value, frac_thr):
     return len(idx_z[0]) * 1.0 / len(f_arr) >= frac_thr
 
 
-def is_periodic2(arr, thr=10):
+def is_periodic2(arr, mmrate_thr=10, show=False, plot=False, filename=""):
     starttime = time.time()
+
+    if type(arr) == list:
+        arr = np.array(arr)
+
+    # 标准化
+    arr_mean = np.mean(arr)
+    arr_std = np.std(arr)
+    if arr_std == 0:
+        arr_std = 1
+    arr = (arr - arr_mean) / arr_std
+    # 二值化
+    arr[np.where(arr > 0.01)[0]] = 1
+    arr[np.where(arr < 0.01)[0]] = 0
+
     f_arr = fft(arr)
     f_arr = 2.0 / len(arr) * np.abs(f_arr)
-    median = np.median(f_arr)
-    max = np.max(f_arr)
-    print("median: %f, max: %f" % (median, max))
+
+    # 去除直流影响，仅考察0.1~0.5
+    median = float(np.median(f_arr[len(arr) // 10 : len(arr) // 10 * 5]))
+    max = float(np.max(f_arr[len(arr) // 10 : len(arr) // 10 * 5]))
+    # 计算max / median的比值，考察频域信号是否为离散冲击
+    if median != 0:
+        mmrate = max * 1.0 / median
+    else:
+        if max == 0:
+            mmrate = 0
+        else:
+            mmrate = mmrate_thr + 999
+    print("median: %f, max: %f, max_median rate: %f" % (median, max, mmrate))
+
     endtime = time.time()
     print("time cost = %fs" % (endtime - starttime))
-    return max * 1.0 / median >= thr
+
+    if show or plot:
+        ts = len(arr)
+        n = len(arr)
+        fs = n * 1.0 / ts
+        x = np.linspace(0.0, ts, n, endpoint=False)
+        xf = np.linspace(0.0, 1.0 / 2.0 * fs, n // 2, endpoint=False)
+
+        plt.figure(figsize=(15, 6))
+        plt.subplot(121)
+        plt.plot(x, arr)
+        plt.title('Original Signal', fontsize=12)
+        #plt.ylim((0, 100))
+
+        plt.subplot(122)
+        plt.plot(xf, f_arr[: n // 2], 'g')
+        plt.title('FFT Transform Normalization', fontsize=12, color='g')
+
+        if plot:
+            plotfile = "%s_%.2f_%.2f_%.2f_" % (mmrate >= mmrate_thr, mmrate, max, median) + filename
+            plt.savefig(plotfile)
+        if show:
+            plt.show()
+
+    return mmrate >= mmrate_thr
 
 
 if __name__ == '__main__':
@@ -59,29 +108,29 @@ if __name__ == '__main__':
 
     # ---------- 生成一段周期性数据 ----------
     # 周期性冲击
-    # y1 = np.zeros(n)
-    # for i in range(0, n, 6):
-    #     y1[i] = random.randint(8, 12) * 1.0 / 10
+    y1 = np.zeros(n)
+    for i in range(0, n, 10):
+        y1[i] = random.randint(8, 12) * 1.0 / 10
 
     # 周期性冲击 Type2
-    full_list = []
-    sub_list = [1, 0, 0, 1, 0]
-    T = len(sub_list)
-    T_count = n // T
-    for _ in range(0, T_count):
-        sub_list[0] = random.randint(8, 12) * 2.0 / 10
-        sub_list[3] = random.randint(8, 12) * 2.0 / 10
-        full_list = full_list + sub_list
-    if len(full_list) > n:
-        full_list = full_list[: n]
-    else:
-        full_list = full_list + [0] * (n - len(full_list))
-    y1 = np.array(full_list)
+    # full_list = []
+    # sub_list = [1, 0, 0, 1, 0]
+    # T = len(sub_list)
+    # T_count = n // T
+    # for _ in range(0, T_count):
+    #     sub_list[0] = random.randint(8, 12) * 2.0 / 10
+    #     sub_list[3] = random.randint(8, 12) * 2.0 / 10
+    #     full_list = full_list + sub_list
+    # if len(full_list) > n:
+    #     full_list = full_list[: n]
+    # else:
+    #     full_list = full_list + [0] * (n - len(full_list))
+    # y1 = np.array(full_list)
 
     # 正弦波 （相比而言，冲击总是正信号，有直流分量，频域0处会有较大值）
     # y1 = np.sin(2 * np.pi * 0.1 * x) + 2 * np.sin(2 * np.pi * 0.2 * x)
 
-    # 近似周期性冲击
+    # 近似周期性冲击 --> 此种信号（周期取值发生震荡）下性能不佳
     # full_list = []
     # T = 7
     # T_count = n // T
@@ -96,10 +145,15 @@ if __name__ == '__main__':
     # y1 = np.array(full_list)
 
     # ---------- 生成一段非周期性数据 ----------
+    # 随机冲击
+    # y2 = np.zeros(n)
+    # idx = random.sample(range(0, len(x)), 5)
+    # for i in idx:
+    #     y2[i] = random.randint(5, 10)
+    # 方波
     y2 = np.zeros(n)
-    idx = random.sample(range(0, len(x)), 5)
-    for i in idx:
-        y2[i] = random.randint(5, 10)
+    for i in range(100, 120):
+        y2[i] = 1
 
     # ---------- 画图 ----------
     plt.figure(figsize=(15, 6))
@@ -137,7 +191,7 @@ if __name__ == '__main__':
 
     # 周期性检测
     plt.subplot(233)
-    # if is_periodic(y1, 0.02, 0.5):
+    # if is_periodic(y1):
     if is_periodic2(y1):
         plt.title('Periodic Signal Detected!', fontsize=9, color='r')
         plt.plot(xf1_n, yf1_n[: n // 2], 'r')
@@ -148,7 +202,7 @@ if __name__ == '__main__':
     plt.ylim((0, 1))
 
     plt.subplot(236)
-    # if is_periodic(y2, 0.02, 0.5):
+    # if is_periodic(y2):
     if is_periodic2(y2):
         plt.plot(xf2_n, yf2_n[: n // 2], 'r')
         plt.title('Periodic Signal Detected!', fontsize=9, color='r')
