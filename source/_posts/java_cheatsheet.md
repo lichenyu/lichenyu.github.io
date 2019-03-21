@@ -10,7 +10,7 @@ tags:
 ## 1.1. 数据类型 ##
 
 - 8种基本类型：
-  - 4种整型：`int` (4)、`short` (2)、`long` (8, B)、`byte` (1)
+  - 4种整型：`int` (4)、`short` (2)、`long` (8, L)、`byte` (1)
   - 2种浮点：`float` (4, F)、`double` (8, D, default)
   - 1种字符：`char`
   - 1种布尔：`boolean`
