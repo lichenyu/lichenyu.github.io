@@ -40,6 +40,10 @@ def is_periodic2(arr, mmrate_thr=10, show=False, plot=False, filename=""):
     if type(arr) == list:
         arr = np.array(arr)
 
+    # 准直流
+    # if len(np.where(arr > 0)[0]) >= 0.9 * len(arr):
+    #    return False
+
     # 标准化
     arr_mean = np.mean(arr)
     arr_std = np.std(arr)
@@ -48,7 +52,8 @@ def is_periodic2(arr, mmrate_thr=10, show=False, plot=False, filename=""):
     arr = (arr - arr_mean) / arr_std
     # 二值化
     arr[np.where(arr > 0.01)[0]] = 1
-    arr[np.where(arr < 0.01)[0]] = 0
+    arr[np.where(abs(arr) <= 0.01)[0]] = 0
+    arr[np.where(arr < -0.01)[0]] = -1
 
     f_arr = fft(arr)
     f_arr = 2.0 / len(arr) * np.abs(f_arr)
