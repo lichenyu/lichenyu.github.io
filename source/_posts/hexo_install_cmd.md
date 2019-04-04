@@ -23,13 +23,13 @@ tags:
 
 管理员打开cmd
 
-- （如需代理）`npm config set proxy http://l00429910:password@proxycn2.huawei.com:8080`
+- （如需代理）`npm config set proxy http://username:password@hostname:8080`
 - （国内加速）`npm config set registry "https://registry.npm.taobao.org"`
 - `npm install -g hexo-cli`
 
 进入本地username.github.io目录
 
-- （如需代理）`git config --global http.proxy http://l00429910:password@proxycn2.huawei.com:8080`
+- （如需代理）`git config --global http.proxy http://username:password@hostname:8080`
 - （如需代理）`git config --global http.sslverify false`
 - hexo init
 - npm install
