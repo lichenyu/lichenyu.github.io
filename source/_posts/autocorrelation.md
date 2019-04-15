@@ -92,7 +92,7 @@ r = cov(A_{t}, B_{t}) = E((A_{t} - \mu)(B_{t} - \nu)) = \frac{\sum_{i=1}^{n}(A_{
 
 {% math %}
 \begin{aligned}
-&r_{k} = cov(A_{t}, A_{t + k}) = E((A_{t} - \mu)(A_{t + k} - \mu)) = \frac{\sum_{i=1}^{n - k}(A_{i} - \mu )(A_{i + k} - \mu)}{n}\\
+&r_{k} = cov(A_{t}, A_{t + k}) = E((A_{t} - \mu)(A_{t + k} - \mu)) = \frac{\sum_{i=1}^{n - k}(A_{i} - \mu )(A_{i + k} - \mu)}{n - k}\\
 &k = 0,1, ..., n-1
 \end{aligned}
 {% endmath %}
@@ -117,36 +117,76 @@ r = cov(A_{t}, B_{t}) = E((A_{t} - \mu)(B_{t} - \nu)) = \frac{\sum_{i=1}^{n}(A_{
 
 **MORE**：
 
-在信号处理中，上面的定义通常不减去均值并除以方差，即假定信号无偏（均值为0）归一化（标准差为1）。（甚至进一步简化，不除以n）
-这样好处是可以通过**点积**计算离散序列的自相关系数（见下文）。
-
-对于连续信号，
-{% math %}
-\begin{aligned}
-\rho_{k} &= \int_{-\infty}^{\infty}\bar{f}(t)f(t + k)dt \\
-&= f(k) * \bar{f}(-k） 
-\end{aligned}
-{% endmath %}
-其中$\bar{f}$表示共轭复数，对于实值函数$\bar{f} = f$。$*$表示卷积。
+在信号处理中，往往提前对信号进行无偏（均值为0）归一化（标准差为1）处理，此时计算**自协方差系数**不需要减去均值。
+这样好处是可以通过**点积**计算离散序列的自协方差、自相关系数（见下文）。
 
 对于离散信号，
 {% math %}
 \begin{aligned}
-\rho_{k} = \sum \bar{y}(i)y(i+k)
+r_{k} = \frac{\sum_{i=0}^{n-k-1} y(i)\bar{y}(i+k)}{n-k}, k = 0,1, ..., n-1
 \end{aligned}
 {% endmath %}
-注意，求算每个离散卷积项，所用的运算其实是**向量点积（内积）**运算。
-
-上述定义在信号平方可积或平方可和（即有限能量）的前提下才成立。但“永远持续”的信号被处理成随机过程，就需要使用基于期望的定义。
-而对于可遍历的过程, 期望会被换成时间平均的极限。
-{% math %}
-\begin{aligned}
-&\rho_{k} = \frac{1}{T}\int_{0}^{T}\bar{f}(t)f(t + k)dt \\
-&\rho_{k} = \frac{1}{n}\sum_{i=0}^{n-k} \bar{y}(i)y(i+k)
-\end{aligned}
-{% endmath %}
+注意，这里分子上的运算其实是**向量点乘（内积）**运算。
+下标为了对应程序代码，调整为$[0, n-k-1]$。
 
 **MORE**：
 
+**相关函数与卷积**
+
+上文离散信号为例，其自协方差**函数**结果，其实是一个**卷积**计算与**$k$所决定的权重**乘积的结果。（卷积算出来的是一个**序列**，而非一个值。乘以权重后，对应不同$k$值时，数据的自协方差，即自协方差函数值）
+
+{% math %}
+\begin{aligned}
+&r_{k} = \frac{\sum_{i=0}^{n-k-1}y(i)\bar{y}(i+k)}{n-k} \\
+&\sum_{i=0}^{n-k-1} y(i)\bar{y}(i+k) = y(k) * \bar{y}(-k） \\
+&k = 0,1, ..., n-1
+\end{aligned}
+{% endmath %}
+$k$是自变量，表示延迟。$n$为序列长度。
+$*$表示卷积，${f}(-k）$表示翻转$f(k)$。根据卷积含义（先翻转、再平移），可得上式。
+
+而对应每个$k$值，求算自协方差$r_{k}$时，做的**向量点乘**（向量对应项相乘，再全部相加，得到一个数），其实就是在计算**卷积结果中的一项**。
+
+代码示例
+```python
+# -*- coding: UTF-8 -*-
+import numpy as np
+
+if __name__ == '__main__':
+    # 本示例数据未做标准化
+
+    # f(t)
+    x1 = [1, 7, 5, 1, 7, 5]
+    n = len(x1)
+
+    # k = 0, 1, 2, ..., n - 1
+    r = [0] * n
+    # acovf
+    for k in range(0, n):
+        x1_1 = x1[:n - k]
+        x1_2 = x1[k:]
+        sum = 0
+        for i in range(0, len(x1_1)):
+            sum = sum + x1_1[i] * x1_2[i]
+        r[k] = sum / (n - k)
+    print(r)
+
+    # f(-t)
+    x2 = [5, 7, 1, 5, 7, 1]
+    # convolution
+    y = np.convolve(x1, x2)
+    # weight: n - k
+    xi = range(1, n + 1)
+    d = xi + xi[:-1][::-1]
+    # acovf
+    r = (y / d)[n - 1:]
+    print(r)
+
+```
+
+对求得的**自协方差函数**值，全体除以$r_{0}$，即可得**自相关函数**。
+
+
+此外，
 - 周期函数的自相关函数是具有与原函数相同周期的函数。
 - {% post_link fft_convolution 使用FFT加速卷积求算 %}
