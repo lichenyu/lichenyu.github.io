@@ -3,7 +3,7 @@ date: 2019/04/15
 categories:
 - Data Analysis
 tags:
-- KPI Check
+- Algorithm
 ---
 
 

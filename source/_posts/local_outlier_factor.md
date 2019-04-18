@@ -3,7 +3,7 @@ date: 2018/11/12
 categories:
 - Data Analysis
 tags:
-- KPI Check
+- Algorithm
 ---
 
 
