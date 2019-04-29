@@ -10,7 +10,7 @@ tags:
 ## 目录名中包含中文 ##
 
 ```python
-root_dir = "D:/工作留档/"
+root_dir = "D:/工作留档"
 root_dir = unicode(root_dir, "utf-8")
 if not os.path.exists(root_dir):
     print("Error: %s does not exist!" % root_dir)
