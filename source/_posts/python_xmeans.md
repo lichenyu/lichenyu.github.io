@@ -323,66 +323,13 @@ if __name__ == '__main__':
     print("timecost: %0.3f" % (time6 - time5))
     """
 
+
+    # plot result
     """
-    data1 = [
-        [0.999, 1.999, 0.999, 2.999, 6.999, 7.999, 3.999, 1.999, 0.999],
-        [0.999, 1.999, 0.999, 2.999, 6.999, 7.999, 3.999, 1.999, 0.999],
-        [1, 2, 1, 3, 7, 8, 4, 2, 1],
-        [1.001, 2.001, 1.001, 3.001, 7.001, 8.001, 4.001, 2.001, 1.001]
-    ]
-
-    data2 = [
-        [2.999, 2.999, 2.999, 2.999, 2.999, 2.999, 2.999, 2.999, 2.999],
-        [2.999, 2.999, 2.999, 2.999, 2.999, 2.999, 2.999, 2.999, 2.999],
-        [3, 3, 3, 3, 3, 3, 3, 3, 3],
-        [3.001, 3.001, 3.001, 3.001, 3.001, 3.001, 3.001, 3.001, 3.001]
-    ]
-
-    data3 = [
-        [-0.001, -0.001, -0.001, -0.001, -0.001, -0.001, -0.001, -0.001, -0.001],
-        [-0.001, -0.001, -0.001, -0.001, -0.001, -0.001, -0.001, -0.001, -0.001],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001]
-    ]
-
-    # for data in [data1, data2, data3]:
-    #     for d in data:
-    #         for i in range(len(d)):
-    #             d[i] += 100000
-
-    time3 = time.time()
-    xmeans = cluster_by_xmeans(data1, min_k=1)
-    print("use xmeans to find the right k".center(80, "-"))
-    print("cur kmeans model: %s" % xmeans)
-    print("cur centers: %s" % xmeans.cluster_centers_)
-    print("labels of data: %s" % xmeans.predict(data1))
-    time4 = time.time()
-    print("timecost: %0.3f" % (time4 - time3))
-    print("".center(80, "-"))
-
-    time3 = time.time()
-    xmeans = cluster_by_xmeans(data2, min_k=1)
-    print("use xmeans to find the right k".center(80, "-"))
-    print("cur kmeans model: %s" % xmeans)
-    print("cur centers: %s" % xmeans.cluster_centers_)
-    print("labels of data: %s" % xmeans.predict(data2))
-    time4 = time.time()
-    print("timecost: %0.3f" % (time4 - time3))
-    print("".center(80, "-"))
-
-    time3 = time.time()
-    xmeans = cluster_by_xmeans(data3, min_k=1)
-    print("use xmeans to find the right k".center(80, "-"))
-    print("cur kmeans model: %s" % xmeans)
-    print("cur centers: %s" % xmeans.cluster_centers_)
-    print("labels of data: %s" % xmeans.predict(data3))
-    time4 = time.time()
-    print("timecost: %0.3f" % (time4 - time3))
-    print("".center(80, "-"))
+    xmeans = cluster_by_xmeans(data, max_k=4)
+    data_predicted = xmeans.predict(data)
+    cluster_data_map = create_cluster_data_map(len(xmeans.cluster_centers_), data, data_predicted)
+    plot_by_clusters(cluster_data_map)
     """
-
-    # xmeans = cluster_by_xmeans(data, min_k=1, max_k=4)
-    # cluster_data_map = create_cluster_data_map(len(xmeans.cluster_centers_), data, xmeans.predict(data))
-    # plot_by_clusters(cluster_data_map)#, savepath="D://out.png")
 
 ```
