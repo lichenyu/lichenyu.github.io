@@ -43,7 +43,7 @@ $$
 计算$dw$、$db$的方式：
 
 $$
-dw += x^{(l)}\ dz^{(l)},db += dz^{(l)}, \text{for }l = 1, ..., m \\
+dw += x^{(i)}\ dz^{(i)},db += dz^{(i)}, \text{for }i = 1, ..., m \\
 dw /= m, db /= m
 $$
 
@@ -65,8 +65,11 @@ $$
 - $z^{[l]}$.shape = $(n^{[l]}, 1)$
 - $a^{[l]}$.shape = $(n^{[l]}, 1)$
 
+$$
+\text{向量化} \ A^{[l]} = (a^{[l](1)}, a^{[l](2)}, , ..., a^{[l](n^{[l]})})
+$$
+
 全体，第$l$层
-向量化$A^{[l]} = (a^{[l](1)}, a^{[l](2)}, , ..., a^{[l](n^{[l]})})$
 
 $$
 Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} \\
@@ -85,7 +88,7 @@ $$
 $$
 dZ^{[l]} = W^{[l+1]T}dZ^{[l+1]} * {g^{[l]}}'(Z^{[l]}) \\
 dW^{[l]} = \frac{1}{m}dZ^{[l]}X^{T} \\
-db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]}, axls=1, keepdlms=True) \\
+db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]}, axis=1, keepdims=True) \\
 dA^{[l-1]} = W^{[l]T}dZ^{[l]}
 $$
 
