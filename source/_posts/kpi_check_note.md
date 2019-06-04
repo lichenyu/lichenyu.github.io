@@ -45,7 +45,7 @@ tags:
 - 滑动平均 Moving Average
   - 某点的值为该点前面一个窗口的平均值，迭代滑动窗口。
 - 指数平滑 Exponential Smoothing
-  - 一次指数平滑：适用于趋势无明显变化的时间序列
+  - 一次指数平滑：适用于趋势无明显变化的时间序列（平滑值$s_t$）
 {% math %}
 \begin{aligned}
 s_t &= \alpha x_{t} + (1-\alpha)s_{t-1}\\
