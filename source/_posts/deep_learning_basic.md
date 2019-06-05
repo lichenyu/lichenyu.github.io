@@ -15,7 +15,7 @@ tags:
 - 成本函数cost：全体平均
 
 $$
-J(w,b) = \frac{1}{m}\sum_{l=1}^{m}L(\hat{y}^{(l)},y^{(l)})
+J(w,b) = \frac{1}{m}\sum_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)})
 $$
 
 
@@ -23,6 +23,16 @@ $$
 
 - slgmold / tanh
 - ReLU / leaky ReLU / P ReLU
+
+**输出层**
+
+- softmax，多分类，和为1（归一化）
+
+$$
+z^{[L]} = w^{[L]}a^{[L-1]} + b^{[L]} \\
+t = e^{z^{[L]}} \\
+a^{[L]}_{i} = \frac{t^{(i)}}{\sum t^{(i)}}, a^{[L]} = \frac{t}{\sum t^{(i)}}
+$$
 
 
 ### 梯度下降 gradient descent
@@ -200,7 +210,7 @@ $$
 2. 已知的$dW, db$看做$d\theta_{i}$
 3. 对于每一个$i$，计算$d\theta_{approx}[i]$，最终得到$d\theta_{approx}$，对比$d\theta_{approx}$和$d\theta$
 $$
-d\theta_{approx}[i] = \frac{J(\theta_{1}, \theta_{2}, ..., \theta_{i}+\varepsilon, ...) - J(\theta_{1}, \theta_{2}, ..., \theta_{i}-\varepsilon, ...)}{2\varepsilon} \\
+d\theta_{approx}[i] = \frac{J(\theta_{1}, \theta_{2}, ..., \theta_{i}+\epsilon, ...) - J(\theta_{1}, \theta_{2}, ..., \theta_{i}-\epsilon, ...)}{2\epsilon} \\
 d\theta_{approx} \ ?\approx \ d\theta \\
 check \ \frac{\left \| d\theta_{approx} - d\theta \right \|_{2}}{\left \| d\theta_{approx} \right \|_{2} + \left \| d\theta \right \|_{2}}
 $$
@@ -227,7 +237,9 @@ $$
 v_t = \beta v_{t-1} + (1-\beta) \theta_{t}
 $$
 
-迭代获取
+效果接近于每次对$\frac{1}{1-\beta}$个值做平均
+
+迭代获取：
 1. $v_{\theta} = 0$
 2. `repeat: ` 获取下一个$\theta_{t}$，$v_{\theta} = \beta v_{\theta} + (1-\beta) \theta_{t}$
 
@@ -287,3 +299,87 @@ on iteration $t$
 $$
 \alpha = \frac{1}{1 + \text{decay_rate} \times \text{epoch_num}}
 $$
+
+
+### log-scale random搜索超参数
+
+例如，对于学习率$\alpha$，希望从0.0001至1范围内选择
+
+`r = -4 * np.random.rand()`
+`alpha = 10 ** r`
+
+
+### 正则化激活函数输入 batch norm
+
+输入数据正则化
+
+$$
+\mu = \frac{1}{m}\sum x^{i} \\
+X = X - \mu \\
+\sigma^{2} = \frac{1}{m}\sum {(x^{i})}^{2} \\
+X = X / \sigma
+$$
+
+激活函数输入正则化
+
+$$
+\mu = \frac{1}{m}\sum z^{(i)} \\
+\sigma^{2} = \frac{1}{m}\sum {(z^{(i)} - \mu)}^{2} \\
+z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}
+$$
+
+进一步设定均值、标准差，对$z^{(i)}_{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}_{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数
+$\gamma$、$\beta$为参数
+此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$
+
+- batch nrom不仅能加速训练（最优求解过程），在covariate shift问题（例如检测对象从“黑猫”偏移至“橘猫”）上也能一定程度上提升模型性能（限定了稳定的均值和标准差，前层输出变动，对后层输入影响较小）
+- mini-batch训练时，batch norm的均值、标准差计算，使用current mini-batch的数据
+- mini-batch测试时，batch norm的均值、标准差计算，使用训练时（同一层）各个mini-batch获取的均值、标准差，进行**指数平滑**来估算
+
+
+## 学习策略
+
+### evaluation metric
+
+dev set + evaluation metric，进行模型选择（模型形式、超参数）
+
+- optimizing metric
+- satisficing metric
+
+只使用一个定量的evaluation (optimizing) metric
+
+通常的工作流程：
+
+1. 选择算法/超参数等
+2. 使用training set对模型进行训练
+3. 使用dev set + evaluation metric对训练得到的模型进行评估
+4. 更换算法/超参数，返回2，直到找到最佳模型
+5. 使用test set对最终得到的模型进行评估，得到对模型性能的无偏估计
+
+此外，特别的，当模型在实际应用上出现问题时，需要考虑是否**改变dev set + evaluation metric**
+
+
+### bias & variance
+
+1. 根据training error与Bayes error/human level error对比，判断bias
+2. 根据dev/test error与training error对比，判断variance
+
+处理方式见上文
+
+**error analysis**
+分析error中，大部分是哪种类型，专门进行关注（并能得到解决后，性能提升的ceiling）
+注意，这个ceiling可以指导模型下一步的关注方向
+
+
+### training set v.s. dev/test set
+
+training set的数据与dev/test set的数据（分布）不同
+dev/test set为真实（关注问题）的数据
+
+- mix -> shuffle -> re-split：但是dev/test set不能较好反映真正关心的问题（原dev/test set）
+- 从dev/test set中抽出一部分，加入training set
+
+
+
+
+
