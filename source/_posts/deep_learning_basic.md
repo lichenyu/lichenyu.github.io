@@ -376,9 +376,62 @@ dev set + evaluation metric，进行模型选择（模型形式、超参数）
 training set的数据与dev/test set的数据（分布）不同
 dev/test set为真实（关注问题）的数据
 
-- mix -> shuffle -> re-split：但是dev/test set不能较好反映真正关心的问题（原dev/test set）
+**bias & variance analysis**
+
+- 从training set中split一部分来做training-dev set，这部分不做training，只用于对比dev error，这样可区分high variance和data mismatch
+
+||training set|dev set|
+|---|---|---|
+|**human level**|human level error||
+|**error on examples trained on**|training error||
+|**error on examples not trained on**|training-dev error|dev/test error|
+
+- human level error <-> training error: avoidable bias
+- training error <-> training-dev error: variance
+- training-dev error <-> dev/test error: data mismatch
+
+data mismatch处理方法：
+
+
+#### 重分数据集
+
+- mix -> shuffle -> re-split：但是新的dev/test set不能较好反映真正关心的问题（已经与原dev/test set不同）
 - 从dev/test set中抽出一部分，加入training set
 
+
+#### 模拟数据集
+
+- 找到dev/test set特殊在哪里，尝试在training set中合成模拟/收集类似的数据作为训练集
+- 模拟数据集时，需要注意合成方法有可能会引入过拟合问题（模拟的数据之间太相似）
+
+
+### 迁移学习 transfer learning
+
+已经不只是数据偏移这么简单了，target问题完全发生了变化
+
+场景：
+
+- Task A、Task B输入类别相同（例如都是图像）
+- Task A的数据量大于Task B（否则直接用B的数据就好了）
+- Task A的low level特征，应该对Task B是有益的
+
+处理方法：
+
+- 先用一个数据集pre training，再用另一个数据集fine tuning（随机参数/层替换最后一层，保留其它层及参数，重新训练）
+
+
+### 多任务学习 multi-task learning
+
+target问题同时有多个
+
+场景：
+
+- low level特征对各个Task是有益的
+- - 各个Task的数据量差不多，但都不多（合起来则还可以）
+
+处理方法：
+
+- 一个网络，输出层对应各个Task
 
 
 
