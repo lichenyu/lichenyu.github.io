@@ -417,7 +417,7 @@ data mismatch处理方法：
 
 处理方法：
 
-- 先用一个数据集pre training，再用另一个数据集fine tuning（随机参数/层替换最后一层，保留其它层及参数，重新训练）
+- 先用一个数据集pre training，再用另一个数据集fine tuning（随机参数/层替换最后一/若干层，冻结其它层及参数，重新训练）
 
 
 ### 多任务学习 multi-task learning
