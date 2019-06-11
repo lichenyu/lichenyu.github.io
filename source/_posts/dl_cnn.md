@@ -132,15 +132,3 @@ $$
 并行堆叠conv、pooling等模块作为一层
   - $1 \times 1$ conv作为bottleneck层，加速计算
 
-
-
-
-
-
-
-
-
-
-
-
-
