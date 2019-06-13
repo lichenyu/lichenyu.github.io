@@ -1,9 +1,9 @@
 title: 深度学习基础
 date: 2019/06/03
 categories:
-- Data Analysis
+- Machine Learning
 tags:
-- Algorithm
+- Model
 ---
 
 

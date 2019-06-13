@@ -1,9 +1,9 @@
 title: RNN
 date: 2019/06/12
 categories:
-- Data Analysis
+- Machine Learning
 tags:
-- Algorithm
+- Model
 ---
 
 

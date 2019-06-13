@@ -1,9 +1,9 @@
 title: CNN
 date: 2019/06/06
 categories:
-- Data Analysis
+- Machine Learning
 tags:
-- Algorithm
+- Model
 ---
 
 

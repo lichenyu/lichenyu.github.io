@@ -1,9 +1,9 @@
 title: 目标检测 object detection
 date: 2019/06/11
 categories:
-- Data Analysis
+- Machine Learning
 tags:
-- Algorithm
+- Model
 ---
 
 

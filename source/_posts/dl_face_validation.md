@@ -1,9 +1,9 @@
 title: 人脸验证
 date: 2019/06/11
 categories:
-- Data Analysis
+- Machine Learning
 tags:
-- Algorithm
+- Model
 ---
 
 
