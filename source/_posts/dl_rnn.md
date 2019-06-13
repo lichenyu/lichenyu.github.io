@@ -75,22 +75,29 @@ $$
 
 解决梯度消失问题，使得较深层能够利用浅层信息
 
+---
+
 对比**naive RNN**
 $$
 a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\
 $$
 关键在于$a^{\langle t-1 \rangle}, x^{\langle t \rangle}, a^{\langle t \rangle}$，而$\hat{y}^{\langle t \rangle}$可由$a^{\langle t \rangle}$算出
 
+---
+
 而**GRU**，引入记忆细胞$c^{\langle t \rangle}$，相当于$a^{\langle t \rangle}$
 由此，关键在于通过$c^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}$
 - 若按naive计算，$\tilde{c}^{\langle t \rangle} = g_{1}(W_{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) = tanh(W_{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$
 - 或者直接透传，即本层不进行计算，直接输出$c^{\langle t-1 \rangle}$
 
-进一步定义一个**门**，update gate, $\Gamma_{u} = \sigma(W_{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$
+进一步定义一个门，update gate, $\Gamma_{u} = \sigma(W_{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$
 - 由于使用sigmoid，$\Gamma_{u}$的值，大多数情形下，或者极为接近0，或者极为接近1
 - $\Gamma_{u}$决定使用按naive计算（遗忘），还是直接透传（记忆）
 
-**计算策略**：$c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + (1 - \Gamma_{u}) * c^{\langle t-1 \rangle}$
+综上，
+
+$$c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + (1 - \Gamma_{u}) * c^{\langle t-1 \rangle}$$
+
 - $*$为逐元素乘
 - $c^{\langle t \rangle}$是多维的，可能某些位上需要计算（遗忘），某些位上需要透传（记忆）
 
