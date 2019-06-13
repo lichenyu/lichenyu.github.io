@@ -1,4 +1,4 @@
-title: 深度学习笔记
+title: 深度学习基础
 date: 2019/06/03
 categories:
 - Data Analysis
@@ -427,7 +427,7 @@ target问题同时有多个
 场景：
 
 - low level特征对各个Task是有益的
-- - 各个Task的数据量差不多，但都不多（合起来则还可以）
+- 各个Task的数据量差不多，但都不多（合起来则还可以）
 
 处理方法：
 
