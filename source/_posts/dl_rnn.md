@@ -144,6 +144,7 @@ $$
 
 - $a^{\langle t \rangle}$分为$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$
 - 先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T_{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T_{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$
+  - 可将初始化$\overrightarrow{a}^{\langle 0 \rangle}$和$\overrightarrow{a}^{\langle T_{x}+1 \rangle}$都设为0
 - $\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W_{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b_{y}$）
 
 
