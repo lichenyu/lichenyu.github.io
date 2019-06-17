@@ -47,13 +47,13 @@ $$
 **误差分析：RNN还是beam search有问题**
 
 对于同一输入句子，输出：
-human-level：$y^{*}$
+human-level：$y^{h}$
 model：$\hat{y}$
 
-将$y^{*}$依次输入decoder，能够最终计算出$P(y^{*}|x)$
+将$y^{h}$依次输入decoder，能够最终计算出$P(y^{h}|x)$
 
-- $P(y^{*}|x) > P(\hat{y}|x)$：RNN能够计算出human-level更好，但却没选到，**beam search**有问题
-- $P(y^{*}|x) < P(\hat{y}|x)$：RNN未能计算出human-level更好，但却没选到，**RNN**有问题
+- $P(y^{h}|x) > P(\hat{y}|x)$：RNN能够计算出human-level更好，但却没选到，**beam search**有问题
+- $P(y^{h}|x) < P(\hat{y}|x)$：RNN未能计算出human-level更好，但却没选到，**RNN**有问题
 
 （若使用了length normalization，则对比length normalization之后的P）
 
