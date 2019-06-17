@@ -55,10 +55,19 @@ $$
   - 即，given $y^{\langle 1 \rangle}, y^{\langle 2 \rangle}, ..., y^{\langle t \rangle}$，得到$y^{\langle t + 1\rangle}$的各字典项概率
   - 例如，$p(\hat{y}^{\langle 1 \rangle}|0)$为句子开头（已输入为$0$时，下一个）单词，为字典各项的概率
 
-**sampling**
+**sampling novel sequences**
 
 利用训好的语言模型，随机生成语句
-即，将$p(\hat{y}^{\langle 1 \rangle}|0)$，作为$y^{\langle 1 \rangle}$，得到$p(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$；继续将$p(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$，作为$y^{\langle 2 \rangle}$...
+
+即，将$(\hat{y}^{\langle 1 \rangle}|0)$，作为$y^{\langle 1 \rangle}$，得到$(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$；继续将$(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$，作为$y^{\langle 2 \rangle}$...
+
+具体来讲，首先，从第一个0元素输出$\hat{y}^{\langle 1 \rangle}$的softmax分布中，**sample**一个word作为新语句的首词$y^{\langle 1 \rangle}$。然后，计算$\hat{y}^{\langle 2 \rangle}$，从$\hat{y}^{\langle 2 \rangle}$的softmax分布中，继续**sample**一个word作为$y^{\langle 2 \rangle}$，以此类推，直到产生EOS（或设定语句长度上限）
+
+- sample方式，使用softmax得到的词汇表中各word的概率，来进行选取（`np.random.choice`可以设定序列中各个元素的出现概率，来进行选取）
+- 引入采样的是为了保证每个单词都有产生的可能，如果每次只是选取softmax对应的最大值，那么有些单词会永远生成不到，而且生成的句子会极为相似
+- 采样过程中可能会生成UNK字符，为了避免生成这种无意义字符，可以重复采样，直到得到一个非UNK字符
+- 模型的初始输入可以不用零向量，而是用某一个单词的one hot向量作为赋值，这样可以生成与该单词主题相关的句子
+
 这样得到的生成语句，体现着该语言模型的特性（例如新闻报道风格、莎士比亚文学风格...）
 
 
