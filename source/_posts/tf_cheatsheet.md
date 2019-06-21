@@ -73,3 +73,57 @@ with tf.Session() as sess:
 ```
 
 
+### mini batch
+
+```python
+
+batch_size = 100
+n_batch = m // batch_size
+
+#...
+
+with tf.Session as sess:
+	# 迭代2000个epoch
+	for epoch in range(2000):
+		# 每个epoch有n_batch个batch
+		for batch in range(n_batch):
+			# 获取batch_size大小的batch
+			batch_x, batch_y = get_next_batch()
+			sess.run(train_step, feed_dict={x:batch_x, y:batch_y})
+```
+
+
+### dropout
+
+```python
+keep_prob = tf.placeholder(tf.float32)
+
+layer1 = tf.nn.relu(tf.matmul(W1, x) + b1)
+layer1 = tf.nn.dropout(layer1, keep_prob=keep_prob)
+
+layer2 = tf.nn.relu(tf.matmul(W2, layer1) + b2)
+layer2 = tf.nn.dropout(layer2, keep_prob=keep_prob)
+
+```
+
+
+--- 
+
+### 计算准确率（OP）
+
+```python
+correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(prediction, 1))  # tf.argmax返回最大值下标
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+# ...
+
+with tf.Session as sess:
+	
+	# ...
+	
+	acc = sess.run(accuracy, feed_dict(x:test_x, y:test_y))
+	print(acc)
+```
+
+
+
