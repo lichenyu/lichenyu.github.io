@@ -107,6 +107,17 @@ layer2 = tf.nn.dropout(layer2, keep_prob=keep_prob)
 ```
 
 
+### 初始化
+
+随机初始化
+- W
+  - `tf.Variable(tf.truncated_normal(shape, stddev=0.1))`
+- b
+  - `tf.Variable(tf.zeros(shape) + 0.1)`
+
+**note**：好的初始化系数、优化器等设置，可以在迭代次数一定的情形下，更好的逼近最优解，从而提升模型性能
+
+
 --- 
 
 ### 计算准确率（OP）
@@ -126,4 +137,46 @@ with tf.Session as sess:
 ```
 
 
+--- 
 
+### tensorboard
+
+```python
+with tf.name_scope('input'):
+	input1 = tf.placeholder(tf.float32, [nx, none], name='input1')
+	input2 = tf.placeholder(tf.float32, [nx, none], name='input2')
+	
+
+tf.summary.scalar('name', var)
+
+# ...
+
+merged = tf.summary.merge_all()
+
+with tf.Session() as sess:
+	writer = tf.summary.FileWriter('dir', sess.graph)
+	
+	# for each epoch
+	summary = sess.run(merged)
+	writer.add_summary(summary, epoch)
+```
+
+- `tensorboard --logdir=dir`
+- name_scope在定义图时进行设置（执行图则仅对定义图进行计算）
+
+
+### 模型存取
+
+模型保存
+```python
+saver = tf.train.Saver()
+# ...
+saver.save(sess, 'file_path/file_name')
+```
+
+模型读取
+```python
+saver = tf.train.Saver()
+# ...
+saver.restore(sess, 'file_path/file_name')
+```
