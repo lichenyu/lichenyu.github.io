@@ -1,7 +1,7 @@
 title: Install Hexo
 date: 2018/09/26
 categories:
-- Test
+- Program Development
 tags:
 - Hexo
 ---

@@ -1,3 +1,15 @@
 ## 晨雨舒心 ##
 
-> 幸运的是，Spark提供了一个基于海量数据的机器学习库，它提供了常用机器学习算法的分布式实现，开发者只需要有 Spark 基础并且了解机器学习算法的原理，以及方法相关参数的含义，就可以轻松的通过调用相应的 API 来实现基于海量数据的机器学习过程。
+## CATEGORIES
+- Data Analysis
+  统计、信号处理等数据分析方法介绍
+  - TAGS：Algorithm，case名称
+- Machine Learning
+  机器学习算法介绍
+  - TAGS：Model
+- Program Development
+  各种开发语言、包、工具使用方法介绍
+  - TAGS：具体开发语言、包、工具，Algorithm，Underlying
+- Technique Research
+  新概念、新技术预研
+  - TAGS：具体新概念、新技术
