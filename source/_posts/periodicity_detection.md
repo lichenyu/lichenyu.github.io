@@ -19,5 +19,6 @@ tags:
 
 ## 基于自相关函数 ##
 
+周期函数的自相关函数是具有与原函数相同周期的函数。
 
 {% post_link python_autocorrelation_is_periodic 代码示例 %}
