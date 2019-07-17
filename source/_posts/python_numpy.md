@@ -65,7 +65,7 @@ tags:
 花式索引
 - `arr[[4, 2, 1, 7]]`，索引为数组。如果目标是一维数组，那么索引的结果就是对应位置的元素；如果目标是二维数组，那么就是对应下标的行。
 
-**注意**：切片数组返回一个view，而非copy
+**注意**：切片数组返回一个view，而非copy；这与python list不同，python list的切片是copy
 
 #### `ndarray.ndim`
 
@@ -408,17 +408,17 @@ a ** b
 
 #### 统计
 
-#### `np.min(a)`
-#### `np.max(a)`
-#### `np.sum(a)`
-#### `np.percentile(a, q)`
+#### `np.amin(a)`、`np.nanmin(a)`
+#### `np.amax(a)`、`np.nanmax(a)`
+#### `np.sum(a)`、`np.nansum(a)`
+#### `np.percentile(a, q)`、`np.nanpercentile(a, q)`
 q在0~100之间
-#### `np.quantile(a, q)`
+#### `np.quantile(a, q)`、`np.nanquantile(a, q)`
 q在0~1之间
-#### `np.median(a)`
-#### `np.mean(a)`
-#### `np.std(a)`
-#### `np.var(a)`
+#### `np.median(a)`、`np.nanmedian(a)`
+#### `np.mean(a)`、`np.nanmean(a)`
+#### `np.std(a)`、`np.nanstd(a)`
+#### `np.var(a)`、`np.nanvar(a)`
 
 #### 线性代数
 
