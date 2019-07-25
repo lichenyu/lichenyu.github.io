@@ -15,20 +15,20 @@ $$
 WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac{\#G_{i}}{\#B_{i}}}{\frac{\#G}{\#B}}}
 $$
 
-其中，$\#G_{i}$为该类别Good数量，$\#G$为总Good数量，$\#B_{i}$为该类别Bad数量，$\#B$为总Bad数量。
+其中，$\\#G_{i}$为该类别Good数量，$\\#G$为总Good数量，$\\#B_{i}$为该类别Bad数量，$\\#B$为总Bad数量。
 可以看出，$\ln$中的值在描述“本类别的G、B分布比例，与总体的G、B分布比例，是否相似”。
 若本类别的分布极为特殊，则woe值较大，表明本类别具有较强的区分性；若本类别的分布与总体基本一致，则woe近似为0，表明本类别区分性较弱。
 
-**分箱与woe：**
-- For continuous independent variables: First, create bins (categories / groups) for a continuous independent variable and then combine categories with similar WOE values and replace categories with WOE values. Use WOE values rather than input values in your model.
+**基于WOE分箱：**
+- For continuous independent variables: First, create 10 or 20 bins (categories / groups) for a continuous independent variable and then combine categories with similar WOE values and replace categories with WOE values. Use WOE values rather than input values in your model.
 - For categorical independent variables: Combine categories with similar WOE and then create new categories of an independent variable with continuous WOE values. In other words, use WOE values rather than raw categories in your model. The transformed variable will be a continuous variable with WOE values. It is same as any continuous variable.
 
-**Rules related to 分箱与woe：**
+**基于WOE分箱-指导规则：**
 - Each category (bin) should have at least 5% of the observations.
-- Each category (bin) should be non-zero for both non-events and events.
+- Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G_{i} + 0.5$, $\#B_{i} + 0.5$
 - The WOE should be distinct for each category. Similar groups should be aggregated.
-- For logistic regression, the WOE should be monotonic, i.e. either growing or decreasing with the groupings. (It is because logistic regression assumes there must be a linear relationship between logit function and independent variable.)
-- Missing values are binned separately.
+- For logistic regression, the WOE should be monotonic, i.e. either growing or decreasing with the groupings. (It is because logistic regression assumes there must be a linear relationship between logit function and independent variable.) 最好满足
+- Missing values are binned separately. 若未做缺失值预处理
 
 Why combine categories with similar WOE?
 It is because the categories with similar WOE have almost same proportion of events and non-events. In other words, the behavior of both the categories is same.
@@ -44,7 +44,7 @@ $$
 
 Information value is one of the most useful technique to **select important variables** in a predictive model. It helps to rank variables on the basis of their importance.
 
-**特征选择**
+**基于IV特征选择**
 
 If the IV statistic is:
 - Less than 0.02, then the predictor is not useful for modeling (separating the Goods from the Bads)
