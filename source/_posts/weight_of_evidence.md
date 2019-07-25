@@ -25,7 +25,7 @@ $$
 
 **基于WOE分箱-指导规则：**
 - Each category (bin) should have at least 5% of the observations.
-- Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G_{i} + 0.5$, $\#B_{i} + 0.5$
+- Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\\#G_{i} + 0.5$, $\\#B_{i} + 0.5$
 - The WOE should be distinct for each category. Similar groups should be aggregated.
 - For logistic regression, the WOE should be monotonic, i.e. either growing or decreasing with the groupings. (It is because logistic regression assumes there must be a linear relationship between logit function and independent variable.) 最好满足
 - Missing values are binned separately. 若未做缺失值预处理
