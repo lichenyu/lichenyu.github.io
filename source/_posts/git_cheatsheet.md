@@ -80,7 +80,7 @@ tags:
 
 ---
 
-- 修改已近提交的commit message
+- 修改已经提交的commit message
   1. git rebase -i HEAD~8                //8为距最后提交的倒数第8次
   2. pick -> edit
   3. git commit --amend
