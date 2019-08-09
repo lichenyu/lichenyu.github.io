@@ -137,6 +137,19 @@ print(df3)
 - 删除列：`del df1['A']`
 - 新增列：`df1['K'] = 'k'`（注意k会被广播）
 - 去除NaN：`df1.dropna()`
+  - `axis : {0 or ‘index’, 1 or ‘columns’}, default 0`**此处有坑，axis操作预期与其他处不同！**
+    - 0, or ‘index’ : Drop rows which contain missing values.
+    - 1, or ‘columns’ : Drop columns which contain missing value.
+  - `how : {‘any’, ‘all’}, default ‘any’`
+    - ‘any’ : If any NA values are present, drop that row or column.
+    - ‘all’ : If all values are NA, drop that row or column.
+  - `thresh : int, optional`
+    - ‘any’、‘all’的折中，达到‘thresh’个NaN再去除
+  - `subset : array-like, optional`
+    - Labels along other axis to consider, e.g. if you are dropping rows these would be a list of columns to include.
+    - 指定考察哪些（字段）
+  - `inplace : bool, default False`
+    - If True, do operation inplace and return None.
 - 替换NaN：`df1.fillna()`
 
 #### 查看
@@ -145,8 +158,12 @@ print(df3)
 - 查看头，默认5行：`df1.tail(1)`
 - 查看index：`df1.index`
 - 查看columns：`df1.columns`
+  - 选择列`df1[df1.columns[bool_list]]`
 - 查看各列dtype：`df1.dtypes`
-- 查看基本统计信息：`df1.describe()`
+- 查看基本统计信息：
+  - `df1.info()`
+  - `df1.describe().T.assign(missing_pct=df1.apply(lambda x: (len(x) - x.count()) / len(x)))`
+  - `df1.select_dtypes(include=['object']).describe().T.assign(missing_pct=df1.apply(lambda x: (len(x) - x.count()) / len(x)))`
 - 按值排序：`df1.sort_values(by='K')`
 
 #### apply
@@ -177,7 +194,19 @@ By "group by" we are referring to a process involving one or more of the followi
 
 - `pd.read_csv('foo.csv')`、`df.to_csv('foo.csv')`
 
+多文件合并demo
+```
+def load_data_from_csv(obj):
+    if isinstance(obj, list) and len(obj) > 0:
+        df_list = []
+        for p in obj:
+            df_list.append(pd.read_csv(p, header=0, low_memory=False))
+        all_data = pd.concat(df_list)
+    else:
+        all_data = pd.read_csv(obj, header=0)
 
+    return all_data
+```
 
 
 
