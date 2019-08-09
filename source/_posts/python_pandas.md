@@ -132,6 +132,8 @@ print(df3)
     - `df1.iloc[:, df1.isnull().all(axis=0).values]`
       - all/any: if all/any element by axis is True
     - `df1.iloc[:, [df1[col].isnull().all() for col in df1.columns]]`
+    - `df1[df1.columns[df1.isnull().all(axis=0)]]`
+      - `df1[]`为取列操作，此处为取多列
 - 删除列：`del df1['A']`
 - 新增列：`df1['K'] = 'k'`（注意k会被广播）
 - 去除NaN：`df1.dropna()`
