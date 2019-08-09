@@ -121,14 +121,17 @@ print(df3)
     - 连续行：`df1.iloc[0:2]`
     - 跳行：`df1.iloc[[0, 2]]`
 - 过滤行：由于DataFrame的rows是数据，columns是字段，所以一般都是过滤“列满足条件的所有行”
-  - 某字段符合条件的所有行：
+  - 选择行，该行某字段符合某条件：
     - `df1[df1['col1'] == 10]`
     - `df1[df1['col1'] != 10]`
     - `df1[df1['col1'] > 10]`
     - `df1[df1['col1'].isnull()]`
 	- `df1[df1['col1'].isin([10, 20])]`
 	- `df1[df1['col1'] == 10 | df1['col1'].isin([10, 20])]`
-  - 所有字段符合条件的所有行：`df1[df1 == 10]`
+  - 过滤列，剩余列字段都符合某条件：
+    - `df1.iloc[:, df1.isnull().all(axis=0).values]`
+      - all/any: if all/any element by axis is True
+    - `df1.iloc[:, [df1[col].isnull().all() for col in df1.columns]]`
 - 删除列：`del df1['A']`
 - 新增列：`df1['K'] = 'k'`（注意k会被广播）
 - 去除NaN：`df1.dropna()`
