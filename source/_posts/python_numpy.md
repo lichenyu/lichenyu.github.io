@@ -151,9 +151,10 @@ array([[ 8, 10],
 #### 拼接
 
 #### `np.concatenate((a1, a2, ...), axis)`
-#### `np.vstack()`
-#### `np.hstack()`
-#### `np.stack(arrays, axis)`
+#### `np.vstack()` `np.r_[ar1, ar2]`
+#### `np.hstack()` `np.c_[ar1, ar2]`
+#### `np.dstack()`
+#### `np.stack(arrays, axis)` **（会拓展维度）**
 
 ```python
 a = np.zeros((2, 3), dtype=np.uint64)
@@ -169,7 +170,7 @@ b = np.ones((2, 3), dtype=np.uint64)
 # a、b的shape可以不完全相同，但需要在待拼接的维度中一致
 
 c1 = np.concatenate((a, b))
-c11 = np.vstack((a, b))
+c11 = np.vstack((a, b)) #np.r_
 '''
 [[0 0 0]
  [0 0 0]
@@ -177,7 +178,7 @@ c11 = np.vstack((a, b))
  [1 1 1]]
 '''
 c2 = np.concatenate((a, b), axis=1)
-c22 = np.hstack((a, b))
+c22 = np.hstack((a, b)) #np.c_
 '''
 [[0 0 0 1 1 1]
  [0 0 0 1 1 1]]
@@ -196,7 +197,7 @@ print(cc1.shape)
 # (2, 2, 3)
 
 # 深度方向堆叠
-cc2 = np.stack((a, b), axis=2)
+cc2 = np.stack((a, b), axis=2) #np.dstack()
 '''
 [[[0 1]
   [0 1]
@@ -209,6 +210,34 @@ cc2 = np.stack((a, b), axis=2)
 print(cc2.shape)
 # (2, 3, 2)
 ```
+
+**增加行（对行进行拼接）的方法有：**
+
+```python
+np.concatenate((ar1, ar2),axis=0)
+np.append(ar1, ar2, axis=0)
+np.vstack((ar1, ar2))
+np.row_stack((ar1, ar2))
+np.r_[ar1,ar2]
+```
+
+**增加列（对列进行拼接）的方法有：**
+
+```python
+np.concatenate((ar1, ar2),axis=1)
+np.append(ar1, ar2, axis=1)
+np.hstack((ar1, ar2))
+np.column_stack((ar1, ar2))
+np.c_[ar1,ar2]
+```
+
+**增加维度进行拼接的方法有：**
+
+```python
+np.stack((ar1, ar2), axis=-1)
+np.dstack((ar1, ar2))
+```
+或者用`np.expand_dims`拓展维度`axis=0`后，对行进行拼接，然后`transpose`
 
 #### 拆分
 
