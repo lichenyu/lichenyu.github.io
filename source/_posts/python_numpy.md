@@ -18,7 +18,7 @@ tags:
 |`np.array(object)`|由object（常见为list）创建ndarray数组对象|
 |`np.asarray(object)`|由object（常见为list）创建ndarray数组对象|
 ||由list创建时，二者一样；由ndarray创建时，array会新复制出一个ndarray，asarray则仍引用原来的ndarray|
-|`np.empty(shape, dtype)`|创建一个指定形状、数据类型、未初始化的数组|
+|`np.empty(shape, dtype)`|创建一个指定形状、数据类型、未初始化的数组，shape as tuple|
 ||注意，empty指的是未初始化，数组元素值为**随机值**，并不是0值|
 |`np.zeros(shape, dtype)`|创建一个指定形状、指定数据类型，由0填充的数组|
 |`np.ones(shape, dtype)`|创建一个指定形状、指定数据类型，由1填充的数组|
@@ -35,7 +35,7 @@ tags:
 |`ndarray.shape`|数组各维度的大小（是数量不是阶数）|
 |`ndarray.size`|数组元素的总个数（等于shape中各值相乘）|
 |`ndarray.dtype`|数组的元素类型|
-|`ndarray.ndim`|轴的数量，或维度的数量。轴编号从`0`到`ndim-1`|
+|`ndarray.ndim`|轴的数量，或维度的数量rank。轴编号从`0`到`ndim-1`|
 
 **轴的概念**
 
@@ -74,17 +74,24 @@ array([[ 8, 10],
 
 |方法|说明|
 |---|---|
-|`arr[start:stop:step]`|一维|
+|`arr[idx]`|一维索引|
+|`arr[start:stop:step]`|一维，切片索引|
 |`arr[start:]`|一维，start直至最后|
+|`arr[np.array([(idx1, idx2), (idx3, idx4)])]`|通过一维生成二维|
+|`arr[1]`|二维，第二行|
+|`arr[1, 1]`|二维，第二行、第二列|
 |`arr[:, 1]`|二维，所有行、第二列|
-|`arr[1, :]`|二维，第二行、所有列|
+|`arr[-1, :]`|二维，最后行、所有列|
 |`arr[..., 1]`|二维，所有行、第二列|
 ||对于多维，如3darray，`arr[..., 1] == arr[:, :, 1]`|
 |`arr[..., 1:]`|二维，所有行、第二至最后列|
 |`arr[0:1, 1:2]`|二维，一至二行、二至三列|
-|`arr[[0,1,2], [0,1,3]]`|二维，分别指定行、列。即，`arr[rows,cols]`|
+|`arr[[0,1,2], [0,1,0]]`|二维，数组索引，分别指定idx_x、idx_y。即，`arr[(0, 0), (1, 1), (2, 0)]`|
 |`arr[arr >  5]`|布尔索引，其中`arr > 5`会给出一个和arr同shape的布尔数组，按这个布尔数组索引|
 |`arr[[4, 2, 1, 7]]`|花式索引，索引为数组。如果目标是一维数组，那么索引的结果就是对应位置的元素；如果目标是二维数组，那么就是对应下标的行。
+|||
+|`np.where(condition)`|`np.asarray(condition).nonzero()`，False作为0。由于`nonzero`返回的是索引，选择时，使用`arr[np.where(condition)]`|
+|`np.where(condition, x, y)`|满足条件(condition)，输出x（对应位置内容），不满足输出y（对应位置内容）。相当于对`zip(condition, x, y)`进行选择。`zip`将各个对象打包（同idx的在同一批处理），如果各个迭代器的元素个数不一致，则返回列表长度与最短的对象相同。`zip(*)`解压出各个对象|
 
 数字后的`:`表示范围；单独的`:`表示所有
 
@@ -92,7 +99,7 @@ array([[ 8, 10],
 
 |方法|说明|
 |---|---|
-|`ndarray.reshape()`|调整数组shape，返回view|
+|`ndarray.reshape()`|调整数组shape，返回view。shape中-1表示（根据其他维度设置）自动决定数量|
 |`np.resize(arr, shape)`|调整数组shape，返回copy|
 |`ndarray.flat`|返回数组元素迭代器（可直接索引`arr.flat[3]`）|
 |`ndarray.ravel()`|返回数组flat后的view|
@@ -200,6 +207,7 @@ print(cc2.shape)
 |`np.quantile(a, q)` `np.nanquantile(a, q)`|q在0~1之间|
 |`np.median(a)` `np.nanmedian(a)`||
 |`np.mean(a)` `np.nanmean(a)`||
+|`np.average(a, weights=arr)`|可指定权重，计算加权平均|
 |`np.std(a)` `np.nanstd(a)`||
 |`np.var(a)` `np.nanvar(a)`||
 ||
@@ -215,5 +223,6 @@ print(cc2.shape)
 |`np.argmax(a)`|a中最大元素的索引|
 |`np.argmin(a)`|a中最小元素的索引|
 |`np.nonzero(a)`|a中非0元素的索引|
+|`np.where(condition)`|`np.asarray(condition).nonzero()`，给出符合条件的索引（a包含在条件中）||
 
 
