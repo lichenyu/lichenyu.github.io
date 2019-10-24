@@ -18,7 +18,7 @@ tags:
 |**CPS**, cost per sale; **CPA**, cost per action|广告主自家广告平台|
 
 
-## 评价指标
+## 比率指标
 
 |指标|含义|
 |---|---|
