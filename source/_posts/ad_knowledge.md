@@ -1,5 +1,5 @@
 title: Computational Advertising
-date: 2019/10/12
+date: 2019/10/22
 categories:
 - Technique Research
 tags:
