@@ -127,7 +127,6 @@ def load_data_from_csv(obj):
 |方法|说明|
 |---|---|
 |`pd.concat(df_list)`|增加行，纵向连接多个DataFrame|
-|`df1.append(s, ignore_index=True)`|append行|
 |`pd.merge(left, right, how='inner', on=None)`|增加列，join两个DataFrame，`how`指定join方式（左右内外），`on`指定key|
 
 ### 查看
@@ -154,9 +153,10 @@ df1.select_dtypes(include=['object']).describe().T.assign(missing_pct=df1.apply(
 
 |方法|说明|
 |---|---|
+|*获取列*||
 |`df1['A']`|获取列，根据**列名**获取单列|
 |`df1[['A', 'B']]`|获取列，根据**列名**list获取多列|
-|||
+|*获取行*||
 |`df1[0:1]`|获取行，使用**切片**直接获取连续多行|
 |`df1.loc[997]`|获取行，根据**索引名称**获取单行（索引名称有可能非数字）|
 |`df1.loc[997:999]`|获取行，根据**索引名称**获取连续行（**本方法较特殊，会包含'999'行**）|
@@ -164,7 +164,7 @@ df1.select_dtypes(include=['object']).describe().T.assign(missing_pct=df1.apply(
 |`df1.iloc[0]`|获取行，根据**行位置**获取单行|
 |`df1.iloc[0:2]`|获取行，根据**行位置**获取连续行|
 |`df1.iloc[[0, 2]]`|获取行，根据**行位置**获取跳行|
-|||
+|*获取行*||
 |`df1[bool_list]`|通过生成与行数同len的布尔Series，来**选择行**|
 |`df1[df1['col1'] == 10]`||
 |`df1[df1['col1'] != 10]`||
@@ -172,19 +172,31 @@ df1.select_dtypes(include=['object']).describe().T.assign(missing_pct=df1.apply(
 |`df1[df1['col1'].isnull()]`||
 |`df1[df1['col1'].isin([10, 20])]`|
 |`df1[df1['col1'] == 10 & df1['col2'].isin([10, 20])]`||
-|||
-|`df[df.columns[bool_list]]`|通过生成与列数同len的布尔Series，来选择列名，进而选择列|
+|*获取列*||
+|`df[df.columns[bool_list]]`|通过生成与列数同len的布尔Series，来选择列名，进而**选择列**|
 |`df1[df1.columns[df1.isnull().all(axis=0)]]`||
 |`df[:, bool_list]`|通过生成与列数同len的布尔Series，来**选择列**||
 |`df1.iloc[:, df1.isnull().all(axis=0).values]`||
 |`df1.iloc[:, [df1[col].isnull().all() for col in df1.columns]]`||
+|*删除列*||
+|`del df1['A']`||
+|*删除行*||
+|`df1.drop(index_list, inplace=True)`||
+|*新增行*||
+|`df1.append(s, ignore_index=True)`|append行，`ignore_index=True`使得df1的index不会被s的影响|
+|*新增列*||
+|`df1['K'] = 'k'`|k会被广播|
+|`df1['K'] = list`||
+|`df1.assign(new_colname=list)`|create a new dataframe|
+||`df1.assign(new_colname=df['temp_c'] * 9 / 5 + 32)`|
+|`df1.assign(new_colname=func)`|`func`被用于`df1`|
+||`df1.assign(new_colname=lambda x: x.temp_c * 9 / 5 + 32)`|
 |||
+|`df1.sort_values(by='K')`|按值排序|
+|`df1.apply(func)`|`func`被用于`df1`，得到一组`func`的计算结果|
+||`df1.apply(lambda x: x.max() - x.min())`|
 
-
-
-- 删除列：`del df1['A']`
-- 新增列：`df1['K'] = 'k'`（注意k会被广播）
-- `df1.assign()`
+**对NaN操作**：
 - 去除NaN：`df1.dropna()`
   - `axis : {0 or ‘index’, 1 or ‘columns’}, default 0`**此处有坑，axis操作预期与其他处不同！**
     - 0, or ‘index’ : Drop rows which contain missing values.
@@ -200,32 +212,30 @@ df1.select_dtypes(include=['object']).describe().T.assign(missing_pct=df1.apply(
   - `inplace : bool, default False`
     - If True, do operation inplace and return None.
 - 替换NaN：`df1.fillna()`
-- 按值排序：`df1.sort_values(by='K')`
 
+### 汇聚
 
-#### apply
-
-- `df1.apply(lambda x: x.max() - x.min())`
-
-
-
-
-#### 汇聚
-
-groupby
+`groupby`
 - 例如：`df1.groupby('A').sum()`、`df1.groupby('A').size()`
 By "group by" we are referring to a process involving one or more of the following steps:
   - Splitting the data into groups based on some criteria
   - Applying a function to each group independently
   - Combining the results into a data structure
 
-透视表
+`pivot_table`
+- 例如：`pd.pivot_table(df1, index=['sex', 'smoker'], columns='day', values='some_metric', aggfunc=sum, margins=True)`
+  - `index`：按什么key汇聚，index的值的组合，将作为维度数量
+  - `columns`：指定汇聚多列时，各列维度是什么。columns的值的组合，将作为维度数量（不指定则直接聚合values）
+  - `values`：汇聚的什么值
+  - `aggfunc`：用什么聚合函数汇聚
+  - `margins`：是否给出总计
 
 
 #### 时间索引
 
+对于时间序列，index是时间，可以转化使用pd中时间索引类型。
 - 生成时间索引：`pd.date_range('2019-01-01', periods=72, freq='H')`
-- 转为pandas时间格式：`pd.to_datetime(col, format='%d.%m.%Y')`
+- 将已有字段转为pandas时间格式：`pd.to_datetime(col, format='%d.%m.%Y')`
   - 设为index：`df1.set_index(col, inplace=True)`，inplace原地转换DataFrame，而不会新建
 
 
