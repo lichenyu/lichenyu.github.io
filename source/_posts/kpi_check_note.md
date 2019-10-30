@@ -111,7 +111,7 @@ s_t &= \alpha x_{t} + (1-\alpha)s_{t-1}\\
   - Q3 is positioned at $0.675\sigma$ for a normal distribution. The $IQR$ represents $2 \times 0.675\sigma = 1.35\sigma$. The outlier fence is determined by adding $Q3$ to $1.5 \times IQR = 0.675\sigma + 1.5 \times 1.35\sigma = 2.7\sigma$. This level would declare 0.7% of the measurements to be outliers.
 - 基于$\chi^{2}$检验的分布相似度检测，[使用场景shape=(时刻, 多指标)]
   - 检测各指标出现频次的分布，相较于（训练）基线数据，是否产生了变动。如果某时刻的指标分布与基线不符，则该时刻异常。
-  - {% post_link chi2_test 代码示例 %}给出了计算各个指标的卡方值，将卡方值较大的指标判定为异常的指标。此外，也可以累加了各个指标的卡方值，这样不关注哪个指标是异常的，而是关注哪个（按行累加的行）时刻是异常的。
+  - {% post_link chi2_test_diagnose 代码示例 %}给出了计算各个指标的卡方值，将卡方值较大的指标判定为异常的指标。此外，也可以累加了各个指标的卡方值，这样不关注哪个指标是异常的，而是关注哪个（按行累加的行）时刻是异常的。
 - 基于KS检验的频域分布相似度检测，[使用场景shape=(时刻, 单指标)]
   - 加窗FFT变换，获取（一段）序列的频域信息。
   - KS检验，基于CDF检验两序列是否来自同一分布。
