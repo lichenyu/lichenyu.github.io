@@ -144,7 +144,7 @@ $$
 Population Stability Index
 关注特征的取值，会不会随着时间的推移发生较大的变动
 
-对某特征，获取base集与target集（分别对应不同时期的数据）。在base集进行分箱，分出$i$个等距区间，在target集使用同样标准划分。$#_{i, base}$表示该特征在base集中$i$分箱的记录数量，则该特征PSI定义为：
+对某特征，获取base集与target集（分别对应不同时期的数据）。在base集进行分箱，分出$i$个等距区间，在target集使用同样标准划分。$\\#_{i, base}$表示该特征在base集中$i$分箱的记录数量，则该特征PSI定义为：
 $$
 PSI = \sum_i [(\#_{i, target} - \#_{i, base}) \ln (\frac {\#_{i, target}} {\#_{i, base}})]
 $$
