@@ -41,9 +41,14 @@ Q为动作效用函数（action-utility function），用于评价在特定状�
     - 更新$Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma* max_{a_i}Q(S', a_i)]$
     - 更新$S := S'$
 
-其中，使用策$\pi$，获得动作$a=\pi(S)$，最直观易懂的策略是根据Q表格来选择**效用最大**的动作（若两个动作效用值一样，如初始时某位置处效用值都为0，那就选第一个动作）。但这样的选择可能会使Q陷入局部最优。改进的策略为**$\varepsilon$-greedy**方法：每个状态以$\varepsilon$的概率进行随机选取，而剩下的$1-\varepsilon$的概率则选取当前状态下效用值最大的动作。
+其中，使用策$\pi$，获得动作$a=\pi(S)$，最直观易懂的策略是根据Q表格来选择**效用最大**的动作（若两个动作效用值一样，如初始时某位置处效用值都为0，那就选第一个动作）。但这样的选择可能会使Q陷入局部最优。改进的策略为**$\varepsilon$-greedy**方法：每个状态以$\varepsilon$的概率选取当前状态下效用值最大的动作，而剩下的$1-\varepsilon$的概率则进行随机选取。
 
 **Q值的更新**：
+
+$$
+Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma* max_{a_i}Q(S', a_i)]
+$$
+
 其中等号$Q(S,a)$为旧值，$\alpha$为学习速率（learning rate），$\gamma$为折扣因子（discount factor）。根据公式可以看出，
 学习速率$\alpha$越大，保留之前训练的效果就越少。
 折扣因子$\gamma$越大，$max_{a_i}Q(S', a_i)$所起到的作用就越大。
