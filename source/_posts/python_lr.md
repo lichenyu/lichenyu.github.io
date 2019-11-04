@@ -27,6 +27,7 @@ if __name__ == '__main__':
     # multi-dim features
     X = data[0:100, [0, 2]]
     y = data[0:100, 4]
+    # 二值化、one-
     y = label_binarize(y, classes=np.unique(y)).ravel()
 
 
