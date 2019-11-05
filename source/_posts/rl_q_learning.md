@@ -1,4 +1,4 @@
-title: Q-Learning
+title: 强化学习 Q-Learning
 date: 2019/11/04
 categories:
 - Machine Learning
@@ -38,7 +38,7 @@ Q为动作效用函数（action-utility function），用于评价在特定状�
   - while $S$ != 死亡状态
     - 使用策略$\pi$，获得动作$a=\pi(S)$
     - 使用动作$a$进行游戏，获得小鸟的新位置$S'$，与奖励$R(S,a)$
-    - 更新$Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma* max_{a_i}Q(S', a_i)]$
+    - 更新$Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma \max_{a_i}Q(S', a_i)]$
     - 更新$S := S'$
 
 其中，使用策$\pi$，获得动作$a=\pi(S)$，最直观易懂的策略是根据Q表格来选择**效用最大**的动作（若两个动作效用值一样，如初始时某位置处效用值都为0，那就选第一个动作）。但这样的选择可能会使Q陷入局部最优。改进的策略为**$\varepsilon$-greedy**方法：每个状态以$\varepsilon$的概率选取当前状态下效用值最大的动作，而剩下的$1-\varepsilon$的概率则进行随机选取。
@@ -46,17 +46,17 @@ Q为动作效用函数（action-utility function），用于评价在特定状�
 **Q值的更新**：
 
 $$
-Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma* max_{a_i}Q(S', a_i)]
+Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma \max_{a_i}Q(S', a_i)]
 $$
 
 其中等号$Q(S,a)$为旧值，$\alpha$为学习速率（learning rate），$\gamma$为折扣因子（discount factor）。根据公式可以看出，
 学习速率$\alpha$越大，保留之前训练的效果就越少。
-折扣因子$\gamma$越大，$max_{a_i}Q(S', a_i)$所起到的作用就越大。
+折扣因子$\gamma$越大，$\max_{a_i}Q(S', a_i)$所起到的作用就越大。
 
-但$max_{a_i}Q(S', a_i)$指什么呢？
-小鸟在对状态进行更新时，会关心到眼前利益$R(S, a)$，和记忆中的利益$max_{a_i}Q(S', a_i)$。
-$max_{a_i}Q(S', a_i)$是记忆中的利益，即小鸟记忆中新位置$S'$能给出的最大效用值。
+但$\max_{a_i}Q(S', a_i)$指什么呢？
+小鸟在对状态进行更新时，会关心到眼前利益$R(S, a)$，和记忆中的利益$\max_{a_i}Q(S', a_i)$。
+$\max_{a_i}Q(S', a_i)$是记忆中的利益，即小鸟记忆中新位置$S'$能给出的最大效用值。
 如果小鸟在过去的游戏中于位置$S'$的某个动作上吃过甜头（例如选择了某个动作之后获得了50的奖赏），这个公式就可以让它提早地得知这个消息，以便使下回再通过位置$S$时选择正确的动作继续进入这个后续吃甜头的位置$S'$。
-可以看出，$\gamma$越大，小鸟就会越重视“后续利益的以往经验”$max_{a_i}Q(S', a_i)$，$\gamma$越小，小鸟只重视“眼前利益”$R(S, a)$。
+可以看出，$\gamma$越大，小鸟就会越重视“后续利益的以往经验”$\max_{a_i}Q(S', a_i)$，$\gamma$越小，小鸟只重视“眼前利益”$R(S, a)$。
 
 $R(S, a)$由训练时交互获取，$\alpha$、$\gamma$为超参，$Q(S,a)$为学到的模型参数。
