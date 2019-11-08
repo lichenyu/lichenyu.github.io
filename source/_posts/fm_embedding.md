@@ -36,6 +36,9 @@ $$
 - 这样，在求某个$w_{ij}$时，可以分解成两个向量内积$(\mathbf{v}_i \cdot \mathbf{v}_j)$。其中，$\mathbf{v}_i$作为特征$i$的隐向量，就是$\mathbf{V}$的第$i$列，是对特征$i$的描述（可理解成类似专用于求二次项时$x_i$的权重），长度为$k$。
 - 换句话说，一个（one-hot后布尔型）特征$i$，对应一个隐向量$\mathbf{v}_i$。
 
+怎么解决上述问题的？
+1）只学隐向量，参数少；2）对于几乎不出现或者很少出现的$i,j$组合，可以通过包含$i$和包含$j$的其他组合的数据，学到隐向量$\mathbf{v}_i$、$\mathbf{v}_j$就够了，反正计算时直接使用隐向量内积
+
 **FM模型**：
 $$
 \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d ( \mathbf{v}_i \cdot \mathbf{v}_j ) x_i x_j
@@ -90,3 +93,4 @@ one-hot稀疏，但可能很长。
 值得注意的是，即使各个field的维度（one-hot转化出的特征的数量）是不一样的，但是它们embedding后长度均为$k$。
 - 这样做是因为，本层的参数$W$（$shape=(k,\text{n_one-hot_features}))$）相当于上文的$\mathbf{V_{this\_field}}$
 - 区分各个field，是为了利用one-hot的特性，由仅有1个“1”从$\mathbf{V_{this\_field}}$只取出**一个**隐向量（“1”所在的位置，指定选哪列）（否则所有$d$个特征连接同一个FC层，会有多个“1”，会从$\mathbf{V} = [\mathbf{V_{field1}}, \mathbf{V_{field2}}, \mathbf{V_{field3}}, ...]$中取出多个隐向量拼接在一起）
+- 此外，也是避免全局全连接，造成参数数量太多的问题。
