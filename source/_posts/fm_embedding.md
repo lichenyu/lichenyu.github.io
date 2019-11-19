@@ -82,6 +82,23 @@ one-hot稀疏，但可能很长。
 即，一组同一个field的特征，对于该field的参数矩阵$\mathbf{V_{this\_field}}$只取一列。$\mathbf{V} = [\mathbf{V_{field1}}, \mathbf{V_{field2}}, \mathbf{V_{field3}}, ...]$
 我们看到，降维是以field为粒度的，所以这也是后文NN结构中，对同一个field专用一个FC连接的原因。
 
+**FM中二次项求算方法**：
+
+对$d^2$种组合，求算$k$长度的内积，复杂度为$O(kd^2)$
+下面方法，可以将复杂度降低到$O(kd)$
+
+$$
+\begin{align*}
+&\sum_{i=1}^d \sum_{j=i+1}^d \langle \mathbf{v}_i, \mathbf{v}_j \rangle x_i x_j \\
+=& \frac{1}{2} \sum_{i=1}^d\sum_{j=1}^d \langle \mathbf{v}_i, \mathbf{v}_j \rangle x_i x_j – \frac{1}{2}\sum_{i=1}^d \langle \mathbf{v}_i, \mathbf{v}_j \rangle x_i x_i \\
+=& \frac{1}{2} \sum_{i=1}^d\sum_{j=1}^d\sum_{f=1}^k v_{i,f}v_{j,f} x_i x_j – \frac{1}{2}\sum_{i=1}^d \sum_{f=1}^k v_{i,f}v_{i,f}x_i x_i \\
+=& \frac{1}{2} \sum_{f=1}^k \left( \left(\sum_{i=1}^dv_{i,f}x_i \right) \left(\sum_{j=1}^dv_{j,f}x_j \right) – \sum_{i=1}^d v_{i,f}^2x_i^2\right) \\
+=&\frac{1}{2} \sum_{f=1}^k \left( \left(\sum_{i=1}^dv_{i,f}x_i \right) ^2 – \sum_{i=1}^d v_{i,f}^2x_i^2\right)
+\end{align*}
+$$
+
+定义前向网络计算方式时，使用这种方法
+
 
 ## 利用NN的FM embedding
 
