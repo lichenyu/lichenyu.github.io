@@ -51,7 +51,7 @@ $$
 
 **FFM模型**：
 $$
-y(\mathbf{x}) = w_0 + \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d (\mathbf{v}_{i, f_j} \cdot \mathbf{v}_{j, f_i}) x_i x_j
+\hat y(\mathbf{x}) = w_0 + \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d (\mathbf{v}_{i, f_j} \cdot \mathbf{v}_{j, f_i}) x_i x_j
 $$
 
 FM模型不区分$x_i,x_j$组合和$x_k,x_j$组合中$x_j$的区别，集，使用同一个隐向量$\mathbf{v}_j$来对应特征$x_j$，与不同的$x_i$、$x_k$相乘。
