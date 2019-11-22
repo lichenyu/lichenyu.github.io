@@ -92,6 +92,8 @@ print(VIF)
 对于分类: `chi2`（卡方检验）、`f_classif`（F检验）、`mutual_info_classif`（互信息）
 对于回归: `f_regression`（F检验）、`mutual_info_regression`（互信息）
 
+相较于相关系数，互信息可以识别非单调的关系（例如先递增再递减），但也要考虑后续使用的模型是否支持这种特征（例如线性模型可能就不适合，树形模型就还好）。
+
 例如，**chi2检验**：
 chi2检验用于**独立性**检验，即关注两变量的**相关**程度（注意区别于，同分布检验-ks检验）
 {% post_link chi2_test chi2检验具体介绍 %}
