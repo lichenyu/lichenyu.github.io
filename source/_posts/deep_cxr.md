@@ -12,7 +12,7 @@ tags:
 ### 0. Naive Method
 
 - categorical fields -> one-hot encoding
-- 上面直接堆叠deep
+- 上面直接堆叠deep，deep一般是MLP，multi-layer perceptron
 
 ### 1. 对高维稀疏特征进行embedding
 
@@ -56,10 +56,11 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
 
 #### [PNN](%28PNN%29 Product-based Neural Networks for User Response Prediction.pdf)
   - 2016
-  - 在embedding和deep之间加入了product layer进行不同field之间特征交叉（同时concat了一阶特征）
+  - 在embedding和deep之间加入了product layer进行不同field之间特征交叉
   - 使用inner product、outer product
     - inner product相当于引入了FM的内积部分
     - outer product会得到一个矩阵，而非像inner product得到一个数。向后进入deep在一个unit中加权求和时，与一个数操作类似，只不过是对矩阵各个元素加权求和
+    - product得到的结果（一系列数值），同时concat一阶特征，作为deep输入
   - 不是被动通过deep学习特征之间关系，而是强制通过product层引入field之间特征交叉
 
 #### [NFM](Neural Factorization Machines for Sparse Predictive Analytics.pdf)
@@ -69,6 +70,7 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
     - 1）embedding层，隐向量$$\times$$feat_val（因为不只one-hot输入，还有real-value输入），获取embeddings$$ = [\mathbf{e_1}, \mathbf{e_2}, \mathbf{e_3}, ...]$$；
     - 2）$$\text{Bi-Interaction Sum Pooling} = \sum_{i=1}\sum_{j=i+1}\mathbf{e_i} \text{  element-wise product  } \mathbf{e_j} $$，即“各种$$\mathbf{e_i}, \mathbf{e_j}$$组合的元素乘”的向量和，此结果shape与$$\mathbf{e_i}$$的shape相同，都是embedding_size
     - 这个结果encode了embedding space的2-order feature interactions，作为“将feature embeddings进行concat”的替代
+    - 3）上面再堆叠deep
   - 相较于FNN，NFM的网络结构中多了一个Bi-Interaction - sum pooling，形式上更像FM（但element-wise product后未将向量各元素累加，仍保留向量形式，所以还不是内积）
   - 相较于PNN，PNN也是不想直接将embeddings concat后输入到deep中，觉得会欠缺feature interactions，对此PNN的做法是各两个embeddings内积得到一个数之后，再将各个数concat在一起，再concat上一阶特征，输入到DNN中；而NFM则不是对各两个embeddings做内积，而是做元素乘，然后sum pooling
   - 相较于Wide & Deep（或DeepFM）,NFM不通过joint一个Wide来引入cross features，而是在embedding与deep之间加一个Bi-Interaction pooling来描述特征交叉（in the low level）
@@ -77,10 +79,10 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
 #### [AFM](Attentional Factorization Machines Learning the Weight of Feature Interactions via Attention Networks.pdf)
   - 2017
   - AFM是在NFM基础上改的，作者中包含NFM的作者
-  - 加入了attention机制，即，Pire-wise Interaction之后，根据$ij$组合不同，后续操作时分配不同的权重
+  - 加入了attention机制，即，Pire-wise Interaction之后，根据$$ij$$组合不同，后续操作时分配不同的权重
   - 即在Interaction Layer中，sum pooling时，为每个“$$\mathbf{e_i}, \mathbf{e_j}$$组合的元素乘”分配一个权重，再做向量和。（此结果shape与$$\mathbf{e_i}$$的shape相同）
   - 这个attention weight是不好学习的：$$n^2$$数量级、有可能组合未出现过。对此参数的学习，单独使用一个所谓的attention network
-    - attention network输入为各种“$$\mathbf{e_i}, \mathbf{e_j}$$组合的元素乘，输出维度为各组合数量的softmax。这样对于某个$$i,j$$，我们将该网络的结果$ij$项作为attention weight
+    - attention network输入为各种“$$\mathbf{e_i}, \mathbf{e_j}$$组合的元素乘，输出维度为各组合数量的softmax。这样对于某个$$i,j$$，我们将该网络的结果$$ij$$项作为attention weight
   - Interaction Layer之后，原文的AFM没有再堆叠deep了
 
 #### 2.3. 为deep joint一个wide结构 [同时考虑低抽象层次特征]
@@ -107,31 +109,45 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
   - Google 2017
   - Wide部分 -> Cross部分：N层可显式的表示到N阶的特征交叉
     - 每层为一个变换节点，为$$x^{[l+1]} = w^{[l]}({x^{[0]}}^T x^{[l]}) + b^{[l]} + x^{[l]}$$
-    - $$x^{[l]}$$.shape = $$(1, d)$$
+    - $$x^{[l]}\text{.shape} = (1, d)$$
     - $${x^{[0]}}^T x^{[l]}$$是个矩阵，使得交叉特征阶数+1，$$+ x^{[l]}$$则保存了之前所有低阶交叉特征
     - 最后层的输出，相当于各阶交叉特征加权求和
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### 3. 加入attention机制
 
-
-
-#### [DIN]
+#### [DIN](Deep Interest Network for Click-Through Rate Prediction.pdf)
   - Ali 2018
+  - 对于“用户的历史商品列表”这个multi-hot特征，在embedding后得到不定个数的embeddings向量。通常做法是将这项向量sum pooling或avg pooling，然后concat到其他特征embeddings，输入给deep。进一步，在做sum pooling时引入weights，表现不同的历史兴趣item，重要性不同
+    - 在遇见sum pooling、avg pooling这种东西时，都可以考虑进一步引入weights
+    - 如果只是加一个general weights，其描述的“不同item的重要程度”是固定的，不会区分场景。再进一步，对于不同candidate ad，可以让weights不同，即，对于不同的ad，商品embeddings的weights是不同的，然后再weighted sum pooling，获取基于历史信息的、用户对该商品的兴趣表达，即引入了attention机制
+    - 理解一下，attention不仅仅是加weights，还需要对于不同的query，使用的是不同的weights（一组仅对应本query的weights）
+    - recall一下AFM，其实是在其设计的NFM的interaction layer中出现了sum pooling，就向其中进一步引入了weights，从而声称使用了attention机制（但其实并没有query的概念，也就没有为每个query生成不同的weights组的概念，仅是一个general的weightes进行sum pooling）
+  - attention weights的计算：local activation unit
+    - item embedding（待weighted项）与ad embedding（query）进行element-wise product，然后concat两个embeddings，输入一层deep（输出未进行softmax，想描述weights的绝对差异）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### [DIEN]
   - Ali 2018
