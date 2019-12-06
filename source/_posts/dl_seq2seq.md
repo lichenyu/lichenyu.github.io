@@ -72,10 +72,10 @@ decoder由$a^{\langle T_{x} \rangle}$初始化，每次用$a^{\langle t-1 \rangl
 attention模型试图在decoder生成$\hat{y}^{\langle t \rangle}$时，引入encoder不同$t'$的$a^{\langle t' \rangle}$的考量
 
 具体来讲，使用$s^{\langle t \rangle}$表示decoder的输出，以区分encoder的activation
-$s^{\langle t \rangle}$的计算，除了输入$s^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$，还增加了一个context $c^{\langle t \rangle} = \sum_{t'} \alpha^{\langle t, t' \rangle} a^{\langle t' \rangle}$
+$s^{\langle t \rangle}$的计算，除了输入$s^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$，还增加了一个context $c^{\langle t \rangle} = \sum_{t'} \alpha^{\langle t, t' \rangle} a^{\langle t' \rangle}$，即对key各项的加权求和，并且这组权重对于不同的query（$s^{\langle t - 1 \rangle}$）是不同的
 - 其中$t'$为encoder中$a$对应各时刻
 - $\alpha^{\langle t, t' \rangle}$即表示计算$t$时刻的$s^{\langle t \rangle}$时，应付出多少attention在$a^{\langle t' \rangle}$上
-- $\alpha^{\langle t, t' \rangle}$是归一化的，由$s^{\langle t-1 \rangle}$和$a^{\langle t' \rangle}$通过一个小NN-softmax算出
+- $\alpha^{\langle t, t' \rangle}$是归一化的，由$s^{\langle t-1 \rangle}$（query）和$a^{\langle t' \rangle}$（待weighted项）通过一个小NN-softmax算出（直接end-to-end计算）
 
 
 
