@@ -7,8 +7,6 @@ tags:
 ---
 
 
-## Deep Models for CTR, CVR Prediction
-
 ### 0. Naive Method
 
 - categorical fields -> one-hot encoding
@@ -120,10 +118,10 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
   - 对于“用户的历史商品列表”这个multi-hot特征，在embedding后得到不定个数的embeddings向量。通常做法是将这项向量sum pooling或avg pooling，然后concat到其他特征embeddings，输入给deep。进一步，在做sum pooling时引入weights，表现不同的历史兴趣item，重要性不同
     - 在遇见sum pooling、avg pooling这种东西时，都可以考虑进一步引入weights
     - 如果只是加一个general weights，其描述的“不同item的重要程度”是固定的，不会区分场景。再进一步，对于不同candidate ad，可以让weights不同，即，对于不同的ad，商品embeddings的weights是不同的，然后再weighted sum pooling，获取基于历史信息的、用户对该商品的兴趣表达，即引入了attention机制
-    - 理解一下，attention不仅仅是加weights，还需要对于不同的query，使用的是不同的weights（一组仅对应本query的weights）
+    - 理解一下，attention不仅仅是加weights，还需要对于不同的query，使用的是一组不同的weights（一个query对应一组weights）
     - recall一下AFM，其实是在其设计的NFM的interaction layer中出现了sum pooling，就向其中进一步引入了weights，从而声称使用了attention机制（但其实并没有query的概念，也就没有为每个query生成不同的weights组的概念，仅是一个general的weightes进行sum pooling）
   - attention weights的计算：local activation unit
-    - item embedding（待weighted项）与ad embedding（query）进行element-wise product，然后concat两个embeddings，输入一层deep（输出未进行softmax，想描述weights的绝对差异）
+    - 某item embedding（待weighted项）与ad embedding（query）进行element-wise product，然后concat两个embeddings，输入一层deep（输出未进行softmax，想描述weights的绝对差异）（u_units对齐embedding_size，保证weight能element-wise product上去）（end-to-end training）
 
 
 
@@ -151,6 +149,24 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
 
 #### [DIEN]
   - Ali 2018
+  - - 对于“行为列表”这类特征，不再使用multi-hot，而是考虑时序，使用seq模型
+  - 对用户interest的representation，往往直接使用用户行为（embedding & pooling）；DIEN尝试通过显示的用户行为，提取隐含的用户当前兴趣表示、及兴趣发展趋势（设计了一个提取层，使用xxx）
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### [DSIN]
   - Ali 2019
