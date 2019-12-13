@@ -182,3 +182,60 @@ CNN系CCPM、FGCNN
 
 
 
+
+---
+
+### OTHERS
+
+#### 1. 解决“训练数据空间”与“预测数据空间”不一致的问题
+
+#### [ESMM](Entire Space Multi-Task Model An Effective Approach for Estimating Post-Click Conversion Rate.pdf)
+  - Ali 2018
+  - pCVR的问题：**Sample Selection Bias**，即pCVR训练基于点击数据，推理却基于曝光数据
+    - 现在想对pCVR使用全特征域（曝光数据）学习
+  - 分析：$$\text{pCTCVR} = \text{pCTR} \times \text{pCVR}$$
+    - 其中，$$\text{pCTCVR}$$与$$\text{pCTR}$$是可以通过全特征域学习的
+    - 故，可以引入**多任务学习**MTL，使用全域特征显示学习$$\text{pCTCVR}$$与$$\text{pCTR}$$，同时隐式学习$$\text{pCVR}$$
+  - 模型关键：
+    - 一个$$\text{pCVR}$$网络、一个$$\text{pCTR}$$网络，结果相乘得到$$\text{pCTCVR}$$
+    - loss精巧设计，显示的、joint训练$$\text{pCTR}$$与$$\text{pCTCVR}$$，这两部分都可以通过全域特征进行训练，一定程度的消除了Sample Selection Bias
+$$
+\begin{aligned}
+loss &= L_{pCTR} + L_{pCTCVR} \\
+&= L(\theta_{pCTR}, \theta_{pCVR}) \\
+&= \sum_{i=1}^{N}l(y_i,f(\mathbf{x}_i;\theta_{pCTR})) + \sum_{i=1}^{N}l(y_i\&z_i),f(\mathbf{x}_i;\theta_{pCTR})*f(\mathbf{x}_i;\theta_{pCVR}))
+\end{aligned}
+$$
+    - loss由两部分组成，即显示学习、joint训练的pCTR部分和pCTCVR部分。而pCVR只能隐式学习，因为1）loss中各任务应该是基于全域特征学习的；2）其负样本标注是有些问题的。在loss中，要保证label都是准的。所以，pCVR不适合基于全域特征，在loss中直接进行监督
+      - pCVR使用全域特征，隐含了一个负样本标注的问题：“**CVR预估到底要预估什么**”，论文虽未明确提及，但理解这个问题才能真正理解CVR预估困境的本质。想象一个场景，一个item，由于某些原因，例如在feeds中的展示头图很丑，它被某个user点击的概率很低，但这个item内容本身完美符合这个user的偏好，若user点击进去，那么此item被user转化的概率极高。CVR预估模型，预估的正是这个转化概率，**它与CTR没有绝对的关系，很多人有一个先入为主的认知，即若user对某item的点击概率很低，则user对这个item的转化概率也肯定低，这是不成立的。更准确的说，CVR预估模型的本质，不是预测“item被点击，然后被转化”的概率（CTCVR），而是“假设item被点击，那么它被转化”的概率（CVR）。**这就是不能直接使用全部样本训练CVR模型的原因，因为咱们压根不知道这个信息：那些unclicked的item，假设他们被user点击了，它们是否会被转化。**如果直接使用0作为它们的label，会很大程度上误导CVR模型的学习。**
+    - 注意，loss虽然是对pCTR部分和pCTCVR部分的描述，但其参数还是来自于pCTR网络和pCVR网络的，即$$\theta_{pCTR}, \theta_{pCVR}$$
+    - $$y$$是点击label，$$z$$是转化label，$$l$$是单独一个网络的loss函数（交叉熵），$$f$$是模型函数
+    - 此外，两个网络共享embedding，joint学习，这也解决了转化正样本稀疏的问题，**Data Sparsity**
+      - 当然，pCVR网络的训练、推理，都使用全域特征了哦。即，隐式学得了一个输入全域特征，预测$$pCVR$$的子网络
+  - 为什么使用乘法形式，而不使用除法形式，即$$\text{pCVR} = \frac{\text{pCTCVR}}{\text{pCTR}}$$？
+    - 因为$$pCTR$$数值往往较小，容易造成数值溢出
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
