@@ -123,60 +123,34 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
   - attention weights的计算：local activation unit
     - 某item embedding（待weighted项）与ad embedding（query）进行element-wise product，然后concat两个embeddings，输入一层deep（输出未进行softmax，想描述weights的绝对差异）（u_units对齐embedding_size，保证weight能element-wise product上去）（end-to-end training）
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### [DIEN]
+#### [DIEN](Deep Interest Evolution Network for Click-Through Rate Prediction.pdf)
   - Ali 2018
-  - - 对于“行为列表”这类特征，不再使用multi-hot，而是考虑时序，使用seq模型
-  - 对用户interest的representation，往往直接使用用户行为（embedding & pooling）；DIEN尝试通过显示的用户行为，提取隐含的用户当前兴趣表示、及兴趣发展趋势（设计了一个提取层，使用xxx）
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  - 本深度模型关注点，不同域之间的特征交互描述 -> 用户兴趣表示
+  - 对于“行为列表”这类特征，考虑时序，使用seq模型
+    - 不同于DIN中，用户行为列表是没有顺序的，故使用multi-hot
+    - 对用户interest的representation，往往直接使用用户行为（embedding & pooling）；DIEN尝试通过显示的用户行为，提取隐含的用户当前兴趣表示、及兴趣发展趋势
+  - 时序兴趣特征提取：
+    - GRU，使用下一动作作为监督信号
+    - 描述特征之间的影响
+  - 兴趣发展进程：
+    - Attention Update GRU
+    - 描述与target AD相关的interest
 
 #### [DSIN]
   - Ali 2019
+  - 以session为粒度
 
 ### TODO
 
 xDeepFM
+FiBiNet
+
+Behavior Sequence Transformer
+Deep Spatio-Temporal Neural Networks for Click-Through Rate Prediction
+ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation
 
 AutoInt
-FiBiNet
+
 
 CNN系CCPM、FGCNN
 
@@ -185,9 +159,15 @@ CNN系CCPM、FGCNN
 
 ---
 
-### OTHERS
+### 4. 多任务学习
 
-#### 1. 解决“训练数据空间”与“预测数据空间”不一致的问题
+通常来说，如果你发现你需要的不止一个损失函数，你就是在做多任务学习。
+
+- MTL可以有效增加用于模型训练的样本量
+- 学到更好的特征表示、关系
+- 约束参数适应于各个子任务，降低过拟合风险
+
+#### 4.1. 解决“训练数据空间”与“预测数据空间”不一致的问题
 
 #### [ESMM](Entire Space Multi-Task Model An Effective Approach for Estimating Post-Click Conversion Rate.pdf)
   - Ali 2018
@@ -197,7 +177,7 @@ CNN系CCPM、FGCNN
     - 其中，$$\text{pCTCVR}$$与$$\text{pCTR}$$是可以通过全特征域学习的
     - 故，可以引入**多任务学习**MTL，使用全域特征显示学习$$\text{pCTCVR}$$与$$\text{pCTR}$$，同时隐式学习$$\text{pCVR}$$
   - 模型关键：
-    - 一个$$\text{pCVR}$$网络、一个$$\text{pCTR}$$网络，结果相乘得到$$\text{pCTCVR}$$
+    - 一个$$\text{pCVR}$$网络、一个$$\text{pCTR}$$网络（网络结构为简单的embedding+MLP），结果相乘得到$$\text{pCTCVR}$$
     - loss精巧设计，显示的、joint训练$$\text{pCTR}$$与$$\text{pCTCVR}$$，这两部分都可以通过全域特征进行训练，一定程度的消除了Sample Selection Bias
 $$
 \begin{aligned}
@@ -217,9 +197,11 @@ $$
 
 
 
+#### ESM2
 
+#### DUPN
 
-
+#### Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts
 
 
 
