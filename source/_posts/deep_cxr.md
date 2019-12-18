@@ -111,6 +111,22 @@ DNN的优势在于能够自动学得高抽象层次（high-level）的特征，�
     - $${x^{[0]}}^T x^{[l]}$$是个矩阵，使得交叉特征阶数+1，$$+ x^{[l]}$$则保存了之前所有低阶交叉特征
     - 最后层的输出，相当于各阶交叉特征加权求和
 
+#### [xDeepFM](xDeepFM Combining Explicit and Implicit Feature Interactions for Recommender Systems.pdf)
+  - Microsoft 2018
+  - 对比其他
+    - Wide & Deep的deep结构中，将隐向量的各个bit进行交互。这是有一定问题的：这种交互是bit-wise描述的，它意识不到field隐向量的概念。并且在multi-hot的field中，同一隐向量内各个bit也会各自影响。这些与FM的初衷是不一致的。
+    - DeepFM的wide结构中，倒是引入了vector-wise的交互描述。但它只有2阶。
+    - DCN在wide结构中，同样引入了vector-wise的交互描述，并且阶数可由网络层数指定。但其只能学习某特定形式的高阶交互，并且也是bit-wise描述的。
+  - xDeepFM的wide结构中，cross方式（Compressed Interaction Network，CIN）：
+    - 令$$\mathbf{X}^k \in \mathbb{R}^{H_k \times D}$$表示第$$k$$层的输出，其中$$H_k$$表示第$$k$$层的vector个数（n_units），vecor维度始终为$$D$$，保持和输入层一致（vector-wise操作）。具体地，第$$H_k$$层每个vector的计算方式为：
+    - $$\mathbf{X}^k_{h,*} =  \sum^{H_{k-1}}_{i=1} \sum^{m}_{j=1} \mathbf{W}^{k,h}_{ij}(\mathbf{X}^{k-1}_{i,*} \circ \mathbf{X}^{0}_{j,*}) \in \mathbb{R}^{1 \times D}, ~~~~~~ where~~ 1 \le h \le H_k$$
+    - 其中$$\mathbf{W}^{k,h}  \in  \mathbb{R}^{H_{k-1} \ times m}$$表示第$$k$$层的第$$h$$个vector（或者理解成DNN一层中的一个unit）的权重矩阵，$$\circ$$表示元素乘
+      - 其实就是：取前一层$$\mathbf{X}^{k-1} \in \mathbb{R}^{H_{k-1} \times D}$$中的$$H_{k-1}$$个vector，与输入层$$\mathbf{X}^{0} \in \mathbb{R}^{m \times D}$$中的$$m$$个vector，进行两两元素乘运算，得到$$H_{k-1} \times m$$个vector。然后$$H_k$$个unit有$$H_k$$个权重矩阵$$\mathbf{W}$$，每个unit中的$$H_{k-1} \times m$$个vector，乘以相应的权重矩阵后相加（加权求和）。这样，每个unit输出1个维度为$$D$$的vector，本层输出为$$\mathbf{X}^{k} \in \mathbb{R}^{H_k \times D}$$
+    - 这样，在第$$l$$层，CIN只包含$$l+1$$阶的组合特征。最终，需要CIN将每层的中间结果都输出出来
+      - sum pooling：$$p_i^k = \sum_{i=1}^D \mathbf{X}_{i, j}^k$$，即将第$$k$$层中，$$H_k$$个units中，各vector的bit进行累加。注意，这隐含着内积的思想。最终，对于该层，会得到$$H_k$$个数，作为一个vector$$\mathbf{p}^k=[p_1^k, p_2^k, ..., p_{H_k}^k]$$
+      - 最终，将各层$$\mathbf{p}^k$$concat在一起，作为CIN输出，（并且concat上raw，作为wide输出）
+  - concat上deep（MLP）的结果，作为最终预测层输入
+
 ### 3. 加入attention机制
 
 #### [DIN](Deep Interest Network for Click-Through Rate Prediction.pdf)
@@ -166,6 +182,7 @@ CNN系CCPM、FGCNN
 - MTL可以有效增加用于模型训练的样本量
 - 学到更好的特征表示、关系
 - 约束参数适应于各个子任务，降低过拟合风险
+- 其实感觉实际上更多是：1）为了获取更通用的特征表达，对各个任务都有利；2）单独某个任务比较困难，可能是样本不够，需要其他的任务带一带。
 
 #### 4.1. 解决“训练数据空间”与“预测数据空间”不一致的问题
 
@@ -202,9 +219,6 @@ $$
 #### DUPN
 
 #### Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts
-
-
-
 
 
 
