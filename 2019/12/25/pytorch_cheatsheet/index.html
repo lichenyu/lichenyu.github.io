@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>PyTorch Cheatsheet | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Tensor1234567891011121314151617181920212223import torchx = torch.Tensor(5, 3)  # 构造一个未初始化的5*3的矩阵x = torch.rand(5, 3)  # 构造一个随机初始化的矩阵x # 此处在notebook中输出x的值来查看具体的x内容x.size()#NOTE: torch.Size 事实上是一个tuple,">
+<meta name="keywords" content="PyTorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch Cheatsheet">
+<meta property="og:url" content="http://yoursite.com/2019/12/25/pytorch_cheatsheet/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="Tensor1234567891011121314151617181920212223import torchx = torch.Tensor(5, 3)  # 构造一个未初始化的5*3的矩阵x = torch.rand(5, 3)  # 构造一个随机初始化的矩阵x # 此处在notebook中输出x的值来查看具体的x内容x.size()#NOTE: torch.Size 事实上是一个tuple,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-12-30T01:45:07.851Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyTorch Cheatsheet">
+<meta name="twitter:description" content="Tensor1234567891011121314151617181920212223import torchx = torch.Tensor(5, 3)  # 构造一个未初始化的5*3的矩阵x = torch.rand(5, 3)  # 构造一个随机初始化的矩阵x # 此处在notebook中输出x的值来查看具体的x内容x.size()#NOTE: torch.Size 事实上是一个tuple,">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-pytorch_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/25/pytorch_cheatsheet/" class="article-date">
+  <time datetime="2019-12-24T16:00:00.000Z" itemprop="datePublished">2019-12-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PyTorch Cheatsheet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Tensor"><a href="#Tensor" class="headerlink" title="Tensor"></a>Tensor</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">x = torch.Tensor(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 构造一个未初始化的5*3的矩阵</span></span><br><span class="line">x = torch.rand(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 构造一个随机初始化的矩阵</span></span><br><span class="line">x <span class="comment"># 此处在notebook中输出x的值来查看具体的x内容</span></span><br><span class="line">x.size()</span><br><span class="line"></span><br><span class="line"><span class="comment">#<span class="doctag">NOTE:</span> torch.Size 事实上是一个tuple, 所以其支持相关的操作*</span></span><br><span class="line">y = torch.rand(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#此处 将两个同形矩阵相加有两种语法结构</span></span><br><span class="line">x + y <span class="comment"># 语法一</span></span><br><span class="line">torch.add(x, y) <span class="comment"># 语法二</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外输出tensor也有两种写法</span></span><br><span class="line">result = torch.Tensor(<span class="number">5</span>, <span class="number">3</span>) <span class="comment"># 语法一</span></span><br><span class="line">torch.add(x, y, out=result) <span class="comment"># 语法二</span></span><br><span class="line">y.add_(x) <span class="comment"># 将y与x相加，inplace</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 特别注明：任何可以改变tensor内容的操作都会在方法名后加一个下划线'_'</span></span><br><span class="line"><span class="comment"># 例如：x.copy_(y), x.t_(), 这俩都会改变x的值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#另外python中的切片操作也是资次的。</span></span><br><span class="line">x[:,<span class="number">1</span>] <span class="comment">#这一操作会输出x矩阵的第二列的所有值</span></span><br></pre></td></tr></table></figure>
+<h4 id="Tensor与numpy"><a href="#Tensor与numpy" class="headerlink" title="Tensor与numpy"></a>Tensor与numpy</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此处演示tensor和numpy数据结构的相互转换</span></span><br><span class="line">a = torch.ones(<span class="number">5</span>)</span><br><span class="line">b = a.numpy()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处演示当修改numpy数组之后,与之相关联的tensor也会相应的被修改</span></span><br><span class="line">a.add_(<span class="number">1</span>)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将numpy的Array转换为torch的Tensor</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.ones(<span class="number">5</span>)</span><br><span class="line">b = torch.from_numpy(a)</span><br><span class="line">np.add(a, <span class="number">1</span>, out=a)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外除了CharTensor之外，所有的tensor都可以在CPU运算和GPU预算之间相互转换</span></span><br><span class="line"><span class="comment"># 使用CUDA函数来将Tensor移动到GPU上</span></span><br><span class="line"><span class="comment"># 当CUDA可用时会进行GPU的运算</span></span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    x = x.cuda()</span><br><span class="line">    y = y.cuda()</span><br><span class="line">    x + y</span><br></pre></td></tr></table></figure>
+<h4 id="Autograd"><a href="#Autograd" class="headerlink" title="Autograd"></a>Autograd</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">x = Variable(torch.ones(<span class="number">2</span>, <span class="number">2</span>), requires_grad = <span class="keyword">True</span>)</span><br><span class="line">y = x + <span class="number">2</span></span><br><span class="line">y.creator</span><br><span class="line"></span><br><span class="line"><span class="comment"># y 是作为一个操作的结果创建的因此y有一个creator</span></span><br><span class="line">z = y * y * <span class="number">3</span></span><br><span class="line">out = z.mean()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在我们来使用反向传播</span></span><br><span class="line">out.backward()</span><br><span class="line"></span><br><span class="line"><span class="comment"># out.backward()和操作out.backward(torch.Tensor([1.0]))是等价的</span></span><br><span class="line"><span class="comment"># 在此处输出 d(out)/dx</span></span><br><span class="line">x.grad</span><br></pre></td></tr></table></figure>
+<h4 id="Neural-Network"><a href="#Neural-Network" class="headerlink" title="Neural Network"></a>Neural Network</h4><ul>
+<li>定义一个有着可学习的参数（或者权重）的神经网络</li>
+<li>对着一个输入的数据集进行迭代:<ul>
+<li>用神经网络对输入进行处理</li>
+<li>计算代价值 (对输出值的修正到底有多少)</li>
+<li>将梯度传播回神经网络的参数中</li>
+<li>更新网络中的权重<ul>
+<li>通常使用简单的更新规则: weight = weight + learning_rate * gradient</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>定义网络<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRModel</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        <span class="comment"># linear内置了参数初始化方法，此处无需显式指定</span></span><br><span class="line">        self.linear = torch.nn.Linear(<span class="number">2</span>, <span class="number">1</span>) <span class="comment"># 2 in, 1 out</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        y_pred = F.sigmoid(self.linear(x))</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br></pre></td></tr></table></figure></p>
+<p>仅仅需要定义一个forward函数就可以了，backward会自动地生成。<br>你可以在forward函数中使用所有的Tensor中的操作。<br>模型中可学习的参数会由net.parameters()返回。</p>
+<p>定义loss与optimizer<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">criterion = torch.nn.BCELoss()</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure></p>
+<p>训练迭代<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">x_data = Variable(torch.Tensor(X))</span><br><span class="line">y_data = Variable(torch.Tensor(T))</span><br><span class="line"></span><br><span class="line">model = LRModel()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    <span class="comment"># Forward pass: Compute predicted y by passing x to the model</span></span><br><span class="line">    y_pred = model(x_data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = criterion(y_pred, y_data)</span><br><span class="line">    print(epoch, loss.data[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Zero gradients, perform a backward pass, and update the weights.</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/12/25/pytorch_cheatsheet/" data-id="ckmleadm60053skw2guiba6zd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyTorch/">PyTorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/04/09/shell_bg/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Shell后台运行
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/12/05/deep_cxr/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Deep CXR</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

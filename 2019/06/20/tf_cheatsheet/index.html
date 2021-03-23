@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Tensorflow Cheatsheet | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="定义OP、执行OP123456789101112131415161718192021222324# ---------- 定义OP----------m1 = tf.constant([[3, 3]])  # 常量OPm2 = tf.constant([[2], [3]])product = tf.matmul(m1, m2)  # 计算OPstate = tf.Variable(0, name=">
+<meta name="keywords" content="Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow Cheatsheet">
+<meta property="og:url" content="http://yoursite.com/2019/06/20/tf_cheatsheet/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="定义OP、执行OP123456789101112131415161718192021222324# ---------- 定义OP----------m1 = tf.constant([[3, 3]])  # 常量OPm2 = tf.constant([[2], [3]])product = tf.matmul(m1, m2)  # 计算OPstate = tf.Variable(0, name=">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow Cheatsheet">
+<meta name="twitter:description" content="定义OP、执行OP123456789101112131415161718192021222324# ---------- 定义OP----------m1 = tf.constant([[3, 3]])  # 常量OPm2 = tf.constant([[2], [3]])product = tf.matmul(m1, m2)  # 计算OPstate = tf.Variable(0, name=">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-tf_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/20/tf_cheatsheet/" class="article-date">
+  <time datetime="2019-06-19T16:00:00.000Z" itemprop="datePublished">2019-06-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Tensorflow Cheatsheet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义OP、执行OP"><a href="#定义OP、执行OP" class="headerlink" title="定义OP、执行OP"></a>定义OP、执行OP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---------- 定义OP----------</span></span><br><span class="line">m1 = tf.constant([[<span class="number">3</span>, <span class="number">3</span>]])  <span class="comment"># 常量OP</span></span><br><span class="line">m2 = tf.constant([[<span class="number">2</span>], [<span class="number">3</span>]])</span><br><span class="line">product = tf.matmul(m1, m2)  <span class="comment"># 计算OP</span></span><br><span class="line"></span><br><span class="line">state = tf.Variable(<span class="number">0</span>, name=<span class="string">'counter'</span>)  <span class="comment"># 变量OP</span></span><br><span class="line">get_new_value = tf.add(state, <span class="number">1</span>)</span><br><span class="line">update = tf.assign(state, get_new_value)  <span class="comment"># 为变量赋值OP</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为变量定义一个初始化OP：变量执行时，需要先初始化</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---------- 执行OP ----------</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="comment"># 总是sess.run一个OP，才会产生（计算）结果</span></span><br><span class="line">	res = sess.run(product)</span><br><span class="line">	print(res)</span><br><span class="line">	</span><br><span class="line">	sess.run(init)</span><br><span class="line">	print(sess.run(state))</span><br><span class="line">	<span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">		sess.run(update)</span><br><span class="line">	print(sess.run(state))</span><br></pre></td></tr></table></figure>
+<h3 id="feed"><a href="#feed" class="headerlink" title="feed"></a>feed</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">input1 = tf.placeholder(tf.float32)</span><br><span class="line">input2 = tf.placeholder(tf.float32)</span><br><span class="line">output = tf.multiply(input1, input2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	res = sess.run(output, feed_dict=&#123;intput1:[<span class="number">7.</span>], input2:[<span class="number">2.</span>]&#125;)</span><br><span class="line">	print(res)</span><br></pre></td></tr></table></figure>
+<h3 id="training通用流程"><a href="#training通用流程" class="headerlink" title="training通用流程"></a>training通用流程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># prediction为之前基于x（placeholder），已定义的预测输出</span></span><br><span class="line"><span class="comment"># y为ground truth（placeholder）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义cost function OP</span></span><br><span class="line">loss = tf.reduce_mean(tf.square(y - prediction))</span><br><span class="line"><span class="comment"># 定义优化方法（一次梯度下降迭代）OP</span></span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	sess.run(tf.global_variables_initializer())</span><br><span class="line">	<span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">2000</span>):</span><br><span class="line">		<span class="comment"># 每次优化迭代，改变prediction计算中的Variables，降低loss</span></span><br><span class="line">		sess.run(train_step, feed_dict=&#123;x:x_data, y:y_data&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 预测时只需</span></span><br><span class="line">	sess.run(pridiction, feed_dict=&#123;x:x_data&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="mini-batch"><a href="#mini-batch" class="headerlink" title="mini batch"></a>mini batch</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">n_batch = m // batch_size</span><br><span class="line"></span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="comment"># 迭代2000个epoch</span></span><br><span class="line">	<span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">2000</span>):</span><br><span class="line">		<span class="comment"># 每个epoch有n_batch个batch</span></span><br><span class="line">		<span class="keyword">for</span> batch <span class="keyword">in</span> range(n_batch):</span><br><span class="line">			<span class="comment"># 获取batch_size大小的batch</span></span><br><span class="line">			batch_x, batch_y = get_next_batch()</span><br><span class="line">			sess.run(train_step, feed_dict=&#123;x:batch_x, y:batch_y&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="dropout"><a href="#dropout" class="headerlink" title="dropout"></a>dropout</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">keep_prob = tf.placeholder(tf.float32)</span><br><span class="line"></span><br><span class="line">layer1 = tf.nn.relu(tf.matmul(W1, x) + b1)</span><br><span class="line">layer1 = tf.nn.dropout(layer1, keep_prob=keep_prob)</span><br><span class="line"></span><br><span class="line">layer2 = tf.nn.relu(tf.matmul(W2, layer1) + b2)</span><br><span class="line">layer2 = tf.nn.dropout(layer2, keep_prob=keep_prob)</span><br></pre></td></tr></table></figure>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>随机初始化</p>
+<ul>
+<li>W<ul>
+<li><code>tf.Variable(tf.truncated_normal(shape, stddev=0.1))</code></li>
+</ul>
+</li>
+<li>b<ul>
+<li><code>tf.Variable(tf.zeros(shape) + 0.1)</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>note</strong>：好的初始化系数、优化器等设置，可以在迭代次数一定的情形下，更好的逼近最优解，从而提升模型性能</p>
+<hr>
+<h3 id="计算准确率（OP）"><a href="#计算准确率（OP）" class="headerlink" title="计算准确率（OP）"></a>计算准确率（OP）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">correct_prediction = tf.equal(tf.argmax(y, <span class="number">1</span>), tf.argmax(prediction, <span class="number">1</span>))  <span class="comment"># tf.argmax返回最大值下标</span></span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session <span class="keyword">as</span> sess:</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># ...</span></span><br><span class="line">	</span><br><span class="line">	acc = sess.run(accuracy, feed_dict(x:test_x, y:test_y))</span><br><span class="line">	print(acc)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="tensorboard"><a href="#tensorboard" class="headerlink" title="tensorboard"></a>tensorboard</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">'input'</span>):</span><br><span class="line">	input1 = tf.placeholder(tf.float32, [nx, none], name=<span class="string">'input1'</span>)</span><br><span class="line">	input2 = tf.placeholder(tf.float32, [nx, none], name=<span class="string">'input2'</span>)</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">tf.summary.scalar(<span class="string">'name'</span>, var)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">merged = tf.summary.merge_all()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	writer = tf.summary.FileWriter(<span class="string">'dir'</span>, sess.graph)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># for each epoch</span></span><br><span class="line">	summary = sess.run(merged)</span><br><span class="line">	writer.add_summary(summary, epoch)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>tensorboard --logdir=dir</code></li>
+<li>name_scope在定义图时进行设置（执行图则仅对定义图进行计算）</li>
+</ul>
+<h3 id="模型存取"><a href="#模型存取" class="headerlink" title="模型存取"></a>模型存取</h3><p>模型保存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">saver = tf.train.Saver()</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">saver.save(sess, <span class="string">'file_path/file_name'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>模型读取<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">saver = tf.train.Saver()</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">saver.restore(sess, <span class="string">'file_path/file_name'</span>)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/20/tf_cheatsheet/" data-id="ckmleadmx006oskw2qev45s78" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/01/tf_process/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Tensorflow模型构建通用流程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/14/dl_nlp/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">NLP</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Python Pandas | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SeriesSeries is a one-dimensional labeled array capable of holding any data type.     方法 说明     pd.Series(data, index) 创建，可由list、np 1darray、dict等创建    指定的index，需保证长度与data的长度对应。由dict创建，则可以不对应。index在key">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Pandas">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/python_pandas/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="SeriesSeries is a one-dimensional labeled array capable of holding any data type.     方法 说明     pd.Series(data, index) 创建，可由list、np 1darray、dict等创建    指定的index，需保证长度与data的长度对应。由dict创建，则可以不对应。index在key">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-29T02:26:38.745Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Pandas">
+<meta name="twitter:description" content="SeriesSeries is a one-dimensional labeled array capable of holding any data type.     方法 说明     pd.Series(data, index) 创建，可由list、np 1darray、dict等创建    指定的index，需保证长度与data的长度对应。由dict创建，则可以不对应。index在key">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python_pandas" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/17/python_pandas/" class="article-date">
+  <time datetime="2019-07-16T16:00:00.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python Pandas
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h2><p>Series is a one-dimensional labeled array capable of holding any data type.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.Series(data, index)</code></td>
+<td>创建，可由<code>list</code>、<code>np 1darray</code>、<code>dict</code>等创建</td>
+</tr>
+<tr>
+<td></td>
+<td>指定的<code>index</code>，需保证长度与<code>data</code>的长度对应。由<code>dict</code>创建，则可以不对应。<code>index</code>在<code>keys</code>值中设置，<code>keys</code>以外的，<code>value</code>为<code>NaN</code>。</td>
+</tr>
+<tr>
+<td><code>Series.to_numpy()</code></td>
+<td>直接转成<code>ndarray</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>索引、切片、计算等操作，与<code>ndarray</code>相同</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由list创建</span></span><br><span class="line">s1 = pd.Series(range(<span class="number">5</span>))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0    0</span></span><br><span class="line"><span class="string">1    1</span></span><br><span class="line"><span class="string">2    2</span></span><br><span class="line"><span class="string">3    3</span></span><br><span class="line"><span class="string">4    4</span></span><br><span class="line"><span class="string">dtype: int64</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 由1darray创建</span></span><br><span class="line">s2 = pd.Series(np.arange(<span class="number">5</span>, dtype=np.uint64), index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">a    0</span></span><br><span class="line"><span class="string">b    1</span></span><br><span class="line"><span class="string">c    2</span></span><br><span class="line"><span class="string">d    3</span></span><br><span class="line"><span class="string">e    4</span></span><br><span class="line"><span class="string">dtype: uint64</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 由dict创建</span></span><br><span class="line">s3 = pd.Series(&#123;<span class="string">'a'</span>:<span class="string">'0'</span>, <span class="string">'b'</span>:<span class="string">'1'</span>, <span class="string">'c'</span>:<span class="string">'2'</span>, <span class="string">'d'</span>:<span class="string">'3'</span>, <span class="string">'e'</span>:<span class="string">'4'</span>&#125;, index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'xx'</span>])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">a       0</span></span><br><span class="line"><span class="string">b       1</span></span><br><span class="line"><span class="string">c       2</span></span><br><span class="line"><span class="string">xx    NaN</span></span><br><span class="line"><span class="string">dtype: object</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><p>DataFrame is a 2-dimensional labeled data structure with columns of potentially different types.</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.DataFrame(data, index, columns)</code></td>
+<td>创建，可由<code>np 2darray</code>、<code>dict</code>等创建</td>
+</tr>
+<tr>
+<td></td>
+<td>指定的<code>index</code>、<code>columns</code>，需保证长度与<code>data</code>的<code>shape</code>对应。由<code>dict</code>创建，则可以不对应。<code>columns</code>在<code>keys</code>值中设置（<code>dict</code>的<code>values</code>是序列，能生成<code>index</code>），<code>keys</code>以外的，<code>value</code>为<code>NaN</code>。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由2darray创建</span></span><br><span class="line">d1 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">df1 = pd.DataFrame(d1, index=[<span class="number">997</span>, <span class="number">998</span>, <span class="number">999</span>], columns=[<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>])</span><br><span class="line">print(df1)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">     A  B   C   D</span></span><br><span class="line"><span class="string">997  0  1   2   3</span></span><br><span class="line"><span class="string">998  4  5   6   7</span></span><br><span class="line"><span class="string">999  8  9  10  11</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由dict of list创建</span></span><br><span class="line">d2 = &#123;<span class="string">'one'</span>: [<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>], <span class="string">'two'</span>: [<span class="number">4.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">1.</span>]&#125;</span><br><span class="line">df2 = pd.DataFrame(d2, columns=[<span class="string">'one'</span>])</span><br><span class="line">print(df2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">   one</span></span><br><span class="line"><span class="string">0  1.0</span></span><br><span class="line"><span class="string">1  2.0</span></span><br><span class="line"><span class="string">2  3.0</span></span><br><span class="line"><span class="string">3  4.0</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由dict of Series创建</span></span><br><span class="line">d3 = &#123;<span class="string">'one'</span>: pd.Series([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>]), <span class="string">'two'</span>: pd.Series([<span class="number">4.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">1.</span>])&#125;</span><br><span class="line">df3 = pd.DataFrame(d3, index=[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>], columns=[<span class="string">'two'</span>, <span class="string">'three'</span>])</span><br><span class="line">print(df3)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">   two three</span></span><br><span class="line"><span class="string">0  4.0   NaN</span></span><br><span class="line"><span class="string">2  2.0   NaN</span></span><br><span class="line"><span class="string">4  NaN   NaN</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h3 id="存取"><a href="#存取" class="headerlink" title="存取"></a>存取</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.read_csv(&#39;foo.csv&#39;)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df.to_csv(&#39;foo.csv&#39;)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>多文件合并demo</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data_from_csv</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(obj, list) <span class="keyword">and</span> len(obj) &gt; <span class="number">0</span>:</span><br><span class="line">        df_list = []</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> obj:</span><br><span class="line">            df_list.append(pd.read_csv(p, header=<span class="number">0</span>))</span><br><span class="line">        all_data = pd.concat(df_list)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        all_data = pd.read_csv(obj, header=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> all_data</span><br></pre></td></tr></table></figure>
+<h3 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.concat(df_list)</code></td>
+<td>增加行，纵向连接多个DataFrame</td>
+</tr>
+<tr>
+<td><code>pd.merge(left, right, how=&#39;inner&#39;, on=None)</code></td>
+<td>增加列，join两个DataFrame，<code>how</code>指定join方式（左右内外），<code>on</code>指定key</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df1.head(1)</code></td>
+<td>查看头，默认5行</td>
+</tr>
+<tr>
+<td><code>df1.tail(1)</code></td>
+<td>查看尾，默认5行</td>
+</tr>
+<tr>
+<td><code>df1.index</code></td>
+<td>查看index</td>
+</tr>
+<tr>
+<td><code>df1.columns</code></td>
+<td>查看columns</td>
+</tr>
+<tr>
+<td></td>
+<td>按列名称，选择列<code>df1[df1.columns[bool_list]]</code></td>
+</tr>
+<tr>
+<td><code>df1.dtypes</code></td>
+<td>查看各列dtype</td>
+</tr>
+<tr>
+<td><code>df1.info()</code></td>
+<td>查看非空值数量等信息</td>
+</tr>
+<tr>
+<td><code>df1.describe()</code></td>
+<td>查看基本统计量等信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数值类型</span></span><br><span class="line">df1.describe().T.assign(missing_pct=df1.apply(<span class="keyword">lambda</span> x: (len(x) - x.count()) / len(x)))</span><br><span class="line"><span class="comment"># 非数值类型</span></span><br><span class="line">df1.select_dtypes(include=[<span class="string">'object'</span>]).describe().T.assign(missing_pct=df1.apply(<span class="keyword">lambda</span> x: (len(x) - x.count()) / len(x)))</span><br></pre></td></tr></table></figure>
+<h3 id="获取与修改"><a href="#获取与修改" class="headerlink" title="获取与修改"></a>获取与修改</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>获取列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[&#39;A&#39;]</code></td>
+<td>获取列，根据<strong>列名</strong>获取单列</td>
+</tr>
+<tr>
+<td><code>df1[[&#39;A&#39;, &#39;B&#39;]]</code></td>
+<td>获取列，根据<strong>列名</strong>list获取多列</td>
+</tr>
+<tr>
+<td><em>获取行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[0:1]</code></td>
+<td>获取行，使用<strong>切片</strong>直接获取连续多行</td>
+</tr>
+<tr>
+<td><code>df1.loc[997]</code></td>
+<td>获取行，根据<strong>索引名称</strong>获取单行（索引名称有可能非数字）</td>
+</tr>
+<tr>
+<td><code>df1.loc[997:999]</code></td>
+<td>获取行，根据<strong>索引名称</strong>获取连续行（<strong>本方法较特殊，会包含’999’行</strong>）</td>
+</tr>
+<tr>
+<td><code>df1.loc[[997, 999]]</code></td>
+<td>获取行，根据<strong>索引名称</strong>获取跳行</td>
+</tr>
+<tr>
+<td><code>df1.iloc[0]</code></td>
+<td>获取行，根据<strong>行位置</strong>获取单行</td>
+</tr>
+<tr>
+<td><code>df1.iloc[0:2]</code></td>
+<td>获取行，根据<strong>行位置</strong>获取连续行</td>
+</tr>
+<tr>
+<td><code>df1.iloc[[0, 2]]</code></td>
+<td>获取行，根据<strong>行位置</strong>获取跳行</td>
+</tr>
+<tr>
+<td><em>获取行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[bool_list]</code></td>
+<td>通过生成与行数同len的布尔Series，来<strong>选择行</strong></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] == 10]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] != 10]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] &gt; 10]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;].isnull()]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;].isin([10, 20])]</code></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] == 10 &amp; df1[&#39;col2&#39;].isin([10, 20])]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>获取列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df[df.columns[bool_list]]</code></td>
+<td>通过生成与列数同len的布尔Series，来选择列名，进而<strong>选择列</strong></td>
+</tr>
+<tr>
+<td><code>df1[df1.columns[df1.isnull().all(axis=0)]]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df[:, bool_list]</code></td>
+<td>通过生成与列数同len的布尔Series，来<strong>选择列</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.iloc[:, df1.isnull().all(axis=0).values]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.iloc[:, [df1[col].isnull().all() for col in df1.columns]]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>删除列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>del df1[&#39;A&#39;]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>删除行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.drop(index_list, inplace=True)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>新增行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.append(s, ignore_index=True)</code></td>
+<td>append行，<code>ignore_index=True</code>使得df1的index不会被s的影响</td>
+</tr>
+<tr>
+<td><em>新增列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[&#39;K&#39;] = &#39;k&#39;</code></td>
+<td>k会被广播</td>
+</tr>
+<tr>
+<td><code>df1[&#39;K&#39;] = list</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.assign(new_colname=list)</code></td>
+<td>create a new dataframe</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df1.assign(new_colname=df[&#39;temp_c&#39;] * 9 / 5 + 32)</code></td>
+</tr>
+<tr>
+<td><code>df1.assign(new_colname=func)</code></td>
+<td><code>func</code>被用于<code>df1</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>df1.assign(new_colname=lambda x: x.temp_c * 9 / 5 + 32)</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.sort_values(by=&#39;K&#39;)</code></td>
+<td>按值排序</td>
+</tr>
+<tr>
+<td><code>df1.apply(func)</code></td>
+<td><code>func</code>被用于<code>df1</code>，得到一组<code>func</code>的计算结果</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df1.apply(lambda x: x.max() - x.min())</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>对NaN操作</strong>：</p>
+<ul>
+<li>去除NaN：<code>df1.dropna()</code><ul>
+<li><code>axis : {0 or ‘index’, 1 or ‘columns’}, default 0</code><strong>此处有坑，axis操作预期与其他处不同！</strong><ul>
+<li>0, or ‘index’ : Drop rows which contain missing values.</li>
+<li>1, or ‘columns’ : Drop columns which contain missing value.</li>
+</ul>
+</li>
+<li><code>how : {‘any’, ‘all’}, default ‘any’</code><ul>
+<li>‘any’ : If any NA values are present, drop that row or column.</li>
+<li>‘all’ : If all values are NA, drop that row or column.</li>
+</ul>
+</li>
+<li><code>thresh : int, optional</code><ul>
+<li>‘any’、‘all’的折中，达到‘thresh’个NaN再去除</li>
+</ul>
+</li>
+<li><code>subset : array-like, optional</code><ul>
+<li>Labels along other axis to consider, e.g. if you are dropping rows these would be a list of columns to include.</li>
+<li>指定考察哪些（字段）</li>
+</ul>
+</li>
+<li><code>inplace : bool, default False</code><ul>
+<li>If True, do operation inplace and return None.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>替换NaN：<code>df1.fillna()</code></li>
+</ul>
+<h3 id="汇聚"><a href="#汇聚" class="headerlink" title="汇聚"></a>汇聚</h3><p><code>groupby</code></p>
+<ul>
+<li>例如：<code>df1.groupby(&#39;A&#39;).sum()</code>、<code>df1.groupby(&#39;A&#39;).size()</code><br>By “group by” we are referring to a process involving one or more of the following steps:<ul>
+<li>Splitting the data into groups based on some criteria</li>
+<li>Applying a function to each group independently</li>
+<li>Combining the results into a data structure</li>
+</ul>
+</li>
+</ul>
+<p><code>pivot_table</code></p>
+<ul>
+<li>例如：<code>pd.pivot_table(df1, index=[&#39;sex&#39;, &#39;smoker&#39;], columns=&#39;day&#39;, values=&#39;some_metric&#39;, aggfunc=sum, margins=True)</code><ul>
+<li><code>index</code>：按什么key汇聚，index的值的组合，将作为维度数量</li>
+<li><code>columns</code>：指定汇聚多列时，各列维度是什么。columns的值的组合，将作为维度数量（不指定则直接聚合values）</li>
+<li><code>values</code>：汇聚的什么值</li>
+<li><code>aggfunc</code>：用什么聚合函数汇聚</li>
+<li><code>margins</code>：是否给出总计</li>
+</ul>
+</li>
+</ul>
+<h4 id="时间索引"><a href="#时间索引" class="headerlink" title="时间索引"></a>时间索引</h4><p>对于时间序列，index是时间，可以转化使用pd中时间索引类型。</p>
+<ul>
+<li>生成时间索引：<code>pd.date_range(&#39;2019-01-01&#39;, periods=72, freq=&#39;H&#39;)</code></li>
+<li>将已有字段转为pandas时间格式：<code>pd.to_datetime(col, format=&#39;%d.%m.%Y&#39;)</code><ul>
+<li>设为index：<code>df1.set_index(col, inplace=True)</code>，inplace原地转换DataFrame，而不会新建</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/17/python_pandas/" data-id="ckmleadlz004oskw2rmeb901q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/24/weight_of_evidence/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Weight of Evidence (WOE)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/17/python_scipy/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python Scipy</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

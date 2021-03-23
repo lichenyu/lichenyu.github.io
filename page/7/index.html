@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="ChenyuShuxin">
+<meta property="og:url" content="http://yoursite.com/page/7/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChenyuShuxin">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-dl_rnn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/12/dl_rnn/" class="article-date">
+  <time datetime="2019-06-11T16:00:00.000Z" itemprop="datePublished">2019-06-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/12/dl_rnn/">RNN</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="序列数据"><a href="#序列数据" class="headerlink" title="序列数据"></a>序列数据</h2><p>一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T<em>{x} \rangle}$，长度为$T</em>{x}$</p>
+<ul>
+<li>$x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示</li>
+</ul>
+<h2 id="RNN结构"><a href="#RNN结构" class="headerlink" title="RNN结构"></a>RNN结构</h2><h3 id="输入输出长度相同（每个时刻一个输出）"><a href="#输入输出长度相同（每个时刻一个输出）" class="headerlink" title="输入输出长度相同（每个时刻一个输出）"></a>输入输出长度相同（每个时刻一个输出）</h3><p>当前时刻的处理，引入了前一时刻的activation</p>
+<script type="math/tex; mode=display">
+a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\
+\hat{y}^{\langle t \rangle} = g_{2}(W_{y}a^{\langle t \rangle} + b_{y})</script><ul>
+<li>parameters第一个下标，表示该p是用于计算谁的系数；第二个下标，表示该p是谁前面的系数</li>
+<li>$W<em>{a}$为$W</em>{aa},W_{ax}$横向拼接；$[a^{\langle t-1 \rangle},x^{\langle t \rangle}]$为$a^{\langle t-1 \rangle},x^{\langle t \rangle}$纵向拼接</li>
+<li>相当于$x^{\langle t \rangle}$位于输入层，$a^{\langle t \rangle}$位于（一层）隐藏层，$\hat{y}^{\langle t \rangle}$位于输出层</li>
+</ul>
+<p>一些其他结构的RNN包括：</p>
+<h3 id="many-to-one"><a href="#many-to-one" class="headerlink" title="many-to-one"></a>many-to-one</h3><p>输出只使用$\hat{y}^{\langle T_{x} \rangle}$</p>
+<h3 id="one-to-many"><a href="#one-to-many" class="headerlink" title="one-to-many"></a>one-to-many</h3><p>输入只使用$\hat{x}^{\langle 1 \rangle}$</p>
+<h3 id="输入输出长度不同"><a href="#输入输出长度不同" class="headerlink" title="输入输出长度不同"></a>输入输出长度不同</h3><p>两个结构拼接 encoder+decoder<br>前一个结构只有输入；后一个结构只有输出</p>
+<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><ul>
+<li>输入：$x = [0, y^{\langle 1 \rangle}, y^{\langle 2 \rangle}, …, y^{\langle T_{y} - 1 \rangle}]$</li>
+<li><em>softmax</em>，p维度为字典size</li>
+<li>输出：$y = [p(\hat{y}^{\langle 1 \rangle}|0), p(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle}), p(\hat{y}^{\langle 3 \rangle}|y^{\langle 1 \rangle}y^{\langle 2 \rangle}), …]$<ul>
+<li>即，given $y^{\langle 1 \rangle}, y^{\langle 2 \rangle}, …, y^{\langle t \rangle}$，得到$y^{\langle t + 1\rangle}$的各字典项概率</li>
+<li>例如，$p(\hat{y}^{\langle 1 \rangle}|0)$为句子开头（已输入为$0$时，下一个）单词，为字典各项的概率</li>
+</ul>
+</li>
+</ul>
+<p><strong>sampling novel sequences</strong></p>
+<p>利用训好的语言模型，随机生成语句</p>
+<p>即，将$(\hat{y}^{\langle 1 \rangle}|0)$，作为$y^{\langle 1 \rangle}$，得到$(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$；继续将$(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$，作为$y^{\langle 2 \rangle}$…</p>
+<p>具体来讲，首先，从第一个0元素输出$\hat{y}^{\langle 1 \rangle}$的softmax分布中，<strong>sample</strong>一个word作为新语句的首词$y^{\langle 1 \rangle}$。然后，计算$\hat{y}^{\langle 2 \rangle}$，从$\hat{y}^{\langle 2 \rangle}$的softmax分布中，继续<strong>sample</strong>一个word作为$y^{\langle 2 \rangle}$，以此类推，直到产生EOS（或设定语句长度上限）</p>
+<ul>
+<li>sample方式，使用softmax得到的词汇表中各word的概率，来进行选取（<code>np.random.choice</code>可以设定序列中各个元素的出现概率，来进行选取）</li>
+<li>引入采样的是为了保证每个单词都有产生的可能，如果每次只是选取softmax对应的最大值，那么有些单词会永远生成不到，而且生成的句子会极为相似</li>
+<li>采样过程中可能会生成UNK字符，为了避免生成这种无意义字符，可以重复采样，直到得到一个非UNK字符</li>
+<li>模型的初始输入可以不用零向量，而是用某一个单词的one hot向量作为赋值，这样可以生成与该单词主题相关的句子</li>
+</ul>
+<p>这样得到的生成语句，体现着该语言模型的特性（例如新闻报道风格、莎士比亚文学风格…）</p>
+<h2 id="cost-funtion"><a href="#cost-funtion" class="headerlink" title="cost funtion"></a>cost funtion</h2><p>定义各个时刻的loss，则序列总体loss为各时刻loss的累加</p>
+<script type="math/tex; mode=display">
+L^{\langle t \rangle}(\hat{y}^{\langle t \rangle}, y^{\langle t \rangle}) = -y^{\langle t \rangle}\log{\hat{y}^{\langle t \rangle}} - (1-y^{\langle t \rangle})\log{(1-\hat{y}^{\langle t \rangle})} \\
+L(\hat{y},y) = \sum_{t=1}^{T_{y}}L^{\langle t \rangle}(\hat{y}^{\langle t \rangle}, y^{\langle t \rangle})</script><h2 id="门控递归单元-get-recurrent-unit-GRU"><a href="#门控递归单元-get-recurrent-unit-GRU" class="headerlink" title="门控递归单元 get recurrent unit, GRU"></a>门控递归单元 get recurrent unit, GRU</h2><p>解决梯度消失问题，使得较深层能够利用浅层信息</p>
+<hr>
+<p>对比<strong>naive RNN</strong></p>
+<script type="math/tex; mode=display">
+a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\</script><p>关键在于$a^{\langle t-1 \rangle}, x^{\langle t \rangle}, a^{\langle t \rangle}$，而$\hat{y}^{\langle t \rangle}$可由$a^{\langle t \rangle}$算出</p>
+<hr>
+<p>而<strong>GRU</strong>，引入记忆细胞$c^{\langle t \rangle}$，相当于$a^{\langle t \rangle}$<br>由此，关键在于通过$c^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}$</p>
+<ul>
+<li>若按naive计算，$\tilde{c}^{\langle t \rangle} = g<em>{1}(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b<em>{c}) = tanh(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$</li>
+<li>或者直接透传，即本层不进行计算，直接输出$c^{\langle t-1 \rangle}$</li>
+</ul>
+<p>进一步定义一个门，update gate, $\Gamma<em>{u} = \sigma(W</em>{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$</p>
+<ul>
+<li>由于使用sigmoid，$\Gamma_{u}$的值，大多数情形下，或者极为接近0，或者极为接近1</li>
+<li>$\Gamma_{u}$决定使用按naive计算（遗忘），还是直接透传（记忆）</li>
+</ul>
+<p>综上，</p>
+<script type="math/tex; mode=display">c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + (1 - \Gamma_{u}) * c^{\langle t-1 \rangle}</script><ul>
+<li>$*$为逐元素乘</li>
+<li>$c^{\langle t \rangle}$是多维的，可能某些位上需要计算（遗忘），某些位上需要透传（记忆）</li>
+</ul>
+<p><strong>完整版GRU</strong></p>
+<script type="math/tex; mode=display">
+\Gamma_{r} = \sigma(W_{r}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{r}) \\
+\tilde{c}^{\langle t \rangle} = tanh(W_{c}[\Gamma_{r} * c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) \\
+\Gamma_{u} = \sigma(W_{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u}) \\
+c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + (1 - \Gamma_{u}) * c^{\langle t-1 \rangle}</script><ul>
+<li>related gate, $\Gamma_{r}$描述$c^{\langle t-1 \rangle}$与$c^{\langle t \rangle}$之间的相关性</li>
+<li>记忆细胞$c^{\langle t \rangle}$相当于$a^{\langle t \rangle}$</li>
+</ul>
+<h2 id="长短期记忆单元-long-short-term-memory-LSTM"><a href="#长短期记忆单元-long-short-term-memory-LSTM" class="headerlink" title="长短期记忆单元 long short term memory, LSTM"></a>长短期记忆单元 long short term memory, LSTM</h2><script type="math/tex; mode=display">
+\tilde{c}^{\langle t \rangle} = tanh(W_{c}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) \\
+\Gamma_{u} = \sigma(W_{u}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u}) \\
+\Gamma_{f} = \sigma(W_{f}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{f}) \\
+c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + \Gamma_{f} * c^{\langle t-1 \rangle} \\
+\Gamma_{o} = \sigma(W_{o}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{o}) \\
+a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
+<li>记忆细胞$c^{\langle t \rangle}$<strong>不再</strong>相当于$a^{\langle t \rangle}$</li>
+<li>关键在于通过$c^{\langle t-1 \rangle}, a^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}, a^{\langle t \rangle}$</li>
+<li>update、forget门，分别考虑需要计算（遗忘），某些位上需要透传（记忆）</li>
+<li>通过output门指定，基于$c^{\langle t \rangle}$计算$a^{\langle t \rangle}$</li>
+</ul>
+<h2 id="双向RNN"><a href="#双向RNN" class="headerlink" title="双向RNN"></a>双向RNN</h2><ul>
+<li>$a^{\langle t \rangle}$分为$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$</li>
+<li>先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T<em>{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T</em>{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$<ul>
+<li>可将初始化$\overrightarrow{a}^{\langle 0 \rangle}$和$\overrightarrow{a}^{\langle T_{x}+1 \rangle}$都设为0</li>
+</ul>
+</li>
+<li>$\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W<em>{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b</em>{y}$）</li>
+</ul>
+<h2 id="Deep-RNN"><a href="#Deep-RNN" class="headerlink" title="Deep RNN"></a>Deep RNN</h2><ul>
+<li>隐藏层有多层，注意Deep RNN的隐藏层是要引入了前一时刻的activation的！<ul>
+<li>不引入前一时刻的activation，可直接在RNN隐藏层上，堆一个NN来给出$\hat{y}^{\langle t \rangle}$（相当于RNN的hidden unit使用的一个NN）</li>
+</ul>
+</li>
+<li>由于Deep RNN的隐藏层是要引入了前一时刻的activation，系数会很多，隐藏层一般不多（3，不像Deep NN、Deep CNN，可以很深）</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmleadjw0018skw2c2wjc83k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dl_face_validation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/11/dl_face_validation/" class="article-date">
+  <time datetime="2019-06-10T16:00:00.000Z" itemprop="datePublished">2019-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/11/dl_face_validation/">人脸验证</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：砍掉softmax层，直接输出一个多维向量，相当于对输入图像进行encoding<br>验证：待验证输入、目标，分别计算网络输出（特征）向量，衡量两向量的相似程度</p>
+<ul>
+<li>足够相似（相近），则认为匹配成功；否则，认为匹配不成功</li>
+<li>除了基于距离计算相似度，也可以训练一个二分类器，给出两种类别（同一个人、不同的人）</li>
+</ul>
+<h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ul>
+<li>多分类：不同人物采集多张图片，每个人物作为一个类，多分类问题训练RNN<ul>
+<li>缺点是各类中（即同一个人）数据可能较少</li>
+</ul>
+</li>
+<li>triplet cost<ul>
+<li>使用$(Anchor, Positive, Negative)$形式数据训练，构造cost function使得A-P相似度大于A-N</li>
+<li>构造triplet时，选择与A-P相近的A-N，以确保能区分相似不同的人脸</li>
+</ul>
+</li>
+</ul>
+<h2 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h2><ul>
+<li>全库遍历，与待识别输入做人脸验证，成功hit的结果作为识别成功</li>
+</ul>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>人脸验证的RNN应用，表明NN不单单可以通过（训练一个网络），由<strong>输出层</strong>（sigmoid、softmax）给出分类、回归结果<br>还可以直接使用（预训练好的网络）中间<strong>隐藏层</strong>的输出，作为把输入进行encoding</p>
+<ul>
+<li>输入 &lt;-&gt; encoding可以认为是一一映射，这个对应着图片的内容，即用一个多维encoding向量来描述输入图片</li>
+<li>因此，可以基于不同输入encoding的相似性，衡量两个图片是否是同一内容，来解决一些问题</li>
+<li>选择深、浅隐藏层输出，对应着使用大、小粒度的特性</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/11/dl_face_validation/" data-id="ckmleadjn000qskw2d49hv8rz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dl_object_detection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/11/dl_object_detection/" class="article-date">
+  <time datetime="2019-06-10T16:00:00.000Z" itemprop="datePublished">2019-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/11/dl_object_detection/">目标检测 object detection</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p<em>{c}$，object的中心点$b</em>{x},b<em>{y}$和宽高$b</em>{w},b<em>{h}$，以及object属于哪个具体类别的指示$c</em>{1},c<em>{2},c</em>{3},…$</p>
+<p>$(p<em>{c},b</em>{x},b<em>{y},b</em>{w},b<em>{h},c</em>{1},c<em>{2},c</em>{3},…)$</p>
+<h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ul>
+<li>sliding windows<ul>
+<li>训练：closely cropped data；检测：sliding windows with different sizes</li>
+<li>sliding windows计算效率较低</li>
+<li>使用卷积替代FC，使得图像整体输入处理，即可得到sliding windows结果（提高计算效率）</li>
+</ul>
+</li>
+<li>YOLO<ul>
+<li>输入打格子，不做滑动，每个格子粒度构建label训练、检测</li>
+<li>$b<em>{w},b</em>{h}$可能大于1（跨格子）</li>
+<li>非最大值抑制 non-max suppression：高IoU的一系列格子，只选$p_{c}$最大的</li>
+<li>多object在同一个grid：anchor box预定义bounding box形状，来区分不同的object<ul>
+<li>使用前：各object &lt;-&gt; grid cell</li>
+<li>使用后：各object &lt;-&gt; (grid cell, bounding box)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><ul>
+<li>交并比 intersection over union，IoU</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmleadjv0015skw29u0imaj9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dl_cnn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/06/dl_cnn/" class="article-date">
+  <time datetime="2019-06-05T16:00:00.000Z" itemprop="datePublished">2019-06-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/06/dl_cnn/">CNN</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="图像卷积"><a href="#图像卷积" class="headerlink" title="图像卷积"></a>图像卷积</h2><p><strong>卷积filter</strong></p>
+<p>一般为$3 \times 3$，例如：</p>
+<p>垂直边缘检测</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+1 & 0 & -1 \\ 
+1 & 0 & -1 \\ 
+1 & 0 & -1
+\end{bmatrix}</script><p>水平边缘检测</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+1 & 1 & 1 \\ 
+0 & 0 & 0 \\ 
+-1 & -1 & -1
+\end{bmatrix}</script><ul>
+<li>若其他filter内数值不同，对应不同的特性、角度</li>
+<li>可以把这些数值作为参数$w$</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+w_{1,1} & w_{1,2} & w_{1,3} \\ 
+w_{2,1} & w_{2,2} & w_{2,3} \\ 
+w_{3,1} & w_{3,2} & w_{3,3}
+\end{bmatrix}</script><p><strong>padding</strong></p>
+<p>将原图像四周，补充一圈（对于$3 \times 3$大小的filter）</p>
+<ul>
+<li>卷积之后，图像大小不变</li>
+<li>（用0padding）</li>
+</ul>
+<p><strong>步长</strong></p>
+<p>filter每次求卷积值后移动的长度，可以大于1</p>
+<p><strong>图像$n \times n$，filter $f \times f$，padding $p$，步长$s$，则输出维度为：$\left \lfloor \frac{n+2p-f}{s} + 1 \right \rfloor$</strong></p>
+<p><strong>multiple filters卷积</strong></p>
+<ul>
+<li>维度：$(n \times n \times n<em>{c}) * (f \times f \times n</em>{c})$ —&gt; $((n - f + 1) \times (n - f + 1) \times n<em>{f})$，其中$n</em>{c}$为chanel数，$n_{f}$为卷积filter数<ul>
+<li>使用一个$f \times f \times n_{c}$卷积，得到$((n - f + 1) \times (n - f + 1))$</li>
+<li>使用$n<em>{f}$个$f \times f \times n</em>{c}$卷积，将结果堆叠，得到$((n - f + 1) \times (n - f + 1) \times n_{f})$</li>
+</ul>
+</li>
+</ul>
+<h2 id="卷积unit"><a href="#卷积unit" class="headerlink" title="卷积unit"></a>卷积unit</h2><p><strong>维度检查</strong></p>
+<p>对于第$l$层</p>
+<ul>
+<li>$f^{[l]}$：filter大小</li>
+<li>$p^{[l]}$：padding大小</li>
+<li>$s^{[l]}$：stride大小</li>
+<li>input维度：$n^{[l-1]} \times n^{[l-1]} \times n_{c}^{[l-1]}$</li>
+<li>output维度：$n^{[l]} \times n^{[l]} \times n_{c}^{[l]}$</li>
+</ul>
+<p>可知关系</p>
+<ul>
+<li>$n^{[l]} = \left \lfloor \frac{n^{[l-1]}+2p^{[l]}-f^{[l]}}{s^{[l]}} + 1 \right \rfloor$</li>
+<li>$n<em>{c}^{[l]}$：本层filter数量（$n</em>{c}^{[0]}$原始图像chanel数）</li>
+<li>本层filter的维度：$f^{[l]} \times f^{[l]} \times n_{c}^{[l-1]}$</li>
+</ul>
+<p><strong>activation</strong></p>
+<ul>
+<li>卷积操作相当于线性$W$，进而将卷积结果进一步加$b$</li>
+<li>上述结果输入一个激活函数（如ReLU）</li>
+</ul>
+<p>多个filters操作、堆叠，即构成一个卷积层</p>
+<h2 id="CNN各层"><a href="#CNN各层" class="headerlink" title="CNN各层"></a>CNN各层</h2><p><strong>conv卷积层</strong></p>
+<p><strong>pooling</strong></p>
+<ul>
+<li>按filter抽取（如max pooling，找到各filter区域最大值）<em>（有点像马赛克化）</em></li>
+<li>没有需要学习的参数，只需要设置超参数（filter大小、步长）</li>
+</ul>
+<p><strong>fully connected，FC</strong></p>
+<ul>
+<li>这是NN一层</li>
+</ul>
+<p>一般的，随着层数变深，图像长宽的大小$n^{[l]}$变小，但$n_{c}^{[l]}$会变大</p>
+<h2 id="CNN结构"><a href="#CNN结构" class="headerlink" title="CNN结构"></a>CNN结构</h2><h3 id="经典结构"><a href="#经典结构" class="headerlink" title="经典结构"></a>经典结构</h3><p>conv + pooling -&gt; conv + pooling -&gt; fc -&gt; fc -&gt; softmax</p>
+<h3 id="残差网络-residual-network"><a href="#残差网络-residual-network" class="headerlink" title="残差网络 residual network"></a>残差网络 residual network</h3><p><strong>residual block</strong></p>
+<p>第$l$层输入，向第$l+2$层激活函数传递</p>
+<script type="math/tex; mode=display">
+z^{[l+1]} = W^{[l+1]}a^{[l]} + b^{[l+1]} \\
+a^{[l+1]} = g(z^{[l+1]}) \\
+z^{[l+2]} = W^{[l+2]}a^{[l+1]} + b^{[l+2]} \\
+a^{[l+2]} = g(z^{[l+1]} + a^{[l]})</script><h3 id="1-times-1-conv"><a href="#1-times-1-conv" class="headerlink" title="$1 \times 1$ conv"></a>$1 \times 1$ conv</h3><ul>
+<li>控制$n_{c}$大小</li>
+<li>增加非线性（使用了激活函数）</li>
+</ul>
+<h3 id="inception-network"><a href="#inception-network" class="headerlink" title="inception network"></a>inception network</h3><p>并行堆叠conv、pooling等模块作为一层</p>
+<ul>
+<li>$1 \times 1$ conv作为bottleneck层，加速计算</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmleadjq000vskw2un7lz936" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-deep_learning_basic" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/03/deep_learning_basic/" class="article-date">
+  <time datetime="2019-06-02T16:00:00.000Z" itemprop="datePublished">2019-06-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/03/deep_learning_basic/">深度学习基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="NN基础"><a href="#NN基础" class="headerlink" title="NN基础"></a>NN基础</h2><h3 id="损失函数-amp-成本函数-loss-function-amp-cost-function"><a href="#损失函数-amp-成本函数-loss-function-amp-cost-function" class="headerlink" title="损失函数 &amp; 成本函数 loss function &amp; cost function"></a>损失函数 &amp; 成本函数 loss function &amp; cost function</h3><ul>
+<li>损失函数loss：单样本</li>
+<li>成本函数cost：全体平均</li>
+</ul>
+<script type="math/tex; mode=display">
+J(w,b) = \frac{1}{m}\sum_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)})</script><h3 id="激活函数-activation-function"><a href="#激活函数-activation-function" class="headerlink" title="激活函数 activation function"></a>激活函数 activation function</h3><ul>
+<li>slgmold / tanh</li>
+<li>ReLU / leaky ReLU / P ReLU</li>
+</ul>
+<p><strong>输出层</strong></p>
+<ul>
+<li>softmax，多分类，和为1（归一化）</li>
+</ul>
+<script type="math/tex; mode=display">
+z^{[L]} = w^{[L]}a^{[L-1]} + b^{[L]} \\
+t = e^{z^{[L]}} \\
+a^{[L]}_{i} = \frac{t^{(i)}}{\sum t^{(i)}}, a^{[L]} = \frac{t}{\sum t^{(i)}}</script><h3 id="梯度下降-gradient-descent"><a href="#梯度下降-gradient-descent" class="headerlink" title="梯度下降 gradient descent"></a>梯度下降 gradient descent</h3><p>寻找合适的$w$、$b$的值，能够minimize $J(w,b)$，即fit the model</p>
+<ol>
+<li>初始化$w$、$b$</li>
+<li>计算$dw$、$db$</li>
+<li>更新$w$、$b$</li>
+<li>迭代2、3步骤至指定次数</li>
+</ol>
+<script type="math/tex; mode=display">
+w = w - \alpha\ dw \\
+b = b - \alpha\ db</script><p>根据$L$ -&gt; $J(w,b)$，单样本 -&gt; 全体<br>计算$dw$、$db$的方式：</p>
+<script type="math/tex; mode=display">
+dw += x^{(i)}\ dz^{(i)},db += dz^{(i)}, \text{for }i = 1, ..., m \\
+dw /= m, db /= m</script><h3 id="正向传播-forward-propagation"><a href="#正向传播-forward-propagation" class="headerlink" title="正向传播 forward propagation"></a>正向传播 forward propagation</h3><p><strong>正向传播，计算结果</strong></p>
+<p>单样本，第$l$层</p>
+<script type="math/tex; mode=display">
+z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} \\
+a^{[l]} = g(z^{[l]})</script><ul>
+<li>W.shape = $(n^{[l]}, n^{[l-1]})$</li>
+<li>b.shape = $(n^{[l]}, 1)$</li>
+<li>$a^{[l-1]}$.shape = $(n^{[l-1]}, 1)$</li>
+<li>$z^{[l]}$.shape = $(n^{[l]}, 1)$</li>
+<li>$a^{[l]}$.shape = $(n^{[l]}, 1)$</li>
+</ul>
+<script type="math/tex; mode=display">
+\text{向量化} \ A^{[l]} = (a^{[l](1)}, a^{[l](2)}, , ..., a^{[l](n^{[l]})})</script><p>全体，第$l$层</p>
+<script type="math/tex; mode=display">
+Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} \\
+A^{[l]} = g(Z^{[l]})</script><ul>
+<li>$A^{[l-1]}$.shape = $(n^{[l-1]}, m)$</li>
+<li>$Z^{[l]}$.shape = $(n^{[l]}, m)$</li>
+<li>$A^{[l]}$.shape = $(n^{[l]}, m)$</li>
+</ul>
+<h3 id="反向传播-backward-propagation"><a href="#反向传播-backward-propagation" class="headerlink" title="反向传播 backward propagation"></a>反向传播 backward propagation</h3><p><strong>反向传播，计算梯度</strong></p>
+<script type="math/tex; mode=display">
+dZ^{[l]} = W^{[l+1]T}dZ^{[l+1]} * {g^{[l]}}'(Z^{[l]}) \\
+dW^{[l]} = \frac{1}{m}dZ^{[l]}X^{T} \\
+db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]}, axis=1, keepdims=True) \\
+dA^{[l-1]} = W^{[l]T}dZ^{[l]}</script><p><em>简略推导（箭头反向求导，使用相乘，依据链式法则）</em>：</p>
+<script type="math/tex; mode=display">
+Z^{[l]} \rightarrow A^{[l]} = g^{[l]}(Z^{[l]}) \rightarrow Z^{[l+1]} = W^{[l+1]}A^{[l]} + b^{[l+1]} \\
+dZ^{[l+1]} \\
+dA^{[l]} = W^{[l+1]}dZ^{[l+1]} \\
+dZ^{[l]} = {g^{[l]}}'(Z^{[l]})dA^{[l]} = W^{[l+1]T}dZ^{[l+1]} * {g^{[l]}}'(Z^{[l]})</script><ul>
+<li>$dZ^{[l]}$.shape = $Z^{[l]}$.shape</li>
+<li>$dW^{[l]}$.shape = $W^{[l]}$.shape</li>
+<li><p>$db^{[l]}$.shape = $b^{[l]}$.shape</p>
+</li>
+<li><p>根据$J(w,b)$计算最后的$dA^{[L]}$</p>
+</li>
+<li>求算时，输入$dA^{[l]}$，输出$dA^{[l-1]}$</li>
+</ul>
+<h2 id="模型性能"><a href="#模型性能" class="headerlink" title="模型性能"></a>模型性能</h2><h3 id="解决high-bias"><a href="#解决high-bias" class="headerlink" title="解决high bias"></a>解决high bias</h3><p>训练误差大（比如和人工相比）<br>模型性能不够</p>
+<ul>
+<li>更大更深的网络</li>
+<li>增加训练时长</li>
+<li>（尝试其他网络结构）</li>
+</ul>
+<h3 id="解决high-variance"><a href="#解决high-variance" class="headerlink" title="解决high variance"></a>解决high variance</h3><p>训练误差小，验证/测试误差相对训练误差增大较多<br>模型过拟合</p>
+<ul>
+<li>更多（多样）的数据</li>
+<li>正则化</li>
+<li>（尝试其他网络结构）</li>
+</ul>
+<p>模型可能同时存在high bias和high variance<br>尝试独立的先解决high bias再解决high variance</p>
+<h3 id="正则化-regularization"><a href="#正则化-regularization" class="headerlink" title="正则化 regularization"></a>正则化 regularization</h3><p>L2正则，解决过拟合</p>
+<script type="math/tex; mode=display">
+J(w,b) + \frac{\lambda }{2m}\left \| w \right \|_{2}^{2} \\
+\left \| w \right \|_{2}^{2} = \sum_{j=1}^{n_{x}}w_{j}^{2}</script><p>（L1正则，使w稀疏化）</p>
+<script type="math/tex; mode=display">
+J(w,b) + \frac{\lambda }{m}\left \| w \right \|_{1} \\
+\left \| w \right \|_{1} = \sum_{j=1}^{n_{x}}\left | w_{j} \right |</script><ul>
+<li>$\lambda$作为超参数</li>
+</ul>
+<p>向量化的L2正则求算</p>
+<script type="math/tex; mode=display">
+J(w,b) + \frac{\lambda }{2m}\left \| w^{[l]} \right \|_{F}^{2} \\
+\left \| w^{[l]} \right \|_{F}^{2} = \sum_{i=1}^{n^{l}}\sum_{j=1}^{n^{l-1}}{w_{i,j}^{[l]}}^{2}</script><ul>
+<li>w.shape = $(n^{[l]}, n^{[l-1]})$</li>
+</ul>
+<p>如何使用</p>
+<script type="math/tex; mode=display">
+dw^{[l]} = \text{from_bp} + \frac{\lambda }{m}w^{[l]} \\
+w^{[l]} = w^{[l]} - \alpha \  dw^{[l]}</script><ul>
+<li>dw的增加项，为L2正则项的求导结果</li>
+</ul>
+<h3 id="随机失活-dropout"><a href="#随机失活-dropout" class="headerlink" title="随机失活 dropout"></a>随机失活 dropout</h3><p>随机去除网络中一些节点</p>
+<p>对每一层，设置该层的节点使用概率<br>例如，对于第3层<br><code>d3 = np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep_prob</code><br><code>a3 = np.multiply(a3, d3)</code><br><code>a3 \= keep_prob</code>  &lt;-  inverted dropout，修正期望值</p>
+<p>使用时机：</p>
+<ul>
+<li>训练，例如每个样本，或者每次梯度下降</li>
+<li>测试，不使用dropout</li>
+</ul>
+<h2 id="训练性能"><a href="#训练性能" class="headerlink" title="训练性能"></a>训练性能</h2><h3 id="初始化-W"><a href="#初始化-W" class="headerlink" title="初始化$W$"></a>初始化$W$</h3><p>使得w不太大也不太小，尽量避免梯度爆炸和消失</p>
+<ul>
+<li>ReLU：$W^{[l]} = np.random.rand(W^{[l]}.shape) * np.sqrt(\frac{2}{n^{[l-1]}})$</li>
+<li>tanh：$W^{[l]} = np.random.rand(W^{[l]}.shape) * np.sqrt(\frac{1}{n^{[l-1]}})$</li>
+</ul>
+<h3 id="梯度检查-grad-check"><a href="#梯度检查-grad-check" class="headerlink" title="梯度检查 grad check"></a>梯度检查 grad check</h3><ol>
+<li>已知的$J(W, b)$看做$\theta<em>{i}$的函数，$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, …) = J(\theta</em>{1}, \theta<em>{2}, \theta</em>{3}, \theta_{4}, …)$</li>
+<li>已知的$dW, db$看做$d\theta_{i}$</li>
+<li>对于每一个$i$，计算$d\theta<em>{approx}[i]$，最终得到$d\theta</em>{approx}$，对比$d\theta_{approx}$和$d\theta$<script type="math/tex; mode=display">
+d\theta_{approx}[i] = \frac{J(\theta_{1}, \theta_{2}, ..., \theta_{i}+\epsilon, ...) - J(\theta_{1}, \theta_{2}, ..., \theta_{i}-\epsilon, ...)}{2\epsilon} \\
+d\theta_{approx} \ ?\approx \ d\theta \\
+check \ \frac{\left \| d\theta_{approx} - d\theta \right \|_{2}}{\left \| d\theta_{approx} \right \|_{2} + \left \| d\theta \right \|_{2}}</script></li>
+</ol>
+<ul>
+<li>注意norm没有平方，是距离，需要差方和后开方</li>
+</ul>
+<h3 id="mini-batch-gradient-descent"><a href="#mini-batch-gradient-descent" class="headerlink" title="mini-batch gradient descent"></a>mini-batch gradient descent</h3><p>加速训练<br>将整个数据集分为若干个mini-batch，每个梯度下降迭代，使用一个mini-batch进行<br>这样，用整体数据集进行一次训练迭代（epoch），可进行多次梯度下降迭代（全体数据量/mini-batch大小）</p>
+<p>typical mini-batch size: 64, 128, 256, 512</p>
+<h3 id="梯度下降替代算法"><a href="#梯度下降替代算法" class="headerlink" title="梯度下降替代算法"></a>梯度下降替代算法</h3><h4 id="背景知识：指数平滑"><a href="#背景知识：指数平滑" class="headerlink" title="背景知识：指数平滑"></a>背景知识：指数平滑</h4><p>平滑值$v_t$</p>
+<script type="math/tex; mode=display">
+v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\frac{1}{1-\beta}$个值做平均</p>
+<p>迭代获取：</p>
+<ol>
+<li>$v_{\theta} = 0$</li>
+<li><code>repeat:</code> 获取下一个$\theta<em>{t}$，$v</em>{\theta} = \beta v<em>{\theta} + (1-\beta) \theta</em>{t}$</li>
+</ol>
+<p>偏差修正（修正冷启动）：</p>
+<script type="math/tex; mode=display">
+\frac{v_t}{1-\beta^{t}}</script><h4 id="动量梯度下降-momentum"><a href="#动量梯度下降-momentum" class="headerlink" title="动量梯度下降 momentum"></a>动量梯度下降 momentum</h4><p>对梯度下降应用指数平滑（$\beta=0.9$），本质上减少了不必要的抖动，也就加速向最优值靠拢</p>
+<p>on iteration $t$</p>
+<ul>
+<li>compute $dw$, $db$ on current mini-batch</li>
+<li>$v<em>{dw} = \beta v</em>{dw} + (1 - \beta)dw$</li>
+<li>$v<em>{db} = \beta v</em>{db} + (1 - \beta)db$</li>
+<li>$w = w - \alpha \ v_{dw}$</li>
+<li>$b = b - \alpha \ v_{db}$</li>
+</ul>
+<h4 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h4><p>比率化$dw$, $db$</p>
+<p>on iteration $t$</p>
+<ul>
+<li>compute $dw$, $db$ on current mini-batch</li>
+<li>$s<em>{dw} = \beta s</em>{dw} + (1 - \beta)dw^{2}$</li>
+<li>$s<em>{db} = \beta s</em>{db} + (1 - \beta)db^{2}$</li>
+<li>$w = w - \alpha \frac{dw}{\sqrt{s_{dw}}}$</li>
+<li>$b = b - \alpha \frac{db}{\sqrt{s_{db}}}$</li>
+</ul>
+<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>结合momentum、RMSprop（$\beta<em>{1}=0.9, \beta</em>{2}=0.999$）</p>
+<p>on iteration $t$</p>
+<ul>
+<li>compute $dw$, $db$ on current mini-batch</li>
+<li>$v<em>{dw} = \beta</em>{1} v<em>{dw} + (1 - \beta</em>{1})dw$</li>
+<li>$v<em>{db} = \beta</em>{1} v<em>{db} + (1 - \beta</em>{1})db$</li>
+<li>$s<em>{dw} = \beta</em>{2} s<em>{dw} + (1 - \beta</em>{2})dw^{2}$</li>
+<li>$s<em>{db} = \beta</em>{2} s<em>{db} + (1 - \beta</em>{2})db^{2}$</li>
+<li>$V^{corrected}<em>{dw} = \frac{v</em>{dw}}{1 - \beta_{1}^{t}}$</li>
+<li>$V^{corrected}<em>{db} = \frac{v</em>{db}}{1 - \beta_{1}^{t}}$</li>
+<li>$S^{corrected}<em>{dw} = \frac{s</em>{dw}}{1 - \beta_{2}^{t}}$</li>
+<li>$S^{corrected}<em>{db} = \frac{s</em>{db}}{1 - \beta_{2}^{t}}$</li>
+<li>$w = w - \alpha \frac{V^{corrected}<em>{dw}}{\sqrt{S^{corrected}</em>{dw}}}$</li>
+<li>$b = b - \alpha \frac{V^{corrected}<em>{db}}{\sqrt{S^{corrected}</em>{db}}}$</li>
+</ul>
+<h3 id="学习率衰减-learning-rate-dacay"><a href="#学习率衰减-learning-rate-dacay" class="headerlink" title="学习率衰减 learning rate dacay"></a>学习率衰减 learning rate dacay</h3><p>学习率随epoch进行而衰减</p>
+<script type="math/tex; mode=display">
+\alpha = \frac{1}{1 + \text{decay_rate} \times \text{epoch_num}}</script><h3 id="log-scale-random搜索超参数"><a href="#log-scale-random搜索超参数" class="headerlink" title="log-scale random搜索超参数"></a>log-scale random搜索超参数</h3><p>例如，对于学习率$\alpha$，希望从0.0001至1范围内选择</p>
+<p><code>r = -4 * np.random.rand()</code><br><code>alpha = 10 ** r</code></p>
+<h3 id="正则化激活函数输入-batch-norm"><a href="#正则化激活函数输入-batch-norm" class="headerlink" title="正则化激活函数输入 batch norm"></a>正则化激活函数输入 batch norm</h3><p>输入数据正则化</p>
+<script type="math/tex; mode=display">
+\mu = \frac{1}{m}\sum x^{i} \\
+X = X - \mu \\
+\sigma^{2} = \frac{1}{m}\sum {(x^{i})}^{2} \\
+X = X / \sigma</script><p>激活函数输入正则化</p>
+<script type="math/tex; mode=display">
+\mu = \frac{1}{m}\sum z^{(i)} \\
+\sigma^{2} = \frac{1}{m}\sum {(z^{(i)} - \mu)}^{2} \\
+z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>进一步设定均值、标准差，对$z^{(i)}<em>{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}</em>{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数<br>$\gamma$、$\beta$为参数<br>此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$</p>
+<ul>
+<li>batch nrom不仅能加速训练（最优求解过程），在covariate shift问题（例如检测对象从“黑猫”偏移至“橘猫”）上也能一定程度上提升模型性能（限定了稳定的均值和标准差，前层输出变动，对后层输入影响较小）</li>
+<li>mini-batch训练时，batch norm的均值、标准差计算，使用current mini-batch的数据</li>
+<li>mini-batch测试时，batch norm的均值、标准差计算，使用训练时（同一层）各个mini-batch获取的均值、标准差，进行<strong>指数平滑</strong>来估算</li>
+</ul>
+<h2 id="学习策略"><a href="#学习策略" class="headerlink" title="学习策略"></a>学习策略</h2><h3 id="evaluation-metric"><a href="#evaluation-metric" class="headerlink" title="evaluation metric"></a>evaluation metric</h3><p>dev set + evaluation metric，进行模型选择（模型形式、超参数）</p>
+<ul>
+<li>optimizing metric</li>
+<li>satisficing metric</li>
+</ul>
+<p>只使用一个定量的evaluation (optimizing) metric</p>
+<p>通常的工作流程：</p>
+<ol>
+<li>选择算法/超参数等</li>
+<li>使用training set对模型进行训练</li>
+<li>使用dev set + evaluation metric对训练得到的模型进行评估</li>
+<li>更换算法/超参数，返回2，直到找到最佳模型</li>
+<li>使用test set对最终得到的模型进行评估，得到对模型性能的无偏估计</li>
+</ol>
+<p>此外，特别的，当模型在实际应用上出现问题时，需要考虑是否<strong>改变dev set + evaluation metric</strong></p>
+<h3 id="bias-amp-variance"><a href="#bias-amp-variance" class="headerlink" title="bias &amp; variance"></a>bias &amp; variance</h3><ol>
+<li>根据training error与Bayes error/human level error对比，判断bias</li>
+<li>根据dev/test error与training error对比，判断variance</li>
+</ol>
+<p>处理方式见上文</p>
+<p><strong>error analysis</strong><br>分析error中，大部分是哪种类型，专门进行关注（并能得到解决后，性能提升的ceiling）<br>注意，这个ceiling可以指导模型下一步的关注方向</p>
+<h3 id="training-set-v-s-dev-test-set"><a href="#training-set-v-s-dev-test-set" class="headerlink" title="training set v.s. dev/test set"></a>training set v.s. dev/test set</h3><p>training set的数据与dev/test set的数据（分布）不同<br>dev/test set为真实（关注问题）的数据</p>
+<p><strong>bias &amp; variance analysis</strong></p>
+<ul>
+<li>从training set中split一部分来做training-dev set，这部分不做training，只用于对比dev error，这样可区分high variance和data mismatch</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>training set</th>
+<th>dev set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>human level</strong></td>
+<td>human level error</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>error on examples trained on</strong></td>
+<td>training error</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>error on examples not trained on</strong></td>
+<td>training-dev error</td>
+<td>dev/test error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>human level error &lt;-&gt; training error: avoidable bias</li>
+<li>training error &lt;-&gt; training-dev error: variance</li>
+<li>training-dev error &lt;-&gt; dev/test error: data mismatch</li>
+</ul>
+<p>data mismatch处理方法：</p>
+<h4 id="重分数据集"><a href="#重分数据集" class="headerlink" title="重分数据集"></a>重分数据集</h4><ul>
+<li>mix -&gt; shuffle -&gt; re-split：但是新的dev/test set不能较好反映真正关心的问题（已经与原dev/test set不同）</li>
+<li>从dev/test set中抽出一部分，加入training set</li>
+</ul>
+<h4 id="模拟数据集"><a href="#模拟数据集" class="headerlink" title="模拟数据集"></a>模拟数据集</h4><ul>
+<li>找到dev/test set特殊在哪里，尝试在training set中合成模拟/收集类似的数据作为训练集</li>
+<li>模拟数据集时，需要注意合成方法有可能会引入过拟合问题（模拟的数据之间太相似）</li>
+</ul>
+<h3 id="迁移学习-transfer-learning"><a href="#迁移学习-transfer-learning" class="headerlink" title="迁移学习 transfer learning"></a>迁移学习 transfer learning</h3><p>已经不只是数据偏移这么简单了，target问题完全发生了变化</p>
+<p>场景：</p>
+<ul>
+<li>Task A、Task B输入类别相同（例如都是图像）</li>
+<li>Task A的数据量大于Task B（否则直接用B的数据就好了）</li>
+<li>Task A的low level特征，应该对Task B是有益的</li>
+</ul>
+<p>处理方法：</p>
+<ul>
+<li>先用一个数据集pre training，再用另一个数据集fine tuning（随机参数/层替换最后一/若干层，冻结其它层及参数，重新训练）</li>
+</ul>
+<h3 id="多任务学习-multi-task-learning"><a href="#多任务学习-multi-task-learning" class="headerlink" title="多任务学习 multi-task learning"></a>多任务学习 multi-task learning</h3><p>target问题同时有多个</p>
+<p>场景：</p>
+<ul>
+<li>low level特征对各个Task是有益的</li>
+<li>各个Task的数据量差不多，但都不多（合起来则还可以）</li>
+</ul>
+<p>处理方法：</p>
+<ul>
+<li>一个网络，输出层对应各个Task</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmleadjl000nskw2b6xm4spt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

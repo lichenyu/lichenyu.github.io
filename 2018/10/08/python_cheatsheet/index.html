@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Python Cheatsheet | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.1. 标识符 标识符由字母、数字、下划线组成，不能以数字开头。 以下划线开头的标识符是有特殊意义的。 以单下划线开头_foo的代表不能直接访问的类属性protected，需通过类提供的接口进行访问，不能用from xxx import *而导入。 以双下划线开头的__foo代表类的私有成员private。 以双下划线开头和结尾的__foo__代表Python里特殊方法专用的标识，如__init">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Cheatsheet">
+<meta property="og:url" content="http://yoursite.com/2018/10/08/python_cheatsheet/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="1.1. 标识符 标识符由字母、数字、下划线组成，不能以数字开头。 以下划线开头的标识符是有特殊意义的。 以单下划线开头_foo的代表不能直接访问的类属性protected，需通过类提供的接口进行访问，不能用from xxx import *而导入。 以双下划线开头的__foo代表类的私有成员private。 以双下划线开头和结尾的__foo__代表Python里特殊方法专用的标识，如__init">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Cheatsheet">
+<meta name="twitter:description" content="1.1. 标识符 标识符由字母、数字、下划线组成，不能以数字开头。 以下划线开头的标识符是有特殊意义的。 以单下划线开头_foo的代表不能直接访问的类属性protected，需通过类提供的接口进行访问，不能用from xxx import *而导入。 以双下划线开头的__foo代表类的私有成员private。 以双下划线开头和结尾的__foo__代表Python里特殊方法专用的标识，如__init">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/08/python_cheatsheet/" class="article-date">
+  <time datetime="2018-10-07T16:00:00.000Z" itemprop="datePublished">2018-10-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python Cheatsheet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-1-标识符"><a href="#1-1-标识符" class="headerlink" title="1.1. 标识符"></a>1.1. 标识符</h2><ul>
+<li>标识符由字母、数字、下划线组成，不能以数字开头。</li>
+<li>以下划线开头的标识符是有特殊意义的。<ul>
+<li>以单下划线开头<code>_foo</code>的代表不能直接访问的类属性protected，需通过类提供的接口进行访问，不能用<code>from xxx import *</code>而导入。</li>
+<li>以双下划线开头的<code>__foo</code>代表类的私有成员private。</li>
+<li>以双下划线开头和结尾的<code>__foo__</code>代表Python里特殊方法专用的标识，如<code>__init__()</code>代表类的构造函数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-2-变量"><a href="#1-2-变量" class="headerlink" title="1.2. 变量"></a>1.2. 变量</h2><ul>
+<li>Python 中的变量赋值不需要类型声明。每个变量在使用前都必须赋值，变量赋值以后该变量才会被创建。</li>
+<li>多变量赋值<ul>
+<li><code>a = b = c = 1</code></li>
+<li><code>a, b, c = 1, 2, &quot;john&quot;</code></li>
+</ul>
+</li>
+<li>删除对象的引用<ul>
+<li><code>del var_a, var_b</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="1-3-标准数据类型"><a href="#1-3-标准数据类型" class="headerlink" title="1.3. 标准数据类型"></a>1.3. 标准数据类型</h2><h3 id="Number数字"><a href="#Number数字" class="headerlink" title="Number数字"></a>Number数字</h3><ul>
+<li>整型 int，例如：<code>10</code>。</li>
+<li>长整型 long，例如：<code>10L</code>。<ul>
+<li><code>long</code>类型只存在于Python2.X版本中，<code>int</code>型数据溢出后会自动转为<code>long</code>型。在Python3.X版本中<code>long</code>类型被移除，使用<code>int</code>替代。</li>
+</ul>
+</li>
+<li>浮点型 float，例如：<code>10.0</code>。</li>
+<li>复数型 complex，例如：<code>10+3.14j</code>。<ul>
+<li>复数的实部和虚部都是浮点型</li>
+</ul>
+</li>
+</ul>
+<h3 id="String字符串"><a href="#String字符串" class="headerlink" title="String字符串"></a>String字符串</h3><ul>
+<li>引号<ul>
+<li>Python 可以使用引号<code>&#39;</code>、双引号<code>&quot;</code>、三引号<code>&#39;&#39;&#39;</code>或<code>&quot;&quot;&quot;</code>来表示字符串，引号的开始与结束必须的相同类型的。</li>
+<li>其中三引号可以由多行组成（字符串中换行）。</li>
+<li>原始字符串：例如<code>r&quot;\n&quot;</code>，不对字符串进行转义。</li>
+</ul>
+</li>
+<li>注释<ul>
+<li>单行注释采用<code>#</code>开头。</li>
+<li>多行注释使用三个单引号<code>&#39;&#39;&#39;</code>或三个双引号<code>&quot;&quot;&quot;</code>。</li>
+<li><code># -*- coding: UTF-8 -*-</code>。</li>
+</ul>
+</li>
+<li>截取与拼接<ul>
+<li>索引下标：从左到右索引从0开始，最大范围是n-1；从右到左索引从-1开始，最大范围-n。</li>
+<li>使用<code>[头下标:尾下标]</code>来截取相应的字符串，截取区间左闭右开[)。</li>
+<li>使用加号<code>+</code>来拼接字符串，使用乘号<code>*</code>来生成重复拼接的字符串。</li>
+</ul>
+</li>
+<li>格式化<ul>
+<li>例如：<code>a = &quot;%d, %s&quot; % (111, &quot;test&quot;)</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="List列表"><a href="#List列表" class="headerlink" title="List列表"></a>List列表</h3><ul>
+<li>用<code>[]</code>标识，元素类型可以不同，支持列表嵌套。</li>
+<li>支持截取、拼接，参考字符串截取。</li>
+<li>用<code>[下标]</code>取值。</li>
+</ul>
+<h3 id="Tuple元组"><a href="#Tuple元组" class="headerlink" title="Tuple元组"></a>Tuple元组</h3><ul>
+<li>用<code>()</code>标识，元组不能二次赋值（指定下标赋值），相当于只读列表。</li>
+<li>新建元组中只包含一个元素时，需要在元素后面添加逗号<code>tup1 = (50,)</code>。</li>
+</ul>
+<h3 id="Dictionary字典"><a href="#Dictionary字典" class="headerlink" title="Dictionary字典"></a>Dictionary字典</h3><ul>
+<li>用<code>{}</code>标识，key-value结构。</li>
+<li>用<code>[key]</code>取值。</li>
+<li>字典值可以没有限制地取任何python对象，既可以是标准的对象，也可以是用户定义的。但键必须不可变（可以用数字、字符串或元组充当，用列表就不行）。</li>
+</ul>
+<h2 id="1-4-运算符"><a href="#1-4-运算符" class="headerlink" title="1.4. 运算符"></a>1.4. 运算符</h2><ul>
+<li>算术运算符：<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、次幂<code>**</code>、取模<code>%</code>、地板除<code>//</code>（即处理浮点时，<code>1.//2=0.0</code>）。<ul>
+<li><code>=</code>及运算符与<code>=</code>连用。</li>
+<li>无<code>++</code>，因为在 Python 里的数值和字符串之类的都是不可变对象，对不可变对象操作的结果都会生成一个新的对象，而不是把某内存地址数据值增加 。</li>
+</ul>
+</li>
+<li>位运算符：<code>&amp;</code>、<code>|</code>、<code>^</code>、<code>~</code>、<code>&lt;&lt;</code>、<code>&gt;&gt;</code>。</li>
+<li>比较运算符：<code>==</code>、<code>!=</code>、另一种不等于<code>&lt;&gt;</code>、<code>&gt;</code>、<code>&lt;</code>、<code>&gt;=</code>、<code>&lt;=</code>。</li>
+<li>逻辑运算符：<code>and</code>、<code>or</code>、<code>not</code>。<ul>
+<li>可加括号，表达更清楚。</li>
+</ul>
+</li>
+<li>成员运算符：<code>in</code>、<code>not in</code>。<ul>
+<li>字符串，列表或元组中是否包含某元素。</li>
+</ul>
+</li>
+<li>身份运算符：<code>is</code>、<code>is not</code>。<ul>
+<li>是否引用同一内存。</li>
+<li>例如a为List，b=a与b=a[:]的区别，前者为传递引用，后者为拷贝。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-1-缩进"><a href="#2-1-缩进" class="headerlink" title="2.1. 缩进"></a>2.1. 缩进</h2><p>Python的代码块不使用大括号<code>{}</code>来控制类，函数以及其他逻辑判断。Python最具特色的就是<strong>用缩进来写模块</strong>。</p>
+<h2 id="2-2-条件控制"><a href="#2-2-条件控制" class="headerlink" title="2.2. 条件控制"></a>2.2. 条件控制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> expression : </span><br><span class="line">    suite </span><br><span class="line"><span class="keyword">elif</span> expression :  </span><br><span class="line">    suite  </span><br><span class="line"><span class="keyword">else</span> :  </span><br><span class="line">    suite</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-循环"><a href="#2-3-循环" class="headerlink" title="2.3. 循环"></a>2.3. 循环</h2><ul>
+<li>支持<code>continue</code>、<code>break</code>。</li>
+<li><code>pass</code>为空语句，占位语句。</li>
+</ul>
+<h3 id="while循环"><a href="#while循环" class="headerlink" title="while循环"></a>while循环</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> expression : </span><br><span class="line">    suite </span><br><span class="line"><span class="keyword">else</span> :  </span><br><span class="line">    suite</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>else</code>为非<code>break</code>退出循环的分支。</li>
+</ul>
+<h3 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> iterating_var <span class="keyword">in</span> sequence:</span><br><span class="line">    suite</span><br><span class="line"><span class="keyword">else</span> :  </span><br><span class="line">    suite</span><br></pre></td></tr></table></figure>
+<ul>
+<li>直接迭代元素：<code>for letter in &#39;Python&#39;</code>；或迭代下标：<code>for index in range(0， 10)</code>。</li>
+<li>使用<code>for index, item in enumerate(sequence)</code>，同时获取下标和值。</li>
+</ul>
+<h2 id="2-4-函数"><a href="#2-4-函数" class="headerlink" title="2.4. 函数"></a>2.4. 函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">functionname</span><span class="params">( parameters )</span>:</span></span><br><span class="line">    <span class="string">"函数_文档字符串"</span></span><br><span class="line">    function_suite</span><br><span class="line">    <span class="keyword">return</span> [expression]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数传递<ul>
+<li>数字、字符串、元组是不可变类型，而列表、字典等则是可变类型。参数传递时，不可变类型的对象传值，可变类型的对象传引用。</li>
+<li>默认参数，例如<code>def printinfo( name, age = 35 ):</code>。</li>
+<li>不定长参数，加了星号<code>*</code>的变量名会存放所有未命名的变量参数，例如<code>def printinfo( arg1, *vartuple ):</code>。</li>
+</ul>
+</li>
+<li>全局变量想作用于函数内，需加关键字<code>global</code>。</li>
+<li>匿名函数lambda<ul>
+<li><code>lambda [arg1 [,arg2,.....argn]]:expression</code>。</li>
+<li>lambda函数拥有自己的命名空间，且不能访问自有参数列表之外或全局命名空间里的参数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-5-异常处理"><a href="#2-5-异常处理" class="headerlink" title="2.5. 异常处理"></a>2.5. 异常处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">raise</span> [Exception [, args [, traceback]]]</span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    &lt;语句&gt;</span><br><span class="line"><span class="keyword">except</span>：</span><br><span class="line">    &lt;语句&gt;</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    &lt;语句&gt;</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    &lt;语句&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="2-6-模块"><a href="#2-6-模块" class="headerlink" title="2.6. 模块"></a>2.6. 模块</h2><ul>
+<li>模块导入<ul>
+<li><code>import module1</code>，使用函数：<code>module1.func1()</code>。</li>
+<li><code>from module1 import func1</code>，使用函数：<code>func1()</code>。</li>
+<li><code>from module1 import *</code>，使用函数：<code>func1()</code>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-1-面向对象"><a href="#3-1-面向对象" class="headerlink" title="3.1. 面向对象"></a>3.1. 面向对象</h2><h3 id="定义类"><a href="#定义类" class="headerlink" title="定义类"></a>定义类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span>:</span></span><br><span class="line">    <span class="string">'所有员工的基类'</span></span><br><span class="line">    empCount = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, salary)</span>:</span></span><br><span class="line">        self.name = name</span><br><span class="line">        self.salary = salary</span><br><span class="line">        Employee.empCount += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">displayCount</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Total Employee %d"</span> % Employee.empCount</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">displayEmployee</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">"Name : "</span>, self.name,  <span class="string">", Salary: "</span>, self.salary</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>empCount</code>变量是一个类变量，它的值将在这个类的所有实例之间共享。在内部类或外部类使用<code>Employee.empCount</code>访问。</li>
+<li>方法<code>__init__()</code>是构造函数。</li>
+<li><code>self</code>代表类的实例，<code>self</code>在定义类的方法时是必须有的，但在调用时不必传入相应的参数。<ul>
+<li>类的方法与普通的函数只有一个特别的区别——它们必须有一个额外的第一个参数名称, 按照惯例它的名称是<code>self</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用实例"><a href="#使用实例" class="headerlink" title="使用实例"></a>使用实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">emp1 = Employee(<span class="string">"Zara"</span>, <span class="number">2000</span>)</span><br><span class="line">emp1.displayEmployee()</span><br><span class="line"><span class="keyword">print</span> <span class="string">"Total Employee %d"</span> % Employee.empCount</span><br></pre></td></tr></table></figure>
+<ul>
+<li>无<code>new</code>关键字，使用的是构造函数<code>__init__</code>。</li>
+<li>用点号<code>.</code>访问属性、方法。</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SubClassName</span> <span class="params">(ParentClass1[, ParentClass2, ...])</span>:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在调用基类的方法时，需要加上基类的类名前缀，且需要带上<code>self</code>参数变量。</li>
+<li>调用方法时，先在本类中查找调用的方法，找不到才去基类中逐个查找。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/08/python_cheatsheet/" data-id="ckmleadln003wskw2ty6o0ezr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/17/scala_cheatsheet/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Scala Cheatsheet
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/30/kpi_check_note/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">KPI Check Note</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

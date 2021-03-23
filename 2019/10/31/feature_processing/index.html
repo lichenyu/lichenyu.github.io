@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>数据预处理、特征工程 | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在不引起重要信息丢失的前提下去除掉无关特征 (irrelevant feature) 和冗余特征 (redundant feature) 0. NaN值处理0.1. 是否保留NaN值如果NaN值过多，或者有明确的含义（比如用户拒绝选择），可以选择保留NaN值，作为一个类别型值 0.2. 删除NaN值过多的字段df1.dropna()检查各字段，如果某字段的NaN值过多，则去除该字段 0.3. 对某">
+<meta name="keywords" content="Algorithm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据预处理、特征工程">
+<meta property="og:url" content="http://yoursite.com/2019/10/31/feature_processing/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="在不引起重要信息丢失的前提下去除掉无关特征 (irrelevant feature) 和冗余特征 (redundant feature) 0. NaN值处理0.1. 是否保留NaN值如果NaN值过多，或者有明确的含义（比如用户拒绝选择），可以选择保留NaN值，作为一个类别型值 0.2. 删除NaN值过多的字段df1.dropna()检查各字段，如果某字段的NaN值过多，则去除该字段 0.3. 对某">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-22T02:49:55.346Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据预处理、特征工程">
+<meta name="twitter:description" content="在不引起重要信息丢失的前提下去除掉无关特征 (irrelevant feature) 和冗余特征 (redundant feature) 0. NaN值处理0.1. 是否保留NaN值如果NaN值过多，或者有明确的含义（比如用户拒绝选择），可以选择保留NaN值，作为一个类别型值 0.2. 删除NaN值过多的字段df1.dropna()检查各字段，如果某字段的NaN值过多，则去除该字段 0.3. 对某">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-feature_processing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/31/feature_processing/" class="article-date">
+  <time datetime="2019-10-30T16:00:00.000Z" itemprop="datePublished">2019-10-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Data-Analysis/">Data Analysis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据预处理、特征工程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在不引起重要信息丢失的前提下去除掉无关特征 (irrelevant feature) 和冗余特征 (redundant feature)</p>
+<h2 id="0-NaN值处理"><a href="#0-NaN值处理" class="headerlink" title="0. NaN值处理"></a>0. NaN值处理</h2><h3 id="0-1-是否保留NaN值"><a href="#0-1-是否保留NaN值" class="headerlink" title="0.1. 是否保留NaN值"></a>0.1. 是否保留NaN值</h3><p>如果NaN值过多，或者有明确的含义（比如用户拒绝选择），可以选择保留NaN值，作为一个类别型值</p>
+<h3 id="0-2-删除NaN值过多的字段"><a href="#0-2-删除NaN值过多的字段" class="headerlink" title="0.2. 删除NaN值过多的字段"></a>0.2. 删除NaN值过多的字段</h3><p><code>df1.dropna()</code><br>检查各字段，如果某字段的NaN值过多，则去除该字段</p>
+<h3 id="0-3-对某字段进行NaN值替换"><a href="#0-3-对某字段进行NaN值替换" class="headerlink" title="0.3. 对某字段进行NaN值替换"></a>0.3. 对某字段进行NaN值替换</h3><p><code>df1.fillna()</code><br>对某字段进行处理，将NaN值替换为某值</p>
+<h2 id="1-去除冗余"><a href="#1-去除冗余" class="headerlink" title="1. 去除冗余"></a>1. 去除冗余</h2><h3 id="1-1-低方差特征"><a href="#1-1-低方差特征" class="headerlink" title="1.1. 低方差特征"></a>1.1. 低方差特征</h3><p><code>X_new = VarianceThreshold(threshold).fit_transform(X)</code><br>阈值选取可以考虑通过均值标准化</p>
+<h3 id="1-2-高相关特征"><a href="#1-2-高相关特征" class="headerlink" title="1.2. 高相关特征"></a>1.2. 高相关特征</h3><p><strong>变量两两相关性分析</strong><br>计算特征之间的皮尔森相关系数，当两特征的相关系数大于阈值时（一般阈值设为0.7或0.4），剔除其中一个特征（比如不均衡的）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># pd.DataFrame</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_corr_heatmap</span><span class="params">(df)</span>:</span></span><br><span class="line">    dfData = df.corr()</span><br><span class="line">    plt.subplots(figsize=(<span class="number">9</span>, <span class="number">9</span>)) <span class="comment"># 设置画面大小</span></span><br><span class="line">    <span class="comment"># annot=True显示热力图上的数值大小</span></span><br><span class="line">    <span class="comment"># vmax是显示最大值</span></span><br><span class="line">    <span class="comment"># square=True将图变成一个正方形，默认是一个矩形</span></span><br><span class="line">    <span class="comment"># cmap="Blues"指定一种颜色配置方案</span></span><br><span class="line">    sns.heatmap(dfData, annot=<span class="keyword">True</span>, vmax=<span class="number">1</span>, square=<span class="keyword">True</span>, cmap=<span class="string">"Blues"</span>)</span><br><span class="line">    plt.savefig(<span class="string">'./BluesStateRelation.png'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<h3 id="1-3-多重共线性特征"><a href="#1-3-多重共线性特征" class="headerlink" title="1.3. 多重共线性特征"></a>1.3. 多重共线性特征</h3><p>某特征可由其他一系列特征线性组合计算出</p>
+<p>多元共线性带来的一些问题：</p>
+<ul>
+<li>特征不显著</li>
+<li>对参数估计值的正负号产生影响</li>
+<li>对准确性能影响较小，但会影响模型（求算）的复杂程度</li>
+</ul>
+<p>举个简单的例子：比如对一个二元线性回归模型，自变量是x1和x2，如果我们画图大家可以很自然的想象出一个三维（三轴）坐标系。假如x1和x2之间没有多重共线性，那么这个模型就是一个确定了的超平面。但假如x1和x2有很强的多重共线性，那么这个模型就近似是一个直线向量，而以这个直线所拟合出来的平面是无数个的（穿过一条直线的平面是不固定的）。这也就造成了回归系数的不确定性，以及模型无法稳定。</p>
+<p><code>variance_inflation_factor</code><br>通常用VIF值来衡量一个变量和其他变量的多重共线性，当某个变量的VIF大于阈值时（一般阈值设为10 或 7），需要剔除特征</p>
+<p>此外，使用降维、模型加正则项的方式，也可以解决</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">b=np.array(df1)</span><br><span class="line">VIF=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(df1.shape[<span class="number">1</span>]):</span><br><span class="line">    vifi=variance_inflation_factor(exog=b,exog_idx=i)</span><br><span class="line">    VIF.append(vifi)</span><br><span class="line">print(VIF)</span><br></pre></td></tr></table></figure>
+<h2 id="2-特征选择-基于相关性检验"><a href="#2-特征选择-基于相关性检验" class="headerlink" title="2. 特征选择-基于相关性检验"></a>2. 特征选择-基于相关性检验</h2><h3 id="2-1-单特征与label之间的相关性"><a href="#2-1-单特征与label之间的相关性" class="headerlink" title="2.1. 单特征与label之间的相关性"></a>2.1. 单特征与label之间的相关性</h3><p><code>SelectKBest</code>、<code>SelectPercentile</code></p>
+<p><strong>评价指标</strong><br>对于分类: <code>chi2</code>（卡方检验）、<code>f_classif</code>（F检验）、<code>mutual_info_classif</code>（互信息）<br>对于回归: <code>f_regression</code>（F检验）、<code>mutual_info_regression</code>（互信息）</p>
+<p>相较于相关系数，互信息可以识别非单调的关系（例如先递增再递减），但也要考虑后续使用的模型是否支持这种特征（例如线性模型可能就不适合，树形模型就还好）。</p>
+<p>例如，<strong>chi2检验</strong>：<br>chi2检验用于<strong>独立性</strong>检验，即关注两变量的<strong>相关</strong>程度（注意区别于，同分布检验-ks检验）<br><a href="/2019/10/30/chi2_test/" title="chi2检验具体介绍">chi2检验具体介绍</a><br>chi2越大，x与y越相关（取前k个）<br><code>X_new = SelectKBest(chi2, k=5).fit_transform(X, y)</code><br><code>X_new = SelectPercentile(chi2, percentile=10).fit_transform(X, y)</code></p>
+<h2 id="3-特征选择-基于预训练模型-有效性"><a href="#3-特征选择-基于预训练模型-有效性" class="headerlink" title="3. 特征选择-基于预训练模型-有效性"></a>3. 特征选择-基于预训练模型-有效性</h2><p><code>RFE</code>、<code>SelectFromModel</code></p>
+<p>最常用的包装法是递归消除特征法（recursive feature elimination，RFE）。递归消除特征法使用一个机器学习模型来进行多轮训练，每轮训练后，消除若干权值系数的对应的特征，再基于新的特征集进行下一轮训练。</p>
+<p>嵌入法也是用机器学习的方法来选择特征，但是它和RFE的区别是它不是通过不停的筛掉特征来进行训练，而是使用的都是特征全集。</p>
+<h3 id="3-1-线性模型权重"><a href="#3-1-线性模型权重" class="headerlink" title="3.1. 线性模型权重"></a>3.1. 线性模型权重</h3><p>对于包装法，以经典的SVM-RFE算法来讨论这个特征选择的思路。这个算法以支持向量机来做RFE的机器学习模型选择特征。它在第一轮训练的时候，会选择所有的特征来训练，得到了分类的超平面$wx+b=0$后，如果有n个特征，那么RFE-SVM会选择出$w$中分量的平方值$w^2_i$最小的那个序号$i$对应的特征，将其排除。在第二次分类的时候，特征数就剩下$n-1$个了，我们继续用这$n-1$个特征和输出值来训练SVM，同样的，去掉$w^2_i$最小的那个序号$i$对应的特征。以此类推，直到剩下的特征数满足我们的需求为止。<br><code>X_new = RFE(estimator=SVC(kernel=&quot;linear&quot;, C=1), n_features_to_select=5, step=1).fit_transform(X, y)</code></p>
+<p>对于嵌入法，最常用的是使用L1正则化和L2正则化来选择特征。正则化惩罚项越大，那么模型的系数就会越小。当正则化惩罚项大到一定的程度的时候，部分特征系数会变成0，当正则化惩罚项继续增大到一定程度时，所有的特征系数都会趋于0. 但是我们会发现一部分特征系数会更容易先变成0，这部分系数就是可以筛掉的。也就是说，我们选择特征系数较大的特征。常用的L1正则化和L2正则化来选择特征的基学习器是逻辑回归。<br><code>X_new = SelectFromModel(LogisticRegression(penalty=&quot;l1&quot;, C=0.1)).fit_transform(X, y)</code></p>
+<h3 id="3-2-树形模型feature-importance"><a href="#3-2-树形模型feature-importance" class="headerlink" title="3.2. 树形模型feature importance"></a>3.2. 树形模型feature importance</h3><p>此外对于嵌入法，也可以使用决策树或者GBDT。<br>一般来说，可以得到特征系数coef或者可以得到特征重要度(feature importances)的算法才可以做为嵌入法的基学习器。<br><code>SelectFromModel</code>可以用来处理任何带有<code>coef_</code>或者<code>feature_importances_</code>属性的训练之后的评估器。<br><code>X_new = SelectFromModel(GradientBoostingClassifier()).fit_transform(X, y)</code></p>
+<h2 id="4-特征选择-面向仅有类别型（分箱）变量的场景"><a href="#4-特征选择-面向仅有类别型（分箱）变量的场景" class="headerlink" title="4. 特征选择-面向仅有类别型（分箱）变量的场景"></a>4. 特征选择-面向仅有类别型（分箱）变量的场景</h2><p>对于“评分卡”这种模型形式，所有特征都是分箱的（并使用WOE编码）。<br>计算各个特征的<strong>IV值</strong>，取IV值大的特征。<br>某特征的IV值计算如下：</p>
+<script type="math/tex; mode=display">
+IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i  = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}}</script><p>其中$i$为该特征的某个分箱。</p>
+<h2 id="5-特征选择-特征在时间上稳定性"><a href="#5-特征选择-特征在时间上稳定性" class="headerlink" title="5. 特征选择-特征在时间上稳定性"></a>5. 特征选择-特征在时间上稳定性</h2><h3 id="5-1-PSI"><a href="#5-1-PSI" class="headerlink" title="5.1. PSI"></a>5.1. PSI</h3><p>Population Stability Index<br>关注特征的取值，会不会随着时间的推移发生较大的变动</p>
+<p>对某特征，获取base集与target集（分别对应不同时期的数据）。在base集进行分箱，分出$i$个等距区间，在target集使用同样标准划分。$\#_{i, base}$表示该特征在base集中$i$分箱的记录数量，则该特征PSI定义为：</p>
+<script type="math/tex; mode=display">
+PSI = \sum_i [(\#_{i, target} - \#_{i, base}) \ln (\frac {\#_{i, target}} {\#_{i, base}})]</script><p>PSI衡量了某特征在两个数据集中各个分箱中记录数量的分布，是否发生了变化；也就反应了该特征的总体分布，是否发生了变化<br>可以计算base集与一些列不同后推时间的target集的PSI值，检查PSI变化情况</p>
+<h3 id="5-2-KS检验"><a href="#5-2-KS检验" class="headerlink" title="5.2. KS检验"></a>5.2. KS检验</h3><p>同分布检验</p>
+<h2 id="6-降维"><a href="#6-降维" class="headerlink" title="6. 降维"></a>6. 降维</h2><p>常见的降维方法有主成分分析法（PCA）和线性判别分析（LDA），线性判别分析本身也是一个分类模型。<br>PCA和LDA有很多的相似点，其本质是要将原始的样本映射到维度更低的样本空间中，但是PCA和LDA的映射目标不一样：</p>
+<ul>
+<li>PCA是为了让映射后的样本具有最大的发散性（各点相距尽可能远）</li>
+<li>LDA是为了让映射后的样本有最好的分类性能（同类别的点相距尽可能近，不同类别的点相距尽可能远）</li>
+</ul>
+<p>所以说PCA是一种无监督的降维方法，而LDA是一种有监督的降维方法。</p>
+<p><code>X_new = PCA(n_components=5).fit_transform(X)</code><br><code>X_new = LDA(n_components=5).fit_transform(X, y)</code></p>
+<h2 id="7-交叉特征"><a href="#7-交叉特征" class="headerlink" title="7. 交叉特征"></a>7. 交叉特征</h2><ul>
+<li>人工特征交叉<ul>
+<li>全量两两组合，按单特征处理</li>
+<li>专家经验：例如点击率预估中，应用最多的就是广告跟用户的交叉特征、广告跟性别的交叉特征，广告跟年龄的交叉特征，广告跟手机平台的交叉特征，广告跟地域的交叉特征等等。</li>
+</ul>
+</li>
+<li>模型自动组合<ul>
+<li>FM，分析二阶项系数大小</li>
+<li>GBDT+LR（限制tree层数），分析叶子节点路径</li>
+</ul>
+</li>
+<li>直接使用DNN呀<ul>
+<li>虽然可以直接输入所有一阶特征，由模型学习特征之间的关系（线性、非线性），但最好还是有embedding层</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/31/feature_processing/" data-id="ckmleadk7001uskw250sd49dj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/11/04/rl_q_learning/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          强化学习 Q-Learning
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/30/chi2_test/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">卡方检验</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

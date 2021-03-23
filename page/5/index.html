@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="ChenyuShuxin">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChenyuShuxin">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-credit_scorecard" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/25/credit_scorecard/" class="article-date">
+  <time datetime="2019-07-24T16:00:00.000Z" itemprop="datePublished">2019-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Data-Analysis/">Data Analysis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/25/credit_scorecard/">信用评分卡</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="评分卡构建"><a href="#评分卡构建" class="headerlink" title="评分卡构建"></a>评分卡构建</h2><h3 id="通用流程"><a href="#通用流程" class="headerlink" title="通用流程"></a>通用流程</h3><ol>
+<li>数据预处理<ul>
+<li>缺失值处理（填充、丢弃字段）</li>
+<li>异常值处理（丢弃记录）</li>
+<li><em>探索性数据分析EDA（各字段统计信息）</em></li>
+</ul>
+</li>
+<li>特征选择<ul>
+<li>分箱</li>
+<li>特征选择</li>
+<li>相关性分析</li>
+</ul>
+</li>
+<li>模型训练<ul>
+<li>Logistic Regression</li>
+<li><em>系数符号筛选特征：模型中各个特征的系数，如果出现了负数，说明一些特征的线性相关性较强</em></li>
+<li>性能评估（AUC）</li>
+</ul>
+</li>
+<li>计算评分</li>
+</ol>
+<h3 id="分箱"><a href="#分箱" class="headerlink" title="分箱"></a>分箱</h3><ul>
+<li>等距分箱</li>
+<li>等频分箱</li>
+<li>基于WOE分箱<ul>
+<li><a href="/2019/07/24/weight_of_evidence/" title="WOE与IV">WOE与IV</a>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3><ul>
+<li>基于IV特征选择<ul>
+<li><a href="/2019/07/24/weight_of_evidence/" title="WOE与IV">WOE与IV</a></li>
+</ul>
+</li>
+<li>基于RF特征选择<br>获取随机森林中，各特征importance</li>
+</ul>
+<h3 id="计算评分"><a href="#计算评分" class="headerlink" title="计算评分"></a>计算评分</h3><p>首先来看一下评分卡的形式：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征名称</th>
+<th>特征范围</th>
+<th>得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基准分</td>
+<td></td>
+<td>xxx</td>
+</tr>
+<tr>
+<td>特征1</td>
+<td>分箱1</td>
+<td>aaa</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>bbb</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱p</td>
+<td>ppp</td>
+</tr>
+<tr>
+<td>特征2</td>
+<td>分箱1</td>
+<td>mmm</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>nnn</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱q</td>
+<td>qqq</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>由于得分最终是由基础分、各“特征-某分箱”得分的累加，可知特征值与得分是线性关系。<br>又由逻辑回归，可知</p>
+<script type="math/tex; mode=display">
+\ln(\frac{p}{1-p}) = \mathbf{\theta}^{T} \mathbf{x} = w_{0} + w_{1}x_{1} + ... + w_{0}x_{n}</script><p>其中$p$为预测好用户概率，$\frac{p}{1-p}$为odds，$x_{i}$为第$i$维特征。<br>利用此线性关系，不妨定义信用评分$Score$为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Score &= A + B \times \ln(\frac{p}{1-p})\\
+&= A + B \times (w_{0} + w_{1}x_{1} + ... + w_{0}x_{n})\\
+&=(A + Bw_{0}) + Bw_{1}x_{1} + Bw_{2}x_{2} + ... + Bw_{n}x_{n}
+\end{align*}</script><p>$x<em>{1}, …, x</em>{n}$是各维特征的WOE编码。为了容易看出评分卡的求算，不妨将各维特征的分箱展开，则上式为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2} + ... + Bw_{1}WOE_{1,p}\sigma_{1,p}\\
+&+ Bw_{2}WOE_{2,1}\sigma_{2,1} + Bw_{2}WOE_{2,2}\sigma_{2,2} + ... + Bw_{2}WOE_{2,q}\sigma_{2,q}\\
+&+ ...
+\end{align*}</script><p>其中，$WOE<em>{1,2}$为第1个特征第2个分箱的WOE值，$\sigma</em>{1,2}$是一个取值为0、1的指示变量，$\sigma<em>{1,1}, \sigma</em>{1,2}, …, \sigma_{1,p}$只能有一个为1。<br>由此，填充评分卡。注意，评分卡的输入变量，只能是$\sigma$指示变量，即WOE要提出去。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征名称</th>
+<th>特征范围</th>
+<th>得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基准分</td>
+<td></td>
+<td>$A + Bw_{0}$</td>
+</tr>
+<tr>
+<td>特征1</td>
+<td>分箱1</td>
+<td>$Bw<em>{1}WOE</em>{1,1}$</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>$Bw<em>{1}WOE</em>{1,2}$</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱p</td>
+<td>$Bw<em>{1}WOE</em>{1,p}$</td>
+</tr>
+<tr>
+<td>特征2</td>
+<td>分箱1</td>
+<td>$Bw<em>{2}WOE</em>{2,1}$</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>$Bw<em>{2}WOE</em>{2,2}$</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱q</td>
+<td>$Bw<em>{2}WOE</em>{2,q}$</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>上面卡片中，$w$由逻辑回归模型得出，WOE由特征分箱求算，剩下的$A, B$可以看做超参数，预先定义。<br>由于</p>
+<script type="math/tex; mode=display">
+Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场景条件：当$odds = \theta<em>{0}$时，$Score = P</em>{0}$；当$odds = 2\theta<em>{0}$翻倍时，$Score = P</em>{0} + PDO$，以此来求得$A, B$。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&P_{0} = A + B \times \ln(\theta_{0})\\
+&P_{0} + PDO = A + B \times \ln(2\theta_{0})
+\end{align*}</script><p>可得:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&B = \frac{PDO}{\ln2}\\
+&A = P_{0} - B\ln(\theta_{0})
+\end{align*}</script><p>一般行业规则：当$odds = \theta<em>{0} = 50$时，$Score = 600$；当$odds$翻倍时，$Score = P</em>{0} + 20$。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmleadjf000iskw2u6cqb89q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-weight_of_evidence" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/24/weight_of_evidence/" class="article-date">
+  <time datetime="2019-07-23T16:00:00.000Z" itemprop="datePublished">2019-07-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Data-Analysis/">Data Analysis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/24/weight_of_evidence/">Weight of Evidence (WOE)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="weight-of-evidence-WOE"><a href="#weight-of-evidence-WOE" class="headerlink" title="weight of evidence (WOE)"></a>weight of evidence (WOE)</h2><p>woe编码可对标于dummy变量，对一个<strong>类别型</strong>特征进行<strong>编码</strong>，转换成一个数值型变量。<br>例如，在credit scoring的case中，label是一个binary的值（Good，Bad）。则，对于某一个类别型特征（或数值型特征分箱后），其各类别的woe可定义为：</p>
+<script type="math/tex; mode=display">
+WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac{\#G_{i}}{\#B_{i}}}{\frac{\#G}{\#B}}}</script><p>其中，$\#G<em>{i}$为该类别Good数量，$\#G$为总Good数量，$\#B</em>{i}$为该类别Bad数量，$\#B$为总Bad数量。<br>可以看出，$\ln$中的值在描述“本类别的G、B分布比例，与总体的G、B分布比例，是否相似”。<br>若本类别的分布极为特殊，则woe值较大，表明本类别具有较强的区分性；若本类别的分布与总体基本一致，则woe近似为0，表明本类别区分性较弱。</p>
+<p><strong>基于WOE分箱：</strong></p>
+<ul>
+<li>For continuous independent variables: First, create 10 or 20 bins (categories / groups) for a continuous independent variable and then combine categories with similar WOE values and replace categories with WOE values. Use WOE values rather than input values in your model.</li>
+<li>For categorical independent variables: Combine categories with similar WOE and then create new categories of an independent variable with continuous WOE values. In other words, use WOE values rather than raw categories in your model. The transformed variable will be a continuous variable with WOE values. It is same as any continuous variable.</li>
+</ul>
+<p><strong>基于WOE分箱-指导规则：</strong></p>
+<ul>
+<li>Each category (bin) should have at least 5% of the observations.</li>
+<li>Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G<em>{i} + 0.5$, $\#B</em>{i} + 0.5$</li>
+<li>The WOE should be distinct for each category. Similar groups should be aggregated.</li>
+<li>For logistic regression, the WOE should be monotonic, i.e. either growing or decreasing with the groupings. (It is because logistic regression assumes there must be a linear relationship between logit function and independent variable.) 最好满足</li>
+<li>Missing values are binned separately. 若未做缺失值预处理</li>
+</ul>
+<p>Why combine categories with similar WOE?<br>It is because the categories with similar WOE have almost same proportion of events and non-events. In other words, the behavior of both the categories is same.</p>
+<h2 id="information-value-IV"><a href="#information-value-IV" class="headerlink" title="information value (IV)"></a>information value (IV)</h2><p>WOE only considers the relative risk of each bin, without considering the proportion of accounts in each bin. （各个bin占总体的比例，或者说各个bin中的绝对数量）<br>The information value can be utilised instead to assess the relative contribution of each bin.</p>
+<script type="math/tex; mode=display">
+IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script><p>Information value is one of the most useful technique to <strong>select important variables</strong> in a predictive model. It helps to rank variables on the basis of their importance.</p>
+<p><strong>基于IV特征选择</strong></p>
+<p>If the IV statistic is:</p>
+<ul>
+<li>Less than 0.02, then the predictor is not useful for modeling (separating the Goods from the Bads)</li>
+<li>0.02 to 0.1, then the predictor has only a weak relationship to the Goods/Bads odds ratio</li>
+<li>0.1 to 0.3, then the predictor has a medium strength relationship to the Goods/Bads odds ratio</li>
+<li>0.3 to 0.5, then the predictor has a strong relationship to the Goods/Bads odds ratio.</li>
+<li>0.5, suspicious relationship (Check once)</li>
+</ul>
+<p>Information value is not an optimal feature (variable) selection method when you are building a classification model other than binary logistic regression (for eg. random forest or SVM) as conditional log odds (which we predict in a logistic regression model) is highly related to the calculation of weight of evidence. In other words, it’s designed mainly for binary logistic regression model. Also think this way - Random forest can detect non-linear relationship very well so selecting variables via Information Value and using them in random forest model might not produce the most accurate and robust predictive model.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmleadn20072skw296ydif3y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python_pandas" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/17/python_pandas/" class="article-date">
+  <time datetime="2019-07-16T16:00:00.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/17/python_pandas/">Python Pandas</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h2><p>Series is a one-dimensional labeled array capable of holding any data type.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.Series(data, index)</code></td>
+<td>创建，可由<code>list</code>、<code>np 1darray</code>、<code>dict</code>等创建</td>
+</tr>
+<tr>
+<td></td>
+<td>指定的<code>index</code>，需保证长度与<code>data</code>的长度对应。由<code>dict</code>创建，则可以不对应。<code>index</code>在<code>keys</code>值中设置，<code>keys</code>以外的，<code>value</code>为<code>NaN</code>。</td>
+</tr>
+<tr>
+<td><code>Series.to_numpy()</code></td>
+<td>直接转成<code>ndarray</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>索引、切片、计算等操作，与<code>ndarray</code>相同</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由list创建</span></span><br><span class="line">s1 = pd.Series(range(<span class="number">5</span>))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">0    0</span></span><br><span class="line"><span class="string">1    1</span></span><br><span class="line"><span class="string">2    2</span></span><br><span class="line"><span class="string">3    3</span></span><br><span class="line"><span class="string">4    4</span></span><br><span class="line"><span class="string">dtype: int64</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 由1darray创建</span></span><br><span class="line">s2 = pd.Series(np.arange(<span class="number">5</span>, dtype=np.uint64), index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">a    0</span></span><br><span class="line"><span class="string">b    1</span></span><br><span class="line"><span class="string">c    2</span></span><br><span class="line"><span class="string">d    3</span></span><br><span class="line"><span class="string">e    4</span></span><br><span class="line"><span class="string">dtype: uint64</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># 由dict创建</span></span><br><span class="line">s3 = pd.Series(&#123;<span class="string">'a'</span>:<span class="string">'0'</span>, <span class="string">'b'</span>:<span class="string">'1'</span>, <span class="string">'c'</span>:<span class="string">'2'</span>, <span class="string">'d'</span>:<span class="string">'3'</span>, <span class="string">'e'</span>:<span class="string">'4'</span>&#125;, index=[<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'xx'</span>])</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">a       0</span></span><br><span class="line"><span class="string">b       1</span></span><br><span class="line"><span class="string">c       2</span></span><br><span class="line"><span class="string">xx    NaN</span></span><br><span class="line"><span class="string">dtype: object</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h2 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h2><p>DataFrame is a 2-dimensional labeled data structure with columns of potentially different types.</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.DataFrame(data, index, columns)</code></td>
+<td>创建，可由<code>np 2darray</code>、<code>dict</code>等创建</td>
+</tr>
+<tr>
+<td></td>
+<td>指定的<code>index</code>、<code>columns</code>，需保证长度与<code>data</code>的<code>shape</code>对应。由<code>dict</code>创建，则可以不对应。<code>columns</code>在<code>keys</code>值中设置（<code>dict</code>的<code>values</code>是序列，能生成<code>index</code>），<code>keys</code>以外的，<code>value</code>为<code>NaN</code>。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 由2darray创建</span></span><br><span class="line">d1 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">df1 = pd.DataFrame(d1, index=[<span class="number">997</span>, <span class="number">998</span>, <span class="number">999</span>], columns=[<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>])</span><br><span class="line">print(df1)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">     A  B   C   D</span></span><br><span class="line"><span class="string">997  0  1   2   3</span></span><br><span class="line"><span class="string">998  4  5   6   7</span></span><br><span class="line"><span class="string">999  8  9  10  11</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由dict of list创建</span></span><br><span class="line">d2 = &#123;<span class="string">'one'</span>: [<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>], <span class="string">'two'</span>: [<span class="number">4.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">1.</span>]&#125;</span><br><span class="line">df2 = pd.DataFrame(d2, columns=[<span class="string">'one'</span>])</span><br><span class="line">print(df2)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">   one</span></span><br><span class="line"><span class="string">0  1.0</span></span><br><span class="line"><span class="string">1  2.0</span></span><br><span class="line"><span class="string">2  3.0</span></span><br><span class="line"><span class="string">3  4.0</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 由dict of Series创建</span></span><br><span class="line">d3 = &#123;<span class="string">'one'</span>: pd.Series([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>, <span class="number">4.</span>]), <span class="string">'two'</span>: pd.Series([<span class="number">4.</span>, <span class="number">3.</span>, <span class="number">2.</span>, <span class="number">1.</span>])&#125;</span><br><span class="line">df3 = pd.DataFrame(d3, index=[<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>], columns=[<span class="string">'two'</span>, <span class="string">'three'</span>])</span><br><span class="line">print(df3)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">   two three</span></span><br><span class="line"><span class="string">0  4.0   NaN</span></span><br><span class="line"><span class="string">2  2.0   NaN</span></span><br><span class="line"><span class="string">4  NaN   NaN</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h3 id="存取"><a href="#存取" class="headerlink" title="存取"></a>存取</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.read_csv(&#39;foo.csv&#39;)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df.to_csv(&#39;foo.csv&#39;)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>多文件合并demo</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data_from_csv</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> isinstance(obj, list) <span class="keyword">and</span> len(obj) &gt; <span class="number">0</span>:</span><br><span class="line">        df_list = []</span><br><span class="line">        <span class="keyword">for</span> p <span class="keyword">in</span> obj:</span><br><span class="line">            df_list.append(pd.read_csv(p, header=<span class="number">0</span>))</span><br><span class="line">        all_data = pd.concat(df_list)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        all_data = pd.read_csv(obj, header=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> all_data</span><br></pre></td></tr></table></figure>
+<h3 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pd.concat(df_list)</code></td>
+<td>增加行，纵向连接多个DataFrame</td>
+</tr>
+<tr>
+<td><code>pd.merge(left, right, how=&#39;inner&#39;, on=None)</code></td>
+<td>增加列，join两个DataFrame，<code>how</code>指定join方式（左右内外），<code>on</code>指定key</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df1.head(1)</code></td>
+<td>查看头，默认5行</td>
+</tr>
+<tr>
+<td><code>df1.tail(1)</code></td>
+<td>查看尾，默认5行</td>
+</tr>
+<tr>
+<td><code>df1.index</code></td>
+<td>查看index</td>
+</tr>
+<tr>
+<td><code>df1.columns</code></td>
+<td>查看columns</td>
+</tr>
+<tr>
+<td></td>
+<td>按列名称，选择列<code>df1[df1.columns[bool_list]]</code></td>
+</tr>
+<tr>
+<td><code>df1.dtypes</code></td>
+<td>查看各列dtype</td>
+</tr>
+<tr>
+<td><code>df1.info()</code></td>
+<td>查看非空值数量等信息</td>
+</tr>
+<tr>
+<td><code>df1.describe()</code></td>
+<td>查看基本统计量等信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数值类型</span></span><br><span class="line">df1.describe().T.assign(missing_pct=df1.apply(<span class="keyword">lambda</span> x: (len(x) - x.count()) / len(x)))</span><br><span class="line"><span class="comment"># 非数值类型</span></span><br><span class="line">df1.select_dtypes(include=[<span class="string">'object'</span>]).describe().T.assign(missing_pct=df1.apply(<span class="keyword">lambda</span> x: (len(x) - x.count()) / len(x)))</span><br></pre></td></tr></table></figure>
+<h3 id="获取与修改"><a href="#获取与修改" class="headerlink" title="获取与修改"></a>获取与修改</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>获取列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[&#39;A&#39;]</code></td>
+<td>获取列，根据<strong>列名</strong>获取单列</td>
+</tr>
+<tr>
+<td><code>df1[[&#39;A&#39;, &#39;B&#39;]]</code></td>
+<td>获取列，根据<strong>列名</strong>list获取多列</td>
+</tr>
+<tr>
+<td><em>获取行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[0:1]</code></td>
+<td>获取行，使用<strong>切片</strong>直接获取连续多行</td>
+</tr>
+<tr>
+<td><code>df1.loc[997]</code></td>
+<td>获取行，根据<strong>索引名称</strong>获取单行（索引名称有可能非数字）</td>
+</tr>
+<tr>
+<td><code>df1.loc[997:999]</code></td>
+<td>获取行，根据<strong>索引名称</strong>获取连续行（<strong>本方法较特殊，会包含’999’行</strong>）</td>
+</tr>
+<tr>
+<td><code>df1.loc[[997, 999]]</code></td>
+<td>获取行，根据<strong>索引名称</strong>获取跳行</td>
+</tr>
+<tr>
+<td><code>df1.iloc[0]</code></td>
+<td>获取行，根据<strong>行位置</strong>获取单行</td>
+</tr>
+<tr>
+<td><code>df1.iloc[0:2]</code></td>
+<td>获取行，根据<strong>行位置</strong>获取连续行</td>
+</tr>
+<tr>
+<td><code>df1.iloc[[0, 2]]</code></td>
+<td>获取行，根据<strong>行位置</strong>获取跳行</td>
+</tr>
+<tr>
+<td><em>获取行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[bool_list]</code></td>
+<td>通过生成与行数同len的布尔Series，来<strong>选择行</strong></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] == 10]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] != 10]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] &gt; 10]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;].isnull()]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;].isin([10, 20])]</code></td>
+</tr>
+<tr>
+<td><code>df1[df1[&#39;col1&#39;] == 10 &amp; df1[&#39;col2&#39;].isin([10, 20])]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>获取列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df[df.columns[bool_list]]</code></td>
+<td>通过生成与列数同len的布尔Series，来选择列名，进而<strong>选择列</strong></td>
+</tr>
+<tr>
+<td><code>df1[df1.columns[df1.isnull().all(axis=0)]]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df[:, bool_list]</code></td>
+<td>通过生成与列数同len的布尔Series，来<strong>选择列</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.iloc[:, df1.isnull().all(axis=0).values]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.iloc[:, [df1[col].isnull().all() for col in df1.columns]]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>删除列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>del df1[&#39;A&#39;]</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>删除行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.drop(index_list, inplace=True)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><em>新增行</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.append(s, ignore_index=True)</code></td>
+<td>append行，<code>ignore_index=True</code>使得df1的index不会被s的影响</td>
+</tr>
+<tr>
+<td><em>新增列</em></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1[&#39;K&#39;] = &#39;k&#39;</code></td>
+<td>k会被广播</td>
+</tr>
+<tr>
+<td><code>df1[&#39;K&#39;] = list</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.assign(new_colname=list)</code></td>
+<td>create a new dataframe</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df1.assign(new_colname=df[&#39;temp_c&#39;] * 9 / 5 + 32)</code></td>
+</tr>
+<tr>
+<td><code>df1.assign(new_colname=func)</code></td>
+<td><code>func</code>被用于<code>df1</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>df1.assign(new_colname=lambda x: x.temp_c * 9 / 5 + 32)</code></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>df1.sort_values(by=&#39;K&#39;)</code></td>
+<td>按值排序</td>
+</tr>
+<tr>
+<td><code>df1.apply(func)</code></td>
+<td><code>func</code>被用于<code>df1</code>，得到一组<code>func</code>的计算结果</td>
+</tr>
+<tr>
+<td></td>
+<td><code>df1.apply(lambda x: x.max() - x.min())</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>对NaN操作</strong>：</p>
+<ul>
+<li>去除NaN：<code>df1.dropna()</code><ul>
+<li><code>axis : {0 or ‘index’, 1 or ‘columns’}, default 0</code><strong>此处有坑，axis操作预期与其他处不同！</strong><ul>
+<li>0, or ‘index’ : Drop rows which contain missing values.</li>
+<li>1, or ‘columns’ : Drop columns which contain missing value.</li>
+</ul>
+</li>
+<li><code>how : {‘any’, ‘all’}, default ‘any’</code><ul>
+<li>‘any’ : If any NA values are present, drop that row or column.</li>
+<li>‘all’ : If all values are NA, drop that row or column.</li>
+</ul>
+</li>
+<li><code>thresh : int, optional</code><ul>
+<li>‘any’、‘all’的折中，达到‘thresh’个NaN再去除</li>
+</ul>
+</li>
+<li><code>subset : array-like, optional</code><ul>
+<li>Labels along other axis to consider, e.g. if you are dropping rows these would be a list of columns to include.</li>
+<li>指定考察哪些（字段）</li>
+</ul>
+</li>
+<li><code>inplace : bool, default False</code><ul>
+<li>If True, do operation inplace and return None.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>替换NaN：<code>df1.fillna()</code></li>
+</ul>
+<h3 id="汇聚"><a href="#汇聚" class="headerlink" title="汇聚"></a>汇聚</h3><p><code>groupby</code></p>
+<ul>
+<li>例如：<code>df1.groupby(&#39;A&#39;).sum()</code>、<code>df1.groupby(&#39;A&#39;).size()</code><br>By “group by” we are referring to a process involving one or more of the following steps:<ul>
+<li>Splitting the data into groups based on some criteria</li>
+<li>Applying a function to each group independently</li>
+<li>Combining the results into a data structure</li>
+</ul>
+</li>
+</ul>
+<p><code>pivot_table</code></p>
+<ul>
+<li>例如：<code>pd.pivot_table(df1, index=[&#39;sex&#39;, &#39;smoker&#39;], columns=&#39;day&#39;, values=&#39;some_metric&#39;, aggfunc=sum, margins=True)</code><ul>
+<li><code>index</code>：按什么key汇聚，index的值的组合，将作为维度数量</li>
+<li><code>columns</code>：指定汇聚多列时，各列维度是什么。columns的值的组合，将作为维度数量（不指定则直接聚合values）</li>
+<li><code>values</code>：汇聚的什么值</li>
+<li><code>aggfunc</code>：用什么聚合函数汇聚</li>
+<li><code>margins</code>：是否给出总计</li>
+</ul>
+</li>
+</ul>
+<h4 id="时间索引"><a href="#时间索引" class="headerlink" title="时间索引"></a>时间索引</h4><p>对于时间序列，index是时间，可以转化使用pd中时间索引类型。</p>
+<ul>
+<li>生成时间索引：<code>pd.date_range(&#39;2019-01-01&#39;, periods=72, freq=&#39;H&#39;)</code></li>
+<li>将已有字段转为pandas时间格式：<code>pd.to_datetime(col, format=&#39;%d.%m.%Y&#39;)</code><ul>
+<li>设为index：<code>df1.set_index(col, inplace=True)</code>，inplace原地转换DataFrame，而不会新建</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/17/python_pandas/" data-id="ckmleadlz004oskw2rmeb901q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python_scipy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/17/python_scipy/" class="article-date">
+  <time datetime="2019-07-16T16:00:00.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/17/python_scipy/">Python Scipy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><h3 id="FFT"><a href="#FFT" class="headerlink" title="FFT"></a>FFT</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.fftpack <span class="keyword">import</span> fft, ifft</span><br><span class="line"></span><br><span class="line">a = np.arange(<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">fa = fft(a)</span><br><span class="line">print(fa)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[120. +0.j          -8.+40.21871594j  -8.+19.3137085j   -8.+11.9728461j</span></span><br><span class="line"><span class="string">  -8. +8.j          -8. +5.3454291j   -8. +3.3137085j   -8. +1.59129894j</span></span><br><span class="line"><span class="string">  -8. +0.j          -8. -1.59129894j  -8. -3.3137085j   -8. -5.3454291j</span></span><br><span class="line"><span class="string">  -8. -8.j          -8.-11.9728461j   -8.-19.3137085j   -8.-40.21871594j]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">aa = ifft(fa)</span><br><span class="line">print(aa.real)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[ 0.  1.  2.  3.  4.  5.  6.  7.  8.  9. 10. 11. 12. 13. 14. 15.]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h3 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a>线性插值</h3><h4 id="scipy-interpolate-interp1d-x-y-kind-39-linear-39"><a href="#scipy-interpolate-interp1d-x-y-kind-39-linear-39" class="headerlink" title="scipy.interpolate.interp1d(x, y, kind=&#39;linear&#39;"></a><code>scipy.interpolate.interp1d(x, y, kind=&#39;linear&#39;</code></h4><p>returns a function whose call method uses interpolation to find the value of new points</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> interpolate</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">y = np.exp(-x/<span class="number">3.0</span>)</span><br><span class="line">f = interpolate.interp1d(x, y)</span><br><span class="line"></span><br><span class="line">xnew = np.arange(<span class="number">0</span>, <span class="number">9</span>, <span class="number">0.1</span>)</span><br><span class="line">ynew = f(xnew)   <span class="comment"># use interpolation function returned by `interp1d`</span></span><br><span class="line">print(ynew)</span><br><span class="line">plt.plot(x, y, <span class="string">'o'</span>, xnew, ynew, <span class="string">'-'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/17/python_scipy/" data-id="ckmleadm2004uskw2w0xv5xlc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python_numpy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/15/python_numpy/" class="article-date">
+  <time datetime="2019-07-14T16:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/15/python_numpy/">Python Numpy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ndarray-对象"><a href="#ndarray-对象" class="headerlink" title="ndarray 对象"></a>ndarray 对象</h2><p>同类型元素的N维数组</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.array(object)</code></td>
+<td>由object（常见为list）创建ndarray数组对象</td>
+</tr>
+<tr>
+<td><code>np.asarray(object)</code></td>
+<td>由object（常见为list）创建ndarray数组对象</td>
+</tr>
+<tr>
+<td></td>
+<td>由list创建时，二者一样；由ndarray创建时，array会新复制出一个ndarray，asarray则仍引用原来的ndarray</td>
+</tr>
+<tr>
+<td><code>np.empty(shape, dtype)</code></td>
+<td>创建一个指定形状、数据类型、未初始化的数组，shape as tuple</td>
+</tr>
+<tr>
+<td></td>
+<td>注意，empty指的是未初始化，数组元素值为<strong>随机值</strong>，并不是0值</td>
+</tr>
+<tr>
+<td><code>np.zeros(shape, dtype)</code></td>
+<td>创建一个指定形状、指定数据类型，由0填充的数组</td>
+</tr>
+<tr>
+<td><code>np.ones(shape, dtype)</code></td>
+<td>创建一个指定形状、指定数据类型，由1填充的数组</td>
+</tr>
+<tr>
+<td><code>np.arange(start, stop, step, dtype)</code></td>
+<td>根据<code>start</code>、<code>stop</code>、<code>step</code>，生成一个指定类型的定步长数组</td>
+</tr>
+<tr>
+<td><code>np.linspace(start, stop, num=50, endpoint=True, retstep=False)</code></td>
+<td>根据<code>start</code>、<code>stop</code>、<code>num</code>，生成一个等差数列数组，<code>endpoint</code>表明是否包含<code>stop</code>值，<code>retstep</code>表明结果是否返回公差</td>
+</tr>
+<tr>
+<td><code>np.logspace(start, stop, num=50, endpoint=True, base=10.0)</code></td>
+<td>根据<code>start</code>、<code>stop</code>、<code>num</code>，生成一个等比数列数组，序列起始值为<code>base ** start</code>，序列的终止值为：<code>base ** stop</code></td>
+</tr>
+<tr>
+<td><code>np.random.rand(d0, d1, ..., dn)</code></td>
+<td>随机值<code>[0, 1)</code>序列，<code>d</code>给出shape</td>
+</tr>
+<tr>
+<td><code>ndarray.copy()</code></td>
+<td>深拷贝</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ndarray.shape</code></td>
+<td>数组各维度的大小（是数量不是阶数）</td>
+</tr>
+<tr>
+<td><code>ndarray.size</code></td>
+<td>数组元素的总个数（等于shape中各值相乘）</td>
+</tr>
+<tr>
+<td><code>ndarray.dtype</code></td>
+<td>数组的元素类型</td>
+</tr>
+<tr>
+<td><code>ndarray.ndim</code></td>
+<td>轴的数量，或维度的数量rank。轴编号从<code>0</code>到<code>ndim-1</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>轴的概念</strong></p>
+<p>很多操作可以声明<code>axis</code>。<code>axis=i</code>，代表沿着第<code>i</code>个轴（下标变化）的方向，进行操作。<br>例如，对于<strong>二维数组</strong>：<code>axis=0</code>表示<strong>沿着第0轴</strong>进行操作，即固定其他轴，遍历对第一个下标，这样相当于每次处理了一列的数据，即按<strong>列</strong>操作；<code>axis=1</code>表示<strong>沿着第1轴</strong>进行操作，即按<strong>行</strong>操作。</p>
+<p>更加具体的例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">16</span>).reshape(<span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[[ 0,  1],</span></span><br><span class="line"><span class="string">        [ 2,  3],</span></span><br><span class="line"><span class="string">        [ 4,  5],</span></span><br><span class="line"><span class="string">        [ 6,  7]],</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       [[ 8,  9],</span></span><br><span class="line"><span class="string">        [10, 11],</span></span><br><span class="line"><span class="string">        [12, 13],</span></span><br><span class="line"><span class="string">        [14, 15]]])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">arr.sum(axis=<span class="number">0</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[ 8, 10],</span></span><br><span class="line"><span class="string">       [12, 14],</span></span><br><span class="line"><span class="string">       [16, 18],</span></span><br><span class="line"><span class="string">       [20, 22]])</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure></p>
+<p>例子中，<code>arr</code>的<code>shape</code>为<code>(2, 4, 2)</code>，<code>arr</code>的<code>shape</code>的下标为<code>(0, 1, 2)</code>。<br><code>axis=0</code>，即对<code>shape</code>下标的第一个位置进行处理。由<code>(2, 4, 2)</code>可知，每次处理2个，固定<code>(4, 2)</code>作为最后结果<code>shape</code>。<br>求算时，<code>arr[0][a][b]</code>+<code>arr[1][a][b]</code>作为结果<code>s[a][b]</code>的值。</p>
+<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p><strong>注意</strong>：切片数组返回一个view，而非copy；这与python list不同，python list的切片是copy</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arr[idx]</code></td>
+<td>一维索引</td>
+</tr>
+<tr>
+<td><code>arr[start:stop:step]</code></td>
+<td>一维，切片索引</td>
+</tr>
+<tr>
+<td><code>arr[start:]</code></td>
+<td>一维，start直至最后</td>
+</tr>
+<tr>
+<td><code>arr[np.array([(idx1, idx2), (idx3, idx4)])]</code></td>
+<td>通过一维生成二维</td>
+</tr>
+<tr>
+<td><code>arr[1]</code></td>
+<td>二维，第二行</td>
+</tr>
+<tr>
+<td><code>arr[1, 1]</code></td>
+<td>二维，第二行、第二列</td>
+</tr>
+<tr>
+<td><code>arr[:, 1]</code></td>
+<td>二维，所有行、第二列</td>
+</tr>
+<tr>
+<td><code>arr[-1, :]</code></td>
+<td>二维，最后行、所有列</td>
+</tr>
+<tr>
+<td><code>arr[..., 1]</code></td>
+<td>二维，所有行、第二列</td>
+</tr>
+<tr>
+<td></td>
+<td>对于多维，如3darray，<code>arr[..., 1] == arr[:, :, 1]</code></td>
+</tr>
+<tr>
+<td><code>arr[..., 1:]</code></td>
+<td>二维，所有行、第二至最后列</td>
+</tr>
+<tr>
+<td><code>arr[0:1, 1:2]</code></td>
+<td>二维，一至二行、二至三列</td>
+</tr>
+<tr>
+<td><code>arr[[0,1,2], [0,1,0]]</code></td>
+<td>二维，数组索引，分别指定idx_x、idx_y。即，<code>arr[(0, 0), (1, 1), (2, 0)]</code></td>
+</tr>
+<tr>
+<td><code>arr[arr &gt;  5]</code></td>
+<td>布尔索引，其中<code>arr &gt; 5</code>会给出一个和arr同shape的布尔数组，按这个布尔数组索引</td>
+</tr>
+<tr>
+<td><code>arr[[4, 2, 1, 7]]</code></td>
+<td>花式索引，索引为数组。如果目标是一维数组，那么索引的结果就是对应位置的元素；如果目标是二维数组，那么就是对应下标的行。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.where(condition)</code></td>
+<td><code>np.asarray(condition).nonzero()</code>，False作为0。由于<code>nonzero</code>返回的是索引，选择时，使用<code>arr[np.where(condition)]</code></td>
+</tr>
+<tr>
+<td><code>np.where(condition, x, y)</code></td>
+<td>满足条件(condition)，输出x（对应位置内容），不满足输出y（对应位置内容）。相当于对<code>zip(condition, x, y)</code>进行选择。<code>zip</code>将各个对象打包（同idx的在同一批处理），如果各个迭代器的元素个数不一致，则返回列表长度与最短的对象相同。<code>zip(*)</code>解压出各个对象</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>数字后的<code>:</code>表示范围；单独的<code>:</code>表示所有</p>
+<h3 id="调整形状"><a href="#调整形状" class="headerlink" title="调整形状"></a>调整形状</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ndarray.reshape()</code></td>
+<td>调整数组shape，返回view。shape中-1表示（根据其他维度设置）自动决定数量</td>
+</tr>
+<tr>
+<td><code>np.resize(arr, shape)</code></td>
+<td>调整数组shape，返回copy</td>
+</tr>
+<tr>
+<td><code>ndarray.flat</code></td>
+<td>返回数组元素迭代器（可直接索引<code>arr.flat[3]</code>）</td>
+</tr>
+<tr>
+<td><code>ndarray.ravel()</code></td>
+<td>返回数组flat后的view</td>
+</tr>
+<tr>
+<td><code>ndarray.flatten()</code></td>
+<td>返回数组flat后的copy（默认参数为”C”，即按照行flat；设置参数为”F”，可按照列falt）</td>
+</tr>
+<tr>
+<td><code>ndarray.T</code></td>
+<td>转置数组</td>
+</tr>
+<tr>
+<td><code>np.transpose(arr, axes)</code></td>
+<td>转置数组，axes指定转置后的维度下标顺序。如3darray，默认axes为[0, 1, 2]，当指定为[1, 0, 2]时，所有元素第一下标和第二下标互换位置</td>
+</tr>
+<tr>
+<td><code>np.expand_dims(arr, axis)</code></td>
+<td>扩展维度，<code>axis</code>为新轴插入的位置。例如，一个shape为(2, 2)的数组，经过<code>axis=0</code>扩展，新shape为(1, 2, 2)</td>
+</tr>
+<tr>
+<td><code>np.squeeze(arr, axis)</code></td>
+<td>从给定数组，把shape中为1的维度去掉。例如，shape(1, 2, 2) -&gt; shape(2, 2)。可通过<code>axis</code>参数指定需要删除的维度，但是指定的维度必须为单维度，否则将会报错</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.concatenate((a1, a2, ...), axis)</code></td>
+<td><code>axis=0</code>增加行；<code>axis=1</code>增加列；<code>axis=None</code>获得flat</td>
+</tr>
+<tr>
+<td><code>np.vstack(tup)</code></td>
+<td>增加行，入参为tuple，例如<code>(a1, a2, ...)</code>；<strong>v</strong>ertical方向</td>
+</tr>
+<tr>
+<td><code>np.hstack(tup)</code></td>
+<td>增加列；<strong>h</strong>orizontal方向</td>
+</tr>
+<tr>
+<td><code>np.r_[ar1, ar2]</code></td>
+<td>增加行，<strong>r</strong>ow</td>
+</tr>
+<tr>
+<td><code>np.c_[ar1, ar2]</code></td>
+<td>增加列，<strong>c</strong>olumn</td>
+</tr>
+<tr>
+<td><code>np.dstack(tup)</code></td>
+<td><strong>会拓展维度</strong>，增加维度（深度），<strong>d</strong>epth</td>
+</tr>
+<tr>
+<td><code>np.stack(arrays, axis)</code></td>
+<td><strong>会拓展维度</strong>，在新增维度上堆叠。<code>axis</code>指定新增哪个维度，<code>axis=0</code>新增第一个维度；<code>axis=-1</code>新增最后一个维度（dstack）</td>
+</tr>
+<tr>
+<td></td>
+<td>或者用<code>np.expand_dims</code>拓展维度<code>axis=0</code>后，对行进行拼接，然后<code>transpose</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>demo</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">a = np.zeros((<span class="number">2</span>, <span class="number">3</span>), dtype=np.uint64)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[0 0 0]</span></span><br><span class="line"><span class="string"> [0 0 0]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">b = np.ones((<span class="number">2</span>, <span class="number">3</span>), dtype=np.uint64)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[1 1 1]</span></span><br><span class="line"><span class="string"> [1 1 1]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># a、b的shape可以不完全相同，但需要在待拼接的维度中一致</span></span><br><span class="line"></span><br><span class="line">c1 = np.concatenate((a, b))</span><br><span class="line">c11 = np.vstack((a, b)) <span class="comment">#np.r_</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[0 0 0]</span></span><br><span class="line"><span class="string"> [0 0 0]</span></span><br><span class="line"><span class="string"> [1 1 1]</span></span><br><span class="line"><span class="string"> [1 1 1]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">c2 = np.concatenate((a, b), axis=<span class="number">1</span>)</span><br><span class="line">c22 = np.hstack((a, b)) <span class="comment">#np.c_</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[0 0 0 1 1 1]</span></span><br><span class="line"><span class="string"> [0 0 0 1 1 1]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># np.stack会新创建一个维度，位置由axis指定；而上文三个方法不会新增维度</span></span><br><span class="line">cc1 = np.stack((a, b))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[[0 0 0]</span></span><br><span class="line"><span class="string">  [0 0 0]]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> [[1 1 1]</span></span><br><span class="line"><span class="string">  [1 1 1]]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(cc1.shape)</span><br><span class="line"><span class="comment"># (2, 2, 3)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 深度方向堆叠</span></span><br><span class="line">cc2 = np.stack((a, b), axis=<span class="number">2</span>) <span class="comment">#np.dstack()</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[[0 1]</span></span><br><span class="line"><span class="string">  [0 1]</span></span><br><span class="line"><span class="string">  [0 1]]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> [[0 1]</span></span><br><span class="line"><span class="string">  [0 1]</span></span><br><span class="line"><span class="string">  [0 1]]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(cc2.shape)</span><br><span class="line"><span class="comment"># (2, 3, 2)</span></span><br></pre></td></tr></table></figure>
+<h3 id="增删行列"><a href="#增删行列" class="headerlink" title="增删行列"></a>增删行列</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.append(arr, values, axis=None)</code></td>
+<td>末尾添加，<code>axis</code>可指定添加行、列，shape需保证对齐</td>
+</tr>
+<tr>
+<td><code>np.insert(arr, obj, values, axis)</code></td>
+<td>在指定索引标号<code>obj</code>之前，沿<code>axis</code>指定轴，向数组中插入值<code>values</code>，shape需保证对齐</td>
+</tr>
+<tr>
+<td><code>np.delete(arr, obj, axis)</code></td>
+<td>在指定索引标号<code>obj</code>，沿<code>axis</code>指定轴，删除数组中（某行、列）数据</td>
+</tr>
+<tr>
+<td><code>np.unique(arr, return_index=False, return_inverse=False, return_counts=False)</code></td>
+<td>去除数组中的重复元素</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="计算函数"><a href="#计算函数" class="headerlink" title="计算函数"></a>计算函数</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.around(a, decimals)</code></td>
+<td>四舍五入，<code>decimals</code>指定小数点后位数；负值表示round到十位、百位…</td>
+</tr>
+<tr>
+<td><code>np.floor(a)</code></td>
+<td>取地板</td>
+</tr>
+<tr>
+<td><code>np.ceil(a)</code></td>
+<td>取天花板</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>np.reciprocal(a)</code></td>
+<td>取倒数</td>
+</tr>
+<tr>
+<td><code>np.power(a, b)</code></td>
+<td>幂</td>
+</tr>
+<tr>
+<td><code>np.mod(a)</code></td>
+<td>取余</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>np.amin(a)</code> <code>np.nanmin(a)</code></td>
+<td>ignoring any NaNs</td>
+</tr>
+<tr>
+<td><code>np.amax(a)</code> <code>np.nanmax(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.sum(a)</code> <code>np.nansum(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.percentile(a, q)</code> <code>np.nanpercentile(a, q)</code></td>
+<td>q在0~100之间</td>
+</tr>
+<tr>
+<td><code>np.quantile(a, q)</code> <code>np.nanquantile(a, q)</code></td>
+<td>q在0~1之间</td>
+</tr>
+<tr>
+<td><code>np.median(a)</code> <code>np.nanmedian(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.mean(a)</code> <code>np.nanmean(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.average(a, weights=arr)</code></td>
+<td>可指定权重，计算加权平均</td>
+</tr>
+<tr>
+<td><code>np.std(a)</code> <code>np.nanstd(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.var(a)</code> <code>np.nanvar(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>np.dot(a, b)</code></td>
+<td>矩阵乘法，得到矩阵</td>
+</tr>
+<tr>
+<td><code>np.inner(a)</code></td>
+<td>向量内积（对位相乘后相加），得到一个数</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="排序与索引查询"><a href="#排序与索引查询" class="headerlink" title="排序与索引查询"></a>排序与索引查询</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.sort(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.argsort(a)</code></td>
+<td>从小到大的排序后数组，对应a的索引值</td>
+</tr>
+<tr>
+<td><code>np.argmax(a)</code></td>
+<td>a中最大元素的索引</td>
+</tr>
+<tr>
+<td><code>np.argmin(a)</code></td>
+<td>a中最小元素的索引</td>
+</tr>
+<tr>
+<td><code>np.nonzero(a)</code></td>
+<td>a中非0元素的索引</td>
+</tr>
+<tr>
+<td><code>np.where(condition)</code></td>
+<td><code>np.asarray(condition).nonzero()</code>，给出符合条件的索引（a包含在条件中）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/15/python_numpy/" data-id="ckmleadm1004rskw2k72y9kwp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

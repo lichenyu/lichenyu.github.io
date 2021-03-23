@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Python Numpy | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ndarray 对象同类型元素的N维数组 创建    方法 说明     np.array(object) 由object（常见为list）创建ndarray数组对象   np.asarray(object) 由object（常见为list）创建ndarray数组对象    由list创建时，二者一样；由ndarray创建时，array会新复制出一个ndarray，asarray则仍引用原来的nd">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Numpy">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/python_numpy/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="ndarray 对象同类型元素的N维数组 创建    方法 说明     np.array(object) 由object（常见为list）创建ndarray数组对象   np.asarray(object) 由object（常见为list）创建ndarray数组对象    由list创建时，二者一样；由ndarray创建时，array会新复制出一个ndarray，asarray则仍引用原来的nd">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Numpy">
+<meta name="twitter:description" content="ndarray 对象同类型元素的N维数组 创建    方法 说明     np.array(object) 由object（常见为list）创建ndarray数组对象   np.asarray(object) 由object（常见为list）创建ndarray数组对象    由list创建时，二者一样；由ndarray创建时，array会新复制出一个ndarray，asarray则仍引用原来的nd">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python_numpy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/15/python_numpy/" class="article-date">
+  <time datetime="2019-07-14T16:00:00.000Z" itemprop="datePublished">2019-07-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python Numpy
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="ndarray-对象"><a href="#ndarray-对象" class="headerlink" title="ndarray 对象"></a>ndarray 对象</h2><p>同类型元素的N维数组</p>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.array(object)</code></td>
+<td>由object（常见为list）创建ndarray数组对象</td>
+</tr>
+<tr>
+<td><code>np.asarray(object)</code></td>
+<td>由object（常见为list）创建ndarray数组对象</td>
+</tr>
+<tr>
+<td></td>
+<td>由list创建时，二者一样；由ndarray创建时，array会新复制出一个ndarray，asarray则仍引用原来的ndarray</td>
+</tr>
+<tr>
+<td><code>np.empty(shape, dtype)</code></td>
+<td>创建一个指定形状、数据类型、未初始化的数组，shape as tuple</td>
+</tr>
+<tr>
+<td></td>
+<td>注意，empty指的是未初始化，数组元素值为<strong>随机值</strong>，并不是0值</td>
+</tr>
+<tr>
+<td><code>np.zeros(shape, dtype)</code></td>
+<td>创建一个指定形状、指定数据类型，由0填充的数组</td>
+</tr>
+<tr>
+<td><code>np.ones(shape, dtype)</code></td>
+<td>创建一个指定形状、指定数据类型，由1填充的数组</td>
+</tr>
+<tr>
+<td><code>np.arange(start, stop, step, dtype)</code></td>
+<td>根据<code>start</code>、<code>stop</code>、<code>step</code>，生成一个指定类型的定步长数组</td>
+</tr>
+<tr>
+<td><code>np.linspace(start, stop, num=50, endpoint=True, retstep=False)</code></td>
+<td>根据<code>start</code>、<code>stop</code>、<code>num</code>，生成一个等差数列数组，<code>endpoint</code>表明是否包含<code>stop</code>值，<code>retstep</code>表明结果是否返回公差</td>
+</tr>
+<tr>
+<td><code>np.logspace(start, stop, num=50, endpoint=True, base=10.0)</code></td>
+<td>根据<code>start</code>、<code>stop</code>、<code>num</code>，生成一个等比数列数组，序列起始值为<code>base ** start</code>，序列的终止值为：<code>base ** stop</code></td>
+</tr>
+<tr>
+<td><code>np.random.rand(d0, d1, ..., dn)</code></td>
+<td>随机值<code>[0, 1)</code>序列，<code>d</code>给出shape</td>
+</tr>
+<tr>
+<td><code>ndarray.copy()</code></td>
+<td>深拷贝</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ndarray.shape</code></td>
+<td>数组各维度的大小（是数量不是阶数）</td>
+</tr>
+<tr>
+<td><code>ndarray.size</code></td>
+<td>数组元素的总个数（等于shape中各值相乘）</td>
+</tr>
+<tr>
+<td><code>ndarray.dtype</code></td>
+<td>数组的元素类型</td>
+</tr>
+<tr>
+<td><code>ndarray.ndim</code></td>
+<td>轴的数量，或维度的数量rank。轴编号从<code>0</code>到<code>ndim-1</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>轴的概念</strong></p>
+<p>很多操作可以声明<code>axis</code>。<code>axis=i</code>，代表沿着第<code>i</code>个轴（下标变化）的方向，进行操作。<br>例如，对于<strong>二维数组</strong>：<code>axis=0</code>表示<strong>沿着第0轴</strong>进行操作，即固定其他轴，遍历对第一个下标，这样相当于每次处理了一列的数据，即按<strong>列</strong>操作；<code>axis=1</code>表示<strong>沿着第1轴</strong>进行操作，即按<strong>行</strong>操作。</p>
+<p>更加具体的例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">16</span>).reshape(<span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[[ 0,  1],</span></span><br><span class="line"><span class="string">        [ 2,  3],</span></span><br><span class="line"><span class="string">        [ 4,  5],</span></span><br><span class="line"><span class="string">        [ 6,  7]],</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">       [[ 8,  9],</span></span><br><span class="line"><span class="string">        [10, 11],</span></span><br><span class="line"><span class="string">        [12, 13],</span></span><br><span class="line"><span class="string">        [14, 15]]])</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">arr.sum(axis=<span class="number">0</span>)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">array([[ 8, 10],</span></span><br><span class="line"><span class="string">       [12, 14],</span></span><br><span class="line"><span class="string">       [16, 18],</span></span><br><span class="line"><span class="string">       [20, 22]])</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure></p>
+<p>例子中，<code>arr</code>的<code>shape</code>为<code>(2, 4, 2)</code>，<code>arr</code>的<code>shape</code>的下标为<code>(0, 1, 2)</code>。<br><code>axis=0</code>，即对<code>shape</code>下标的第一个位置进行处理。由<code>(2, 4, 2)</code>可知，每次处理2个，固定<code>(4, 2)</code>作为最后结果<code>shape</code>。<br>求算时，<code>arr[0][a][b]</code>+<code>arr[1][a][b]</code>作为结果<code>s[a][b]</code>的值。</p>
+<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p><strong>注意</strong>：切片数组返回一个view，而非copy；这与python list不同，python list的切片是copy</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arr[idx]</code></td>
+<td>一维索引</td>
+</tr>
+<tr>
+<td><code>arr[start:stop:step]</code></td>
+<td>一维，切片索引</td>
+</tr>
+<tr>
+<td><code>arr[start:]</code></td>
+<td>一维，start直至最后</td>
+</tr>
+<tr>
+<td><code>arr[np.array([(idx1, idx2), (idx3, idx4)])]</code></td>
+<td>通过一维生成二维</td>
+</tr>
+<tr>
+<td><code>arr[1]</code></td>
+<td>二维，第二行</td>
+</tr>
+<tr>
+<td><code>arr[1, 1]</code></td>
+<td>二维，第二行、第二列</td>
+</tr>
+<tr>
+<td><code>arr[:, 1]</code></td>
+<td>二维，所有行、第二列</td>
+</tr>
+<tr>
+<td><code>arr[-1, :]</code></td>
+<td>二维，最后行、所有列</td>
+</tr>
+<tr>
+<td><code>arr[..., 1]</code></td>
+<td>二维，所有行、第二列</td>
+</tr>
+<tr>
+<td></td>
+<td>对于多维，如3darray，<code>arr[..., 1] == arr[:, :, 1]</code></td>
+</tr>
+<tr>
+<td><code>arr[..., 1:]</code></td>
+<td>二维，所有行、第二至最后列</td>
+</tr>
+<tr>
+<td><code>arr[0:1, 1:2]</code></td>
+<td>二维，一至二行、二至三列</td>
+</tr>
+<tr>
+<td><code>arr[[0,1,2], [0,1,0]]</code></td>
+<td>二维，数组索引，分别指定idx_x、idx_y。即，<code>arr[(0, 0), (1, 1), (2, 0)]</code></td>
+</tr>
+<tr>
+<td><code>arr[arr &gt;  5]</code></td>
+<td>布尔索引，其中<code>arr &gt; 5</code>会给出一个和arr同shape的布尔数组，按这个布尔数组索引</td>
+</tr>
+<tr>
+<td><code>arr[[4, 2, 1, 7]]</code></td>
+<td>花式索引，索引为数组。如果目标是一维数组，那么索引的结果就是对应位置的元素；如果目标是二维数组，那么就是对应下标的行。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.where(condition)</code></td>
+<td><code>np.asarray(condition).nonzero()</code>，False作为0。由于<code>nonzero</code>返回的是索引，选择时，使用<code>arr[np.where(condition)]</code></td>
+</tr>
+<tr>
+<td><code>np.where(condition, x, y)</code></td>
+<td>满足条件(condition)，输出x（对应位置内容），不满足输出y（对应位置内容）。相当于对<code>zip(condition, x, y)</code>进行选择。<code>zip</code>将各个对象打包（同idx的在同一批处理），如果各个迭代器的元素个数不一致，则返回列表长度与最短的对象相同。<code>zip(*)</code>解压出各个对象</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>数字后的<code>:</code>表示范围；单独的<code>:</code>表示所有</p>
+<h3 id="调整形状"><a href="#调整形状" class="headerlink" title="调整形状"></a>调整形状</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ndarray.reshape()</code></td>
+<td>调整数组shape，返回view。shape中-1表示（根据其他维度设置）自动决定数量</td>
+</tr>
+<tr>
+<td><code>np.resize(arr, shape)</code></td>
+<td>调整数组shape，返回copy</td>
+</tr>
+<tr>
+<td><code>ndarray.flat</code></td>
+<td>返回数组元素迭代器（可直接索引<code>arr.flat[3]</code>）</td>
+</tr>
+<tr>
+<td><code>ndarray.ravel()</code></td>
+<td>返回数组flat后的view</td>
+</tr>
+<tr>
+<td><code>ndarray.flatten()</code></td>
+<td>返回数组flat后的copy（默认参数为”C”，即按照行flat；设置参数为”F”，可按照列falt）</td>
+</tr>
+<tr>
+<td><code>ndarray.T</code></td>
+<td>转置数组</td>
+</tr>
+<tr>
+<td><code>np.transpose(arr, axes)</code></td>
+<td>转置数组，axes指定转置后的维度下标顺序。如3darray，默认axes为[0, 1, 2]，当指定为[1, 0, 2]时，所有元素第一下标和第二下标互换位置</td>
+</tr>
+<tr>
+<td><code>np.expand_dims(arr, axis)</code></td>
+<td>扩展维度，<code>axis</code>为新轴插入的位置。例如，一个shape为(2, 2)的数组，经过<code>axis=0</code>扩展，新shape为(1, 2, 2)</td>
+</tr>
+<tr>
+<td><code>np.squeeze(arr, axis)</code></td>
+<td>从给定数组，把shape中为1的维度去掉。例如，shape(1, 2, 2) -&gt; shape(2, 2)。可通过<code>axis</code>参数指定需要删除的维度，但是指定的维度必须为单维度，否则将会报错</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="拼接"><a href="#拼接" class="headerlink" title="拼接"></a>拼接</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.concatenate((a1, a2, ...), axis)</code></td>
+<td><code>axis=0</code>增加行；<code>axis=1</code>增加列；<code>axis=None</code>获得flat</td>
+</tr>
+<tr>
+<td><code>np.vstack(tup)</code></td>
+<td>增加行，入参为tuple，例如<code>(a1, a2, ...)</code>；<strong>v</strong>ertical方向</td>
+</tr>
+<tr>
+<td><code>np.hstack(tup)</code></td>
+<td>增加列；<strong>h</strong>orizontal方向</td>
+</tr>
+<tr>
+<td><code>np.r_[ar1, ar2]</code></td>
+<td>增加行，<strong>r</strong>ow</td>
+</tr>
+<tr>
+<td><code>np.c_[ar1, ar2]</code></td>
+<td>增加列，<strong>c</strong>olumn</td>
+</tr>
+<tr>
+<td><code>np.dstack(tup)</code></td>
+<td><strong>会拓展维度</strong>，增加维度（深度），<strong>d</strong>epth</td>
+</tr>
+<tr>
+<td><code>np.stack(arrays, axis)</code></td>
+<td><strong>会拓展维度</strong>，在新增维度上堆叠。<code>axis</code>指定新增哪个维度，<code>axis=0</code>新增第一个维度；<code>axis=-1</code>新增最后一个维度（dstack）</td>
+</tr>
+<tr>
+<td></td>
+<td>或者用<code>np.expand_dims</code>拓展维度<code>axis=0</code>后，对行进行拼接，然后<code>transpose</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>demo</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">a = np.zeros((<span class="number">2</span>, <span class="number">3</span>), dtype=np.uint64)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[0 0 0]</span></span><br><span class="line"><span class="string"> [0 0 0]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">b = np.ones((<span class="number">2</span>, <span class="number">3</span>), dtype=np.uint64)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[1 1 1]</span></span><br><span class="line"><span class="string"> [1 1 1]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="comment"># a、b的shape可以不完全相同，但需要在待拼接的维度中一致</span></span><br><span class="line"></span><br><span class="line">c1 = np.concatenate((a, b))</span><br><span class="line">c11 = np.vstack((a, b)) <span class="comment">#np.r_</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[0 0 0]</span></span><br><span class="line"><span class="string"> [0 0 0]</span></span><br><span class="line"><span class="string"> [1 1 1]</span></span><br><span class="line"><span class="string"> [1 1 1]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">c2 = np.concatenate((a, b), axis=<span class="number">1</span>)</span><br><span class="line">c22 = np.hstack((a, b)) <span class="comment">#np.c_</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[0 0 0 1 1 1]</span></span><br><span class="line"><span class="string"> [0 0 0 1 1 1]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># np.stack会新创建一个维度，位置由axis指定；而上文三个方法不会新增维度</span></span><br><span class="line">cc1 = np.stack((a, b))</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[[0 0 0]</span></span><br><span class="line"><span class="string">  [0 0 0]]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> [[1 1 1]</span></span><br><span class="line"><span class="string">  [1 1 1]]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(cc1.shape)</span><br><span class="line"><span class="comment"># (2, 2, 3)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 深度方向堆叠</span></span><br><span class="line">cc2 = np.stack((a, b), axis=<span class="number">2</span>) <span class="comment">#np.dstack()</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[[[0 1]</span></span><br><span class="line"><span class="string">  [0 1]</span></span><br><span class="line"><span class="string">  [0 1]]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> [[0 1]</span></span><br><span class="line"><span class="string">  [0 1]</span></span><br><span class="line"><span class="string">  [0 1]]]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">print(cc2.shape)</span><br><span class="line"><span class="comment"># (2, 3, 2)</span></span><br></pre></td></tr></table></figure>
+<h3 id="增删行列"><a href="#增删行列" class="headerlink" title="增删行列"></a>增删行列</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.append(arr, values, axis=None)</code></td>
+<td>末尾添加，<code>axis</code>可指定添加行、列，shape需保证对齐</td>
+</tr>
+<tr>
+<td><code>np.insert(arr, obj, values, axis)</code></td>
+<td>在指定索引标号<code>obj</code>之前，沿<code>axis</code>指定轴，向数组中插入值<code>values</code>，shape需保证对齐</td>
+</tr>
+<tr>
+<td><code>np.delete(arr, obj, axis)</code></td>
+<td>在指定索引标号<code>obj</code>，沿<code>axis</code>指定轴，删除数组中（某行、列）数据</td>
+</tr>
+<tr>
+<td><code>np.unique(arr, return_index=False, return_inverse=False, return_counts=False)</code></td>
+<td>去除数组中的重复元素</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="计算函数"><a href="#计算函数" class="headerlink" title="计算函数"></a>计算函数</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.around(a, decimals)</code></td>
+<td>四舍五入，<code>decimals</code>指定小数点后位数；负值表示round到十位、百位…</td>
+</tr>
+<tr>
+<td><code>np.floor(a)</code></td>
+<td>取地板</td>
+</tr>
+<tr>
+<td><code>np.ceil(a)</code></td>
+<td>取天花板</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>np.reciprocal(a)</code></td>
+<td>取倒数</td>
+</tr>
+<tr>
+<td><code>np.power(a, b)</code></td>
+<td>幂</td>
+</tr>
+<tr>
+<td><code>np.mod(a)</code></td>
+<td>取余</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>np.amin(a)</code> <code>np.nanmin(a)</code></td>
+<td>ignoring any NaNs</td>
+</tr>
+<tr>
+<td><code>np.amax(a)</code> <code>np.nanmax(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.sum(a)</code> <code>np.nansum(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.percentile(a, q)</code> <code>np.nanpercentile(a, q)</code></td>
+<td>q在0~100之间</td>
+</tr>
+<tr>
+<td><code>np.quantile(a, q)</code> <code>np.nanquantile(a, q)</code></td>
+<td>q在0~1之间</td>
+</tr>
+<tr>
+<td><code>np.median(a)</code> <code>np.nanmedian(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.mean(a)</code> <code>np.nanmean(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.average(a, weights=arr)</code></td>
+<td>可指定权重，计算加权平均</td>
+</tr>
+<tr>
+<td><code>np.std(a)</code> <code>np.nanstd(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.var(a)</code> <code>np.nanvar(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>np.dot(a, b)</code></td>
+<td>矩阵乘法，得到矩阵</td>
+</tr>
+<tr>
+<td><code>np.inner(a)</code></td>
+<td>向量内积（对位相乘后相加），得到一个数</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="排序与索引查询"><a href="#排序与索引查询" class="headerlink" title="排序与索引查询"></a>排序与索引查询</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>np.sort(a)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>np.argsort(a)</code></td>
+<td>从小到大的排序后数组，对应a的索引值</td>
+</tr>
+<tr>
+<td><code>np.argmax(a)</code></td>
+<td>a中最大元素的索引</td>
+</tr>
+<tr>
+<td><code>np.argmin(a)</code></td>
+<td>a中最小元素的索引</td>
+</tr>
+<tr>
+<td><code>np.nonzero(a)</code></td>
+<td>a中非0元素的索引</td>
+</tr>
+<tr>
+<td><code>np.where(condition)</code></td>
+<td><code>np.asarray(condition).nonzero()</code>，给出符合条件的索引（a包含在条件中）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/15/python_numpy/" data-id="ckmleadm1004rskw2k72y9kwp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/17/python_scipy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python Scipy
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/05/tf_seq2seq_en2cn/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">keras seq2seq 详细注释版</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

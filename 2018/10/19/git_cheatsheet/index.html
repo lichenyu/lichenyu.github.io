@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Git Cheatsheet | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="初始化git init 克隆远端repogit clone &amp;lt;remote_repo_url&amp;gt; &amp;lt;local_repo_name&amp;gt; 添加远端仓库git remote add &amp;lt;remote_repo_name&amp;gt; &amp;lt;remote_repo_url&amp;gt; 列出远端仓库git remote 获取远端仓库到本地git fetch &amp;lt;remote_repo">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Cheatsheet">
+<meta property="og:url" content="http://yoursite.com/2018/10/19/git_cheatsheet/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="初始化git init 克隆远端repogit clone &amp;lt;remote_repo_url&amp;gt; &amp;lt;local_repo_name&amp;gt; 添加远端仓库git remote add &amp;lt;remote_repo_name&amp;gt; &amp;lt;remote_repo_url&amp;gt; 列出远端仓库git remote 获取远端仓库到本地git fetch &amp;lt;remote_repo">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2021-03-23T02:21:02.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Cheatsheet">
+<meta name="twitter:description" content="初始化git init 克隆远端repogit clone &amp;lt;remote_repo_url&amp;gt; &amp;lt;local_repo_name&amp;gt; 添加远端仓库git remote add &amp;lt;remote_repo_name&amp;gt; &amp;lt;remote_repo_url&amp;gt; 列出远端仓库git remote 获取远端仓库到本地git fetch &amp;lt;remote_repo">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-git_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/19/git_cheatsheet/" class="article-date">
+  <time datetime="2018-10-18T16:00:00.000Z" itemprop="datePublished">2018-10-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Git Cheatsheet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>初始化<br><code>git init</code></li>
+<li>克隆远端repo<br><code>git clone &lt;remote_repo_url&gt; &lt;local_repo_name&gt;</code></li>
+<li>添加远端仓库<br><code>git remote add &lt;remote_repo_name&gt; &lt;remote_repo_url&gt;</code></li>
+<li>列出远端仓库<br><code>git remote</code></li>
+<li>获取远端仓库到本地<br><code>git fetch &lt;remote_repo_name&gt;</code></li>
+<li>（本地）重命名远端仓库<br><code>git remote rename &lt;old_name&gt; &lt;new_name&gt;</code></li>
+<li>（本地）重设远端仓库URL<br><code>git remote set-url &lt;remote_repo_name&gt; &lt;new_url&gt;</code></li>
+<li>（本地）删除远端仓库<br><code>git remote rm &lt;remote_repo_name&gt;</code></li>
+</ul>
+<hr>
+<ul>
+<li>列出本地分支<br><code>git branch</code></li>
+<li>切换本地分支<br><code>git checkout &lt;local_branch_name&gt;</code></li>
+<li>删除本地分支<br><code>git branch -D &lt;branch_name&gt;</code></li>
+<li>创建本地分支追中远端分支<br><code>git checkout --track &lt;remote_repo_name/remote_branch_name&gt;</code>  本地创建名为remote_branch_name的分支，追踪<br><code>git checkout -b &lt;local_branch_name&gt; &lt;remote_repo_name/remote_branch_name&gt;</code>  本地创建local_branch_name的分支，追踪</li>
+<li>本地分支从某远端分支来pull<br><code>git pull &lt;remote_repo_name&gt; &lt;remote_branch_name&gt;:&lt;local_repo_name/local_branch_name&gt;</code></li>
+<li>本地分支push到远端分支<br><code>git push &lt;remote_repo_name&gt; &lt;local_branch_name&gt;</code>  若local_branch_name不存在，则新建<br><code>git push &lt;remote_repo_name&gt; &lt;local_branch_name&gt;:&lt;remote_branch_name&gt;</code>  远端as remote_branch_name</li>
+<li>分支merge其他分支冲突<br><code>git checkout &lt;master&gt;</code><br><code>git merge &lt;bugfix&gt;</code><br><code>git mergetool</code><br><code>git status</code><br><code>git commit</code></li>
+</ul>
+<hr>
+<ul>
+<li>检查当前修改状态  对比上次commit<br><code>git status</code></li>
+<li>查看未暂存/已暂存的修改  对比上次commit<br><code>git diff [--staged]</code></li>
+<li><p>查看提交历史<br><code>git log</code><br><code>-数字    最近若干次</code><br><code>-p    显示差异</code><br><code>--stat    文件变化情况</code></p>
+</li>
+<li><p>添加内容到下一次提交中  添加对文件（可以是目录）的跟踪；暂存已修改文件<br><code>git add &lt;file_name&gt;</code></p>
+</li>
+<li><p>提交<br><code>git commit</code><br><code>-m &lt;msg&gt;    附带提交信息</code><br><code>-a    跳过add暂存直接commit</code></p>
+</li>
+<li><p>取消已修改未缓存的文件<br><code>git checkout -- &lt;file_name&gt;</code></p>
+</li>
+<li>取消已缓存的文件  取消已经staged的文件（比如为了从分成多次提交，下次再提交）<br><code>git reset HEAD &lt;file_name&gt;</code></li>
+<li>reset到某次commit<br><code>git reset --hard &lt;commit_hash&gt;</code><br><code>--soft 保留当前修改</code></li>
+<li>修改最后一次commit  修改commit文件或信息，使用当前的暂存区域快照更新后，提交。<br><code>git commit --amend</code></li>
+<li>push时文件大小超出限制<br><code>git rm --cached &lt;file_path/file_name&gt;</code><br><code>.gitignore</code><br><code>git commit --amend</code></li>
+</ul>
+<hr>
+<ul>
+<li>修改已经提交的commit message<ol>
+<li>git rebase -i HEAD~8                //8为距最后提交的倒数第8次</li>
+<li>pick -&gt; edit</li>
+<li>git commit —amend</li>
+<li>git rebase —continue</li>
+<li>git push -f <remote> <branch></branch></remote></li>
+</ol>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/19/git_cheatsheet/" data-id="ckmleadk2001jskw250jd6faj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/21/data_size/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Data Size
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/17/scala_cheatsheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Scala Cheatsheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

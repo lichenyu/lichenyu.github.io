@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>sklearn logistic regression详细注释版 | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100# from s">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn logistic regression详细注释版">
+<meta property="og:url" content="http://yoursite.com/2019/10/28/python_lr/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100# from s">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-04T01:39:55.605Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn logistic regression详细注释版">
+<meta name="twitter:description" content="123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100# from s">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python_lr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/28/python_lr/" class="article-date">
+  <time datetime="2019-10-27T16:00:00.000Z" itemprop="datePublished">2019-10-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sklearn logistic regression详细注释版
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># from sklearn import datasets</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># iris = datasets.load_iris()</span></span><br><span class="line"><span class="comment"># x = iris.data</span></span><br><span class="line"><span class="comment"># y = iris.target</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split, cross_val_score, GridSearchCV</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler, label_binarize</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix, classification_report, roc_curve, auc</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    data = pd.read_csv(<span class="string">'iris.data'</span>, header=<span class="keyword">None</span>).values</span><br><span class="line">    <span class="comment"># multi-dim features</span></span><br><span class="line">    X = data[<span class="number">0</span>:<span class="number">100</span>, [<span class="number">0</span>, <span class="number">2</span>]]</span><br><span class="line">    y = data[<span class="number">0</span>:<span class="number">100</span>, <span class="number">4</span>]</span><br><span class="line">    <span class="comment"># 二值化、one-</span></span><br><span class="line">    y = label_binarize(y, classes=np.unique(y)).ravel()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 划分训练集、测试集 -----</span></span><br><span class="line">    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.25</span>, random_state=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 数据标准化 -----</span></span><br><span class="line">    sc = StandardScaler()</span><br><span class="line">    sc.fit(X_train)</span><br><span class="line">    X_train_std = sc.transform(X_train)</span><br><span class="line">    <span class="comment"># 测试集数据也由训练集的均值、方差来标准化</span></span><br><span class="line">    X_test_std = sc.transform(X_test)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 模型训练 -----</span></span><br><span class="line">    <span class="comment"># LR也可以处理多分类，自动使用one vs others</span></span><br><span class="line">    lr = LogisticRegression(penalty=<span class="string">'l2'</span>, solver=<span class="string">'liblinear'</span>)</span><br><span class="line">    lr.fit(X_train_std, y_train)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 模型保存 -----</span></span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'lr.pkl'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> fd:</span><br><span class="line">        pickle.dump(lr, fd)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 模型读取 -----</span></span><br><span class="line">    fd = open(<span class="string">'lr.pkl'</span>, <span class="string">'rb'</span>)</span><br><span class="line">    lr2 = pickle.load(fd)</span><br><span class="line">    fd.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 模型推理 -----</span></span><br><span class="line">    y_test_pred = lr2.predict(X_test_std)</span><br><span class="line">    y_test_proba = lr2.predict_proba(X_test_std)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----- 模型评价 -----</span></span><br><span class="line">    print(<span class="string">'results ='</span>)</span><br><span class="line">    <span class="keyword">for</span> a <span class="keyword">in</span> zip(y_test_proba, y_test_pred, y_test):</span><br><span class="line">        print(a)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ===== acc =====</span></span><br><span class="line">    print(<span class="string">'acc = &#123;&#125;'</span>.format(lr2.score(X_test_std, y_test)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ===== confusion_matrix =====</span></span><br><span class="line">    <span class="comment"># known to be in group i but predicted to be in group j</span></span><br><span class="line">    print(<span class="string">'confusion_matrix = \n&#123;&#125;'</span>.format(confusion_matrix(y_test, y_test_pred)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ===== classification_report =====</span></span><br><span class="line">    print(<span class="string">'classification_report = \n&#123;&#125;'</span>.format(classification_report(y_test, y_test_pred)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ===== cross validation =====</span></span><br><span class="line">    <span class="comment"># 交叉验证并不是一个指标，多次拆分给定数据集，获取模型平均性能。（用来评价一个已训好模型的泛化性能的）</span></span><br><span class="line">    <span class="comment"># scoring参数指定计算的指标，例如scoring='roc_auc'，默认值为模型默认指标</span></span><br><span class="line">    print(<span class="string">'cross_val_score = \n&#123;&#125;'</span>.format(cross_val_score(lr2, X_test_std, y_test, cv=<span class="number">5</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ===== grid search (with cross validation) =====</span></span><br><span class="line">    <span class="comment"># 网格搜索同样并不是一个指标，用于模型训练（选择），往往使用了交叉验证技术</span></span><br><span class="line">    hyper_paras = dict(penalty=[<span class="string">'l1'</span>, <span class="string">'l2'</span>], C=np.logspace(<span class="number">0</span>, <span class="number">4</span>, <span class="number">10</span>))</span><br><span class="line">    clf = GridSearchCV(LogisticRegression(solver=<span class="string">'liblinear'</span>), hyper_paras, cv=<span class="number">5</span>, verbose=<span class="number">0</span>)</span><br><span class="line">    best_model = clf.fit(X_train_std, y_train)</span><br><span class="line">    print(<span class="string">'Best Penalty= \n&#123;&#125;'</span>.format(best_model.best_estimator_.get_params()[<span class="string">'penalty'</span>]))</span><br><span class="line">    print(<span class="string">'Best C: = \n&#123;&#125;'</span>.format(best_model.best_estimator_.get_params()[<span class="string">'C'</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># # ===== roc =====</span></span><br><span class="line">    <span class="comment"># # only for label==1</span></span><br><span class="line">    <span class="comment"># fpr, tpr, _ = roc_curve(y_test, y_test_proba[:, 1])</span></span><br><span class="line">    <span class="comment"># roc_auc = auc(fpr, tpr)</span></span><br><span class="line">    <span class="comment"># # plot</span></span><br><span class="line">    <span class="comment"># import matplotlib.pyplot as plt</span></span><br><span class="line">    <span class="comment"># plt.title('Receiver Operating Characteristic')</span></span><br><span class="line">    <span class="comment"># plt.plot(fpr, tpr, 'b', label='AUC = %0.2f' % roc_auc)</span></span><br><span class="line">    <span class="comment"># plt.legend(loc='lower right')</span></span><br><span class="line">    <span class="comment"># plt.plot([0, 1], [0, 1], 'r--')</span></span><br><span class="line">    <span class="comment"># plt.xlim([0, 1])</span></span><br><span class="line">    <span class="comment"># plt.ylim([0, 1])</span></span><br><span class="line">    <span class="comment"># plt.ylabel('True Positive Rate')</span></span><br><span class="line">    <span class="comment"># plt.xlabel('False Positive Rate')</span></span><br><span class="line">    <span class="comment"># plt.show()</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/28/python_lr/" data-id="ckmleadm4004xskw20xfexvly" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/30/chi2_test/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          卡方检验
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/10/25/anaconda_cmds/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Anaconda操作命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

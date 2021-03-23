@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>信用评分卡 | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="评分卡构建通用流程 数据预处理 缺失值处理（填充、丢弃字段） 异常值处理（丢弃记录） 探索性数据分析EDA（各字段统计信息）   特征选择 分箱 特征选择 相关性分析   模型训练 Logistic Regression 系数符号筛选特征：模型中各个特征的系数，如果出现了负数，说明一些特征的线性相关性较强 性能评估（AUC）   计算评分  分箱 等距分箱 等频分箱 基于WOE分箱 WOE与IV">
+<meta name="keywords" content="Credit Scoring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信用评分卡">
+<meta property="og:url" content="http://yoursite.com/2019/07/25/credit_scorecard/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="评分卡构建通用流程 数据预处理 缺失值处理（填充、丢弃字段） 异常值处理（丢弃记录） 探索性数据分析EDA（各字段统计信息）   特征选择 分箱 特征选择 相关性分析   模型训练 Logistic Regression 系数符号筛选特征：模型中各个特征的系数，如果出现了负数，说明一些特征的线性相关性较强 性能评估（AUC）   计算评分  分箱 等距分箱 等频分箱 基于WOE分箱 WOE与IV">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="信用评分卡">
+<meta name="twitter:description" content="评分卡构建通用流程 数据预处理 缺失值处理（填充、丢弃字段） 异常值处理（丢弃记录） 探索性数据分析EDA（各字段统计信息）   特征选择 分箱 特征选择 相关性分析   模型训练 Logistic Regression 系数符号筛选特征：模型中各个特征的系数，如果出现了负数，说明一些特征的线性相关性较强 性能评估（AUC）   计算评分  分箱 等距分箱 等频分箱 基于WOE分箱 WOE与IV">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-credit_scorecard" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/25/credit_scorecard/" class="article-date">
+  <time datetime="2019-07-24T16:00:00.000Z" itemprop="datePublished">2019-07-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Data-Analysis/">Data Analysis</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      信用评分卡
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="评分卡构建"><a href="#评分卡构建" class="headerlink" title="评分卡构建"></a>评分卡构建</h2><h3 id="通用流程"><a href="#通用流程" class="headerlink" title="通用流程"></a>通用流程</h3><ol>
+<li>数据预处理<ul>
+<li>缺失值处理（填充、丢弃字段）</li>
+<li>异常值处理（丢弃记录）</li>
+<li><em>探索性数据分析EDA（各字段统计信息）</em></li>
+</ul>
+</li>
+<li>特征选择<ul>
+<li>分箱</li>
+<li>特征选择</li>
+<li>相关性分析</li>
+</ul>
+</li>
+<li>模型训练<ul>
+<li>Logistic Regression</li>
+<li><em>系数符号筛选特征：模型中各个特征的系数，如果出现了负数，说明一些特征的线性相关性较强</em></li>
+<li>性能评估（AUC）</li>
+</ul>
+</li>
+<li>计算评分</li>
+</ol>
+<h3 id="分箱"><a href="#分箱" class="headerlink" title="分箱"></a>分箱</h3><ul>
+<li>等距分箱</li>
+<li>等频分箱</li>
+<li>基于WOE分箱<ul>
+<li><a href="/2019/07/24/weight_of_evidence/" title="WOE与IV">WOE与IV</a>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h3><ul>
+<li>基于IV特征选择<ul>
+<li><a href="/2019/07/24/weight_of_evidence/" title="WOE与IV">WOE与IV</a></li>
+</ul>
+</li>
+<li>基于RF特征选择<br>获取随机森林中，各特征importance</li>
+</ul>
+<h3 id="计算评分"><a href="#计算评分" class="headerlink" title="计算评分"></a>计算评分</h3><p>首先来看一下评分卡的形式：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征名称</th>
+<th>特征范围</th>
+<th>得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基准分</td>
+<td></td>
+<td>xxx</td>
+</tr>
+<tr>
+<td>特征1</td>
+<td>分箱1</td>
+<td>aaa</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>bbb</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱p</td>
+<td>ppp</td>
+</tr>
+<tr>
+<td>特征2</td>
+<td>分箱1</td>
+<td>mmm</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>nnn</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱q</td>
+<td>qqq</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>由于得分最终是由基础分、各“特征-某分箱”得分的累加，可知特征值与得分是线性关系。<br>又由逻辑回归，可知</p>
+<script type="math/tex; mode=display">
+\ln(\frac{p}{1-p}) = \mathbf{\theta}^{T} \mathbf{x} = w_{0} + w_{1}x_{1} + ... + w_{0}x_{n}</script><p>其中$p$为预测好用户概率，$\frac{p}{1-p}$为odds，$x_{i}$为第$i$维特征。<br>利用此线性关系，不妨定义信用评分$Score$为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Score &= A + B \times \ln(\frac{p}{1-p})\\
+&= A + B \times (w_{0} + w_{1}x_{1} + ... + w_{0}x_{n})\\
+&=(A + Bw_{0}) + Bw_{1}x_{1} + Bw_{2}x_{2} + ... + Bw_{n}x_{n}
+\end{align*}</script><p>$x<em>{1}, …, x</em>{n}$是各维特征的WOE编码。为了容易看出评分卡的求算，不妨将各维特征的分箱展开，则上式为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2} + ... + Bw_{1}WOE_{1,p}\sigma_{1,p}\\
+&+ Bw_{2}WOE_{2,1}\sigma_{2,1} + Bw_{2}WOE_{2,2}\sigma_{2,2} + ... + Bw_{2}WOE_{2,q}\sigma_{2,q}\\
+&+ ...
+\end{align*}</script><p>其中，$WOE<em>{1,2}$为第1个特征第2个分箱的WOE值，$\sigma</em>{1,2}$是一个取值为0、1的指示变量，$\sigma<em>{1,1}, \sigma</em>{1,2}, …, \sigma_{1,p}$只能有一个为1。<br>由此，填充评分卡。注意，评分卡的输入变量，只能是$\sigma$指示变量，即WOE要提出去。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征名称</th>
+<th>特征范围</th>
+<th>得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基准分</td>
+<td></td>
+<td>$A + Bw_{0}$</td>
+</tr>
+<tr>
+<td>特征1</td>
+<td>分箱1</td>
+<td>$Bw<em>{1}WOE</em>{1,1}$</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>$Bw<em>{1}WOE</em>{1,2}$</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱p</td>
+<td>$Bw<em>{1}WOE</em>{1,p}$</td>
+</tr>
+<tr>
+<td>特征2</td>
+<td>分箱1</td>
+<td>$Bw<em>{2}WOE</em>{2,1}$</td>
+</tr>
+<tr>
+<td></td>
+<td>分箱2</td>
+<td>$Bw<em>{2}WOE</em>{2,2}$</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>分箱q</td>
+<td>$Bw<em>{2}WOE</em>{2,q}$</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>上面卡片中，$w$由逻辑回归模型得出，WOE由特征分箱求算，剩下的$A, B$可以看做超参数，预先定义。<br>由于</p>
+<script type="math/tex; mode=display">
+Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场景条件：当$odds = \theta<em>{0}$时，$Score = P</em>{0}$；当$odds = 2\theta<em>{0}$翻倍时，$Score = P</em>{0} + PDO$，以此来求得$A, B$。</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&P_{0} = A + B \times \ln(\theta_{0})\\
+&P_{0} + PDO = A + B \times \ln(2\theta_{0})
+\end{align*}</script><p>可得:</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&B = \frac{PDO}{\ln2}\\
+&A = P_{0} - B\ln(\theta_{0})
+\end{align*}</script><p>一般行业规则：当$odds = \theta<em>{0} = 50$时，$Score = 600$；当$odds$翻倍时，$Score = P</em>{0} + 20$。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmleadjf000iskw2u6cqb89q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/09/27/model_fusion/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          多模型融合方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/24/weight_of_evidence/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Weight of Evidence (WOE)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

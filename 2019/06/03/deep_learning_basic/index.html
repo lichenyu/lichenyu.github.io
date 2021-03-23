@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>深度学习基础 | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="NN基础损失函数 &amp;amp; 成本函数 loss function &amp;amp; cost function 损失函数loss：单样本 成本函数cost：全体平均   J(w,b) = \frac{1}{m}\sum_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)})激活函数 activation function slgmold / tanh ReLU / leaky ReLU /">
+<meta name="keywords" content="Model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习基础">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/deep_learning_basic/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="NN基础损失函数 &amp;amp; 成本函数 loss function &amp;amp; cost function 损失函数loss：单样本 成本函数cost：全体平均   J(w,b) = \frac{1}{m}\sum_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)})激活函数 activation function slgmold / tanh ReLU / leaky ReLU /">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习基础">
+<meta name="twitter:description" content="NN基础损失函数 &amp;amp; 成本函数 loss function &amp;amp; cost function 损失函数loss：单样本 成本函数cost：全体平均   J(w,b) = \frac{1}{m}\sum_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)})激活函数 activation function slgmold / tanh ReLU / leaky ReLU /">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-deep_learning_basic" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/03/deep_learning_basic/" class="article-date">
+  <time datetime="2019-06-02T16:00:00.000Z" itemprop="datePublished">2019-06-03</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深度学习基础
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="NN基础"><a href="#NN基础" class="headerlink" title="NN基础"></a>NN基础</h2><h3 id="损失函数-amp-成本函数-loss-function-amp-cost-function"><a href="#损失函数-amp-成本函数-loss-function-amp-cost-function" class="headerlink" title="损失函数 &amp; 成本函数 loss function &amp; cost function"></a>损失函数 &amp; 成本函数 loss function &amp; cost function</h3><ul>
+<li>损失函数loss：单样本</li>
+<li>成本函数cost：全体平均</li>
+</ul>
+<script type="math/tex; mode=display">
+J(w,b) = \frac{1}{m}\sum_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)})</script><h3 id="激活函数-activation-function"><a href="#激活函数-activation-function" class="headerlink" title="激活函数 activation function"></a>激活函数 activation function</h3><ul>
+<li>slgmold / tanh</li>
+<li>ReLU / leaky ReLU / P ReLU</li>
+</ul>
+<p><strong>输出层</strong></p>
+<ul>
+<li>softmax，多分类，和为1（归一化）</li>
+</ul>
+<script type="math/tex; mode=display">
+z^{[L]} = w^{[L]}a^{[L-1]} + b^{[L]} \\
+t = e^{z^{[L]}} \\
+a^{[L]}_{i} = \frac{t^{(i)}}{\sum t^{(i)}}, a^{[L]} = \frac{t}{\sum t^{(i)}}</script><h3 id="梯度下降-gradient-descent"><a href="#梯度下降-gradient-descent" class="headerlink" title="梯度下降 gradient descent"></a>梯度下降 gradient descent</h3><p>寻找合适的$w$、$b$的值，能够minimize $J(w,b)$，即fit the model</p>
+<ol>
+<li>初始化$w$、$b$</li>
+<li>计算$dw$、$db$</li>
+<li>更新$w$、$b$</li>
+<li>迭代2、3步骤至指定次数</li>
+</ol>
+<script type="math/tex; mode=display">
+w = w - \alpha\ dw \\
+b = b - \alpha\ db</script><p>根据$L$ -&gt; $J(w,b)$，单样本 -&gt; 全体<br>计算$dw$、$db$的方式：</p>
+<script type="math/tex; mode=display">
+dw += x^{(i)}\ dz^{(i)},db += dz^{(i)}, \text{for }i = 1, ..., m \\
+dw /= m, db /= m</script><h3 id="正向传播-forward-propagation"><a href="#正向传播-forward-propagation" class="headerlink" title="正向传播 forward propagation"></a>正向传播 forward propagation</h3><p><strong>正向传播，计算结果</strong></p>
+<p>单样本，第$l$层</p>
+<script type="math/tex; mode=display">
+z^{[l]} = W^{[l]}a^{[l-1]} + b^{[l]} \\
+a^{[l]} = g(z^{[l]})</script><ul>
+<li>W.shape = $(n^{[l]}, n^{[l-1]})$</li>
+<li>b.shape = $(n^{[l]}, 1)$</li>
+<li>$a^{[l-1]}$.shape = $(n^{[l-1]}, 1)$</li>
+<li>$z^{[l]}$.shape = $(n^{[l]}, 1)$</li>
+<li>$a^{[l]}$.shape = $(n^{[l]}, 1)$</li>
+</ul>
+<script type="math/tex; mode=display">
+\text{向量化} \ A^{[l]} = (a^{[l](1)}, a^{[l](2)}, , ..., a^{[l](n^{[l]})})</script><p>全体，第$l$层</p>
+<script type="math/tex; mode=display">
+Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} \\
+A^{[l]} = g(Z^{[l]})</script><ul>
+<li>$A^{[l-1]}$.shape = $(n^{[l-1]}, m)$</li>
+<li>$Z^{[l]}$.shape = $(n^{[l]}, m)$</li>
+<li>$A^{[l]}$.shape = $(n^{[l]}, m)$</li>
+</ul>
+<h3 id="反向传播-backward-propagation"><a href="#反向传播-backward-propagation" class="headerlink" title="反向传播 backward propagation"></a>反向传播 backward propagation</h3><p><strong>反向传播，计算梯度</strong></p>
+<script type="math/tex; mode=display">
+dZ^{[l]} = W^{[l+1]T}dZ^{[l+1]} * {g^{[l]}}'(Z^{[l]}) \\
+dW^{[l]} = \frac{1}{m}dZ^{[l]}X^{T} \\
+db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]}, axis=1, keepdims=True) \\
+dA^{[l-1]} = W^{[l]T}dZ^{[l]}</script><p><em>简略推导（箭头反向求导，使用相乘，依据链式法则）</em>：</p>
+<script type="math/tex; mode=display">
+Z^{[l]} \rightarrow A^{[l]} = g^{[l]}(Z^{[l]}) \rightarrow Z^{[l+1]} = W^{[l+1]}A^{[l]} + b^{[l+1]} \\
+dZ^{[l+1]} \\
+dA^{[l]} = W^{[l+1]}dZ^{[l+1]} \\
+dZ^{[l]} = {g^{[l]}}'(Z^{[l]})dA^{[l]} = W^{[l+1]T}dZ^{[l+1]} * {g^{[l]}}'(Z^{[l]})</script><ul>
+<li>$dZ^{[l]}$.shape = $Z^{[l]}$.shape</li>
+<li>$dW^{[l]}$.shape = $W^{[l]}$.shape</li>
+<li><p>$db^{[l]}$.shape = $b^{[l]}$.shape</p>
+</li>
+<li><p>根据$J(w,b)$计算最后的$dA^{[L]}$</p>
+</li>
+<li>求算时，输入$dA^{[l]}$，输出$dA^{[l-1]}$</li>
+</ul>
+<h2 id="模型性能"><a href="#模型性能" class="headerlink" title="模型性能"></a>模型性能</h2><h3 id="解决high-bias"><a href="#解决high-bias" class="headerlink" title="解决high bias"></a>解决high bias</h3><p>训练误差大（比如和人工相比）<br>模型性能不够</p>
+<ul>
+<li>更大更深的网络</li>
+<li>增加训练时长</li>
+<li>（尝试其他网络结构）</li>
+</ul>
+<h3 id="解决high-variance"><a href="#解决high-variance" class="headerlink" title="解决high variance"></a>解决high variance</h3><p>训练误差小，验证/测试误差相对训练误差增大较多<br>模型过拟合</p>
+<ul>
+<li>更多（多样）的数据</li>
+<li>正则化</li>
+<li>（尝试其他网络结构）</li>
+</ul>
+<p>模型可能同时存在high bias和high variance<br>尝试独立的先解决high bias再解决high variance</p>
+<h3 id="正则化-regularization"><a href="#正则化-regularization" class="headerlink" title="正则化 regularization"></a>正则化 regularization</h3><p>L2正则，解决过拟合</p>
+<script type="math/tex; mode=display">
+J(w,b) + \frac{\lambda }{2m}\left \| w \right \|_{2}^{2} \\
+\left \| w \right \|_{2}^{2} = \sum_{j=1}^{n_{x}}w_{j}^{2}</script><p>（L1正则，使w稀疏化）</p>
+<script type="math/tex; mode=display">
+J(w,b) + \frac{\lambda }{m}\left \| w \right \|_{1} \\
+\left \| w \right \|_{1} = \sum_{j=1}^{n_{x}}\left | w_{j} \right |</script><ul>
+<li>$\lambda$作为超参数</li>
+</ul>
+<p>向量化的L2正则求算</p>
+<script type="math/tex; mode=display">
+J(w,b) + \frac{\lambda }{2m}\left \| w^{[l]} \right \|_{F}^{2} \\
+\left \| w^{[l]} \right \|_{F}^{2} = \sum_{i=1}^{n^{l}}\sum_{j=1}^{n^{l-1}}{w_{i,j}^{[l]}}^{2}</script><ul>
+<li>w.shape = $(n^{[l]}, n^{[l-1]})$</li>
+</ul>
+<p>如何使用</p>
+<script type="math/tex; mode=display">
+dw^{[l]} = \text{from_bp} + \frac{\lambda }{m}w^{[l]} \\
+w^{[l]} = w^{[l]} - \alpha \  dw^{[l]}</script><ul>
+<li>dw的增加项，为L2正则项的求导结果</li>
+</ul>
+<h3 id="随机失活-dropout"><a href="#随机失活-dropout" class="headerlink" title="随机失活 dropout"></a>随机失活 dropout</h3><p>随机去除网络中一些节点</p>
+<p>对每一层，设置该层的节点使用概率<br>例如，对于第3层<br><code>d3 = np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep_prob</code><br><code>a3 = np.multiply(a3, d3)</code><br><code>a3 \= keep_prob</code>  &lt;-  inverted dropout，修正期望值</p>
+<p>使用时机：</p>
+<ul>
+<li>训练，例如每个样本，或者每次梯度下降</li>
+<li>测试，不使用dropout</li>
+</ul>
+<h2 id="训练性能"><a href="#训练性能" class="headerlink" title="训练性能"></a>训练性能</h2><h3 id="初始化-W"><a href="#初始化-W" class="headerlink" title="初始化$W$"></a>初始化$W$</h3><p>使得w不太大也不太小，尽量避免梯度爆炸和消失</p>
+<ul>
+<li>ReLU：$W^{[l]} = np.random.rand(W^{[l]}.shape) * np.sqrt(\frac{2}{n^{[l-1]}})$</li>
+<li>tanh：$W^{[l]} = np.random.rand(W^{[l]}.shape) * np.sqrt(\frac{1}{n^{[l-1]}})$</li>
+</ul>
+<h3 id="梯度检查-grad-check"><a href="#梯度检查-grad-check" class="headerlink" title="梯度检查 grad check"></a>梯度检查 grad check</h3><ol>
+<li>已知的$J(W, b)$看做$\theta<em>{i}$的函数，$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, …) = J(\theta</em>{1}, \theta<em>{2}, \theta</em>{3}, \theta_{4}, …)$</li>
+<li>已知的$dW, db$看做$d\theta_{i}$</li>
+<li>对于每一个$i$，计算$d\theta<em>{approx}[i]$，最终得到$d\theta</em>{approx}$，对比$d\theta_{approx}$和$d\theta$<script type="math/tex; mode=display">
+d\theta_{approx}[i] = \frac{J(\theta_{1}, \theta_{2}, ..., \theta_{i}+\epsilon, ...) - J(\theta_{1}, \theta_{2}, ..., \theta_{i}-\epsilon, ...)}{2\epsilon} \\
+d\theta_{approx} \ ?\approx \ d\theta \\
+check \ \frac{\left \| d\theta_{approx} - d\theta \right \|_{2}}{\left \| d\theta_{approx} \right \|_{2} + \left \| d\theta \right \|_{2}}</script></li>
+</ol>
+<ul>
+<li>注意norm没有平方，是距离，需要差方和后开方</li>
+</ul>
+<h3 id="mini-batch-gradient-descent"><a href="#mini-batch-gradient-descent" class="headerlink" title="mini-batch gradient descent"></a>mini-batch gradient descent</h3><p>加速训练<br>将整个数据集分为若干个mini-batch，每个梯度下降迭代，使用一个mini-batch进行<br>这样，用整体数据集进行一次训练迭代（epoch），可进行多次梯度下降迭代（全体数据量/mini-batch大小）</p>
+<p>typical mini-batch size: 64, 128, 256, 512</p>
+<h3 id="梯度下降替代算法"><a href="#梯度下降替代算法" class="headerlink" title="梯度下降替代算法"></a>梯度下降替代算法</h3><h4 id="背景知识：指数平滑"><a href="#背景知识：指数平滑" class="headerlink" title="背景知识：指数平滑"></a>背景知识：指数平滑</h4><p>平滑值$v_t$</p>
+<script type="math/tex; mode=display">
+v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\frac{1}{1-\beta}$个值做平均</p>
+<p>迭代获取：</p>
+<ol>
+<li>$v_{\theta} = 0$</li>
+<li><code>repeat:</code> 获取下一个$\theta<em>{t}$，$v</em>{\theta} = \beta v<em>{\theta} + (1-\beta) \theta</em>{t}$</li>
+</ol>
+<p>偏差修正（修正冷启动）：</p>
+<script type="math/tex; mode=display">
+\frac{v_t}{1-\beta^{t}}</script><h4 id="动量梯度下降-momentum"><a href="#动量梯度下降-momentum" class="headerlink" title="动量梯度下降 momentum"></a>动量梯度下降 momentum</h4><p>对梯度下降应用指数平滑（$\beta=0.9$），本质上减少了不必要的抖动，也就加速向最优值靠拢</p>
+<p>on iteration $t$</p>
+<ul>
+<li>compute $dw$, $db$ on current mini-batch</li>
+<li>$v<em>{dw} = \beta v</em>{dw} + (1 - \beta)dw$</li>
+<li>$v<em>{db} = \beta v</em>{db} + (1 - \beta)db$</li>
+<li>$w = w - \alpha \ v_{dw}$</li>
+<li>$b = b - \alpha \ v_{db}$</li>
+</ul>
+<h4 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h4><p>比率化$dw$, $db$</p>
+<p>on iteration $t$</p>
+<ul>
+<li>compute $dw$, $db$ on current mini-batch</li>
+<li>$s<em>{dw} = \beta s</em>{dw} + (1 - \beta)dw^{2}$</li>
+<li>$s<em>{db} = \beta s</em>{db} + (1 - \beta)db^{2}$</li>
+<li>$w = w - \alpha \frac{dw}{\sqrt{s_{dw}}}$</li>
+<li>$b = b - \alpha \frac{db}{\sqrt{s_{db}}}$</li>
+</ul>
+<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>结合momentum、RMSprop（$\beta<em>{1}=0.9, \beta</em>{2}=0.999$）</p>
+<p>on iteration $t$</p>
+<ul>
+<li>compute $dw$, $db$ on current mini-batch</li>
+<li>$v<em>{dw} = \beta</em>{1} v<em>{dw} + (1 - \beta</em>{1})dw$</li>
+<li>$v<em>{db} = \beta</em>{1} v<em>{db} + (1 - \beta</em>{1})db$</li>
+<li>$s<em>{dw} = \beta</em>{2} s<em>{dw} + (1 - \beta</em>{2})dw^{2}$</li>
+<li>$s<em>{db} = \beta</em>{2} s<em>{db} + (1 - \beta</em>{2})db^{2}$</li>
+<li>$V^{corrected}<em>{dw} = \frac{v</em>{dw}}{1 - \beta_{1}^{t}}$</li>
+<li>$V^{corrected}<em>{db} = \frac{v</em>{db}}{1 - \beta_{1}^{t}}$</li>
+<li>$S^{corrected}<em>{dw} = \frac{s</em>{dw}}{1 - \beta_{2}^{t}}$</li>
+<li>$S^{corrected}<em>{db} = \frac{s</em>{db}}{1 - \beta_{2}^{t}}$</li>
+<li>$w = w - \alpha \frac{V^{corrected}<em>{dw}}{\sqrt{S^{corrected}</em>{dw}}}$</li>
+<li>$b = b - \alpha \frac{V^{corrected}<em>{db}}{\sqrt{S^{corrected}</em>{db}}}$</li>
+</ul>
+<h3 id="学习率衰减-learning-rate-dacay"><a href="#学习率衰减-learning-rate-dacay" class="headerlink" title="学习率衰减 learning rate dacay"></a>学习率衰减 learning rate dacay</h3><p>学习率随epoch进行而衰减</p>
+<script type="math/tex; mode=display">
+\alpha = \frac{1}{1 + \text{decay_rate} \times \text{epoch_num}}</script><h3 id="log-scale-random搜索超参数"><a href="#log-scale-random搜索超参数" class="headerlink" title="log-scale random搜索超参数"></a>log-scale random搜索超参数</h3><p>例如，对于学习率$\alpha$，希望从0.0001至1范围内选择</p>
+<p><code>r = -4 * np.random.rand()</code><br><code>alpha = 10 ** r</code></p>
+<h3 id="正则化激活函数输入-batch-norm"><a href="#正则化激活函数输入-batch-norm" class="headerlink" title="正则化激活函数输入 batch norm"></a>正则化激活函数输入 batch norm</h3><p>输入数据正则化</p>
+<script type="math/tex; mode=display">
+\mu = \frac{1}{m}\sum x^{i} \\
+X = X - \mu \\
+\sigma^{2} = \frac{1}{m}\sum {(x^{i})}^{2} \\
+X = X / \sigma</script><p>激活函数输入正则化</p>
+<script type="math/tex; mode=display">
+\mu = \frac{1}{m}\sum z^{(i)} \\
+\sigma^{2} = \frac{1}{m}\sum {(z^{(i)} - \mu)}^{2} \\
+z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>进一步设定均值、标准差，对$z^{(i)}<em>{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}</em>{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数<br>$\gamma$、$\beta$为参数<br>此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$</p>
+<ul>
+<li>batch nrom不仅能加速训练（最优求解过程），在covariate shift问题（例如检测对象从“黑猫”偏移至“橘猫”）上也能一定程度上提升模型性能（限定了稳定的均值和标准差，前层输出变动，对后层输入影响较小）</li>
+<li>mini-batch训练时，batch norm的均值、标准差计算，使用current mini-batch的数据</li>
+<li>mini-batch测试时，batch norm的均值、标准差计算，使用训练时（同一层）各个mini-batch获取的均值、标准差，进行<strong>指数平滑</strong>来估算</li>
+</ul>
+<h2 id="学习策略"><a href="#学习策略" class="headerlink" title="学习策略"></a>学习策略</h2><h3 id="evaluation-metric"><a href="#evaluation-metric" class="headerlink" title="evaluation metric"></a>evaluation metric</h3><p>dev set + evaluation metric，进行模型选择（模型形式、超参数）</p>
+<ul>
+<li>optimizing metric</li>
+<li>satisficing metric</li>
+</ul>
+<p>只使用一个定量的evaluation (optimizing) metric</p>
+<p>通常的工作流程：</p>
+<ol>
+<li>选择算法/超参数等</li>
+<li>使用training set对模型进行训练</li>
+<li>使用dev set + evaluation metric对训练得到的模型进行评估</li>
+<li>更换算法/超参数，返回2，直到找到最佳模型</li>
+<li>使用test set对最终得到的模型进行评估，得到对模型性能的无偏估计</li>
+</ol>
+<p>此外，特别的，当模型在实际应用上出现问题时，需要考虑是否<strong>改变dev set + evaluation metric</strong></p>
+<h3 id="bias-amp-variance"><a href="#bias-amp-variance" class="headerlink" title="bias &amp; variance"></a>bias &amp; variance</h3><ol>
+<li>根据training error与Bayes error/human level error对比，判断bias</li>
+<li>根据dev/test error与training error对比，判断variance</li>
+</ol>
+<p>处理方式见上文</p>
+<p><strong>error analysis</strong><br>分析error中，大部分是哪种类型，专门进行关注（并能得到解决后，性能提升的ceiling）<br>注意，这个ceiling可以指导模型下一步的关注方向</p>
+<h3 id="training-set-v-s-dev-test-set"><a href="#training-set-v-s-dev-test-set" class="headerlink" title="training set v.s. dev/test set"></a>training set v.s. dev/test set</h3><p>training set的数据与dev/test set的数据（分布）不同<br>dev/test set为真实（关注问题）的数据</p>
+<p><strong>bias &amp; variance analysis</strong></p>
+<ul>
+<li>从training set中split一部分来做training-dev set，这部分不做training，只用于对比dev error，这样可区分high variance和data mismatch</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>training set</th>
+<th>dev set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>human level</strong></td>
+<td>human level error</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>error on examples trained on</strong></td>
+<td>training error</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>error on examples not trained on</strong></td>
+<td>training-dev error</td>
+<td>dev/test error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>human level error &lt;-&gt; training error: avoidable bias</li>
+<li>training error &lt;-&gt; training-dev error: variance</li>
+<li>training-dev error &lt;-&gt; dev/test error: data mismatch</li>
+</ul>
+<p>data mismatch处理方法：</p>
+<h4 id="重分数据集"><a href="#重分数据集" class="headerlink" title="重分数据集"></a>重分数据集</h4><ul>
+<li>mix -&gt; shuffle -&gt; re-split：但是新的dev/test set不能较好反映真正关心的问题（已经与原dev/test set不同）</li>
+<li>从dev/test set中抽出一部分，加入training set</li>
+</ul>
+<h4 id="模拟数据集"><a href="#模拟数据集" class="headerlink" title="模拟数据集"></a>模拟数据集</h4><ul>
+<li>找到dev/test set特殊在哪里，尝试在training set中合成模拟/收集类似的数据作为训练集</li>
+<li>模拟数据集时，需要注意合成方法有可能会引入过拟合问题（模拟的数据之间太相似）</li>
+</ul>
+<h3 id="迁移学习-transfer-learning"><a href="#迁移学习-transfer-learning" class="headerlink" title="迁移学习 transfer learning"></a>迁移学习 transfer learning</h3><p>已经不只是数据偏移这么简单了，target问题完全发生了变化</p>
+<p>场景：</p>
+<ul>
+<li>Task A、Task B输入类别相同（例如都是图像）</li>
+<li>Task A的数据量大于Task B（否则直接用B的数据就好了）</li>
+<li>Task A的low level特征，应该对Task B是有益的</li>
+</ul>
+<p>处理方法：</p>
+<ul>
+<li>先用一个数据集pre training，再用另一个数据集fine tuning（随机参数/层替换最后一/若干层，冻结其它层及参数，重新训练）</li>
+</ul>
+<h3 id="多任务学习-multi-task-learning"><a href="#多任务学习-multi-task-learning" class="headerlink" title="多任务学习 multi-task learning"></a>多任务学习 multi-task learning</h3><p>target问题同时有多个</p>
+<p>场景：</p>
+<ul>
+<li>low level特征对各个Task是有益的</li>
+<li>各个Task的数据量差不多，但都不多（合起来则还可以）</li>
+</ul>
+<p>处理方法：</p>
+<ul>
+<li>一个网络，输出层对应各个Task</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmleadjl000nskw2b6xm4spt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/06/dl_cnn/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CNN
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/29/python_dir/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python - 目录操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

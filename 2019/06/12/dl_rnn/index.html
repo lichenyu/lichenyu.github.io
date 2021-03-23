@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>RNN | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T{x} \rangle}$，长度为$T{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输出长">
+<meta name="keywords" content="Model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNN">
+<meta property="og:url" content="http://yoursite.com/2019/06/12/dl_rnn/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T{x} \rangle}$，长度为$T{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输出长">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RNN">
+<meta name="twitter:description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T{x} \rangle}$，长度为$T{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输出长">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-dl_rnn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/12/dl_rnn/" class="article-date">
+  <time datetime="2019-06-11T16:00:00.000Z" itemprop="datePublished">2019-06-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RNN
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="序列数据"><a href="#序列数据" class="headerlink" title="序列数据"></a>序列数据</h2><p>一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T<em>{x} \rangle}$，长度为$T</em>{x}$</p>
+<ul>
+<li>$x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示</li>
+</ul>
+<h2 id="RNN结构"><a href="#RNN结构" class="headerlink" title="RNN结构"></a>RNN结构</h2><h3 id="输入输出长度相同（每个时刻一个输出）"><a href="#输入输出长度相同（每个时刻一个输出）" class="headerlink" title="输入输出长度相同（每个时刻一个输出）"></a>输入输出长度相同（每个时刻一个输出）</h3><p>当前时刻的处理，引入了前一时刻的activation</p>
+<script type="math/tex; mode=display">
+a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\
+\hat{y}^{\langle t \rangle} = g_{2}(W_{y}a^{\langle t \rangle} + b_{y})</script><ul>
+<li>parameters第一个下标，表示该p是用于计算谁的系数；第二个下标，表示该p是谁前面的系数</li>
+<li>$W<em>{a}$为$W</em>{aa},W_{ax}$横向拼接；$[a^{\langle t-1 \rangle},x^{\langle t \rangle}]$为$a^{\langle t-1 \rangle},x^{\langle t \rangle}$纵向拼接</li>
+<li>相当于$x^{\langle t \rangle}$位于输入层，$a^{\langle t \rangle}$位于（一层）隐藏层，$\hat{y}^{\langle t \rangle}$位于输出层</li>
+</ul>
+<p>一些其他结构的RNN包括：</p>
+<h3 id="many-to-one"><a href="#many-to-one" class="headerlink" title="many-to-one"></a>many-to-one</h3><p>输出只使用$\hat{y}^{\langle T_{x} \rangle}$</p>
+<h3 id="one-to-many"><a href="#one-to-many" class="headerlink" title="one-to-many"></a>one-to-many</h3><p>输入只使用$\hat{x}^{\langle 1 \rangle}$</p>
+<h3 id="输入输出长度不同"><a href="#输入输出长度不同" class="headerlink" title="输入输出长度不同"></a>输入输出长度不同</h3><p>两个结构拼接 encoder+decoder<br>前一个结构只有输入；后一个结构只有输出</p>
+<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><ul>
+<li>输入：$x = [0, y^{\langle 1 \rangle}, y^{\langle 2 \rangle}, …, y^{\langle T_{y} - 1 \rangle}]$</li>
+<li><em>softmax</em>，p维度为字典size</li>
+<li>输出：$y = [p(\hat{y}^{\langle 1 \rangle}|0), p(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle}), p(\hat{y}^{\langle 3 \rangle}|y^{\langle 1 \rangle}y^{\langle 2 \rangle}), …]$<ul>
+<li>即，given $y^{\langle 1 \rangle}, y^{\langle 2 \rangle}, …, y^{\langle t \rangle}$，得到$y^{\langle t + 1\rangle}$的各字典项概率</li>
+<li>例如，$p(\hat{y}^{\langle 1 \rangle}|0)$为句子开头（已输入为$0$时，下一个）单词，为字典各项的概率</li>
+</ul>
+</li>
+</ul>
+<p><strong>sampling novel sequences</strong></p>
+<p>利用训好的语言模型，随机生成语句</p>
+<p>即，将$(\hat{y}^{\langle 1 \rangle}|0)$，作为$y^{\langle 1 \rangle}$，得到$(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$；继续将$(\hat{y}^{\langle 2 \rangle}|y^{\langle 1 \rangle})$，作为$y^{\langle 2 \rangle}$…</p>
+<p>具体来讲，首先，从第一个0元素输出$\hat{y}^{\langle 1 \rangle}$的softmax分布中，<strong>sample</strong>一个word作为新语句的首词$y^{\langle 1 \rangle}$。然后，计算$\hat{y}^{\langle 2 \rangle}$，从$\hat{y}^{\langle 2 \rangle}$的softmax分布中，继续<strong>sample</strong>一个word作为$y^{\langle 2 \rangle}$，以此类推，直到产生EOS（或设定语句长度上限）</p>
+<ul>
+<li>sample方式，使用softmax得到的词汇表中各word的概率，来进行选取（<code>np.random.choice</code>可以设定序列中各个元素的出现概率，来进行选取）</li>
+<li>引入采样的是为了保证每个单词都有产生的可能，如果每次只是选取softmax对应的最大值，那么有些单词会永远生成不到，而且生成的句子会极为相似</li>
+<li>采样过程中可能会生成UNK字符，为了避免生成这种无意义字符，可以重复采样，直到得到一个非UNK字符</li>
+<li>模型的初始输入可以不用零向量，而是用某一个单词的one hot向量作为赋值，这样可以生成与该单词主题相关的句子</li>
+</ul>
+<p>这样得到的生成语句，体现着该语言模型的特性（例如新闻报道风格、莎士比亚文学风格…）</p>
+<h2 id="cost-funtion"><a href="#cost-funtion" class="headerlink" title="cost funtion"></a>cost funtion</h2><p>定义各个时刻的loss，则序列总体loss为各时刻loss的累加</p>
+<script type="math/tex; mode=display">
+L^{\langle t \rangle}(\hat{y}^{\langle t \rangle}, y^{\langle t \rangle}) = -y^{\langle t \rangle}\log{\hat{y}^{\langle t \rangle}} - (1-y^{\langle t \rangle})\log{(1-\hat{y}^{\langle t \rangle})} \\
+L(\hat{y},y) = \sum_{t=1}^{T_{y}}L^{\langle t \rangle}(\hat{y}^{\langle t \rangle}, y^{\langle t \rangle})</script><h2 id="门控递归单元-get-recurrent-unit-GRU"><a href="#门控递归单元-get-recurrent-unit-GRU" class="headerlink" title="门控递归单元 get recurrent unit, GRU"></a>门控递归单元 get recurrent unit, GRU</h2><p>解决梯度消失问题，使得较深层能够利用浅层信息</p>
+<hr>
+<p>对比<strong>naive RNN</strong></p>
+<script type="math/tex; mode=display">
+a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\</script><p>关键在于$a^{\langle t-1 \rangle}, x^{\langle t \rangle}, a^{\langle t \rangle}$，而$\hat{y}^{\langle t \rangle}$可由$a^{\langle t \rangle}$算出</p>
+<hr>
+<p>而<strong>GRU</strong>，引入记忆细胞$c^{\langle t \rangle}$，相当于$a^{\langle t \rangle}$<br>由此，关键在于通过$c^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}$</p>
+<ul>
+<li>若按naive计算，$\tilde{c}^{\langle t \rangle} = g<em>{1}(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b<em>{c}) = tanh(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$</li>
+<li>或者直接透传，即本层不进行计算，直接输出$c^{\langle t-1 \rangle}$</li>
+</ul>
+<p>进一步定义一个门，update gate, $\Gamma<em>{u} = \sigma(W</em>{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$</p>
+<ul>
+<li>由于使用sigmoid，$\Gamma_{u}$的值，大多数情形下，或者极为接近0，或者极为接近1</li>
+<li>$\Gamma_{u}$决定使用按naive计算（遗忘），还是直接透传（记忆）</li>
+</ul>
+<p>综上，</p>
+<script type="math/tex; mode=display">c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + (1 - \Gamma_{u}) * c^{\langle t-1 \rangle}</script><ul>
+<li>$*$为逐元素乘</li>
+<li>$c^{\langle t \rangle}$是多维的，可能某些位上需要计算（遗忘），某些位上需要透传（记忆）</li>
+</ul>
+<p><strong>完整版GRU</strong></p>
+<script type="math/tex; mode=display">
+\Gamma_{r} = \sigma(W_{r}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{r}) \\
+\tilde{c}^{\langle t \rangle} = tanh(W_{c}[\Gamma_{r} * c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) \\
+\Gamma_{u} = \sigma(W_{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u}) \\
+c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + (1 - \Gamma_{u}) * c^{\langle t-1 \rangle}</script><ul>
+<li>related gate, $\Gamma_{r}$描述$c^{\langle t-1 \rangle}$与$c^{\langle t \rangle}$之间的相关性</li>
+<li>记忆细胞$c^{\langle t \rangle}$相当于$a^{\langle t \rangle}$</li>
+</ul>
+<h2 id="长短期记忆单元-long-short-term-memory-LSTM"><a href="#长短期记忆单元-long-short-term-memory-LSTM" class="headerlink" title="长短期记忆单元 long short term memory, LSTM"></a>长短期记忆单元 long short term memory, LSTM</h2><script type="math/tex; mode=display">
+\tilde{c}^{\langle t \rangle} = tanh(W_{c}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) \\
+\Gamma_{u} = \sigma(W_{u}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u}) \\
+\Gamma_{f} = \sigma(W_{f}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{f}) \\
+c^{\langle t \rangle} = \Gamma_{u} * \tilde{c}^{\langle t \rangle} + \Gamma_{f} * c^{\langle t-1 \rangle} \\
+\Gamma_{o} = \sigma(W_{o}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{o}) \\
+a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
+<li>记忆细胞$c^{\langle t \rangle}$<strong>不再</strong>相当于$a^{\langle t \rangle}$</li>
+<li>关键在于通过$c^{\langle t-1 \rangle}, a^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}, a^{\langle t \rangle}$</li>
+<li>update、forget门，分别考虑需要计算（遗忘），某些位上需要透传（记忆）</li>
+<li>通过output门指定，基于$c^{\langle t \rangle}$计算$a^{\langle t \rangle}$</li>
+</ul>
+<h2 id="双向RNN"><a href="#双向RNN" class="headerlink" title="双向RNN"></a>双向RNN</h2><ul>
+<li>$a^{\langle t \rangle}$分为$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$</li>
+<li>先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T<em>{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T</em>{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$<ul>
+<li>可将初始化$\overrightarrow{a}^{\langle 0 \rangle}$和$\overrightarrow{a}^{\langle T_{x}+1 \rangle}$都设为0</li>
+</ul>
+</li>
+<li>$\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W<em>{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b</em>{y}$）</li>
+</ul>
+<h2 id="Deep-RNN"><a href="#Deep-RNN" class="headerlink" title="Deep RNN"></a>Deep RNN</h2><ul>
+<li>隐藏层有多层，注意Deep RNN的隐藏层是要引入了前一时刻的activation的！<ul>
+<li>不引入前一时刻的activation，可直接在RNN隐藏层上，堆一个NN来给出$\hat{y}^{\langle t \rangle}$（相当于RNN的hidden unit使用的一个NN）</li>
+</ul>
+</li>
+<li>由于Deep RNN的隐藏层是要引入了前一时刻的activation，系数会很多，隐藏层一般不多（3，不像Deep NN、Deep CNN，可以很深）</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmleadjw0018skw2c2wjc83k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/14/dl_seq2seq/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          seq2seq
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/11/dl_face_validation/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">人脸验证</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

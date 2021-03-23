@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Java Cheatsheet | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.1. 数据类型 8种基本类型： 4种整型：int (4)、short (2)、long (8, L)、byte (1) 2种浮点：float (4, F)、double (8, D, default) 1种字符：char 1种布尔：boolean   枚举类型：enum 数组：12345678910int[] a = new int [100];int[] b = &amp;#123;0, 1, 2,">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Cheatsheet">
+<meta property="og:url" content="http://yoursite.com/2018/10/22/java_cheatsheet/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="1.1. 数据类型 8种基本类型： 4种整型：int (4)、short (2)、long (8, L)、byte (1) 2种浮点：float (4, F)、double (8, D, default) 1种字符：char 1种布尔：boolean   枚举类型：enum 数组：12345678910int[] a = new int [100];int[] b = &amp;#123;0, 1, 2,">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Cheatsheet">
+<meta name="twitter:description" content="1.1. 数据类型 8种基本类型： 4种整型：int (4)、short (2)、long (8, L)、byte (1) 2种浮点：float (4, F)、double (8, D, default) 1种字符：char 1种布尔：boolean   枚举类型：enum 数组：12345678910int[] a = new int [100];int[] b = &amp;#123;0, 1, 2,">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/22/java_cheatsheet/" class="article-date">
+  <time datetime="2018-10-21T16:00:00.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java Cheatsheet
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-1-数据类型"><a href="#1-1-数据类型" class="headerlink" title="1.1. 数据类型"></a>1.1. 数据类型</h2><ul>
+<li>8种基本类型：<ul>
+<li>4种整型：<code>int</code> (4)、<code>short</code> (2)、<code>long</code> (8, L)、<code>byte</code> (1)</li>
+<li>2种浮点：<code>float</code> (4, F)、<code>double</code> (8, D, default)</li>
+<li>1种字符：<code>char</code></li>
+<li>1种布尔：<code>boolean</code></li>
+</ul>
+</li>
+<li>枚举类型：<code>enum</code></li>
+<li>数组：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">100</span>];</span><br><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">a = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;      <span class="comment">//使用匿名数组，在不创建新变量情况下，重新初始化a</span></span><br><span class="line"><span class="comment">// 允许运行时确定大小</span></span><br><span class="line"><span class="keyword">int</span> size = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line"><span class="comment">// 引用同一个</span></span><br><span class="line"><span class="keyword">int</span>[] c = a;</span><br><span class="line"><span class="comment">// 拷贝数值</span></span><br><span class="line"><span class="keyword">int</span>[] d = Arrays.copyOf(a, <span class="number">2</span> * a.length);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="1-2-运算符"><a href="#1-2-运算符" class="headerlink" title="1.2. 运算符"></a>1.2. 运算符</h2><p><code>=</code> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>+=</code> <code>++</code><br><code>==</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>&amp;&amp;</code> <code>||</code> <code>!</code> <code>?:</code><br><code>&amp;</code> <code>|</code> <code>^</code> <code>~</code> <code>&gt;&gt;</code>（用符号位补位） <code>&gt;&gt;&gt;</code>（用0补位） <code>&lt;&lt;</code>（用0补位）</p>
+<h2 id="2-1-控制流程"><a href="#2-1-控制流程" class="headerlink" title="2.1. 控制流程"></a>2.1. 控制流程</h2><ul>
+<li>条件分支：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> xxx:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>循环：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">while</span> ()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> （；；）</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ( : )</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>中断：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">lable:</span><br><span class="line"><span class="keyword">while</span> ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> ( ; ; )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> ()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span> lable;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// jump to here</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-2-异常处理"><a href="#2-2-异常处理" class="headerlink" title="2.2. 异常处理"></a>2.2. 异常处理</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">catch</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">catch</span> ( | )</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// if "throw" exists in catch, or the exception is not catched, execute here then throw</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-1-修饰符"><a href="#3-1-修饰符" class="headerlink" title="3.1. 修饰符"></a>3.1. 修饰符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>final</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量</td>
+<td>常量，不可更改</td>
+</tr>
+<tr>
+<td>方法</td>
+<td>不允许覆盖</td>
+</tr>
+<tr>
+<td>类</td>
+<td>不允许继承</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>static</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量</td>
+<td>类变量</td>
+</tr>
+<tr>
+<td>方法</td>
+<td>类方法</td>
+</tr>
+<tr>
+<td>类</td>
+<td>内部类不引用外围类对象。不加static的内部类可以引用外围类对象，但如在外围类static方法中定义的内部类，就需要不引用外围类对象。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>被任意类使用</td>
+</tr>
+<tr>
+<td>private</td>
+<td>被定义自身的类使用</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>被子类或同包中的类使用</td>
+</tr>
+<tr>
+<td>default</td>
+<td>被同包中的类使用</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="4-1-调用"><a href="#4-1-调用" class="headerlink" title="4.1. 调用"></a>4.1. 调用</h2><h3 id="Java方法总是值调用（call-by-value）"><a href="#Java方法总是值调用（call-by-value）" class="headerlink" title="Java方法总是值调用（call by value）"></a>Java方法总是值调用（call by value）</h3><p>方法参数包含两种类型：基本数据类型；对象引用。<br>将对象引用进行拷贝（得到另一个对象引用，指向同一对象）而传入方法，用起来很像“引用调用”（call by reference），但此时仅能修改对象，无法swap。因为swap的是拷贝出来的对象引用，在方法结束后被丢弃。</p>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>如果一个类中没有编写构造器，将使用默认构造器，无入参，将所有变量设为默认值（0、false、null）。<br>但如果类中有提供（非默认）构造器，而未提供默认构造器，则构造对象时不能使用默认构造器（无入参）。</p>
+<p>对于构造器中没有显式初始化的类中变量，会被初始化为默认值。</p>
+<p>使用super调用父类构造器，必须是子类构造器的第一句。实际上，调用构造器的语句（this或super），必须是子类构造器的第一条语句。<br>如果子类构造器没有显式调用父类构造器，则自动调用父类的默认构造器（无入参）。</p>
+<p>初始化顺序：</p>
+<ul>
+<li>静态成员变量赋值和静态初始化块级别相同，非静态成员变量赋值和非静态初始化块级别相同，按代码中出现顺序执行。</li>
+<li>父类静态 -&gt; 子类静态 -&gt; （创建实例时执行后续，否则不执行） -&gt; 父类非静态 -&gt; 父类构造器 -&gt; 子类非静态 -&gt; 子类构造器</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/22/java_cheatsheet/" data-id="ckmleadl0002lskw2zmnkq8mh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/10/23/scala_symbols/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Scala Symbols
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/10/22/spark_cheatsheet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spark Cheatsheet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

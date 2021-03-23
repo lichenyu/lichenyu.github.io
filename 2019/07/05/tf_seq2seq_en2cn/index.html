@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>keras seq2seq 详细注释版 | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="seq2seq 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
+<meta name="keywords" content="Tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="keras seq2seq 详细注释版">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/tf_seq2seq_en2cn/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="seq2seq 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="keras seq2seq 详细注释版">
+<meta name="twitter:description" content="seq2seq 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-tf_seq2seq_en2cn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/05/tf_seq2seq_en2cn/" class="article-date">
+  <time datetime="2019-07-04T16:00:00.000Z" itemprop="datePublished">2019-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      keras seq2seq 详细注释版
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>seq2seq</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">referrences:</span></span><br><span class="line"><span class="string">    https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html</span></span><br><span class="line"><span class="string">    https://blog.csdn.net/PIPIXIU/article/details/81016974</span></span><br><span class="line"><span class="string">dataset:</span></span><br><span class="line"><span class="string">    http://www.manythings.org/anki/</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Input, LSTM, Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># n_input: input one-hot维度；n_output: output one-hot维度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_model</span><span class="params">(n_input, n_output, n_units)</span>:</span></span><br><span class="line">    <span class="comment"># ----------训练阶段（decoder有teacher forcing）----------</span></span><br><span class="line">    <span class="comment"># Input实例化Keras张量</span></span><br><span class="line">    encoder_input = Input(shape=(<span class="keyword">None</span>, n_input))</span><br><span class="line">    <span class="comment"># n_units为LSTM单元中神经元的个数；return_state返回最后时刻的状态h和c</span></span><br><span class="line">    encoder = LSTM(n_units, return_state=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment"># call LSTM，获取最后时刻的状态，作为decoder的初始状态</span></span><br><span class="line">    _, encoder_h, encoder_c = encoder(encoder_input)</span><br><span class="line">    encoder_state = [encoder_h, encoder_c]</span><br><span class="line"></span><br><span class="line">    decoder_input = Input(shape=(<span class="keyword">None</span>, n_output))</span><br><span class="line">    <span class="comment"># 训练模型时需要decoder的输出序列来优化，故return_sequences</span></span><br><span class="line">    decoder = LSTM(n_units, return_sequences=<span class="keyword">True</span>, return_state=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment"># call LSTM，获取输出序列。注意，decoder_output shape(?, ?, n_units)</span></span><br><span class="line">    decoder_output, _, _ = decoder(decoder_input, initial_state=encoder_state)</span><br><span class="line">    <span class="comment"># FC + softmax</span></span><br><span class="line">    decoder_dense = Dense(n_output, activation=<span class="string">'softmax'</span>)</span><br><span class="line">    <span class="comment"># call Dense（FC + softmax），decoder_output shape = (?, ?, n_output)</span></span><br><span class="line">    decoder_output = decoder_dense(decoder_output)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成训练模型</span></span><br><span class="line">    <span class="comment"># 第一个参数为训练模型的输入，包含了encoder和decoder的输入，第二个参数为模型的输出，包含了decoder的输出</span></span><br><span class="line">    model = Model([encoder_input, decoder_input], decoder_output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------推理阶段（即预测）----------</span></span><br><span class="line">    <span class="comment"># 调整训练模型（但是weights和biases不变），以适配预测场景</span></span><br><span class="line">    <span class="comment"># 一个直接的需要修改的地方是改变teacher forcing为前一时刻输出</span></span><br><span class="line">    <span class="comment"># encoder其实没有变化，主要修改decoder</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 直接生成推断encoder模型</span></span><br><span class="line">    encoder_infer = Model(encoder_input, encoder_state)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 准备生产推断decoder模型</span></span><br><span class="line">    <span class="comment"># On the first decoder call, the hidden and cell states from the encoder will be used to initialize the decoder LSTM layer, provided as input to the model directly.</span></span><br><span class="line">    decoder_state_input_h = Input(shape=(n_units,))</span><br><span class="line">    decoder_state_input_c = Input(shape=(n_units,))</span><br><span class="line">    <span class="comment"># initial_state</span></span><br><span class="line">    decoder_state_input = [decoder_state_input_h, decoder_state_input_c]</span><br><span class="line">    <span class="comment"># call LSTM，获取输出</span></span><br><span class="line">    decoder_infer_output, decoder_infer_state_h, decoder_infer_state_c = decoder(decoder_input, initial_state=decoder_state_input)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># The decoder must output the hidden and cell states along with the predicted character on each call, so that these states can be assigned to a variable and used on each subsequent recursive call.</span></span><br><span class="line">    <span class="comment"># 当前时刻得到的状态</span></span><br><span class="line">    decoder_infer_state = [decoder_infer_state_h, decoder_infer_state_c]</span><br><span class="line">    <span class="comment"># 当前时刻的输出，call Dense（FC + softmax），decoder_output shape = (?, ?, n_output)</span></span><br><span class="line">    decoder_infer_output = decoder_dense(decoder_infer_output)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成推断decoder模型</span></span><br><span class="line">    <span class="comment"># decoder_state_input本身是个list，+运算符append到前面的list</span></span><br><span class="line">    decoder_infer = Model([decoder_input] + decoder_state_input, [decoder_infer_output] + decoder_infer_state)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 可以看出，decoder_infer没法被训练，因为input不易被直接定义</span></span><br><span class="line">    <span class="comment"># 而model就可以很方便的按定义形式给出input、output，进行训练。具体见下文main中使用</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model, encoder_infer, decoder_infer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict_chinese</span><span class="params">(source, encoder_inference, decoder_inference, n_steps, features)</span>:</span></span><br><span class="line">    <span class="comment"># encoding</span></span><br><span class="line">    state = encoder_inference.predict(source)</span><br><span class="line">    <span class="comment"># 第一个字符'\t',为起始标志</span></span><br><span class="line">    predict_seq = np.zeros((<span class="number">1</span>, <span class="number">1</span>, features))</span><br><span class="line">    predict_seq[<span class="number">0</span>, <span class="number">0</span>, target_dict[<span class="string">'\t'</span>]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------看一下，这里就是如何使用推理模型了。----------</span></span><br><span class="line">    <span class="comment"># ----------我们的训练模型仅用于获取weights和biases，获取后真正使用的是推理模型了----------</span></span><br><span class="line">    output = <span class="string">''</span></span><br><span class="line">    <span class="comment"># 每次用前一次的预测输出（字符），作为输入，来预测下一次的字符，直到预测出了终止符/最大长度</span></span><br><span class="line">    <span class="comment"># n_steps为OUTPUT_SEQ_LENGTH，即最大句子长度</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n_steps):</span><br><span class="line">        <span class="comment"># 输入前一次的预测输出字符predict_seq，及隐状态h，c</span></span><br><span class="line">        <span class="comment"># 输出yhat因经过FC+softmax，shape = (?, ?, n_output)</span></span><br><span class="line">        yhat, h, c = decoder_inference.predict([predict_seq] + state)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># sample=0，time=-1（last），实际上，yhat shape = (1, 1, output_onehot_dim)</span></span><br><span class="line">        char_index = np.argmax(yhat[<span class="number">0</span>, <span class="number">-1</span>, :])</span><br><span class="line">        char = target_dict_reverse[char_index]</span><br><span class="line">        output += char</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 本次state为下一次的init state</span></span><br><span class="line">        state = [h, c]</span><br><span class="line">        <span class="comment"># 本次的output为下一次的input</span></span><br><span class="line">        predict_seq = np.zeros((<span class="number">1</span>, <span class="number">1</span>, features))</span><br><span class="line">        predict_seq[<span class="number">0</span>, <span class="number">0</span>, char_index] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 遇到终止符则停止</span></span><br><span class="line">        <span class="keyword">if</span> char == <span class="string">'\n'</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NUM_SAMPLES = <span class="number">2000</span></span><br><span class="line">BATCH_SIZE = <span class="number">64</span></span><br><span class="line">EPOCH = <span class="number">200</span></span><br><span class="line">N_UNITS = <span class="number">256</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------处理数据----------</span></span><br><span class="line">    data_path = <span class="string">'cmn.txt'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取NUM_SAMPLES行数据</span></span><br><span class="line">    <span class="comment"># pd.read_table默认分隔符为'\t'（pd.read_csv默认分隔符则为','）</span></span><br><span class="line">    df = pd.read_table(data_path, header=<span class="keyword">None</span>).iloc[:NUM_SAMPLES, :]</span><br><span class="line">    df.columns = [<span class="string">'inputs'</span>, <span class="string">'targets'</span>]</span><br><span class="line">    <span class="comment"># target每句前后增加'\t'、'\n'，作为起始、终止标志</span></span><br><span class="line">    df[<span class="string">'targets'</span>] = df[<span class="string">'targets'</span>].apply(<span class="keyword">lambda</span> x: <span class="string">'\t'</span> + x + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># input、target句子列表</span></span><br><span class="line">    input_texts = df.inputs.values.tolist()</span><br><span class="line">    target_texts = df.targets.values.tolist()</span><br><span class="line">    <span class="comment"># input、target字符列表</span></span><br><span class="line">    input_characters = sorted(list(set(df.inputs.unique().sum())))</span><br><span class="line">    target_characters = sorted(list(set(df.targets.unique().sum())))</span><br><span class="line"></span><br><span class="line">    INUPT_SEQ_LENGTH = max([len(i) <span class="keyword">for</span> i <span class="keyword">in</span> input_texts])</span><br><span class="line">    OUTPUT_SEQ_LENGTH = max([len(i) <span class="keyword">for</span> i <span class="keyword">in</span> target_texts])</span><br><span class="line">    <span class="comment"># one-hot --&gt; features，特征维度为one-hot维度，即字符数</span></span><br><span class="line">    INPUT_FEATURE_LENGTH = len(input_characters)</span><br><span class="line">    OUTPUT_FEATURE_LENGTH = len(target_characters)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># encoder seq、decoder seq为定长，且decoder每次都输出，故使用max_input_seq_len、max_out_seq_len</span></span><br><span class="line">    <span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line">    encoder_input = np.zeros((NUM_SAMPLES, INUPT_SEQ_LENGTH, INPUT_FEATURE_LENGTH))</span><br><span class="line">    <span class="comment"># (samples, max_out_seq_len, features)</span></span><br><span class="line">    decoder_input = np.zeros((NUM_SAMPLES, OUTPUT_SEQ_LENGTH, OUTPUT_FEATURE_LENGTH))</span><br><span class="line">    <span class="comment"># (samples, max_out_seq_len, features)</span></span><br><span class="line">    decoder_output = np.zeros((NUM_SAMPLES, OUTPUT_SEQ_LENGTH, OUTPUT_FEATURE_LENGTH))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># &#123;char: index&#125;</span></span><br><span class="line">    input_dict = &#123;char: index <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(input_characters)&#125;</span><br><span class="line">    <span class="comment"># &#123;index: char&#125;</span></span><br><span class="line">    input_dict_reverse = &#123;index: char <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(input_characters)&#125;</span><br><span class="line">    <span class="comment"># &#123;char: index&#125;</span></span><br><span class="line">    target_dict = &#123;char: index <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(target_characters)&#125;</span><br><span class="line">    <span class="comment"># &#123;index: char&#125;</span></span><br><span class="line">    target_dict_reverse = &#123;index: char <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(target_characters)&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> seq_index, seq <span class="keyword">in</span> enumerate(input_texts):</span><br><span class="line">        <span class="keyword">for</span> char_index, char <span class="keyword">in</span> enumerate(seq):</span><br><span class="line">            <span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line">            encoder_input[seq_index, char_index, input_dict[char]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> seq_index, seq <span class="keyword">in</span> enumerate(target_texts):</span><br><span class="line">        <span class="keyword">for</span> char_index, char <span class="keyword">in</span> enumerate(seq):</span><br><span class="line">            decoder_input[seq_index, char_index, target_dict[char]] = <span class="number">1.0</span></span><br><span class="line">            <span class="comment"># decoder_input = 前一次的decoder_output</span></span><br><span class="line">            <span class="keyword">if</span> char_index &gt; <span class="number">0</span>:</span><br><span class="line">                decoder_output[seq_index, char_index - <span class="number">1</span>, target_dict[char]] = <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------训练模型----------</span></span><br><span class="line">    model_train, encoder_infer, decoder_infer = create_model(INPUT_FEATURE_LENGTH, OUTPUT_FEATURE_LENGTH, N_UNITS)</span><br><span class="line">    model_train.compile(optimizer=<span class="string">'rmsprop'</span>, loss=<span class="string">'categorical_crossentropy'</span>)</span><br><span class="line">    model_train.fit([encoder_input, decoder_input], decoder_output, batch_size=BATCH_SIZE, epochs=EPOCH, validation_split=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------测试模型----------</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>, <span class="number">200</span>):</span><br><span class="line">        <span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line">        test = encoder_input[i:i + <span class="number">1</span>, :, :]  <span class="comment"># i:i+1保持数组是三维</span></span><br><span class="line">        out = predict_chinese(test, encoder_infer, decoder_infer, OUTPUT_SEQ_LENGTH, OUTPUT_FEATURE_LENGTH)</span><br><span class="line">        print(input_texts[i])</span><br><span class="line">        print(out)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/05/tf_seq2seq_en2cn/" data-id="ckmleadn1006zskw2kqvv890n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/15/python_numpy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python Numpy
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/01/tf_process/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Tensorflow模型构建通用流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

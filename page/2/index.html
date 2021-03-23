@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="ChenyuShuxin">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChenyuShuxin">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-weight_initialization" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/28/weight_initialization/" class="article-date">
+  <time datetime="2019-11-27T16:00:00.000Z" itemprop="datePublished">2019-11-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/28/weight_initialization/">Weight Initialization</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="权重初始化方法"><a href="#权重初始化方法" class="headerlink" title="权重初始化方法"></a>权重初始化方法</h2><p>策略：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Activation Function</th>
+<th>Uniform Distribution $[-r, +r]$</th>
+<th>Normal Distribution</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sigmoid</td>
+<td>$r = 4\sqrt{\frac{6}{n<em>{in} + n</em>{out}}}$</td>
+<td>$\sigma = 4\sqrt{\frac{2}{n<em>{in} + n</em>{out}}}$</td>
+<td>Glorot</td>
+</tr>
+<tr>
+<td>tanh</td>
+<td>$r = \sqrt{\frac{6}{n<em>{in} + n</em>{out}}}$</td>
+<td>$\sigma = \sqrt{\frac{2}{n<em>{in} + n</em>{out}}} = \sqrt{\frac{1}{n_{in}}}$</td>
+<td>Glorot</td>
+</tr>
+<tr>
+<td>relu</td>
+<td>$r = \sqrt{2}\sqrt{\frac{6}{n<em>{in} + n</em>{out}}}$</td>
+<td>$\sigma = \sqrt{\frac{4}{n<em>{in} + n</em>{out}}}  = \sqrt{\frac{2}{n_{in}}}$</td>
+<td>He</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glorot = np.sqrt(<span class="number">2.0</span> / (self.deep_layers[i - <span class="number">1</span>] + self.deep_layers[i]))</span><br><span class="line">weights[<span class="string">"layer_%d"</span> % i] = tf.Variable(</span><br><span class="line">	np.random.normal(loc=<span class="number">0</span>, scale=glorot, size=(self.deep_layers[i - <span class="number">1</span>], self.deep_layers[i])),</span><br><span class="line">    dtype=np.float32)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/28/weight_initialization/" data-id="ckmleadn0006vskw2t6jjelal" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-fm_embedding" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/08/fm_embedding/" class="article-date">
+  <time datetime="2019-11-07T16:00:00.000Z" itemprop="datePublished">2019-11-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/08/fm_embedding/">FM embedding</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="FM模型"><a href="#FM模型" class="headerlink" title="FM模型"></a>FM模型</h2><p>Factorization Machines</p>
+<p><strong>一般的线性模型</strong>：</p>
+<script type="math/tex; mode=display">
+\hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i</script><p>线性模型压根没有考虑特征间的关联。</p>
+<ul>
+<li>为了表述特征间的相关性，我们采用多项式模型。</li>
+<li>$x<em>i$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w</em>{ij}$即为我们学习的参数</li>
+</ul>
+<p><strong>Poly2模型</strong>：</p>
+<script type="math/tex; mode=display">
+\hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d w_{ij} x_i x_j</script><p>但这个模型有些问题：</p>
+<ul>
+<li>参数的个数是非常的多。$d$为特征数量（注意，one-hot后每个为单独一类，因此特征数量大大增加），对于参数数量：一次项有$d+1$个，二次项（即组合特征的参数）共有$\frac{d(d−1)}{2}$个。</li>
+<li>参数与参数之间被认为彼此独立，在<strong>稀疏场景下</strong>（one-hot）二次项的训练是很困难的。因为要训练$w<em>{ij}$，需要有大量的$x_i$和$x_j$都非零的样本（只有非零组合才有意义）。而样本本身是稀疏的，满足$x_i x_j \ne 0$的样本会非常少，样本少则难以估计参数$w</em>{ij}$，训练出来容易导致模型的过拟合。</li>
+</ul>
+<p>为解决这些问题，提出了FM模型。<br>上文Poly2模型，对于不同的特征对$x<em>i,x_j$和$x_i,x_k$认为是完全独立的，对参数$w</em>{ij}$和$w_{ik}$分别进行训练。<br>而实际上并非如此，不同的特征之间进行组合并非完全独立。</p>
+<ul>
+<li>因此，对所有的$i$、$j$求$w<em>{ij}$，也就是一个矩阵$W</em>{ij}$时（$shape=(d,d)$），可以分解成两个矩阵相乘$\mathbf{V}^T\mathbf{V}$（$shape=(d,k)*(k,d)$）。</li>
+<li>这样，在求某个$w_{ij}$时，可以分解成两个向量内积$(\mathbf{v}_i \cdot \mathbf{v}_j)$。其中，$\mathbf{v}_i$作为特征$i$的隐向量，就是$\mathbf{V}$的第$i$列，是对特征$i$的描述（可理解成类似专用于求二次项时$x_i$的权重），长度为$k$。</li>
+<li>换句话说，一个（one-hot后布尔型）特征$i$，对应一个隐向量$\mathbf{v}_i$。</li>
+</ul>
+<p>怎么解决上述问题的？<br>1）只学隐向量，参数少；2）对于几乎不出现或者很少出现的$i,j$组合，可以通过包含$i$和包含$j$的其他组合的数据，学到隐向量$\mathbf{v}_i$、$\mathbf{v}_j$就够了，反正计算时直接使用隐向量内积</p>
+<p><strong>FM模型</strong>：</p>
+<script type="math/tex; mode=display">
+\hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d ( \mathbf{v}_i \cdot \mathbf{v}_j ) x_i x_j</script><p>隐向量长度为$k\ll d$。$(\mathbf{v}<em>i \cdot \mathbf{v}_j)$为内积，其乘积为原来的$w</em>{ij}$，即$w<em>{ij} = ( \mathbf{v}_i \cdot \mathbf{v}_j ) = \sum</em>{t=1}^kv<em>{i,t} \cdot v</em>{j,t}$<br>二次项参数个数减少为$kd$个，$d$为特征数量（one-hot每个为一类），$k$为隐向量长度。</p>
+<p><strong>FFM模型</strong>：</p>
+<script type="math/tex; mode=display">
+\hat y(\mathbf{x}) = w_0 + \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d (\mathbf{v}_{i, f_j} \cdot \mathbf{v}_{j, f_i}) x_i x_j</script><p>FM模型不区分$x_i,x_j$组合和$x_k,x_j$组合中$x_j$的区别，集，使用同一个隐向量$\mathbf{v}_j$来对应特征$x_j$，与不同的$x_i$、$x_k$相乘。<br>而FFM则认为，对于特征$x_j$的隐向量，计算二次项系数时，对于不同的两种field组合，应该使用（各自）不同field的隐向量。<br>这样一来，若field有$f$个，则每个特征提供的隐向量就应该有$f$个（对应相乘特征所属field有$f$个）（而FM中只有1个哦，不区分field）。<br>而对于二次项参数数量，FFM模型相当于比FM模型，多了$f$倍，$f \times kd$。</p>
+<p><strong>FM embedding</strong>：<br>对FM模型，如果不进行最后一步的向量内积、累加，则可以认为是对$x_i$的embedding。（常数项各记录都一样，有没有无所谓）</p>
+<script type="math/tex; mode=display">
+w_i x_i \qquad \mathbf{v}_i x_i \qquad \text{for all }i\text{ in } d,\quad x_i \ne 0</script><p>如果$x_i$都来自于one-hot，取值为1或0，那就是</p>
+<script type="math/tex; mode=display">
+w_i \qquad \mathbf{v}_i \qquad \text{for all }i\text{ in } d,\quad x_i \ne 0</script><p><strong>为什么说FM embedding能降维</strong>：<br>one-hot稀疏，但可能很长。<br>对于某个one-hot的数据：</p>
+<ul>
+<li>直接做输入时，对于一个one-hot会有多个类别值，长度为其“类别数量”。</li>
+<li>而进行FM embedding后，由于其只有一个“1”，输出为一个隐向量，长度为$k$。（或者算上一次项系数，那就是$k+1$）<ul>
+<li>其实是one-hot特征组输入进来后，会对应“类别数量-1”个0，以及1个由“1”的位置$i$决定取值的隐向量$\mathbf{v}_i$。</li>
+<li>则相当于给定一组one-hot特征，只会对应一个特定的隐向量。</li>
+</ul>
+</li>
+</ul>
+<p>所以，对于一个one-hot，或者说对于一个field，特征维度从“类别数量”降至$k$。</p>
+<p>即，一组同一个field的特征，对于该field的参数矩阵$\mathbf{V<em>{this_field}}$只取一列。$\mathbf{V} = [\mathbf{V</em>{field1}}, \mathbf{V<em>{field2}}, \mathbf{V</em>{field3}}, …]$<br>我们看到，降维是以field为粒度的，所以这也是后文NN结构中，对同一个field专用一个FC连接的原因。</p>
+<p><strong>FM中二次项求算方法</strong>：</p>
+<p>对$d^2$种组合，求算$k$长度的内积，复杂度为$O(kd^2)$<br>下面方法，可以将复杂度降低到$O(kd)$</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&\sum_{i=1}^d \sum_{j=i+1}^d \langle \mathbf{v}_i, \mathbf{v}_j \rangle x_i x_j \\
+=& \frac{1}{2} \sum_{i=1}^d\sum_{j=1}^d \langle \mathbf{v}_i, \mathbf{v}_j \rangle x_i x_j – \frac{1}{2}\sum_{i=1}^d \langle \mathbf{v}_i, \mathbf{v}_j \rangle x_i x_i \\
+=& \frac{1}{2} \sum_{i=1}^d\sum_{j=1}^d\sum_{f=1}^k v_{i,f}v_{j,f} x_i x_j – \frac{1}{2}\sum_{i=1}^d \sum_{f=1}^k v_{i,f}v_{i,f}x_i x_i \\
+=& \frac{1}{2} \sum_{f=1}^k \left( \left(\sum_{i=1}^dv_{i,f}x_i \right) \left(\sum_{j=1}^dv_{j,f}x_j \right) – \sum_{i=1}^d v_{i,f}^2x_i^2\right) \\
+=&\frac{1}{2} \sum_{f=1}^k \left( \left(\sum_{i=1}^dv_{i,f}x_i \right) ^2 – \sum_{i=1}^d v_{i,f}^2x_i^2\right)
+\end{align*}</script><p>定义前向网络计算方式时，使用这种方法</p>
+<h2 id="利用NN的FM-embedding"><a href="#利用NN的FM-embedding" class="headerlink" title="利用NN的FM embedding"></a>利用NN的FM embedding</h2><p>对每个field，连接一个（只对本field的）FC层，神经元数量即为$k$隐向量长度。<br>一个field，对应其下one-hot的多个特征，即，这些特征使用了一个FC层。<br>值得注意的是，即使各个field的维度（one-hot转化出的特征的数量）是不一样的，但是它们embedding后长度均为$k$。</p>
+<ul>
+<li>这样做是因为，本层的参数$W$（$shape=(k,\text{n<em>one-hot_features}))$）相当于上文的$\mathbf{V</em>{this_field}}$</li>
+<li>区分各个field，是为了利用one-hot的特性，由仅有1个“1”从$\mathbf{V<em>{this_field}}$只取出<strong>一个</strong>隐向量（“1”所在的位置，指定选哪列）（否则所有$d$个特征连接同一个FC层，会有多个“1”，会从$\mathbf{V} = [\mathbf{V</em>{field1}}, \mathbf{V<em>{field2}}, \mathbf{V</em>{field3}}, …]$中取出多个隐向量，并各元素加在一起）（但如果同field中就是有多个“1”，不是one-hot，那就确实需要同field中取多个隐向量，按各元素加在一起）</li>
+<li>此外，也是避免全局全连接，造成参数数量太多的问题。</li>
+</ul>
+<p><strong>怎么训练</strong>：<br>按FM公式，求预测值；数据中有真实值；梯度下降求模型参数<br>EM embedding时，可以锁或不锁embedding层的参数</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/08/fm_embedding/" data-id="ckmleadk5001rskw25kmgtlh6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-rl_dqn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/06/rl_dqn/" class="article-date">
+  <time datetime="2019-11-05T16:00:00.000Z" itemprop="datePublished">2019-11-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/06/rl_dqn/">强化学习 DQN</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><strong>DQN</strong>（Deep Q-Network），实际上就是Q Learning和Deep Learning的结合，使用DNN代替Q表给出$Q$值，以解决某些场景中，状态空间或者动作空间过大（状态数、动作数过多）的问题。</p>
+<p>价值函数近似（Value Function Approximation）的方法，通过用函数（而不是Q表）来表示$Q$值。</p>
+<script type="math/tex; mode=display">
+f(s, a) = Q(s, a)</script><p>为什么叫近似，因为我们并不知道$Q$值的实际分布情况，本质上就是基于训练，用一个函数来近似$Q$值的分布：</p>
+<script type="math/tex; mode=display">
+f(s, a) \approx Q(s, a)</script><p>这个函数可以是线性的也可以使非线性的，例如：</p>
+<script type="math/tex; mode=display">
+f(s, a) = w_1s+w_2a + b</script><p>当$f$为DNN时，则构成了DQN。</p>
+<p><strong>值得注意</strong>，往往求算$s$的所有$a$，故$f$的输入输出形式，除了“$f(s, a) = Q(s, a)$”，输入状态+动作，输出该状态+动作对应的$Q值$；还可以“$f(s) = [Q(s, a_1), Q(s, a_2), Q(s, a_3), …, Q(s, a_n)]$”，输入状态，输出该状态下所有动作的$Q$值。</p>
+<p><strong>那么如何训练NN呢？</strong></p>
+<p>我们知道，神经网络的训练是一个最优化问题，最优化一个损失函数loss function，也就是标签和网络输出的偏差，目标是让损失函数最小化。<br>为此，我们需要有样本，巨量的有标签数据，然后通过反向传播使用梯度下降的方法来更新神经网络的参数。<br>使用什么作为标签呢？<br>DQN的输出是$Q$值，这个是预测结果。<br>我们回看Q Learning里的更新公式</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Q(s,a) &:= (1-\alpha) \times Q(s,a) + \alpha \times [R(s,a) + \gamma \max_{a_i}Q(s', a_i)] \\
+&:= Q(s,a) + \alpha \times [R(s,a) + \gamma \max_{a_i}Q(s', a_i) - Q(s,a)]
+\end{align*}</script><p>即</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+Q(s,a)_{new} &= Q(s,a)_{old} + \alpha \times [R(s,a) + \gamma \max_{a_i}Q(s', a_i) - Q(s,a)_{old}] \\
+Q(s,a)_{new} - Q(s,a)_{old} &= \alpha \times [R(s,a) + \gamma \max_{a_i}Q(s', a_i) - Q(s,a)_{old}]
+\end{align*}</script><p>新学习时，更新的差距，在于（与$\alpha$因子相乘的）$R(s,a) + \gamma \max<em>{a_i}Q(s’, a_i)$和$Q(s,a)</em>{old}$的差距。</p>
+<ul>
+<li>将$Q(s,a)_{old}$看做当前的现状；（或者此处理解为，DNN给出的预测值）</li>
+<li>将$R(s,a) + \gamma \max_{a_i}Q(s’, a_i)$看做利用Reward和Q计算出来的目标Q值。把这个目标Q值作为标签，让NN给出的Q值趋近于目标Q值。（或者此处理解为，将对未来的估计当做此处的真实$Q$值，要知道真正的真实$Q$值我们是无法知道的）</li>
+<li>loss使用这两者mse即可</li>
+</ul>
+<p><strong>经验回放 Experience Replay</strong><br>为什么要采用经验回放的方法？<br>神经网络进行训练时，假设样本是独立同分布的。而通过强化学习采集到的数据之间存在着关联性，利用这些数据进行顺序训练，神经网络当然不稳定。<br>经验回放通过随机抽取，可以打破数据间的关联。</p>
+<p>具体做法是把每个时间步agent与环境交互得到的转移样本$(s<em>t, a_t, r_t, s</em>{t+1})$储存到回放记忆单元，要训练时就随机拿出一些minibatch来训练。</p>
+<p><strong>目标网络 Target Net</strong></p>
+<p>使用另一个网络（这里称为TargetNet）产生Target Q值。具体地，</p>
+<ul>
+<li>当前网络MainNet的输出$Q(s,a)<em>{old}$或者理解为$Q(s,a)</em>{predict}$（<strong>计算预测值</strong>）;</li>
+<li>目标网络TargetNet的输出，代入上面求$R(s,a) + \gamma \max_{a_i}Q(s’, a_i)$公式中得到Target Q值（<strong>计算标签值</strong>）。</li>
+<li>（<strong>选择$a’$的时候</strong>，还是使用MainNet的$Q$计算并选择的）</li>
+</ul>
+<p>根据loss更新MainNet的参数，每经过N轮迭代，将MainNet的参数复制给TargetNet。</p>
+<p>引入TargetNet后，再一段时间里Target Q值是保持不变的，一定程度降低了当前Q值和目标Q值的相关性，提高了算法稳定性。</p>
+<p><strong>demo</strong></p>
+<p>主逻辑流程，还是Q Learning的框架<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_maze</span><span class="params">()</span>:</span></span><br><span class="line">    step = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 迭代300回合</span></span><br><span class="line">    <span class="keyword">for</span> episode <span class="keyword">in</span> range(<span class="number">300</span>):</span><br><span class="line">        <span class="comment"># 初始状态</span></span><br><span class="line">        observation = env.reset()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            <span class="comment"># fresh env</span></span><br><span class="line">            env.render()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 根据策略，选择本次动作</span></span><br><span class="line">            action = RL.choose_action(observation)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 执行动作，获取奖励、下一状态</span></span><br><span class="line">            observation_, reward, done = env.step(action)</span><br><span class="line"></span><br><span class="line">			<span class="comment"># 为DQN全局存储(s_t, a_t, r_t, s_&#123;t+1&#125;)，对应一次交互</span></span><br><span class="line">            <span class="comment"># 注意这些都是数值（list或单值），保存时直接flat</span></span><br><span class="line">            RL.store_transition(observation, action, reward, observation_)</span><br><span class="line"></span><br><span class="line">			<span class="comment"># 更新计算Q值的DNN，200步后每隔5步训练一次</span></span><br><span class="line">            <span class="comment"># 训练时会抽取minibatch，梯度下降优化loss，以获取DNN的参数</span></span><br><span class="line">            <span class="keyword">if</span> (step &gt; <span class="number">200</span>) <span class="keyword">and</span> (step % <span class="number">5</span> == <span class="number">0</span>):</span><br><span class="line">                RL.learn()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 更新状态</span></span><br><span class="line">            observation = observation_</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 当前步骤为最后的结束步骤时，本回合结束，break</span></span><br><span class="line">            <span class="keyword">if</span> done:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            step += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># end of game</span></span><br><span class="line">    print(<span class="string">'game over'</span>)</span><br><span class="line">    env.destroy()</span><br></pre></td></tr></table></figure></p>
+<p>DNN主要负责对MainNet和TargetNet的训练，在进入“更新”步骤时，抽取minibatch，训练两个DNN<br>此外还有记忆单元，全局缓存$(s<em>t, a_t, r_t, s</em>{t+1})$</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">np.random.seed(<span class="number">1</span>)</span><br><span class="line">tf.set_random_seed(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Deep Q Network off-policy</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeepQNetwork</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">            self,</span></span></span><br><span class="line"><span class="function"><span class="params">            n_actions,</span></span></span><br><span class="line"><span class="function"><span class="params">            n_features,</span></span></span><br><span class="line"><span class="function"><span class="params">            learning_rate=<span class="number">0.01</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            reward_decay=<span class="number">0.9</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            e_greedy=<span class="number">0.9</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            replace_target_iter=<span class="number">300</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            memory_size=<span class="number">500</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            batch_size=<span class="number">32</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            e_greedy_increment=None,</span></span></span><br><span class="line"><span class="function"><span class="params">            output_graph=False,</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br><span class="line">    	<span class="comment"># 动作个数</span></span><br><span class="line">        self.n_actions = n_actions</span><br><span class="line">        <span class="comment"># （一个）状态对应的特征个数，即状态的特征维度</span></span><br><span class="line">        self.n_features = n_features</span><br><span class="line">        <span class="comment"># DNN学习率</span></span><br><span class="line">        self.lr = learning_rate</span><br><span class="line">        <span class="comment"># gamma，计算label用</span></span><br><span class="line">        self.gamma = reward_decay</span><br><span class="line">        <span class="comment"># 把MainNet参数拷贝至TargetNet的轮数</span></span><br><span class="line">        self.replace_target_iter = replace_target_iter</span><br><span class="line">        <span class="comment"># 经验回放中保存的记录数</span></span><br><span class="line">        self.memory_size = memory_size</span><br><span class="line">        <span class="comment"># DNN minibatch大小</span></span><br><span class="line">        self.batch_size = batch_size</span><br><span class="line">        <span class="comment"># epsilon如果增加的话，最大增至多少</span></span><br><span class="line">        self.epsilon_max = e_greedy</span><br><span class="line">        <span class="comment"># epsilon随时间增加（0到epsilon_max）</span></span><br><span class="line">        self.epsilon_increment = e_greedy_increment</span><br><span class="line">        <span class="comment"># epsilon，策略选择的e_greedy方法用</span></span><br><span class="line">        self.epsilon = <span class="number">0</span> <span class="keyword">if</span> e_greedy_increment <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">else</span> self.epsilon_max</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 更新DNN的当前轮数（决定是否把MainNet参数拷贝至TargetNet）</span></span><br><span class="line">        self.learn_step_counter = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 经验回放，注意[s, a, r, s_]被flat了</span></span><br><span class="line">        self.memory = np.zeros((self.memory_size, n_features * <span class="number">2</span> + <span class="number">2</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 构建前向计算OP、loss OP、train(optimizer) OP</span></span><br><span class="line">        self._build_net()</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 取出两个Net的参数</span></span><br><span class="line">        t_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=<span class="string">'target_net'</span>)</span><br><span class="line">        e_params = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope=<span class="string">'eval_net'</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 构建Net参数拷贝OP</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'hard_replacement'</span>):</span><br><span class="line">            self.target_replace_op = [tf.assign(t, e) <span class="keyword">for</span> t, e <span class="keyword">in</span> zip(t_params, e_params)]</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 启动默认图</span></span><br><span class="line">        self.sess = tf.Session()</span><br><span class="line"></span><br><span class="line">		<span class="comment"># for tensorboard</span></span><br><span class="line">        <span class="keyword">if</span> output_graph:</span><br><span class="line">            <span class="comment"># $ tensorboard --logdir=logs</span></span><br><span class="line">            tf.summary.FileWriter(<span class="string">"logs/"</span>, self.sess.graph)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># run tf变量初始化</span></span><br><span class="line">        self.sess.run(tf.global_variables_initializer())</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 每轮学习的cost值保存，用于画曲线</span></span><br><span class="line">        self.cost_his = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_build_net</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># ------------------ all inputs ------------------------</span></span><br><span class="line">        <span class="comment"># 不限行，列数为特征维度</span></span><br><span class="line">        self.s = tf.placeholder(tf.float32, [<span class="keyword">None</span>, self.n_features], name=<span class="string">'s'</span>)  <span class="comment"># input State</span></span><br><span class="line">        self.s_ = tf.placeholder(tf.float32, [<span class="keyword">None</span>, self.n_features], name=<span class="string">'s_'</span>)  <span class="comment"># input Next State</span></span><br><span class="line">        <span class="comment"># 不限行，列数为1</span></span><br><span class="line">        self.r = tf.placeholder(tf.float32, [<span class="keyword">None</span>, ], name=<span class="string">'r'</span>)  <span class="comment"># input Reward</span></span><br><span class="line">        self.a = tf.placeholder(tf.int32, [<span class="keyword">None</span>, ], name=<span class="string">'a'</span>)  <span class="comment"># input Action</span></span><br><span class="line"></span><br><span class="line">        w_initializer, b_initializer = tf.random_normal_initializer(<span class="number">0.</span>, <span class="number">0.3</span>), tf.constant_initializer(<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># ------------------ build evaluate_net ------------------</span></span><br><span class="line">        <span class="comment"># 定义MainNet前向计算输出OP</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'eval_net'</span>):</span><br><span class="line">            e1 = tf.layers.dense(self.s, <span class="number">20</span>, tf.nn.relu, kernel_initializer=w_initializer,</span><br><span class="line">                                 bias_initializer=b_initializer, name=<span class="string">'e1'</span>)</span><br><span class="line">            self.q_eval = tf.layers.dense(e1, self.n_actions, kernel_initializer=w_initializer,</span><br><span class="line">                                          bias_initializer=b_initializer, name=<span class="string">'q'</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 定义TargetNet前向计算输出OP</span></span><br><span class="line">        <span class="comment"># ------------------ build target_net ------------------</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'target_net'</span>):</span><br><span class="line">            t1 = tf.layers.dense(self.s_, <span class="number">20</span>, tf.nn.relu, kernel_initializer=w_initializer,</span><br><span class="line">                                 bias_initializer=b_initializer, name=<span class="string">'t1'</span>)</span><br><span class="line">            self.q_next = tf.layers.dense(t1, self.n_actions, kernel_initializer=w_initializer,</span><br><span class="line">                                          bias_initializer=b_initializer, name=<span class="string">'t2'</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 定义q_target OP</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'q_target'</span>):</span><br><span class="line">            q_target = self.r + self.gamma * tf.reduce_max(self.q_next, axis=<span class="number">1</span>, name=<span class="string">'Qmax_s_'</span>)    <span class="comment"># shape=(None, )</span></span><br><span class="line">            <span class="comment"># 反传截断，避免对loss进行反传时影响到TargetNet的参数</span></span><br><span class="line">            self.q_target = tf.stop_gradient(q_target)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 定义q_eval OP</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'q_eval'</span>):</span><br><span class="line">        	<span class="comment"># 在self.a前面增加indices，生成的indices指定了哪一行取哪个动作（因为动作是0, 1, 2, ...编码的）</span></span><br><span class="line">            a_indices = tf.stack([tf.range(tf.shape(self.a)[<span class="number">0</span>], dtype=tf.int32), self.a], axis=<span class="number">1</span>)</span><br><span class="line">            <span class="comment"># 收集params[indices]，即从q_eval=[Q(s, a0), Q(s, a1), Q(s, a2), ...]中取本次a对应的q</span></span><br><span class="line">            self.q_eval_wrt_a = tf.gather_nd(params=self.q_eval, indices=a_indices)    <span class="comment"># shape=(None, )</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 定义loss OP</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'loss'</span>):</span><br><span class="line">            self.loss = tf.reduce_mean(tf.squared_difference(self.q_target, self.q_eval_wrt_a, name=<span class="string">'TD_error'</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 定义train (optimizer) OP</span></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'train'</span>):</span><br><span class="line">            self._train_op = tf.train.RMSPropOptimizer(self.lr).minimize(self.loss)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">store_transition</span><span class="params">(self, s, a, r, s_)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> hasattr(self, <span class="string">'memory_counter'</span>):</span><br><span class="line">            self.memory_counter = <span class="number">0</span></span><br><span class="line">        <span class="comment"># flat</span></span><br><span class="line">        transition = np.hstack((s, [a, r], s_))</span><br><span class="line">        <span class="comment"># replace the old memory with new memory</span></span><br><span class="line">        index = self.memory_counter % self.memory_size</span><br><span class="line">        self.memory[index, :] = transition</span><br><span class="line">        self.memory_counter += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">choose_action</span><span class="params">(self, observation)</span>:</span></span><br><span class="line">        <span class="comment"># 在np.newaxis位置增加一个轴（因为只有一行记录）</span></span><br><span class="line">        observation = observation[np.newaxis, :]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> np.random.uniform() &lt; self.epsilon:</span><br><span class="line">            <span class="comment"># MainNet执行前向计算</span></span><br><span class="line">            actions_value = self.sess.run(self.q_eval, feed_dict=&#123;self.s: observation&#125;)</span><br><span class="line">            action = np.argmax(actions_value)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            action = np.random.randint(<span class="number">0</span>, self.n_actions)</span><br><span class="line">        <span class="keyword">return</span> action</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">learn</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 是否拷贝MainNet参数至TargetNet</span></span><br><span class="line">        <span class="keyword">if</span> self.learn_step_counter % self.replace_target_iter == <span class="number">0</span>:</span><br><span class="line">            self.sess.run(self.target_replace_op)</span><br><span class="line">            print(<span class="string">'\ntarget_params_replaced\n'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># sample batch memory from all memory</span></span><br><span class="line">        <span class="keyword">if</span> self.memory_counter &gt; self.memory_size:</span><br><span class="line">        	<span class="comment"># 缓存不够，有放回抽取</span></span><br><span class="line">            sample_index = np.random.choice(self.memory_size, size=self.batch_size)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            sample_index = np.random.choice(self.memory_counter, size=self.batch_size)</span><br><span class="line">        batch_memory = self.memory[sample_index, :]</span><br><span class="line"></span><br><span class="line">        _, cost = self.sess.run(</span><br><span class="line">            [self._train_op, self.loss],</span><br><span class="line">            feed_dict=&#123;</span><br><span class="line">                self.s: batch_memory[:, :self.n_features], // 前特征维度个数值，为s</span><br><span class="line">                self.a: batch_memory[:, self.n_features], // <span class="number">1</span>个，为a</span><br><span class="line">                self.r: batch_memory[:, self.n_features + <span class="number">1</span>], // <span class="number">1</span>个，为r</span><br><span class="line">                self.s_: batch_memory[:, -self.n_features:], // 后特征维度个数值，为s_next</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># 记录cost</span></span><br><span class="line">        self.cost_his.append(cost)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># increasing epsilon</span></span><br><span class="line">        self.epsilon = self.epsilon + self.epsilon_increment <span class="keyword">if</span> self.epsilon &lt; self.epsilon_max <span class="keyword">else</span> self.epsilon_max</span><br><span class="line">        self.learn_step_counter += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">plot_cost</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">        plt.plot(np.arange(len(self.cost_his)), self.cost_his)</span><br><span class="line">        plt.ylabel(<span class="string">'Cost'</span>)</span><br><span class="line">        plt.xlabel(<span class="string">'training steps'</span>)</span><br><span class="line">        plt.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    DQN = DeepQNetwork(<span class="number">3</span>,<span class="number">4</span>, output_graph=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/06/rl_dqn/" data-id="ckmleadm70056skw225d0tedz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-rl_sarsa" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/05/rl_sarsa/" class="article-date">
+  <time datetime="2019-11-04T16:00:00.000Z" itemprop="datePublished">2019-11-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/05/rl_sarsa/">强化学习 SARSA</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>SARSA与Q Learning类似，都是最终训练生成一个Q表。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>状态S</th>
+<th>动作A-飞</th>
+<th>动作A-不飞</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$S_1$</td>
+<td>1</td>
+<td>20</td>
+</tr>
+<tr>
+<td>$S_2$</td>
+<td>20</td>
+<td>-100</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$S_{n-1}$</td>
+<td>-100</td>
+<td>30</td>
+</tr>
+<tr>
+<td>$S_n$</td>
+<td>50</td>
+<td>-20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>[推理]</strong></p>
+<p>SARSA的推理与Q Learning一样</p>
+<p><strong>[训练]</strong></p>
+<p>与Q Learning一样，我们会经历状态$S_1$，然后挑选一个带来最大潜在奖励的动作比如$a_2$，这样我们就到达了状态$S_2$。<br>在这一步，如果使用的是Q Learning，选取一个会在$S_2$上会带来最大的潜力动作，来用于计算更新Q值；但是在真正处于$S_2$上要做决定时，却不一定会选取到那个带来最大奖励的动作（$\varepsilon$-greedy）。<br>如果使用的是SARSA，则说到做到，在$S_2$上用于计算更新Q值的动作，也是接下来要做的动作。即，对于$Q(S_1, a_2)$的计算，不再需要使用$\max Q$，而是使用策略确定在$S_2$上选取哪个动作，比如$a_1$，然后使用$Q(S_2, a_1)$计算更新$Q(S_1, a_2)$，并最后进入$S_2$并执行$a_2$。<br>注意，SARSA的动作选择，只在初始化时由策略动态选择，后续各步骤迭代时，动作其实已经是确定的了。确定的时机是在上一步中，确定的方法仍是由策略给出的。</p>
+<script type="math/tex; mode=display">
+Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma Q(S', a')]</script><p><strong>[Q值的更新（对比）]</strong></p>
+<p><strong>SARSA算法（on-policy）</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Initialize Q arbitrarily // 随机初始化Q表</span><br><span class="line">Repeat (for each episode): // 每一次从开始到结束是一个episode</span><br><span class="line">	Initialize S // S为初始位置的状态</span><br><span class="line">    Choose a from s using policy derived from Q (epsilon-greedy) // 仅第一步需使用策略选择下一步，后续步骤则在前一步中已经确定了下一步</span><br><span class="line">    Repeat (for each step of episode):</span><br><span class="line">        Take action a, observe r, s_next</span><br><span class="line">        Choose a_next from s_next using policy derived from Q (epsilon-greedy) // 根据策略，定死了下一步选哪个</span><br><span class="line">        Q(s, a) := (1 - ALPHA) * Q(s, a) + ALPHA * (r + GAMMA * Q(s_next, a_next)) // 更新Q(s, a)</span><br><span class="line">        s := s_next; a := a_next // 更新s、a</span><br><span class="line">    until s is terminal // 到游戏结束为止，即到达最后一步</span><br></pre></td></tr></table></figure></p>
+<p>处于状态<code>s</code>时，1）若是第一步则根据策略来选取动作<code>a</code>；2）若是中间步骤则使用上一步中指定的<code>a</code>。进而观测到下一步状态<code>s_next</code>，并再次根据策略选择动作<code>a_next</code>，这样就有了一个<code>[s, a, r, s_next, a_next]</code>序列（SARSA）。<br>处于状态<code>s_next</code>时，在上一步就知道了要采取哪个<code>a_next</code>，此时真的采取<code>a_next</code>这个动作…<br>动作的选取遵循相同的策略（比如epsilon-greedy）。</p>
+<p><strong>Q-learning算法（off-policy）</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Initialize Q arbitrarily // 随机初始化Q表</span><br><span class="line">Repeat (for each episode): // 每一次从开始到结束是一个episode</span><br><span class="line">    Initialize S // S为初始位置的状态</span><br><span class="line">    Repeat (for each step of episode):</span><br><span class="line">        Choose a from s using policy derived from Q (epsilon-greedy) // 每次都是根据当前S和Q，使用一种策略，动态得到（下一步）</span><br><span class="line">        Take action a, observe r, s_next</span><br><span class="line">        Q(s, a) := (1 - ALPHA) * Q(s, a) + ALPHA * (r + GAMMA * Q(s_next, a_maxQ_at_snext)) // 更新Q(s, a)</span><br><span class="line">        s := s_next // 只更新s，a由下一步动态确定</span><br><span class="line">    until s is terminal // 到游戏结束为止，即到达最后一步</span><br></pre></td></tr></table></figure></p>
+<p>处于状态<code>s</code>时，根据策略来选取动作<code>a</code>。进而观测到下一步状态<code>s_next</code>，这样就有了一个<code>[s, a, r, s_next]</code>序列。<br>处于状态<code>s_next</code>时，再次根据策略来选取动作<code>a_next</code>。</p>
+<p><strong>[SARSA lambda]</strong></p>
+<p>对$Q$值更新，不只更新本次获取$r$的步骤，而是更新之前各个步骤，不过使用$\lambda$来衰减。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Initialize Q arbitrarily // 随机初始化Q表</span><br><span class="line">Repeat (for each episode): // 每一次从开始到结束是一个episode</span><br><span class="line">    for all s in S, a in A: E(s, a) = 0 // 初始化E表</span><br><span class="line">	Initialize S // S为初始位置的状态</span><br><span class="line">    Choose a from s using policy derived from Q (epsilon-greedy) // 仅第一步需使用策略选择下一步，后续步骤则在前一步中已经确定了下一步</span><br><span class="line">    Repeat (for each step of episode):</span><br><span class="line">        Take action a, observe r, s_next</span><br><span class="line">        Choose a_next from s_next using policy derived from Q (epsilon-greedy) // 根据策略，定死了下一步选哪个</span><br><span class="line">        delta = r + GAMMA * Q(s_next, a_next) - Q(s, a)</span><br><span class="line">        E(s, a) := E(s, a) + 1 // 更新E表</span><br><span class="line">        for all s in S, a in A: // 对E表中所有点</span><br><span class="line">        	Q(s, a) += E(s, a) * ALPHA * delta // 利用更新后的E表，计算更新Q(s, a)</span><br><span class="line">            E(s, a) := LAMBDA * E(s, a) + 1 // 衰减E表</span><br><span class="line">        s := s_next; a := a_next // 更新s、a</span><br><span class="line">    until s is terminal // 到游戏结束为止，即到达最后一步</span><br></pre></td></tr></table></figure>
+<p>先定义一个$E$表，用来记录经过的各个位置（$S$）。<br>每走一步，如果这个点不在$E$表中则添加这个点到$E$表中，更新$E(s,a)$的值改为$E(s,a)+1$（还可以优化，下面说）。<br>而在走下一步之前，会对$E$表进行整体衰减。<br>也就是说每走一步，就要对$E$表的当前位置的值进行刷新，然后计算$Q$表，然后衰减$E$表。<br>衰减的意义就在于如果一旦到达终点，就可以体现出来$E$表中各个位置对到达终点的不可或缺性。</p>
+<ul>
+<li>如果衰减比例为0，也就是每次都给$E$表里的值乘0，就意味着表里只会剩下最后一个位置，这就是上文的SARSA；</li>
+<li>如果衰减比例为1，则不会出现衰减，完全保留并更新之前经过的所有$S$。但有一个问题：$E$表里的重复的越多的位置收益越大。前面我们说每次经过这个某个位置，都把$E$表里对应值+1，这样对有些位置会很不公平，可能会出现离终点最近的那个位置的$E$值反而比中间的某个点的$E$值要低，这很不科学。优化办法就是给$E$里的值定个上限，比如就是1，每次走到这个位置，就把他重新定为1，然后从1开始衰减，这样就不会出现上述的问题了。（在$E(s, a) = 1$的同时，可以令$E(s, others) = 0$，减少环的影响）</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/05/rl_sarsa/" data-id="ckmleadmf005nskw2xg2tixlx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-rl_q_learning" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/04/rl_q_learning/" class="article-date">
+  <time datetime="2019-11-03T16:00:00.000Z" itemprop="datePublished">2019-11-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/04/rl_q_learning/">强化学习 Q-Learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>强化学习中有状态（State）、动作（Action）、奖赏（Reward）这三个要素。智能体（Agent）会根据当前状态来采取动作，并记录被反馈的奖赏，以便下次再到相同状态时能采取更优的动作。</p>
+<p>提到Q-learning，我们需要先了解<strong>Q</strong>的含义。<br>Q为动作效用函数（action-utility function），用于评价在特定状态下采取某个动作的优劣。<br>它是智能体的记忆。训练时学的就是这个东西。</p>
+<p>在Flappy Bird这个问题中，状态和动作的组合是有限的。所以我们可以把Q当做是一张<strong>表格</strong>（Q Table）。<br>表中的每一行记录了状态$S_i = (x_i, y_i)$，选择不同动作（飞或不飞）时的奖赏：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>状态S</th>
+<th>动作A-飞</th>
+<th>动作A-不飞</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$S_1$</td>
+<td>1</td>
+<td>20</td>
+</tr>
+<tr>
+<td>$S_2$</td>
+<td>20</td>
+<td>-100</td>
+</tr>
+<tr>
+<td>…</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>$S_{n-1}$</td>
+<td>-100</td>
+<td>30</td>
+</tr>
+<tr>
+<td>$S_n$</td>
+<td>50</td>
+<td>-20</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这张表一共$n$行，即$n$个状态，每个状态所对应的动作都有一个<strong>效用值</strong>。</p>
+<p><strong>[推理]</strong><br>理想状态下，在完成训练后，我们会获得一张完美的Q表格。<br>我们希望只要小鸟根据当前位置查找到对应的行，选择效用值较大的动作作为当前帧的动作，就可以无限地存活。</p>
+<p><strong>[训练]</strong></p>
+<ul>
+<li>初始化 $Q$ = {};</li>
+<li>while $Q$未收敛（状态有限，一定会收敛）<ul>
+<li>初始化小鸟的位置为$S$，开始新一轮游戏</li>
+<li>while $S$ != 死亡状态<ul>
+<li>使用策略$\pi$，获得动作$a=\pi(S)$</li>
+<li>使用动作$a$进行游戏，获得小鸟的新位置$S’$，与奖励$R(S,a)$</li>
+<li>更新$Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma \max_{a_i}Q(S’, a_i)]$</li>
+<li>更新$S := S’$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>其中，使用策$\pi$，获得动作$a=\pi(S)$，最直观易懂的策略是根据Q表格来选择<strong>效用最大</strong>的动作（若两个动作效用值一样，如初始时某位置处效用值都为0，那就选第一个动作）。但这样的选择可能会使Q陷入局部最优。改进的策略为<strong>$\varepsilon$-greedy</strong>方法：每个状态以$\varepsilon$的概率选取当前状态下效用值最大的动作，而剩下的$1-\varepsilon$的概率则进行随机选取。</p>
+<p><strong>Q值的更新</strong>：</p>
+<script type="math/tex; mode=display">
+Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma \max_{a_i}Q(S', a_i)]</script><p>其中等号$Q(S,a)$为旧值，$\alpha$为学习速率（learning rate），$\gamma$为折扣因子（discount factor）。根据公式可以看出，<br>学习速率$\alpha$越大，保留之前训练的效果就越少。<br>折扣因子$\gamma$越大，$\max_{a_i}Q(S’, a_i)$所起到的作用就越大。</p>
+<p>但$\max<em>{a_i}Q(S’, a_i)$指什么呢？<br>小鸟在对状态进行更新时，会关心到眼前利益$R(S, a)$，和记忆中的利益$\max</em>{a<em>i}Q(S’, a_i)$。<br>$\max</em>{a<em>i}Q(S’, a_i)$是记忆中的利益，即小鸟记忆中新位置$S’$能给出的最大效用值。<br>如果小鸟在过去的游戏中于位置$S’$的某个动作上吃过甜头（例如选择了某个动作之后获得了50的奖赏），这个公式就可以让它提早地得知这个消息，以便使下回再通过位置$S$时选择正确的动作继续进入这个后续吃甜头的位置$S’$。<br>可以看出，$\gamma$越大，小鸟就会越重视“后续利益的以往经验”$\max</em>{a_i}Q(S’, a_i)$，$\gamma$越小，小鸟只重视“眼前利益”$R(S, a)$。</p>
+<p>$R(S, a)$由训练时交互获取，$\alpha$、$\gamma$为超参，$Q(S,a)$为学到的模型参数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/04/rl_q_learning/" data-id="ckmleadmb005dskw2jkqwlipl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

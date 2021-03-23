@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="ChenyuShuxin">
+<meta property="og:url" content="http://yoursite.com/page/14/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChenyuShuxin">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-sql_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/24/sql_cheatsheet/" class="article-date">
+  <time datetime="2018-10-23T16:00:00.000Z" itemprop="datePublished">2018-10-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/24/sql_cheatsheet/">SQL Cheatsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-动词"><a href="#1-动词" class="headerlink" title="1. 动词"></a>1. 动词</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据操作</td>
+<td><code>SELECT</code>  <code>UPDATE</code>  <code>INSERT</code>  <code>DELETE</code></td>
+</tr>
+<tr>
+<td>数据定义</td>
+<td><code>CREATE</code>  <code>ALTER</code>  <code>DROP</code></td>
+</tr>
+<tr>
+<td>数据控制</td>
+<td><code>GRANT</code>  <code>REVOKE</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="2-语句形式"><a href="#2-语句形式" class="headerlink" title="2. 语句形式"></a>2. 语句形式</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> [<span class="keyword">DISTINCT</span>/是否去重] &lt;目标列表达式&gt; [, &lt;目标列表达式&gt;...]</span><br><span class="line"><span class="keyword">FROM</span> &lt;表名或视图名&gt; [, &lt;表名或视图名&gt;...]</span><br><span class="line">[<span class="keyword">WHERE</span> &lt;条件表达式&gt;]</span><br><span class="line">[<span class="keyword">GROUP</span> <span class="keyword">BY</span> &lt;列名&gt;]</span><br><span class="line">[<span class="keyword">ORDER</span> <span class="keyword">BY</span> &lt;列名&gt; [<span class="keyword">ASC</span>|<span class="keyword">DESC</span>] [, ...]];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>大小写不敏感</li>
+<li><code>*</code>代表选取所有列</li>
+<li><code>GROUP BY</code>指定“聚集函数”（对于某字段，多行输入，单值输出，例如<code>COUNT</code>、<code>SUM</code>、<code>AVG</code>、<code>MAX</code>、<code>MIN</code>）的作用对象。即：未使用，聚集函数将作用于整个查询结果；使用后，聚集函数将分别作用于各个组（每个组所有行单独计算）。</li>
+<li>聚集函数无法与<code>WHERE</code>一起使用时，使用<code>HAVING</code>。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Customer, <span class="keyword">SUM</span>(OrderPrice) <span class="keyword">FROM</span> Orders</span><br><span class="line"><span class="keyword">WHERE</span> Customer=<span class="string">'Bush'</span> <span class="keyword">OR</span> Customer=<span class="string">'Adams'</span></span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> Customer</span><br><span class="line"><span class="keyword">HAVING</span> <span class="keyword">SUM</span>(OrderPrice)&gt;<span class="number">1500</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-运算符"><a href="#3-运算符" class="headerlink" title="3. 运算符"></a>3. 运算符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>比较</td>
+<td><code>=</code>  <code>&gt;</code>  <code>&lt;</code>  <code>&gt;=</code>  <code>&lt;=</code>  <code>&lt;&gt;</code>  <code>!=</code></td>
+</tr>
+<tr>
+<td>字符匹配</td>
+<td><code>LIKE</code></td>
+</tr>
+<tr>
+<td>确定集合</td>
+<td><code>IN</code></td>
+</tr>
+<tr>
+<td>确定范围</td>
+<td><code>BETWEEN</code></td>
+</tr>
+<tr>
+<td>判断空值</td>
+<td><code>IS NULL</code></td>
+</tr>
+<tr>
+<td>逻辑运算</td>
+<td><code>AND</code>  <code>OR</code>  <code>NOT</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>WHERE中条件运算符</strong>，即<code>WHERE 列名 XXX运算符</code>：</p>
+<p>字符匹配：<code>LIKE 通配符</code></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%</code></td>
+<td>替代一个或多个字符</td>
+</tr>
+<tr>
+<td><code>_</code></td>
+<td>仅替代一个字符</td>
+</tr>
+<tr>
+<td><code>[charlist]</code></td>
+<td>字符列中的任何单一字符（配合<code>%</code>、<code>_</code>使用）</td>
+</tr>
+<tr>
+<td><code>[^charlist]</code></td>
+<td>不在字符列中的任何单一字符（配合<code>%</code>、<code>_</code>使用）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所属集合：<code>IN (value1, value2, ...)</code></p>
+<p>范围选取：<code>BETWEEN ... AND ...</code></p>
+<h2 id="4-别名"><a href="#4-别名" class="headerlink" title="4. 别名"></a>4. 别名</h2><p>使用表名称别名：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> po.OrderID, p.LastName, p.FirstName</span><br><span class="line"><span class="keyword">FROM</span> Persons <span class="keyword">AS</span> p, Product_Orders <span class="keyword">AS</span> po</span><br><span class="line"><span class="keyword">WHERE</span> p.LastName=<span class="string">'Adams'</span> <span class="keyword">AND</span> p.FirstName=<span class="string">'John'</span></span><br></pre></td></tr></table></figure>
+<p>使用一个列名别名（会体现在查询结果上）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> LastName <span class="keyword">AS</span> Family, FirstName <span class="keyword">AS</span> <span class="keyword">Name</span></span><br><span class="line"><span class="keyword">FROM</span> Persons</span><br></pre></td></tr></table></figure>
+<h2 id="5-多表操作"><a href="#5-多表操作" class="headerlink" title="5. 多表操作"></a>5. 多表操作</h2><h3 id="5-1-引用多个表"><a href="#5-1-引用多个表" class="headerlink" title="5.1. 引用多个表"></a>5.1. 引用多个表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> 字段名 <span class="keyword">FROM</span> 表<span class="number">1</span>, 表<span class="number">2</span></span><br><span class="line"><span class="keyword">WHERE</span> 表<span class="number">1.</span>字段 = 表<span class="number">2.</span>字段 <span class="keyword">AND</span> 其它查询条件</span><br></pre></td></tr></table></figure>
+<ul>
+<li>两个表相连接，仅取出符合条件的匹配数据。</li>
+</ul>
+<h3 id="5-2-INNER-JOIN"><a href="#5-2-INNER-JOIN" class="headerlink" title="5.2. INNER JOIN"></a>5.2. INNER JOIN</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> A</span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> B</span><br><span class="line"><span class="keyword">ON</span> A.aID = B.bID</span><br></pre></td></tr></table></figure>
+<ul>
+<li>与“引用多个表”功能相同</li>
+</ul>
+<h3 id="5-3-LEFT-JOIN"><a href="#5-3-LEFT-JOIN" class="headerlink" title="5.3. LEFT JOIN"></a>5.3. LEFT JOIN</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> A</span><br><span class="line"><span class="keyword">LEFT</span> <span class="keyword">JOIN</span> B</span><br><span class="line"><span class="keyword">ON</span> A.aID = B.bID</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先取出A表中所有数据，然后迭代A.aID来检查B表各项的bID，若匹配则扩展B表数据，否则补NULL。换句话说，左表A的记录将会全部显示出来，而右表B只会显示符合匹配条件的记录。</li>
+</ul>
+<h3 id="5-4-RIGHT-JOIN"><a href="#5-4-RIGHT-JOIN" class="headerlink" title="5.4. RIGHT JOIN"></a>5.4. RIGHT JOIN</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> A</span><br><span class="line"><span class="keyword">RIGHT</span> <span class="keyword">JOIN</span> B</span><br><span class="line"><span class="keyword">ON</span> A.aID = B.bID</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先取出B表中所有数据，然后迭代B.bID来检查A表各项的aID，若匹配则扩展A表数据，否则补NULL。</li>
+</ul>
+<h3 id="5-5-FULL-JOIN"><a href="#5-5-FULL-JOIN" class="headerlink" title="5.5. FULL JOIN"></a>5.5. FULL JOIN</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> A</span><br><span class="line"><span class="keyword">FULL</span> <span class="keyword">JOIN</span> B</span><br><span class="line"><span class="keyword">ON</span> A.aID = B.bID</span><br></pre></td></tr></table></figure>
+<ul>
+<li>左连接后，将右表的剩余项NULL拓展后，加入结果表。</li>
+</ul>
+<h3 id="5-6-UNION"><a href="#5-6-UNION" class="headerlink" title="5.6. UNION"></a>5.6. UNION</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name(s) <span class="keyword">FROM</span> table_name1</span><br><span class="line"><span class="keyword">UNION</span> [ALL]</span><br><span class="line"><span class="keyword">SELECT</span> column_name(s) <span class="keyword">FROM</span> table_name2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将多表（的SELECT内容）进行<strong>行</strong>连接</li>
+<li>UNION默认选取不同的值。如果允许重复的值，使用UNION ALL。</li>
+</ul>
+<h3 id="5-7-SELECT-…-INTO-…"><a href="#5-7-SELECT-…-INTO-…" class="headerlink" title="5.7. SELECT … INTO …"></a>5.7. SELECT … INTO …</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> column_name(s)</span><br><span class="line"><span class="keyword">INTO</span> new_table_name [<span class="keyword">IN</span> external_database]</span><br><span class="line"><span class="keyword">FROM</span> old_tablename</span><br></pre></td></tr></table></figure>
+<ul>
+<li>SELECT INTO语句从一个表中选取数据，然后把数据<strong>行</strong>插入另一个表中。常用于创建表的备份复件或者用于对记录进行存档。</li>
+</ul>
+<h2 id="6-行列操作"><a href="#6-行列操作" class="headerlink" title="6. 行列操作"></a>6. 行列操作</h2><h3 id="6-1-插入行-INSERT-INTO-…-VALUES-…"><a href="#6-1-插入行-INSERT-INTO-…-VALUES-…" class="headerlink" title="6.1. 插入行 INSERT INTO … VALUES …"></a>6.1. 插入行 INSERT INTO … VALUES …</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>, ...)</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 (列<span class="number">1</span>, 列<span class="number">2</span>, ...) <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>, ...)</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-更新行-UPDATE-…-SET-…"><a href="#6-2-更新行-UPDATE-…-SET-…" class="headerlink" title="6.2. 更新行 UPDATE … SET …"></a>6.2. 更新行 UPDATE … SET …</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> 表名 <span class="keyword">SET</span> 列名称=新值 [, ...] <span class="keyword">WHERE</span> &lt;条件表达式&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="6-3-删除行-DELETE"><a href="#6-3-删除行-DELETE" class="headerlink" title="6.3. 删除行 DELETE"></a>6.3. 删除行 DELETE</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> &lt;条件表达式&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="6-4-添加列-ALTER-…-ADD-…"><a href="#6-4-添加列-ALTER-…-ADD-…" class="headerlink" title="6.4. 添加列 ALTER … ADD …"></a>6.4. 添加列 ALTER … ADD …</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name</span><br><span class="line"><span class="keyword">ADD</span> column_name datatype</span><br></pre></td></tr></table></figure>
+<h3 id="6-5-更新列-ALTER-…-ALTER-…"><a href="#6-5-更新列-ALTER-…-ALTER-…" class="headerlink" title="6.5. 更新列 ALTER … ALTER …"></a>6.5. 更新列 ALTER … ALTER …</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">COLUMN</span> column_name datatype</span><br></pre></td></tr></table></figure>
+<h3 id="6-6-删除列-ALTER-…-DROP-…"><a href="#6-6-删除列-ALTER-…-DROP-…" class="headerlink" title="6.6. 删除列 ALTER … DROP …"></a>6.6. 删除列 ALTER … DROP …</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> table_name </span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">COLUMN</span> column_name</span><br></pre></td></tr></table></figure>
+<h2 id="7-聚集函数"><a href="#7-聚集函数" class="headerlink" title="7. 聚集函数"></a>7. 聚集函数</h2><h3 id="7-1-AVG"><a href="#7-1-AVG" class="headerlink" title="7.1. AVG"></a>7.1. AVG</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(column_name) <span class="keyword">FROM</span> table_name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>AVG()函数返回数值列的平均值。NULL 值不包括在计算中。</li>
+</ul>
+<h3 id="7-2-COUNT"><a href="#7-2-COUNT" class="headerlink" title="7.2. COUNT"></a>7.2. COUNT</h3><ul>
+<li>COUNT()函数返回匹配指定条件的行数。</li>
+<li>COUNT(column_name)：函数返回指定列的值的数目（NULL 不计入）</li>
+<li>COUNT(DISTINCT column_name)：函数返回指定列的不同值的数目</li>
+<li>COUNT(*)：函数返回表中的记录数</li>
+</ul>
+<h3 id="7-3-SUM"><a href="#7-3-SUM" class="headerlink" title="7.3. SUM"></a>7.3. SUM</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(column_name) <span class="keyword">FROM</span> table_name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>SUM()函数返回数值列的总数（总额）。</li>
+</ul>
+<h3 id="7-4-FIRST、LAST"><a href="#7-4-FIRST、LAST" class="headerlink" title="7.4. FIRST、LAST"></a>7.4. FIRST、LAST</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">FIRST</span>(column_name) <span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">LAST</span>(column_name) <span class="keyword">FROM</span> table_name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>FIRST()函数返回指定的字段中第一个记录的值。</li>
+<li>LAST()函数返回指定的字段中最后一个记录的值。</li>
+</ul>
+<h3 id="7-5-MAX、MIN"><a href="#7-5-MAX、MIN" class="headerlink" title="7.5. MAX、MIN"></a>7.5. MAX、MIN</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(column_name) <span class="keyword">FROM</span> table_name</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(column_name) <span class="keyword">FROM</span> table_name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>MAX()函数返回一列中的最大值。NULL 值不包括在计算中。</li>
+<li>MIN()函数返回一列中的最小值。NULL 值不包括在计算中。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/24/sql_cheatsheet/" data-id="ckmleadms006bskw2lja9jb49" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SQL/">SQL</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-scala_symbols" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/23/scala_symbols/" class="article-date">
+  <time datetime="2018-10-22T16:00:00.000Z" itemprop="datePublished">2018-10-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/23/scala_symbols/">Scala Symbols</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-箭头"><a href="#1-箭头" class="headerlink" title="1. 箭头"></a>1. 箭头</h2><h3 id="lt"><a href="#lt" class="headerlink" title="&lt;-"></a><code>&lt;-</code></h3><p>for循环中</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (arg &lt;- args)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i &lt;- <span class="number">0</span> until <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="gt"><a href="#gt" class="headerlink" title="-&gt;"></a><code>-&gt;</code></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>val colors = Map(&quot;red&quot; -&gt; &quot;#FF0000&quot;, &quot;azure&quot; -&gt; &quot;#F0FFFF&quot;)</code></td>
+<td>定义Map的键值对映射</td>
+</tr>
+<tr>
+<td><code>val t = &quot;A&quot; -&gt; &quot;B&quot;    //(&quot;A&quot;, &quot;B&quot;)</code></td>
+<td>直接生成Tuple（其实上面也是这个用法）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="lt-1"><a href="#lt-1" class="headerlink" title="&lt;="></a><code>&lt;=</code></h3><p>没这玩意</p>
+<h3 id="gt-1"><a href="#gt-1" class="headerlink" title="=&gt;"></a><code>=&gt;</code></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>t: =&gt; Long</code></td>
+<td>参数声明，传名调用</td>
+</tr>
+<tr>
+<td><code>f: Int =&gt; String</code></td>
+<td>参数声明，传函数</td>
+</tr>
+<tr>
+<td><code>(x: Int) =&gt; x + 1</code></td>
+<td>定义匿名函数</td>
+</tr>
+<tr>
+<td><code>case 1 =&gt; &quot;one&quot;</code></td>
+<td>模式匹配match-case中</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/23/scala_symbols/" data-id="ckmleadmc005gskw24zhuwiwv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scala/">Scala</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/22/java_cheatsheet/" class="article-date">
+  <time datetime="2018-10-21T16:00:00.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/22/java_cheatsheet/">Java Cheatsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-1-数据类型"><a href="#1-1-数据类型" class="headerlink" title="1.1. 数据类型"></a>1.1. 数据类型</h2><ul>
+<li>8种基本类型：<ul>
+<li>4种整型：<code>int</code> (4)、<code>short</code> (2)、<code>long</code> (8, L)、<code>byte</code> (1)</li>
+<li>2种浮点：<code>float</code> (4, F)、<code>double</code> (8, D, default)</li>
+<li>1种字符：<code>char</code></li>
+<li>1种布尔：<code>boolean</code></li>
+</ul>
+</li>
+<li>枚举类型：<code>enum</code></li>
+<li>数组：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span> [<span class="number">100</span>];</span><br><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br><span class="line">a = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;      <span class="comment">//使用匿名数组，在不创建新变量情况下，重新初始化a</span></span><br><span class="line"><span class="comment">// 允许运行时确定大小</span></span><br><span class="line"><span class="keyword">int</span> size = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[size];</span><br><span class="line"><span class="comment">// 引用同一个</span></span><br><span class="line"><span class="keyword">int</span>[] c = a;</span><br><span class="line"><span class="comment">// 拷贝数值</span></span><br><span class="line"><span class="keyword">int</span>[] d = Arrays.copyOf(a, <span class="number">2</span> * a.length);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="1-2-运算符"><a href="#1-2-运算符" class="headerlink" title="1.2. 运算符"></a>1.2. 运算符</h2><p><code>=</code> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>+=</code> <code>++</code><br><code>==</code> <code>!=</code> <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>&amp;&amp;</code> <code>||</code> <code>!</code> <code>?:</code><br><code>&amp;</code> <code>|</code> <code>^</code> <code>~</code> <code>&gt;&gt;</code>（用符号位补位） <code>&gt;&gt;&gt;</code>（用0补位） <code>&lt;&lt;</code>（用0补位）</p>
+<h2 id="2-1-控制流程"><a href="#2-1-控制流程" class="headerlink" title="2.1. 控制流程"></a>2.1. 控制流程</h2><ul>
+<li>条件分支：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> xxx:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>循环：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">while</span> ()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> （；；）</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ( : )</span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>中断：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">lable:</span><br><span class="line"><span class="keyword">while</span> ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> ( ; ; )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> ()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">break</span> lable;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// jump to here</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-2-异常处理"><a href="#2-2-异常处理" class="headerlink" title="2.2. 异常处理"></a>2.2. 异常处理</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">catch</span> ()</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">catch</span> ( | )</span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="keyword">finally</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// if "throw" exists in catch, or the exception is not catched, execute here then throw</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-1-修饰符"><a href="#3-1-修饰符" class="headerlink" title="3.1. 修饰符"></a>3.1. 修饰符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>final</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量</td>
+<td>常量，不可更改</td>
+</tr>
+<tr>
+<td>方法</td>
+<td>不允许覆盖</td>
+</tr>
+<tr>
+<td>类</td>
+<td>不允许继承</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>static</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>变量</td>
+<td>类变量</td>
+</tr>
+<tr>
+<td>方法</td>
+<td>类方法</td>
+</tr>
+<tr>
+<td>类</td>
+<td>内部类不引用外围类对象。不加static的内部类可以引用外围类对象，但如在外围类static方法中定义的内部类，就需要不引用外围类对象。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>被任意类使用</td>
+</tr>
+<tr>
+<td>private</td>
+<td>被定义自身的类使用</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>被子类或同包中的类使用</td>
+</tr>
+<tr>
+<td>default</td>
+<td>被同包中的类使用</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="4-1-调用"><a href="#4-1-调用" class="headerlink" title="4.1. 调用"></a>4.1. 调用</h2><h3 id="Java方法总是值调用（call-by-value）"><a href="#Java方法总是值调用（call-by-value）" class="headerlink" title="Java方法总是值调用（call by value）"></a>Java方法总是值调用（call by value）</h3><p>方法参数包含两种类型：基本数据类型；对象引用。<br>将对象引用进行拷贝（得到另一个对象引用，指向同一对象）而传入方法，用起来很像“引用调用”（call by reference），但此时仅能修改对象，无法swap。因为swap的是拷贝出来的对象引用，在方法结束后被丢弃。</p>
+<h3 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h3><p>如果一个类中没有编写构造器，将使用默认构造器，无入参，将所有变量设为默认值（0、false、null）。<br>但如果类中有提供（非默认）构造器，而未提供默认构造器，则构造对象时不能使用默认构造器（无入参）。</p>
+<p>对于构造器中没有显式初始化的类中变量，会被初始化为默认值。</p>
+<p>使用super调用父类构造器，必须是子类构造器的第一句。实际上，调用构造器的语句（this或super），必须是子类构造器的第一条语句。<br>如果子类构造器没有显式调用父类构造器，则自动调用父类的默认构造器（无入参）。</p>
+<p>初始化顺序：</p>
+<ul>
+<li>静态成员变量赋值和静态初始化块级别相同，非静态成员变量赋值和非静态初始化块级别相同，按代码中出现顺序执行。</li>
+<li>父类静态 -&gt; 子类静态 -&gt; （创建实例时执行后续，否则不执行） -&gt; 父类非静态 -&gt; 父类构造器 -&gt; 子类非静态 -&gt; 子类构造器</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/22/java_cheatsheet/" data-id="ckmleadl0002lskw2zmnkq8mh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-spark_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/22/spark_cheatsheet/" class="article-date">
+  <time datetime="2018-10-21T16:00:00.000Z" itemprop="datePublished">2018-10-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/22/spark_cheatsheet/">Spark Cheatsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-1-RDD"><a href="#1-1-RDD" class="headerlink" title="1.1. RDD"></a>1.1. RDD</h2><h3 id="1-1-1-创建"><a href="#1-1-1-创建" class="headerlink" title="1.1.1. 创建"></a>1.1.1. 创建</h3><p>RDD可以通过两种方式创建：</p>
+<ol>
+<li>读取一个外部数据集。比如，从本地文件加载数据集，或者从HDFS文件系统、HBase、Cassandra、Amazon S3等外部数据源中加载数据集。Spark可以支持文本文件、SequenceFile文件（Hadoop提供的 SequenceFile是一个由二进制序列化过的key/value的字节流组成的文本存储文件）和其他符合Hadoop InputFormat格式的文件。</li>
+<li>调用SparkContext的parallelize方法，在Driver中一个已经存在的集合（数组）上创建。</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> lines1 = sc.textFile(<span class="string">"file:///usr/local/spark/mycode/rdd/word.txt"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> lines2 = sc.textFile(<span class="string">"hdfs://localhost:9000/user/hadoop/word.txt"</span>)</span><br></pre></td></tr></table></figure>
+<p>textFile()方法的输入参数，可以是文件名，也可以是目录，也可以是压缩文件等。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> array = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line"><span class="keyword">val</span> rdd = sc.parallelize(array)</span><br></pre></td></tr></table></figure>
+<h3 id="1-1-2-操作"><a href="#1-1-2-操作" class="headerlink" title="1.1.2. 操作"></a>1.1.2. 操作</h3><p><strong>窄依赖/宽依赖</strong>：窄依赖表现为一个父RDD的分区对应于一个子RDD的分区（一对一）；宽依赖则表现为存在一个父RDD的一个分区对应一个子RDD的多个分区（一对多）。</p>
+<p><strong>转换</strong>：每一次转换操作都会产生不同的RDD，供给下一个“转换”使用。转换得到的RDD是惰性求值的，也就是说，整个转换过程只是记录了转换的轨迹，并不会发生真正的计算，只有遇到行动操作时，才会发生真正的计算，开始从血缘关系源头开始，进行物理的转换操作。</p>
+<p>常见的转换：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>filter(func)</td>
+<td>筛选出满足函数func的元素，并返回一个新的数据集</td>
+</tr>
+<tr>
+<td>map(func)</td>
+<td>将每个元素传递到函数func中，并将结果返回为一个新的数据集</td>
+</tr>
+<tr>
+<td>flatMap(func)</td>
+<td>与map()相似，但每个输入元素都可以映射到0或多个输出结果（因此func应该返回一个序列，而不是单一元素），例如<code>rdd.flatMap(x =&gt; x.split(&quot; &quot;)).collect</code></td>
+</tr>
+<tr>
+<td>groupByKey()</td>
+<td>应用于(K,V)键值对的数据集时，返回一个新的(K, Iterable)形式的数据集</td>
+</tr>
+<tr>
+<td>reduceByKey(func)</td>
+<td>应用于(K,V)键值对的数据集时，返回一个新的(K, V)形式的数据集，其中的每个值是将每个key传递到函数func中进行聚合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>行动</strong>：行动操作是真正触发计算的地方。</p>
+<p>常见的行动：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count()</td>
+<td>返回数据集中的元素个数</td>
+</tr>
+<tr>
+<td>collect()</td>
+<td>以数组的形式返回数据集中的所有元素</td>
+</tr>
+<tr>
+<td>first()</td>
+<td>返回数据集中的第一个元素</td>
+</tr>
+<tr>
+<td>take(n)</td>
+<td>以数组的形式返回数据集中的前n个元素</td>
+</tr>
+<tr>
+<td>reduce(func)</td>
+<td>通过函数func（输入两个参数并返回一个值）聚合数据集中的元素</td>
+</tr>
+<tr>
+<td>foreach(func)</td>
+<td>将数据集中的每个元素传递到函数func中运行</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>持久化</strong>：</p>
+<p>在Spark中，RDD采用惰性求值的机制，每次遇到行动操作，都会从头开始执行计算。<br>在一些情形下，我们需要多次调用不同的行动操作，这就意味着，每次调用行动操作，都会触发一次从头开始的计算。<br>可以通过持久化（缓存）机制避免这种重复计算的开销。</p>
+<p>使用<code>persist()</code>方法对一个RDD标记为持久化。<br>（之所以说“标记为持久化”，是因为出现persist()语句的地方，并不会马上计算生成RDD并把它持久化，而是要等到遇到第一个行动操作触发真正计算以后，才会把计算结果进行持久化，持久化后的RDD将会被保留在计算节点的内存中被后面的行动操作重复使用。）<br><code>persist()</code>的圆括号中包含的是持久化级别参数。<br>比如，<code>persist(MEMORY_ONLY)</code>表示将RDD作为反序列化的对象存储于JVM中，如果内存不足，就要按照LRU原则替换缓存中的内容；<code>persist(MEMORY_AND_DISK)</code>表示将RDD作为反序列化的对象存储在JVM中，如果内存不足，超出的分区将会被存放在硬盘上。<br>一般而言，使用<code>cache()</code>方法时，会调用<code>persist(MEMORY_ONLY)</code>。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> list = <span class="type">List</span>(<span class="string">"Hadoop"</span>,<span class="string">"Spark"</span>,<span class="string">"Hive"</span>)</span><br><span class="line"><span class="keyword">val</span> rdd = sc.parallelize(list)</span><br><span class="line">rdd.cache()   <span class="comment">//会调用persist(MEMORY_ONLY)，但是，语句执行到这里，并不会缓存rdd，这是rdd还没有被计算生成</span></span><br><span class="line">println(rdd.count())   <span class="comment">//第一次行动操作，触发一次真正从头到尾的计算，这时才会执行上面的rdd.cache()，把这个rdd放到缓存中</span></span><br><span class="line">println(rdd.collect().mkString(<span class="string">","</span>))   <span class="comment">//第二次行动操作，不需要触发从头到尾的计算，只需要重复使用上面缓存中的rdd</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>unpersist()</code>方法手动地把持久化的RDD从缓存中移除。</p>
+<p><strong>常见键值对RDD操作</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reduceByKey(func)</td>
+<td>pairRDD.reduceByKey((a,b) =&gt; a+b)对具有相同key的键值对进行合并、计算。比如输入四个键值对(“spark”,1)、(“spark”,2)、(“hadoop”,3)和(“hadoop”,5)；输出(“spark”,3)、(“hadoop”,8)。</td>
+</tr>
+<tr>
+<td>groupByKey()</td>
+<td>pairRDD.groupByKey()对具有相同键的值进行分组。比如输入四个键值对(“spark”,1)、(“spark”,2)、(“hadoop”,3)和(“hadoop”,5)；输出(“spark”,(1,2))和(“hadoop”,(3,5))。</td>
+</tr>
+<tr>
+<td>sortByKey()</td>
+<td>pairRDD.sortByKey()根据key排序一个RDD。</td>
+</tr>
+<tr>
+<td>mapValues(func)</td>
+<td>pairRDD.mapValues(x =&gt; x+1)只会对键值对RDD中的每个value都应用一个函数，而key不会发生变化。比如输入四个键值对(“spark”,1)、(“spark”,2)、(“hadoop”,3)和(“hadoop”,5)；输出(“spark”,2)、(“spark”,3)、(“hadoop”,4)和(“hadoop”,6)</td>
+</tr>
+<tr>
+<td>join</td>
+<td>pairRDD1.join(pairRDD2)表示内连接，即对于给定的两个输入数据集(K,V1)和(K,V2)，只有在两个数据集中都存在的key才会被输出，最终得到一个(K,(V1,V2))类型的数据集。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>注意: 当使用定制对象作为键时，必须保证<code>equals()</code>和<code>hashCode()</code>方法一致。</li>
+</ul>
+<h2 id="1-2-共享变量"><a href="#1-2-共享变量" class="headerlink" title="1.2. 共享变量"></a>1.2. 共享变量</h2><p>一般情况下，当一个传递给Spark操作（如map或reduce）的函数在远程节点上面运行时，Spark操作实际上操作的是这个函数所用变量的一个独立副本。<br>这些变量被复制到每台机器上，并且这些变量在远程机器上的所有更新都不会传递回驱动程序。<br>通常跨任务的读写变量是低效的，但是Spark还是为两种常见的使用模式提供了两种有限的共享变量：广播变量（broadcast variable）和累加器（accumulator）。</p>
+<h3 id="1-2-1-广播变量"><a href="#1-2-1-广播变量" class="headerlink" title="1.2.1. 广播变量"></a>1.2.1. 广播变量</h3><p>广播变量允许程序开发人员在每个机器上缓存一个只读的变量（类似分布式缓存）。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> broadcastVar = sc.broadcast(<span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">broadcastVar.value  <span class="comment">//Array(1, 2, 3)</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-累加器"><a href="#1-2-2-累加器" class="headerlink" title="1.2.2. 累加器"></a>1.2.2. 累加器</h3><p>累加器是仅仅被相关操作累加的变量，通常可以被用来实现计数器（counter）和求和（sum）。可以通过调用SparkContext.longAccumulator()或者SparkContext.doubleAccumulator()来创建。<br>运行在集群中的任务，就可以使用add方法来把数值累加到累加器上，但是，这些任务只能做累加操作，不能读取累加器的值，只有任务控制节点（Driver Program）可以使用value方法来读取累加器的值。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> accum = sc.longAccumulator(<span class="string">"My Accumulator"</span>)</span><br><span class="line">accum: org.apache.spark.util.<span class="type">LongAccumulator</span> = <span class="type">LongAccumulator</span>(id: <span class="number">0</span>, name: <span class="type">Some</span>(<span class="type">My</span> <span class="type">Accumulator</span>), value: <span class="number">0</span>)</span><br><span class="line">scala&gt; sc.parallelize(<span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)).foreach(x =&gt; accum.add(x))</span><br><span class="line">scala&gt; accum.value</span><br><span class="line">res1: <span class="type">Long</span> = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-1-在spark中传递函数"><a href="#2-1-在spark中传递函数" class="headerlink" title="2.1. 在spark中传递函数"></a>2.1. 在spark中传递函数</h2><p>Spark API非常依赖在集群中运行的驱动程序中传递function， 对于Scala来说有两种方式实现:</p>
+<ul>
+<li>匿名函数语法（Anonymous function syntax）, 可以用作简短的代码。</li>
+<li>全局单例对象的静态方法（Static methods in a global singleton object）。</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">MyFunctions</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">func1</span></span>(s: <span class="type">String</span>): <span class="type">String</span> = &#123; ... &#125;</span><br><span class="line">&#125;</span><br><span class="line">myRdd.map(<span class="type">MyFunctions</span>.func1)</span><br></pre></td></tr></table></figure>
+<h2 id="3-1-spark-ml"><a href="#3-1-spark-ml" class="headerlink" title="3.1. spark ml"></a>3.1. spark ml</h2><h3 id="3-1-1-ML-Pipelines"><a href="#3-1-1-ML-Pipelines" class="headerlink" title="3.1.1. ML Pipelines"></a>3.1.1. ML Pipelines</h3><p>几个重要概念：</p>
+<ul>
+<li><strong>DataFrame</strong>：使用Spark SQL中的DataFrame作为数据集，它可以容纳各种数据类型。 较之 RDD，包含了schema信息，更类似传统数据库中的二维表格。</li>
+<li><strong>Transformer</strong>：将一个DataFrame转换为另一个DataFrame的算法，是特征变换和机器学习<strong>模型</strong>的抽象。比如一个模型就是一个Transformer，它可以把一个不包含预测标签的测试数据集DataFrame打上标签，转化成另一个包含预测标签的DataFrame。技术上，Transformer实现了一个方法<code>transform()</code>，它通过附加一个或多个列将一个DataFrame转换为另一个DataFrame。</li>
+<li><strong>Estimator</strong>：模型学习器是<strong>训练</strong>模型的机器学习算法或者其他算法的抽象。在Pipeline里通常是被用来操作DataFrame数据并生产一个Transformer。从技术上讲，Estimator实现了一个方法<code>fit()</code>，它接受一个DataFrame并产生一个Transformer。</li>
+<li><strong>Parameter</strong>：用来设置Transformer或者Estimator的参数。现在，所有转换器和估计器可共享用于指定参数的公共API。ParamMap是一组（参数，值）对。</li>
+<li><strong>PipeLine</strong>：将多个工作流阶段（转换器和估计器）连接在一起，形成机器学习的工作流，并获得结果输出。</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.spark.ml.classification.<span class="type">LogisticRegression</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.ml.linalg.&#123;<span class="type">Vector</span>, <span class="type">Vectors</span>&#125;</span><br><span class="line"><span class="keyword">import</span> org.apache.spark.ml.param.<span class="type">ParamMap</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.sql.<span class="type">Row</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// Prepare training data from a list of (label, features) tuples.</span></span><br><span class="line"><span class="keyword">val</span> training = spark.createDataFrame(<span class="type">Seq</span>(</span><br><span class="line">    (<span class="number">1.0</span>, <span class="type">Vectors</span>.dense(<span class="number">0.0</span>, <span class="number">1.1</span>, <span class="number">0.1</span>)),</span><br><span class="line">    (<span class="number">0.0</span>, <span class="type">Vectors</span>.dense(<span class="number">2.0</span>, <span class="number">1.0</span>, <span class="number">-1.0</span>)),</span><br><span class="line">    (<span class="number">0.0</span>, <span class="type">Vectors</span>.dense(<span class="number">2.0</span>, <span class="number">1.3</span>, <span class="number">1.0</span>)),</span><br><span class="line">    (<span class="number">1.0</span>, <span class="type">Vectors</span>.dense(<span class="number">0.0</span>, <span class="number">1.2</span>, <span class="number">-0.5</span>))</span><br><span class="line">)).toDF(<span class="string">"label"</span>, <span class="string">"features"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Create a LogisticRegression instance. This instance is an Estimator.</span></span><br><span class="line"><span class="keyword">val</span> lr = <span class="keyword">new</span> <span class="type">LogisticRegression</span>()</span><br><span class="line"><span class="comment">// Print out the parameters, documentation, and any default values.</span></span><br><span class="line">println(<span class="string">"LogisticRegression parameters:\n"</span> + lr.explainParams() + <span class="string">"\n"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// We may set parameters using setter methods.</span></span><br><span class="line">lr.setMaxIter(<span class="number">10</span>)</span><br><span class="line">    .setRegParam(<span class="number">0.01</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Learn a LogisticRegression model. This uses the parameters stored in lr.</span></span><br><span class="line"><span class="keyword">val</span> model1 = lr.fit(training)</span><br><span class="line"><span class="comment">// Since model1 is a Model (i.e., a Transformer produced by an Estimator),</span></span><br><span class="line"><span class="comment">// we can view the parameters it used during fit().</span></span><br><span class="line"><span class="comment">// This prints the parameter (name: value) pairs, where names are unique IDs for this</span></span><br><span class="line"><span class="comment">// LogisticRegression instance.</span></span><br><span class="line">println(<span class="string">"Model 1 was fit using parameters: "</span> + model1.parent.extractParamMap)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// We may alternatively specify parameters using a ParamMap,</span></span><br><span class="line"><span class="comment">// which supports several methods for specifying parameters.</span></span><br><span class="line"><span class="keyword">val</span> paramMap = <span class="type">ParamMap</span>(lr.maxIter -&gt; <span class="number">20</span>)</span><br><span class="line">    .put(lr.maxIter, <span class="number">30</span>)    <span class="comment">// Specify 1 Param. This overwrites the original maxIter.</span></span><br><span class="line">    .put(lr.regParam -&gt; <span class="number">0.1</span>, lr.threshold -&gt; <span class="number">0.55</span>)    <span class="comment">// Specify multiple Params.</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// One can also combine ParamMaps.</span></span><br><span class="line"><span class="keyword">val</span> paramMap2 = <span class="type">ParamMap</span>(lr.probabilityCol -&gt; <span class="string">"myProbability"</span>)    <span class="comment">// Change output column name.</span></span><br><span class="line"><span class="keyword">val</span> paramMapCombined = paramMap ++ paramMap2</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Now learn a new model using the paramMapCombined parameters.</span></span><br><span class="line"><span class="comment">// paramMapCombined overrides all parameters set earlier via lr.set* methods.</span></span><br><span class="line"><span class="keyword">val</span> model2 = lr.fit(training, paramMapCombined)</span><br><span class="line">println(<span class="string">"Model 2 was fit using parameters: "</span> + model2.parent.extractParamMap)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Prepare test data.</span></span><br><span class="line"><span class="keyword">val</span> test = spark.createDataFrame(<span class="type">Seq</span>(</span><br><span class="line">    (<span class="number">1.0</span>, <span class="type">Vectors</span>.dense(<span class="number">-1.0</span>, <span class="number">1.5</span>, <span class="number">1.3</span>)),</span><br><span class="line">    (<span class="number">0.0</span>, <span class="type">Vectors</span>.dense(<span class="number">3.0</span>, <span class="number">2.0</span>, <span class="number">-0.1</span>)),</span><br><span class="line">    (<span class="number">1.0</span>, <span class="type">Vectors</span>.dense(<span class="number">0.0</span>, <span class="number">2.2</span>, <span class="number">-1.5</span>))</span><br><span class="line">)).toDF(<span class="string">"label"</span>, <span class="string">"features"</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// Make predictions on test data using the Transformer.transform() method.</span></span><br><span class="line"><span class="comment">// LogisticRegression.transform will only use the 'features' column.</span></span><br><span class="line"><span class="comment">// Note that model2.transform() outputs a 'myProbability' column instead of the usual</span></span><br><span class="line"><span class="comment">// 'probability' column since we renamed the lr.probabilityCol parameter previously.</span></span><br><span class="line">model2.transform(test)</span><br><span class="line">    .select(<span class="string">"features"</span>, <span class="string">"label"</span>, <span class="string">"myProbability"</span>, <span class="string">"prediction"</span>)</span><br><span class="line">    .collect()</span><br><span class="line">    .foreach &#123; <span class="keyword">case</span> <span class="type">Row</span>(features: <span class="type">Vector</span>, label: <span class="type">Double</span>, prob: <span class="type">Vector</span>, prediction: <span class="type">Double</span>) =&gt;</span><br><span class="line">        println(<span class="string">s"(<span class="subst">$features</span>, <span class="subst">$label</span>) -&gt; prob=<span class="subst">$prob</span>, prediction=<span class="subst">$prediction</span>"</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-spark-sql"><a href="#3-2-spark-sql" class="headerlink" title="3.2. spark sql"></a>3.2. spark sql</h2><h3 id="3-2-1-DataFrame"><a href="#3-2-1-DataFrame" class="headerlink" title="3.2.1. DataFrame"></a>3.2.1. DataFrame</h3><p>DataFrame是一种以RDD为基础的分布式数据集，也就是分布式的Row对象的集合（每个Row对象代表一行记录），提供了详细的结构信息，也就是我们经常说的模式（schema），Spark SQL可以清楚地知道该数据集中包含哪些列、每列的名称和类型。</p>
+<p><strong>RDD转DataFrame</strong>：</p>
+<ul>
+<li>第一种方法是，利用反射来推断包含特定类型对象的RDD的schema，适用对已知数据结构的RDD转换。<strong>需要定义一个case class</strong></li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> spark = <span class="type">SparkSession</span>.builder().appName(<span class="string">"any"</span>).getOrCreate()</span><br><span class="line"><span class="keyword">import</span> spark.implicits._  <span class="comment">//必须导入隐式转换</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">name: <span class="type">String</span>, age: <span class="type">Long</span></span>)  <span class="title">//定义一个case</span> <span class="title">class</span></span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class"><span class="title">val</span> <span class="title">peopleDF</span> </span>= spark.sparkContext.textFile(<span class="string">"file:///usr/local/spark/examples/src/main/resources/people.txt"</span>)</span><br><span class="line">                                .map(_.split(<span class="string">","</span>))</span><br><span class="line">                                .map(attributes =&gt; <span class="type">Person</span>(attributes(<span class="number">0</span>), attributes(<span class="number">1</span>).trim.toInt))</span><br><span class="line">                                .toDF()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第二种方法是，使用编程接口，构造一个schema并将其应用在已知的RDD上。</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成 RDD</span></span><br><span class="line"><span class="keyword">val</span> lines = spark.sparkContext.textFile(<span class="string">"hdfs://10.30.30.146:9000/input/emp.csv"</span>).map(_.split(<span class="string">","</span>))</span><br><span class="line"><span class="comment">//定义schema：StructType</span></span><br><span class="line"><span class="keyword">val</span> myschema = <span class="type">StructType</span>(<span class="type">List</span>(<span class="type">StructField</span>(<span class="string">"empno"</span>, <span class="type">DataTypes</span>.<span class="type">IntegerType</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"ename"</span>, <span class="type">DataTypes</span>.<span class="type">StringType</span>, nullable = <span class="literal">true</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"job"</span>, <span class="type">DataTypes</span>.<span class="type">StringType</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"mgr"</span>, <span class="type">DataTypes</span>.<span class="type">StringType</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"hiredate"</span>, <span class="type">DataTypes</span>.<span class="type">StringType</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"sal"</span>, <span class="type">DataTypes</span>.<span class="type">IntegerType</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"comm"</span>, <span class="type">DataTypes</span>.<span class="type">StringType</span>)</span><br><span class="line">                                ,<span class="type">StructField</span>(<span class="string">"deptno"</span>, <span class="type">DataTypes</span>.<span class="type">IntegerType</span>)))</span><br><span class="line"><span class="comment">//把读入的每一行数据映射成一个个Row</span></span><br><span class="line"><span class="keyword">val</span> rowRDD = lines.map(x=&gt;<span class="type">Row</span>(x(<span class="number">0</span>).toInt,x(<span class="number">1</span>),x(<span class="number">2</span>),x(<span class="number">3</span>),x(<span class="number">4</span>),x(<span class="number">5</span>).toInt,x(<span class="number">6</span>),x(<span class="number">7</span>).toInt))</span><br><span class="line"><span class="comment">//使用SparkSession.createDataFrame创建表</span></span><br><span class="line"><span class="keyword">val</span> df = spark.createDataFrame(rowRDD,myschema)</span><br></pre></td></tr></table></figure>
+<p><strong>DataFrame存取</strong>：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> peopleDF = spark.read.format(<span class="string">"json"</span>).load(<span class="string">"file:///usr/local/spark/examples/src/main/resources/people.json"</span>)</span><br><span class="line">peopleDF.select(<span class="string">"name"</span>, <span class="string">"age"</span>).write.format(<span class="string">"csv"</span>).save(<span class="string">"file:///usr/local/spark/mycode/newpeople.csv"</span>)</span><br></pre></td></tr></table></figure>
+<p>保存文件内容类似</p>
+<blockquote>
+<p>Michael,<br>Andy,30<br>Justin,19</p>
+</blockquote>
+<h3 id="3-2-2-SQL操作DataFrame"><a href="#3-2-2-SQL操作DataFrame" class="headerlink" title="3.2.2. SQL操作DataFrame"></a>3.2.2. SQL操作DataFrame</h3><ol>
+<li>先把DataFrame注册成是一个Table或View</li>
+<li>使用SparkSession执行从查询</li>
+</ol>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scala&gt;empDF.createOrReplaceTempView(<span class="string">"emp"</span>)</span><br><span class="line">scala&gt;spark.sql(<span class="string">"select * from emp"</span>).show</span><br><span class="line">scala&gt;spark.sql(<span class="string">"select * from emp where deptno=10"</span>).show</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-3-DSL操作DataFrame"><a href="#3-2-3-DSL操作DataFrame" class="headerlink" title="3.2.3. DSL操作DataFrame"></a>3.2.3. DSL操作DataFrame</h3><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> df = spark.read.json(<span class="string">"examples/src/main/resources/people.json"</span>)</span><br><span class="line">df.select(<span class="string">"name"</span>)</span><br><span class="line">df.select($<span class="string">"name"</span>, $<span class="string">"age"</span> + <span class="number">1</span>)</span><br><span class="line">df.filter($<span class="string">"age"</span> &gt; <span class="number">21</span>)</span><br><span class="line">df.groupBy(<span class="string">"age"</span>).count()</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>$&quot;name&quot;</code>即<code>Column(&quot;name&quot;)</code>。注意，例如select函数，接受<code>String</code>或<code>Column</code>多种类型参数。</li>
+</ul>
+<h3 id="3-2-4-DataSet的一些操作"><a href="#3-2-4-DataSet的一些操作" class="headerlink" title="3.2.4. DataSet的一些操作"></a>3.2.4. DataSet的一些操作</h3><p>DataFrame其实就是DataSet[Row]。</p>
+<ul>
+<li>To select a column from the Dataset, use <code>apply</code> method.</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> ageCol = people(<span class="string">"age"</span>)</span><br><span class="line"><span class="keyword">val</span> futureAgeCol = people(<span class="string">"age"</span>) + <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>Columnd的获取：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df(<span class="string">"columnName"</span>)            <span class="comment">// On a specific `df` DataFrame.</span></span><br><span class="line">col(<span class="string">"columnName"</span>)           <span class="comment">// A generic column no yet associated with a DataFrame.</span></span><br><span class="line">col(<span class="string">"columnName.field"</span>)     <span class="comment">// Extracting a struct field</span></span><br><span class="line">col(<span class="string">"`a.column.with.dots`"</span>) <span class="comment">// Escape `.` in column names.</span></span><br><span class="line">$<span class="string">"columnName"</span>               <span class="comment">// Scala short hand for a named column.</span></span><br></pre></td></tr></table></figure>
+<p>注意：<code>$&quot;columnName&quot;</code>是DataFrame中获取named column，<code>$(paraName)</code>是通过Param中通过paraName来getOrDefault其paraValue。</p>
+<ul>
+<li>一些DataSet API进行SQL操纵。</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">people.filter(people.col(<span class="string">"age"</span>).gt(<span class="number">30</span>))</span><br><span class="line">    .join(department, people.col(<span class="string">"deptId"</span>).equalTo(department.col(<span class="string">"id"</span>)))</span><br><span class="line">    .groupBy(department.col(<span class="string">"name"</span>), people.col(<span class="string">"gender"</span>))</span><br><span class="line">    .agg(avg(people.col(<span class="string">"salary"</span>)), max(people.col(<span class="string">"age"</span>)));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一些常用的API</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>def collect(): Array[T]</code></td>
+<td>Returns an array that contains all rows in this Dataset.</td>
+</tr>
+<tr>
+<td><code>def count(): Long</code></td>
+<td>Returns the number of rows in the Dataset.</td>
+</tr>
+<tr>
+<td><code>def distinct(): Dataset[T]</code></td>
+<td>Returns a new Dataset that contains only the unique rows from this Dataset.</td>
+</tr>
+<tr>
+<td><code>def filter(func: (T) ⇒ Boolean): Dataset[T]</code></td>
+<td>Returns a new Dataset that only contains elements where <code>func</code> returns <code>true</code>.</td>
+</tr>
+<tr>
+<td><code>def where(condition: Column): Dataset[T]</code></td>
+<td>Filters rows using the given condition. This is an alias for <code>filter</code>.</td>
+</tr>
+<tr>
+<td><code>def select[U1](c1: TypedColumn[T, U1]): Dataset[U1]</code></td>
+<td>Returns a new Dataset by computing the given Column expression for each element. 对相应Column进行计算。</td>
+</tr>
+<tr>
+<td><code>def select(cols: Column*): DataFrame</code></td>
+<td>Selects a set of column based expressions.</td>
+</tr>
+<tr>
+<td><code>def select(col: String, cols: String*): DataFrame</code></td>
+<td>Selects a set of columns using column names.</td>
+</tr>
+<tr>
+<td><code>def sort(sortExprs: Column*): Dataset[T]</code></td>
+<td>Returns a new Dataset sorted by the given expressions. 根据指定列（表达式）排序。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/22/spark_cheatsheet/" data-id="ckmleadmq0068skw269yul1ni" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-data_size" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/21/data_size/" class="article-date">
+  <time datetime="2018-10-20T16:00:00.000Z" itemprop="datePublished">2018-10-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/21/data_size/">Data Size</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>1 bit是1位，0 ~ 1，可表示$2^{1}$个数。</li>
+<li>1 Byte是1字节，8 bits，0000 0000 ~ 1111 1111，即0 ~ 255、0x00 ~ 0xFF，可表示$2^{8} = 256$个数。</li>
+<li>Java中：</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>byte</td>
+<td>1 Byte （FF）</td>
+</tr>
+<tr>
+<td>short</td>
+<td>2 Bytes （FFFF）</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4 Bytes （FFFF FFFF）</td>
+</tr>
+<tr>
+<td>long</td>
+<td>8 Bytes （FFFF FFFF FFFF FFFF）</td>
+</tr>
+<tr>
+<td>float</td>
+<td>4 Bytes</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8 Bytes</td>
+</tr>
+<tr>
+<td>boolean</td>
+<td>1 bit</td>
+</tr>
+<tr>
+<td>char</td>
+<td>2 Bytes</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/10/21/data_size/" data-id="ckmleadj70006skw2q9s4xbc3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

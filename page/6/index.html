@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="ChenyuShuxin">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChenyuShuxin">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-tf_seq2seq_en2cn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/05/tf_seq2seq_en2cn/" class="article-date">
+  <time datetime="2019-07-04T16:00:00.000Z" itemprop="datePublished">2019-07-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/05/tf_seq2seq_en2cn/">keras seq2seq 详细注释版</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>seq2seq</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">referrences:</span></span><br><span class="line"><span class="string">    https://blog.keras.io/a-ten-minute-introduction-to-sequence-to-sequence-learning-in-keras.html</span></span><br><span class="line"><span class="string">    https://blog.csdn.net/PIPIXIU/article/details/81016974</span></span><br><span class="line"><span class="string">dataset:</span></span><br><span class="line"><span class="string">    http://www.manythings.org/anki/</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Input, LSTM, Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.models <span class="keyword">import</span> Model</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># n_input: input one-hot维度；n_output: output one-hot维度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_model</span><span class="params">(n_input, n_output, n_units)</span>:</span></span><br><span class="line">    <span class="comment"># ----------训练阶段（decoder有teacher forcing）----------</span></span><br><span class="line">    <span class="comment"># Input实例化Keras张量</span></span><br><span class="line">    encoder_input = Input(shape=(<span class="keyword">None</span>, n_input))</span><br><span class="line">    <span class="comment"># n_units为LSTM单元中神经元的个数；return_state返回最后时刻的状态h和c</span></span><br><span class="line">    encoder = LSTM(n_units, return_state=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment"># call LSTM，获取最后时刻的状态，作为decoder的初始状态</span></span><br><span class="line">    _, encoder_h, encoder_c = encoder(encoder_input)</span><br><span class="line">    encoder_state = [encoder_h, encoder_c]</span><br><span class="line"></span><br><span class="line">    decoder_input = Input(shape=(<span class="keyword">None</span>, n_output))</span><br><span class="line">    <span class="comment"># 训练模型时需要decoder的输出序列来优化，故return_sequences</span></span><br><span class="line">    decoder = LSTM(n_units, return_sequences=<span class="keyword">True</span>, return_state=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment"># call LSTM，获取输出序列。注意，decoder_output shape(?, ?, n_units)</span></span><br><span class="line">    decoder_output, _, _ = decoder(decoder_input, initial_state=encoder_state)</span><br><span class="line">    <span class="comment"># FC + softmax</span></span><br><span class="line">    decoder_dense = Dense(n_output, activation=<span class="string">'softmax'</span>)</span><br><span class="line">    <span class="comment"># call Dense（FC + softmax），decoder_output shape = (?, ?, n_output)</span></span><br><span class="line">    decoder_output = decoder_dense(decoder_output)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成训练模型</span></span><br><span class="line">    <span class="comment"># 第一个参数为训练模型的输入，包含了encoder和decoder的输入，第二个参数为模型的输出，包含了decoder的输出</span></span><br><span class="line">    model = Model([encoder_input, decoder_input], decoder_output)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------推理阶段（即预测）----------</span></span><br><span class="line">    <span class="comment"># 调整训练模型（但是weights和biases不变），以适配预测场景</span></span><br><span class="line">    <span class="comment"># 一个直接的需要修改的地方是改变teacher forcing为前一时刻输出</span></span><br><span class="line">    <span class="comment"># encoder其实没有变化，主要修改decoder</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 直接生成推断encoder模型</span></span><br><span class="line">    encoder_infer = Model(encoder_input, encoder_state)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 准备生产推断decoder模型</span></span><br><span class="line">    <span class="comment"># On the first decoder call, the hidden and cell states from the encoder will be used to initialize the decoder LSTM layer, provided as input to the model directly.</span></span><br><span class="line">    decoder_state_input_h = Input(shape=(n_units,))</span><br><span class="line">    decoder_state_input_c = Input(shape=(n_units,))</span><br><span class="line">    <span class="comment"># initial_state</span></span><br><span class="line">    decoder_state_input = [decoder_state_input_h, decoder_state_input_c]</span><br><span class="line">    <span class="comment"># call LSTM，获取输出</span></span><br><span class="line">    decoder_infer_output, decoder_infer_state_h, decoder_infer_state_c = decoder(decoder_input, initial_state=decoder_state_input)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># The decoder must output the hidden and cell states along with the predicted character on each call, so that these states can be assigned to a variable and used on each subsequent recursive call.</span></span><br><span class="line">    <span class="comment"># 当前时刻得到的状态</span></span><br><span class="line">    decoder_infer_state = [decoder_infer_state_h, decoder_infer_state_c]</span><br><span class="line">    <span class="comment"># 当前时刻的输出，call Dense（FC + softmax），decoder_output shape = (?, ?, n_output)</span></span><br><span class="line">    decoder_infer_output = decoder_dense(decoder_infer_output)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 生成推断decoder模型</span></span><br><span class="line">    <span class="comment"># decoder_state_input本身是个list，+运算符append到前面的list</span></span><br><span class="line">    decoder_infer = Model([decoder_input] + decoder_state_input, [decoder_infer_output] + decoder_infer_state)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 可以看出，decoder_infer没法被训练，因为input不易被直接定义</span></span><br><span class="line">    <span class="comment"># 而model就可以很方便的按定义形式给出input、output，进行训练。具体见下文main中使用</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model, encoder_infer, decoder_infer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">predict_chinese</span><span class="params">(source, encoder_inference, decoder_inference, n_steps, features)</span>:</span></span><br><span class="line">    <span class="comment"># encoding</span></span><br><span class="line">    state = encoder_inference.predict(source)</span><br><span class="line">    <span class="comment"># 第一个字符'\t',为起始标志</span></span><br><span class="line">    predict_seq = np.zeros((<span class="number">1</span>, <span class="number">1</span>, features))</span><br><span class="line">    predict_seq[<span class="number">0</span>, <span class="number">0</span>, target_dict[<span class="string">'\t'</span>]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------看一下，这里就是如何使用推理模型了。----------</span></span><br><span class="line">    <span class="comment"># ----------我们的训练模型仅用于获取weights和biases，获取后真正使用的是推理模型了----------</span></span><br><span class="line">    output = <span class="string">''</span></span><br><span class="line">    <span class="comment"># 每次用前一次的预测输出（字符），作为输入，来预测下一次的字符，直到预测出了终止符/最大长度</span></span><br><span class="line">    <span class="comment"># n_steps为OUTPUT_SEQ_LENGTH，即最大句子长度</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n_steps):</span><br><span class="line">        <span class="comment"># 输入前一次的预测输出字符predict_seq，及隐状态h，c</span></span><br><span class="line">        <span class="comment"># 输出yhat因经过FC+softmax，shape = (?, ?, n_output)</span></span><br><span class="line">        yhat, h, c = decoder_inference.predict([predict_seq] + state)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># sample=0，time=-1（last），实际上，yhat shape = (1, 1, output_onehot_dim)</span></span><br><span class="line">        char_index = np.argmax(yhat[<span class="number">0</span>, <span class="number">-1</span>, :])</span><br><span class="line">        char = target_dict_reverse[char_index]</span><br><span class="line">        output += char</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 本次state为下一次的init state</span></span><br><span class="line">        state = [h, c]</span><br><span class="line">        <span class="comment"># 本次的output为下一次的input</span></span><br><span class="line">        predict_seq = np.zeros((<span class="number">1</span>, <span class="number">1</span>, features))</span><br><span class="line">        predict_seq[<span class="number">0</span>, <span class="number">0</span>, char_index] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 遇到终止符则停止</span></span><br><span class="line">        <span class="keyword">if</span> char == <span class="string">'\n'</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> output</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NUM_SAMPLES = <span class="number">2000</span></span><br><span class="line">BATCH_SIZE = <span class="number">64</span></span><br><span class="line">EPOCH = <span class="number">200</span></span><br><span class="line">N_UNITS = <span class="number">256</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------处理数据----------</span></span><br><span class="line">    data_path = <span class="string">'cmn.txt'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 提取NUM_SAMPLES行数据</span></span><br><span class="line">    <span class="comment"># pd.read_table默认分隔符为'\t'（pd.read_csv默认分隔符则为','）</span></span><br><span class="line">    df = pd.read_table(data_path, header=<span class="keyword">None</span>).iloc[:NUM_SAMPLES, :]</span><br><span class="line">    df.columns = [<span class="string">'inputs'</span>, <span class="string">'targets'</span>]</span><br><span class="line">    <span class="comment"># target每句前后增加'\t'、'\n'，作为起始、终止标志</span></span><br><span class="line">    df[<span class="string">'targets'</span>] = df[<span class="string">'targets'</span>].apply(<span class="keyword">lambda</span> x: <span class="string">'\t'</span> + x + <span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># input、target句子列表</span></span><br><span class="line">    input_texts = df.inputs.values.tolist()</span><br><span class="line">    target_texts = df.targets.values.tolist()</span><br><span class="line">    <span class="comment"># input、target字符列表</span></span><br><span class="line">    input_characters = sorted(list(set(df.inputs.unique().sum())))</span><br><span class="line">    target_characters = sorted(list(set(df.targets.unique().sum())))</span><br><span class="line"></span><br><span class="line">    INUPT_SEQ_LENGTH = max([len(i) <span class="keyword">for</span> i <span class="keyword">in</span> input_texts])</span><br><span class="line">    OUTPUT_SEQ_LENGTH = max([len(i) <span class="keyword">for</span> i <span class="keyword">in</span> target_texts])</span><br><span class="line">    <span class="comment"># one-hot --&gt; features，特征维度为one-hot维度，即字符数</span></span><br><span class="line">    INPUT_FEATURE_LENGTH = len(input_characters)</span><br><span class="line">    OUTPUT_FEATURE_LENGTH = len(target_characters)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># encoder seq、decoder seq为定长，且decoder每次都输出，故使用max_input_seq_len、max_out_seq_len</span></span><br><span class="line">    <span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line">    encoder_input = np.zeros((NUM_SAMPLES, INUPT_SEQ_LENGTH, INPUT_FEATURE_LENGTH))</span><br><span class="line">    <span class="comment"># (samples, max_out_seq_len, features)</span></span><br><span class="line">    decoder_input = np.zeros((NUM_SAMPLES, OUTPUT_SEQ_LENGTH, OUTPUT_FEATURE_LENGTH))</span><br><span class="line">    <span class="comment"># (samples, max_out_seq_len, features)</span></span><br><span class="line">    decoder_output = np.zeros((NUM_SAMPLES, OUTPUT_SEQ_LENGTH, OUTPUT_FEATURE_LENGTH))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># &#123;char: index&#125;</span></span><br><span class="line">    input_dict = &#123;char: index <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(input_characters)&#125;</span><br><span class="line">    <span class="comment"># &#123;index: char&#125;</span></span><br><span class="line">    input_dict_reverse = &#123;index: char <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(input_characters)&#125;</span><br><span class="line">    <span class="comment"># &#123;char: index&#125;</span></span><br><span class="line">    target_dict = &#123;char: index <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(target_characters)&#125;</span><br><span class="line">    <span class="comment"># &#123;index: char&#125;</span></span><br><span class="line">    target_dict_reverse = &#123;index: char <span class="keyword">for</span> index, char <span class="keyword">in</span> enumerate(target_characters)&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> seq_index, seq <span class="keyword">in</span> enumerate(input_texts):</span><br><span class="line">        <span class="keyword">for</span> char_index, char <span class="keyword">in</span> enumerate(seq):</span><br><span class="line">            <span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line">            encoder_input[seq_index, char_index, input_dict[char]] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> seq_index, seq <span class="keyword">in</span> enumerate(target_texts):</span><br><span class="line">        <span class="keyword">for</span> char_index, char <span class="keyword">in</span> enumerate(seq):</span><br><span class="line">            decoder_input[seq_index, char_index, target_dict[char]] = <span class="number">1.0</span></span><br><span class="line">            <span class="comment"># decoder_input = 前一次的decoder_output</span></span><br><span class="line">            <span class="keyword">if</span> char_index &gt; <span class="number">0</span>:</span><br><span class="line">                decoder_output[seq_index, char_index - <span class="number">1</span>, target_dict[char]] = <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------训练模型----------</span></span><br><span class="line">    model_train, encoder_infer, decoder_infer = create_model(INPUT_FEATURE_LENGTH, OUTPUT_FEATURE_LENGTH, N_UNITS)</span><br><span class="line">    model_train.compile(optimizer=<span class="string">'rmsprop'</span>, loss=<span class="string">'categorical_crossentropy'</span>)</span><br><span class="line">    model_train.fit([encoder_input, decoder_input], decoder_output, batch_size=BATCH_SIZE, epochs=EPOCH, validation_split=<span class="number">0.2</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------测试模型----------</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>, <span class="number">200</span>):</span><br><span class="line">        <span class="comment"># (samples, max_input_seq_len, features)</span></span><br><span class="line">        test = encoder_input[i:i + <span class="number">1</span>, :, :]  <span class="comment"># i:i+1保持数组是三维</span></span><br><span class="line">        out = predict_chinese(test, encoder_infer, decoder_infer, OUTPUT_SEQ_LENGTH, OUTPUT_FEATURE_LENGTH)</span><br><span class="line">        print(input_texts[i])</span><br><span class="line">        print(out)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/05/tf_seq2seq_en2cn/" data-id="ckmleadn1006zskw2kqvv890n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-tf_process" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/01/tf_process/" class="article-date">
+  <time datetime="2019-06-30T16:00:00.000Z" itemprop="datePublished">2019-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/01/tf_process/">Tensorflow模型构建通用流程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-prediction"><a href="#1-prediction" class="headerlink" title="1. prediction"></a>1. prediction</h2><h4 id="dropout"><a href="#dropout" class="headerlink" title="dropout"></a>dropout</h4><h3 id="seq2seq"><a href="#seq2seq" class="headerlink" title="[seq2seq]"></a>[seq2seq]</h3><p><em>encoder + decoder</em></p>
+<h4 id="teacher-forcing"><a href="#teacher-forcing" class="headerlink" title="teacher forcing"></a>teacher forcing</h4><p><em>training model + inference model</em></p>
+<ul>
+<li>training model用于训练，获取encoder、decoder的weights、biases，其中decoder的input使用<strong>ground truth</strong></li>
+<li>inference model用于预测，保留training model的weights、biases，改变decoder的input使用<strong>前一时刻输出（sampling）</strong></li>
+</ul>
+<h4 id="attention"><a href="#attention" class="headerlink" title="attention"></a>attention</h4><h2 id="2-loss"><a href="#2-loss" class="headerlink" title="2. loss"></a>2. loss</h2><h2 id="3-optimizer"><a href="#3-optimizer" class="headerlink" title="3. optimizer"></a>3. optimizer</h2><ul>
+<li><code>tf.train.AdamOptimizer()</code></li>
+</ul>
+<h2 id="4-train-step"><a href="#4-train-step" class="headerlink" title="4. train_step"></a>4. train_step</h2><h2 id="5-batch-and-epoch"><a href="#5-batch-and-epoch" class="headerlink" title="5. batch and epoch"></a>5. batch and epoch</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/01/tf_process/" data-id="ckmleadmv006iskw2jjp4qmqj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-tf_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/20/tf_cheatsheet/" class="article-date">
+  <time datetime="2019-06-19T16:00:00.000Z" itemprop="datePublished">2019-06-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/20/tf_cheatsheet/">Tensorflow Cheatsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="定义OP、执行OP"><a href="#定义OP、执行OP" class="headerlink" title="定义OP、执行OP"></a>定义OP、执行OP</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---------- 定义OP----------</span></span><br><span class="line">m1 = tf.constant([[<span class="number">3</span>, <span class="number">3</span>]])  <span class="comment"># 常量OP</span></span><br><span class="line">m2 = tf.constant([[<span class="number">2</span>], [<span class="number">3</span>]])</span><br><span class="line">product = tf.matmul(m1, m2)  <span class="comment"># 计算OP</span></span><br><span class="line"></span><br><span class="line">state = tf.Variable(<span class="number">0</span>, name=<span class="string">'counter'</span>)  <span class="comment"># 变量OP</span></span><br><span class="line">get_new_value = tf.add(state, <span class="number">1</span>)</span><br><span class="line">update = tf.assign(state, get_new_value)  <span class="comment"># 为变量赋值OP</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为变量定义一个初始化OP：变量执行时，需要先初始化</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ---------- 执行OP ----------</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="comment"># 总是sess.run一个OP，才会产生（计算）结果</span></span><br><span class="line">	res = sess.run(product)</span><br><span class="line">	print(res)</span><br><span class="line">	</span><br><span class="line">	sess.run(init)</span><br><span class="line">	print(sess.run(state))</span><br><span class="line">	<span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">		sess.run(update)</span><br><span class="line">	print(sess.run(state))</span><br></pre></td></tr></table></figure>
+<h3 id="feed"><a href="#feed" class="headerlink" title="feed"></a>feed</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">input1 = tf.placeholder(tf.float32)</span><br><span class="line">input2 = tf.placeholder(tf.float32)</span><br><span class="line">output = tf.multiply(input1, input2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	res = sess.run(output, feed_dict=&#123;intput1:[<span class="number">7.</span>], input2:[<span class="number">2.</span>]&#125;)</span><br><span class="line">	print(res)</span><br></pre></td></tr></table></figure>
+<h3 id="training通用流程"><a href="#training通用流程" class="headerlink" title="training通用流程"></a>training通用流程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># prediction为之前基于x（placeholder），已定义的预测输出</span></span><br><span class="line"><span class="comment"># y为ground truth（placeholder）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义cost function OP</span></span><br><span class="line">loss = tf.reduce_mean(tf.square(y - prediction))</span><br><span class="line"><span class="comment"># 定义优化方法（一次梯度下降迭代）OP</span></span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	sess.run(tf.global_variables_initializer())</span><br><span class="line">	<span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">2000</span>):</span><br><span class="line">		<span class="comment"># 每次优化迭代，改变prediction计算中的Variables，降低loss</span></span><br><span class="line">		sess.run(train_step, feed_dict=&#123;x:x_data, y:y_data&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment"># 预测时只需</span></span><br><span class="line">	sess.run(pridiction, feed_dict=&#123;x:x_data&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="mini-batch"><a href="#mini-batch" class="headerlink" title="mini batch"></a>mini batch</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">batch_size = <span class="number">100</span></span><br><span class="line">n_batch = m // batch_size</span><br><span class="line"></span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="comment"># 迭代2000个epoch</span></span><br><span class="line">	<span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">2000</span>):</span><br><span class="line">		<span class="comment"># 每个epoch有n_batch个batch</span></span><br><span class="line">		<span class="keyword">for</span> batch <span class="keyword">in</span> range(n_batch):</span><br><span class="line">			<span class="comment"># 获取batch_size大小的batch</span></span><br><span class="line">			batch_x, batch_y = get_next_batch()</span><br><span class="line">			sess.run(train_step, feed_dict=&#123;x:batch_x, y:batch_y&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="dropout"><a href="#dropout" class="headerlink" title="dropout"></a>dropout</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">keep_prob = tf.placeholder(tf.float32)</span><br><span class="line"></span><br><span class="line">layer1 = tf.nn.relu(tf.matmul(W1, x) + b1)</span><br><span class="line">layer1 = tf.nn.dropout(layer1, keep_prob=keep_prob)</span><br><span class="line"></span><br><span class="line">layer2 = tf.nn.relu(tf.matmul(W2, layer1) + b2)</span><br><span class="line">layer2 = tf.nn.dropout(layer2, keep_prob=keep_prob)</span><br></pre></td></tr></table></figure>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>随机初始化</p>
+<ul>
+<li>W<ul>
+<li><code>tf.Variable(tf.truncated_normal(shape, stddev=0.1))</code></li>
+</ul>
+</li>
+<li>b<ul>
+<li><code>tf.Variable(tf.zeros(shape) + 0.1)</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>note</strong>：好的初始化系数、优化器等设置，可以在迭代次数一定的情形下，更好的逼近最优解，从而提升模型性能</p>
+<hr>
+<h3 id="计算准确率（OP）"><a href="#计算准确率（OP）" class="headerlink" title="计算准确率（OP）"></a>计算准确率（OP）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">correct_prediction = tf.equal(tf.argmax(y, <span class="number">1</span>), tf.argmax(prediction, <span class="number">1</span>))  <span class="comment"># tf.argmax返回最大值下标</span></span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session <span class="keyword">as</span> sess:</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># ...</span></span><br><span class="line">	</span><br><span class="line">	acc = sess.run(accuracy, feed_dict(x:test_x, y:test_y))</span><br><span class="line">	print(acc)</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="tensorboard"><a href="#tensorboard" class="headerlink" title="tensorboard"></a>tensorboard</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">'input'</span>):</span><br><span class="line">	input1 = tf.placeholder(tf.float32, [nx, none], name=<span class="string">'input1'</span>)</span><br><span class="line">	input2 = tf.placeholder(tf.float32, [nx, none], name=<span class="string">'input2'</span>)</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">tf.summary.scalar(<span class="string">'name'</span>, var)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">merged = tf.summary.merge_all()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	writer = tf.summary.FileWriter(<span class="string">'dir'</span>, sess.graph)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># for each epoch</span></span><br><span class="line">	summary = sess.run(merged)</span><br><span class="line">	writer.add_summary(summary, epoch)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>tensorboard --logdir=dir</code></li>
+<li>name_scope在定义图时进行设置（执行图则仅对定义图进行计算）</li>
+</ul>
+<h3 id="模型存取"><a href="#模型存取" class="headerlink" title="模型存取"></a>模型存取</h3><p>模型保存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">saver = tf.train.Saver()</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">saver.save(sess, <span class="string">'file_path/file_name'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>模型读取<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">saver = tf.train.Saver()</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">saver.restore(sess, <span class="string">'file_path/file_name'</span>)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/20/tf_cheatsheet/" data-id="ckmleadmx006oskw2qev45s78" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dl_nlp" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/14/dl_nlp/" class="article-date">
+  <time datetime="2019-06-13T16:00:00.000Z" itemprop="datePublished">2019-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/14/dl_nlp/">NLP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="词汇表征"><a href="#词汇表征" class="headerlink" title="词汇表征"></a>词汇表征</h2><ul>
+<li>vocabulary + one-hot <strong>representation</strong><ul>
+<li>词汇表：V = [a, an, …, zulu, <unk>]</unk></li>
+<li>表征：“an” = [0, 1, …, 0, 0]</li>
+</ul>
+</li>
+<li>featureized <strong>representation</strong>: word embedding<ul>
+<li>表征：[feature1, feature2, …]对应一个词（好处是可以计算各个词之间的距离，识别相似的词）（如何将词映射为一个特征向量？：是学来的）</li>
+<li>word embedding含义是，将各个词embed嵌入到n维特征空间中去</li>
+<li>有点类似人类识别中，将图像encoding</li>
+<li>cosine similarity $sim(u,v) = \frac{u^{T}v}{| u |<em>{2} | v |</em>{2}}$</li>
+</ul>
+</li>
+</ul>
+<h2 id="word-embedding-学习"><a href="#word-embedding-学习" class="headerlink" title="word embedding 学习"></a>word embedding 学习</h2><p><strong>word2vec: skip gram</strong></p>
+<p>构造一个预测（或者映射）模型，输入一个词context（one-hot），预测对应到另一个词target（one-hot）</p>
+<ul>
+<li>输入context、输出target的配对关系（间隔），是在一个句子中，在一定正负范围内，随机取的</li>
+<li>而context的选择，则需要特别设计，避免频繁sample无意义的词</li>
+</ul>
+<script type="math/tex; mode=display">
+o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow softmax \rightarrow \hat{o}_{target}</script><p>目标是通过训练这个映射关系，学习到embedding matrix $E = [e<em>{1}, e</em>{2}, e_{3}, …]$</p>
+<ul>
+<li>$o_{context}$是context的one-hot表示</li>
+<li>$E$的各列，为词汇表中各个词的embedding；各行则为embedding的各个特征维度</li>
+<li>$Eo_{content}$相当于从$E$中提取content的embedding</li>
+</ul>
+<p>词汇表较大时，skip gram中的softmax，分母求和，会有计算的大的问题</p>
+<p><strong>negative sampling</strong></p>
+<p>构造一个预测（或者映射）模型，输入一个词context（one-hot），预测对于一个词target是否存在对应（每个target一个二分类问题）</p>
+<ul>
+<li>输入context、判断目标target的配对关系（间隔），是在一个句子中，在一定正负范围内，随机取的</li>
+<li>而context、target的选择，则需要特别设计，避免频繁sample无意义的词</li>
+</ul>
+<script type="math/tex; mode=display">
+o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow \text{vocabulary_size} * \text{logistic_regression} \rightarrow lable</script><ul>
+<li>使用vocabulary_size个二分类器，代替softmax，提升计算性能</li>
+<li>训练数据每次构造，从句子中抽取一对context、target（positive sampling），在从词汇表中随机为context抽取k个target（negative sampling）</li>
+<li>训练时，上述构造的k+1对context、target，训练k+1个分类器</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/14/dl_nlp/" data-id="ckmleadjt0012skw2lddcxb4w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dl_seq2seq" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/14/dl_seq2seq/" class="article-date">
+  <time datetime="2019-06-13T16:00:00.000Z" itemprop="datePublished">2019-06-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/14/dl_seq2seq/">seq2seq</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="基础模型"><a href="#基础模型" class="headerlink" title="基础模型"></a>基础模型</h2><p>encoder（序列迭代输入） + decoder（迭代输出序列）</p>
+<ul>
+<li>encoder甚至有可能并不是一个RNN，而是例如一个CNN，对图像进行encoding</li>
+</ul>
+<h2 id="beam-search"><a href="#beam-search" class="headerlink" title="beam search"></a>beam search</h2><p><strong>翻译模型，选择最可能的句子</strong></p>
+<p>考虑输入$x$由encoder进行encoding，给入decoder<br>第一迭代，输出的$\hat{y}^{\langle 1 \rangle}$；第二迭代，输出的$\hat{y}^{\langle 2 \rangle}$…</p>
+<p>为了得到全局最佳的句子输出，优化是不应将$\hat{y}^{\langle 1 \rangle}$、$\hat{y}^{\langle 2 \rangle}$、…分开单独考虑，而应该<strong>全局</strong>考虑。即优化使得given $x$，能得到最优句子$P(\hat{y}^{\langle 1 \rangle},\hat{y}^{\langle 2 \rangle},…|x)$</p>
+<ul>
+<li>首先，翻译模型使用language model自动生成一条结果语句，每次词的选取是根据softmax的输出概率，随机sample的。这样无法保障，同一个输入，每次输出相同（预期是每次都输出最佳句子）</li>
+<li>其次，若对softmax的输出，不再根据概率sample，而是直接选择概率最大的，即使用贪心算法，则如上文所述，可能得到的不是全局最佳句子。应该$(\hat{y}^{\langle 1 \rangle},\hat{y}^{\langle 2 \rangle},…|x)$，整体考虑</li>
+</ul>
+<p>为此，使用beam search做最优化的选择，<strong>流程</strong>如下：</p>
+<ol>
+<li>对$\hat{y}^{\langle 1 \rangle}$，取top $B$个候选</li>
+<li>对各$\hat{y}^{\langle 1 \rangle}$候选，获取$\hat{y}^{\langle 2 \rangle}$。整体考虑前两个输出联合，可以计算$P(\hat{y}^{\langle 1 \rangle}, \hat{y}^{\langle 2 \rangle} | x) = P(\hat{y}^{\langle 1 \rangle} | x)P(\hat{y}^{\langle 2 \rangle} | x, \hat{y}^{\langle 1 \rangle})$。对于所有$\hat{y}^{\langle 1 \rangle}$候选，所有$P(\hat{y}^{\langle 1 \rangle}, \hat{y}^{\langle 2 \rangle} | x)$计算结果中，取top $B$个候选</li>
+<li>按2方式继续，直到EOS或预设的$T_{y}$</li>
+</ol>
+<p><strong>beam search的目标函数</strong></p>
+<script type="math/tex; mode=display">
+\text{arg }\max_{y}\prod_{t=1}^{T_{y}}P(\hat{y}^{\langle t \rangle} | x, \hat{y}^{\langle 1 \rangle}, ..., , \hat{y}^{\langle t-1 \rangle})</script><p>为避免各个P过小，造成误差和无法表示（过小溢出），对P取log</p>
+<script type="math/tex; mode=display">
+\text{arg }\max_{y}\sum_{t=1}^{T_{y}}\log P(\hat{y}^{\langle t \rangle} | x, \hat{y}^{\langle 1 \rangle}, ..., , \hat{y}^{\langle t-1 \rangle})</script><p>但上述目标函数倾向于使用更短的输出句子，对此使用length normalization（$\alpha$为超参数）</p>
+<script type="math/tex; mode=display">
+\text{arg }\max_{y}\frac{1}{T_{y}^{\alpha}}\sum_{t=1}^{T_{y}}\log P(\hat{y}^{\langle t \rangle} | x, \hat{y}^{\langle 1 \rangle}, ..., , \hat{y}^{\langle t-1 \rangle})</script><p><strong>误差分析：RNN还是beam search有问题</strong></p>
+<p>对于同一输入句子，输出：<br>human-level：$y^{h}$<br>model：$\hat{y}$</p>
+<p>将$y^{h}$依次输入decoder，能够最终计算出$P(y^{h}|x)$</p>
+<ul>
+<li>$P(y^{h}|x) &gt; P(\hat{y}|x)$：RNN能够计算出human-level更好，但却没选到，<strong>beam search</strong>有问题</li>
+<li>$P(y^{h}|x) &lt; P(\hat{y}|x)$：RNN未能计算出human-level更好，但却没选到，<strong>RNN</strong>有问题</li>
+</ul>
+<p>（若使用了length normalization，则对比length normalization之后的P）</p>
+<p>汇总所有labeled data的对比结果，看看RNN还是beam search有问题<br>若RNN有问题，则进一步bias variance分析；若beam search有问题，考虑增大$B$</p>
+<h2 id="attention模型"><a href="#attention模型" class="headerlink" title="attention模型"></a>attention模型</h2><p>对于<strong>seq2seq</strong>模型，<br>encoder由$a^{\langle 0 \rangle} = 0$初始化，每次用$a^{\langle t’-1 \rangle}$、$x^{\langle t’ \rangle}$计算$a^{\langle t’ \rangle}$，最终将$a^{\langle T<em>{x} \rangle}$传给decoder<br>decoder由$a^{\langle T</em>{x} \rangle}$初始化，每次用$a^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$计算$\hat{y}^{\langle t \rangle}$</p>
+<ul>
+<li>计算的unit可以是naive RNN、GRU、LSTM</li>
+</ul>
+<p>当输入序列过长时，decoder性能下降（记不住这么长的输入）<br>attention模型试图在decoder生成$\hat{y}^{\langle t \rangle}$时，引入encoder不同$t’$的$a^{\langle t’ \rangle}$的考量</p>
+<p>具体来讲，使用$s^{\langle t \rangle}$表示decoder的输出，以区分encoder的activation<br>$s^{\langle t \rangle}$的计算，除了输入$s^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$，还增加了一个context $c^{\langle t \rangle} = \sum_{t’} \alpha^{\langle t, t’ \rangle} a^{\langle t’ \rangle}$，即对key各项的加权求和，并且这组权重对于不同的query（$s^{\langle t - 1 \rangle}$）是不同的</p>
+<ul>
+<li>其中$t’$为encoder中$a$对应各时刻</li>
+<li>$\alpha^{\langle t, t’ \rangle}$即表示计算$t$时刻的$s^{\langle t \rangle}$时，应付出多少attention在$a^{\langle t’ \rangle}$上</li>
+<li>$\alpha^{\langle t, t’ \rangle}$是归一化的，由$s^{\langle t-1 \rangle}$（query）和$a^{\langle t’ \rangle}$（待weighted项）通过一个小NN-softmax算出（直接end-to-end计算）</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/14/dl_seq2seq/" data-id="ckmleadjy001cskw25cdq24xs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>Python - 基于FFT的周期性检测方法 | ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="核心思想信号的连续/离散性 v.s. 周期性/非周期性，在时域与频域中是相互决定的。即：时域连续，频域非周期；时域离散，频域周期；时域周期，频域离散；时域非周期，频域连续。 基于FFT的周期性检测方法，具体流程为：（1）对输入信号做FFT；（2）检测FFT结果离散性；（3）根据FFT结果是否为离散，给出周期性判断结果。 123456789101112131415161718192021222324">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python - 基于FFT的周期性检测方法">
+<meta property="og:url" content="http://yoursite.com/2019/03/13/python_fft_is_periodic/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:description" content="核心思想信号的连续/离散性 v.s. 周期性/非周期性，在时域与频域中是相互决定的。即：时域连续，频域非周期；时域离散，频域周期；时域周期，频域离散；时域非周期，频域连续。 基于FFT的周期性检测方法，具体流程为：（1）对输入信号做FFT；（2）检测FFT结果离散性；（3）根据FFT结果是否为离散，给出周期性判断结果。 123456789101112131415161718192021222324">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-10-22T11:15:28.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python - 基于FFT的周期性检测方法">
+<meta name="twitter:description" content="核心思想信号的连续/离散性 v.s. 周期性/非周期性，在时域与频域中是相互决定的。即：时域连续，频域非周期；时域离散，频域周期；时域周期，频域离散；时域非周期，频域连续。 基于FFT的周期性检测方法，具体流程为：（1）对输入信号做FFT；（2）检测FFT结果离散性；（3）根据FFT结果是否为离散，给出周期性判断结果。 123456789101112131415161718192021222324">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python_fft_is_periodic" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/13/python_fft_is_periodic/" class="article-date">
+  <time datetime="2019-03-12T16:00:00.000Z" itemprop="datePublished">2019-03-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python - 基于FFT的周期性检测方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h2><p>信号的连续/离散性 v.s. 周期性/非周期性，在时域与频域中是相互决定的。即：时域连续，频域非周期；时域离散，频域周期；时域周期，频域离散；时域非周期，频域连续。</p>
+<p>基于FFT的周期性检测方法，具体流程为：（1）对输入信号做FFT；（2）检测FFT结果离散性；（3）根据FFT结果是否为离散，给出周期性判断结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.fftpack <span class="keyword">import</span> fft, ifft</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_periodic</span><span class="params">(arr, z_value=<span class="number">0.02</span>, frac_thr=<span class="number">0.5</span>)</span>:</span></span><br><span class="line">    starttime = time.time()</span><br><span class="line">    f_arr = fft(arr)</span><br><span class="line">    f_arr = <span class="number">2.0</span> / len(arr) * np.abs(f_arr)</span><br><span class="line">    idx_z = np.where(f_arr &lt;= z_value)</span><br><span class="line">    print(<span class="string">"idx_z count: %d, f_arr len: %d"</span> % (len(idx_z[<span class="number">0</span>]), len(f_arr)))</span><br><span class="line">    endtime = time.time()</span><br><span class="line">    print(<span class="string">"time cost = %fs"</span> % (endtime - starttime))</span><br><span class="line">    <span class="keyword">return</span> len(idx_z[<span class="number">0</span>]) * <span class="number">1.0</span> / len(f_arr) &gt;= frac_thr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_periodic2</span><span class="params">(arr, mmrate_thr=<span class="number">10</span>, show=False, plot=False, filename=<span class="string">""</span>)</span>:</span></span><br><span class="line">    starttime = time.time()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> type(arr) == list:</span><br><span class="line">        arr = np.array(arr)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 准直流</span></span><br><span class="line">    <span class="comment"># if len(np.where(arr &gt; 0)[0]) &gt;= 0.9 * len(arr):</span></span><br><span class="line">    <span class="comment">#    return False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 标准化</span></span><br><span class="line">    arr_mean = np.mean(arr)</span><br><span class="line">    arr_std = np.std(arr)</span><br><span class="line">    <span class="keyword">if</span> arr_std == <span class="number">0</span>:</span><br><span class="line">        arr_std = <span class="number">1</span></span><br><span class="line">    arr = (arr - arr_mean) / arr_std</span><br><span class="line">    <span class="comment"># 二值化</span></span><br><span class="line">    arr[np.where(arr &gt; <span class="number">0.01</span>)[<span class="number">0</span>]] = <span class="number">1</span></span><br><span class="line">    arr[np.where(abs(arr) &lt;= <span class="number">0.01</span>)[<span class="number">0</span>]] = <span class="number">0</span></span><br><span class="line">    arr[np.where(arr &lt; <span class="number">-0.01</span>)[<span class="number">0</span>]] = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">    f_arr = fft(arr)</span><br><span class="line">    f_arr = <span class="number">2.0</span> / len(arr) * np.abs(f_arr)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 去除直流影响，仅考察0.1~0.5</span></span><br><span class="line">    median = float(np.median(f_arr[len(arr) // <span class="number">10</span> : len(arr) // <span class="number">10</span> * <span class="number">5</span>]))</span><br><span class="line">    max = float(np.max(f_arr[len(arr) // <span class="number">10</span> : len(arr) // <span class="number">10</span> * <span class="number">5</span>]))</span><br><span class="line">    <span class="comment"># 计算max / median的比值，考察频域信号是否为离散冲击</span></span><br><span class="line">    <span class="keyword">if</span> median != <span class="number">0</span>:</span><br><span class="line">        mmrate = max * <span class="number">1.0</span> / median</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> max == <span class="number">0</span>:</span><br><span class="line">            mmrate = <span class="number">0</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            mmrate = mmrate_thr + <span class="number">999</span></span><br><span class="line">    print(<span class="string">"median: %f, max: %f, max_median rate: %f"</span> % (median, max, mmrate))</span><br><span class="line"></span><br><span class="line">    endtime = time.time()</span><br><span class="line">    print(<span class="string">"time cost = %fs"</span> % (endtime - starttime))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> show <span class="keyword">or</span> plot:</span><br><span class="line">        ts = len(arr)</span><br><span class="line">        n = len(arr)</span><br><span class="line">        fs = n * <span class="number">1.0</span> / ts</span><br><span class="line">        x = np.linspace(<span class="number">0.0</span>, ts, n, endpoint=<span class="keyword">False</span>)</span><br><span class="line">        xf = np.linspace(<span class="number">0.0</span>, <span class="number">1.0</span> / <span class="number">2.0</span> * fs, n // <span class="number">2</span>, endpoint=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">        plt.figure(figsize=(<span class="number">15</span>, <span class="number">6</span>))</span><br><span class="line">        plt.subplot(<span class="number">121</span>)</span><br><span class="line">        plt.plot(x, arr)</span><br><span class="line">        plt.title(<span class="string">'Original Signal'</span>, fontsize=<span class="number">12</span>)</span><br><span class="line">        <span class="comment">#plt.ylim((0, 100))</span></span><br><span class="line"></span><br><span class="line">        plt.subplot(<span class="number">122</span>)</span><br><span class="line">        plt.plot(xf, f_arr[: n // <span class="number">2</span>], <span class="string">'g'</span>)</span><br><span class="line">        plt.title(<span class="string">'FFT Transform Normalization'</span>, fontsize=<span class="number">12</span>, color=<span class="string">'g'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> plot:</span><br><span class="line">            plotfile = <span class="string">"%s_%.2f_%.2f_%.2f_"</span> % (mmrate &gt;= mmrate_thr, mmrate, max, median) + filename</span><br><span class="line">            plt.savefig(plotfile)</span><br><span class="line">        <span class="keyword">if</span> show:</span><br><span class="line">            plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> mmrate &gt;= mmrate_thr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># 采样时长ts = 288s。</span></span><br><span class="line">    ts = <span class="number">288.0</span></span><br><span class="line">    <span class="comment"># 采样点数n = 288。</span></span><br><span class="line">    n = <span class="number">288</span></span><br><span class="line">    <span class="comment"># 采样频率fs = 1Hz，即1s采1个点。</span></span><br><span class="line">    fs = n / ts</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 时域</span></span><br><span class="line">    x = np.linspace(<span class="number">0.0</span>, ts, n, endpoint=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ---------- 生成一段周期性数据 ----------</span></span><br><span class="line">    <span class="comment"># 周期性冲击</span></span><br><span class="line">    y1 = np.zeros(n)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, n, <span class="number">10</span>):</span><br><span class="line">        y1[i] = random.randint(<span class="number">8</span>, <span class="number">12</span>) * <span class="number">1.0</span> / <span class="number">10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 周期性冲击 Type2</span></span><br><span class="line">    <span class="comment"># full_list = []</span></span><br><span class="line">    <span class="comment"># sub_list = [1, 0, 0, 1, 0]</span></span><br><span class="line">    <span class="comment"># T = len(sub_list)</span></span><br><span class="line">    <span class="comment"># T_count = n // T</span></span><br><span class="line">    <span class="comment"># for _ in range(0, T_count):</span></span><br><span class="line">    <span class="comment">#     sub_list[0] = random.randint(8, 12) * 2.0 / 10</span></span><br><span class="line">    <span class="comment">#     sub_list[3] = random.randint(8, 12) * 2.0 / 10</span></span><br><span class="line">    <span class="comment">#     full_list = full_list + sub_list</span></span><br><span class="line">    <span class="comment"># if len(full_list) &gt; n:</span></span><br><span class="line">    <span class="comment">#     full_list = full_list[: n]</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     full_list = full_list + [0] * (n - len(full_list))</span></span><br><span class="line">    <span class="comment"># y1 = np.array(full_list)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 正弦波 （相比而言，冲击总是正信号，有直流分量，频域0处会有较大值）</span></span><br><span class="line">    <span class="comment"># y1 = np.sin(2 * np.pi * 0.1 * x) + 2 * np.sin(2 * np.pi * 0.2 * x)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 近似周期性冲击 --&gt; 此种信号（周期取值发生震荡）下性能不佳</span></span><br><span class="line">    <span class="comment"># full_list = []</span></span><br><span class="line">    <span class="comment"># T = 7</span></span><br><span class="line">    <span class="comment"># T_count = n // T</span></span><br><span class="line">    <span class="comment"># for _ in range(0, T_count):</span></span><br><span class="line">    <span class="comment">#     cur_list = [0] * random.randint(T - 1, T)</span></span><br><span class="line">    <span class="comment">#     cur_list[0] = random.randint(8, 12) * 1.0 / 10</span></span><br><span class="line">    <span class="comment">#     full_list = full_list + cur_list</span></span><br><span class="line">    <span class="comment"># if len(full_list) &gt; n:</span></span><br><span class="line">    <span class="comment">#     full_list = full_list[: n]</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     full_list = full_list + [0] * (n - len(full_list))</span></span><br><span class="line">    <span class="comment"># y1 = np.array(full_list)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ---------- 生成一段非周期性数据 ----------</span></span><br><span class="line">    <span class="comment"># 随机冲击</span></span><br><span class="line">    <span class="comment"># y2 = np.zeros(n)</span></span><br><span class="line">    <span class="comment"># idx = random.sample(range(0, len(x)), 5)</span></span><br><span class="line">    <span class="comment"># for i in idx:</span></span><br><span class="line">    <span class="comment">#     y2[i] = random.randint(5, 10)</span></span><br><span class="line">    <span class="comment"># 方波</span></span><br><span class="line">    y2 = np.zeros(n)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>, <span class="number">120</span>):</span><br><span class="line">        y2[i] = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># ---------- 画图 ----------</span></span><br><span class="line">    plt.figure(figsize=(<span class="number">15</span>, <span class="number">6</span>))</span><br><span class="line">    plt.subplot(<span class="number">231</span>)</span><br><span class="line">    plt.plot(x[<span class="number">0</span>:<span class="number">50</span>], y1[<span class="number">0</span>:<span class="number">50</span>])</span><br><span class="line">    plt.title(<span class="string">'Original Signal (Periodic)'</span>, fontsize=<span class="number">9</span>)</span><br><span class="line">    plt.ylim((<span class="number">-1</span>, <span class="number">10</span>))</span><br><span class="line">    plt.subplot(<span class="number">234</span>)</span><br><span class="line">    plt.plot(x[<span class="number">0</span>:], y2[<span class="number">0</span>:])</span><br><span class="line">    plt.title(<span class="string">'Original Signal (Aperiodic)'</span>, fontsize=<span class="number">9</span>)</span><br><span class="line">    plt.ylim((<span class="number">-1</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">    yf1 = fft(y1)</span><br><span class="line">    yf2 = fft(y2)</span><br><span class="line">    xf = np.linspace(<span class="number">0.0</span>, <span class="number">1.0</span> / <span class="number">2.0</span> * fs, n // <span class="number">2</span>, endpoint=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 归一化处理</span></span><br><span class="line">    yf1_n = <span class="number">2.0</span> / n * np.abs(yf1)</span><br><span class="line">    xf1_n = xf</span><br><span class="line">    print(<span class="string">"FFT Periodic"</span>)</span><br><span class="line">    print(yf1_n)</span><br><span class="line">    yf2_n = <span class="number">2.0</span> / n * np.abs(yf2)</span><br><span class="line">    xf2_n = xf</span><br><span class="line">    print(<span class="string">"FFT Aperiodic"</span>)</span><br><span class="line">    print(yf2_n)</span><br><span class="line"></span><br><span class="line">    plt.subplot(<span class="number">232</span>)</span><br><span class="line">    plt.plot(xf1_n, yf1_n[: n // <span class="number">2</span>], <span class="string">'g'</span>)</span><br><span class="line">    plt.title(<span class="string">'FFT Transform Normalization (Periodic)'</span>, fontsize=<span class="number">9</span>, color=<span class="string">'g'</span>)</span><br><span class="line">    plt.ylim((<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">    plt.subplot(<span class="number">235</span>)</span><br><span class="line">    plt.plot(xf2_n, yf2_n[: n // <span class="number">2</span>], <span class="string">'g'</span>)</span><br><span class="line">    plt.title(<span class="string">'FFT Transform Normalization (Aperiodic)'</span>, fontsize=<span class="number">9</span>, color=<span class="string">'g'</span>)</span><br><span class="line">    plt.ylim((<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 周期性检测</span></span><br><span class="line">    plt.subplot(<span class="number">233</span>)</span><br><span class="line">    <span class="comment"># if is_periodic(y1):</span></span><br><span class="line">    <span class="keyword">if</span> is_periodic2(y1):</span><br><span class="line">        plt.title(<span class="string">'Periodic Signal Detected!'</span>, fontsize=<span class="number">9</span>, color=<span class="string">'r'</span>)</span><br><span class="line">        plt.plot(xf1_n, yf1_n[: n // <span class="number">2</span>], <span class="string">'r'</span>)</span><br><span class="line">        print(<span class="string">"y1 is periodic!!!"</span>.center(<span class="number">100</span>, <span class="string">"-"</span>))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        plt.title(<span class="string">'Aperiodic Signal...'</span>, fontsize=<span class="number">9</span>, color=<span class="string">'k'</span>)</span><br><span class="line">        plt.plot(xf1_n, yf1_n[: n // <span class="number">2</span>], <span class="string">'k'</span>)</span><br><span class="line">    plt.ylim((<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    plt.subplot(<span class="number">236</span>)</span><br><span class="line">    <span class="comment"># if is_periodic(y2):</span></span><br><span class="line">    <span class="keyword">if</span> is_periodic2(y2):</span><br><span class="line">        plt.plot(xf2_n, yf2_n[: n // <span class="number">2</span>], <span class="string">'r'</span>)</span><br><span class="line">        plt.title(<span class="string">'Periodic Signal Detected!'</span>, fontsize=<span class="number">9</span>, color=<span class="string">'r'</span>)</span><br><span class="line">        print(<span class="string">"y2 is periodic!!!"</span>.center(<span class="number">100</span>, <span class="string">"-"</span>))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        plt.title(<span class="string">'Aperiodic Signal...'</span>, fontsize=<span class="number">9</span>, color=<span class="string">'k'</span>)</span><br><span class="line">        plt.plot(xf2_n, yf2_n[: n // <span class="number">2</span>], <span class="string">'k'</span>)</span><br><span class="line">    plt.ylim((<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/13/python_fft_is_periodic/" data-id="ckmleadlv004fskw2a41lr3va" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/03/15/python_fileio/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python - 文件IO
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/03/13/python_random/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python - 随机数获取示例</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+
+  
+  <title>ChenyuShuxin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="ChenyuShuxin">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="ChenyuShuxin">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ChenyuShuxin">
+  
+    <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ChenyuShuxin</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晨雨舒心</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/about">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-python_list_dict_set" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/06/python_list_dict_set/" class="article-date">
+  <time datetime="2020-07-05T16:00:00.000Z" itemprop="datePublished">2020-07-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">list_demo</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'创建'</span>)</span><br><span class="line">    list_0 = []</span><br><span class="line">    list_1 = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">    list_2 = [x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)]</span><br><span class="line">    print(<span class="string">'list_0 = &#123;&#125;'</span>.format(list_0))</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(list_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(list_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按下标索引'</span>)</span><br><span class="line">    print(<span class="string">'list_1[0] = &#123;&#125;'</span>.format(list_1[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按下标、切片修改'</span>)</span><br><span class="line">    list_1[<span class="number">0</span>] = <span class="number">999</span></span><br><span class="line">    list_2[<span class="number">0</span>:<span class="number">3</span>] = [<span class="number">6</span>, <span class="number">66</span>, <span class="number">666</span>]</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(list_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(list_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'增加元素、拓展列表'</span>)</span><br><span class="line">    list_1.append(<span class="number">0</span>)</span><br><span class="line">    list_2 += [<span class="number">0</span>]</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(list_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(list_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按值删除、按下标删除'</span>)</span><br><span class="line">    list_1.remove(<span class="number">999</span>)</span><br><span class="line">    <span class="keyword">del</span> list_2[len(list_2)<span class="number">-1</span>]</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(list_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(list_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'遍历并按条件删除'</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> list_1[:]:</span><br><span class="line">        <span class="keyword">if</span> item == <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">del</span> item</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(list_1)<span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</span><br><span class="line">        <span class="keyword">if</span> list_2[i] == <span class="number">4</span>:</span><br><span class="line">            <span class="keyword">del</span> list_1[i]</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(list_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(list_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'排序'</span>)</span><br><span class="line">    new_list = sorted(list_1, key=<span class="keyword">lambda</span> x: -x)</span><br><span class="line">    print(new_list)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dict_demo</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'创建'</span>)</span><br><span class="line">    dict_0 = &#123;&#125;</span><br><span class="line">    dict_1 = &#123;<span class="number">0</span>: <span class="string">'zero'</span>, <span class="number">1</span>: <span class="string">'one'</span>, <span class="number">2</span>: <span class="string">'two'</span>, <span class="number">3</span>: <span class="string">'three'</span>, <span class="number">4</span>: <span class="string">'four'</span>&#125;</span><br><span class="line">    dict_2 = &#123;x: x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)&#125;</span><br><span class="line">    print(<span class="string">'list_0 = &#123;&#125;'</span>.format(dict_0))</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(dict_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(dict_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按下标索引'</span>)</span><br><span class="line">    print(<span class="string">'dict_1[0] = &#123;&#125;'</span>.format(dict_1[<span class="number">0</span>]))</span><br><span class="line">    print(<span class="string">'dict_1[999] = &#123;&#125;'</span>.format(dict_1.get(<span class="number">999</span>, <span class="string">'default'</span>)))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按下标、切片修改'</span>)</span><br><span class="line">    dict_1[<span class="number">0</span>] = <span class="number">999</span></span><br><span class="line">    print(<span class="string">'dict_1 = &#123;&#125;'</span>.format(dict_1))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'增加元素、拓展字典'</span>)</span><br><span class="line">    dict_1[<span class="number">-1</span>] = <span class="string">'minus one'</span></span><br><span class="line">    dict_2.update(dict_1)</span><br><span class="line">    print(<span class="string">'dict_1 = &#123;&#125;'</span>.format(dict_1))</span><br><span class="line">    print(<span class="string">'dict_2 = &#123;&#125;'</span>.format(dict_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按下标删除'</span>)</span><br><span class="line">    <span class="keyword">del</span> dict_2[<span class="number">-1</span>]</span><br><span class="line">    print(<span class="string">'dict_2 = &#123;&#125;'</span>.format(dict_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'遍历并按条件删除'</span>)</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> list(dict_2.keys()):</span><br><span class="line">        <span class="keyword">if</span> k == <span class="number">2</span> <span class="keyword">or</span> dict_2[k] == <span class="string">'three'</span>:</span><br><span class="line">            <span class="keyword">del</span> dict_2[k]</span><br><span class="line">    print(<span class="string">'dict_2 = &#123;&#125;'</span>.format(dict_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按value排序'</span>)</span><br><span class="line">    dict_2[<span class="number">-1</span>] = <span class="number">999</span></span><br><span class="line">    new_list = sorted(dict_2.items(), key=<span class="keyword">lambda</span> item: (str(item[<span class="number">1</span>]), -item[<span class="number">0</span>]))</span><br><span class="line">    print(new_list)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">set_demo</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'创建'</span>)</span><br><span class="line">    set_0 = set()</span><br><span class="line">    set_1 = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>&#125;</span><br><span class="line">    set_2 = &#123;x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>)&#125;</span><br><span class="line">    print(<span class="string">'list_0 = &#123;&#125;'</span>.format(set_0))</span><br><span class="line">    print(<span class="string">'list_1 = &#123;&#125;'</span>.format(set_1))</span><br><span class="line">    print(<span class="string">'list_2 = &#123;&#125;'</span>.format(set_2))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'增加元素、拓展字典'</span>)</span><br><span class="line">    set_1.add(<span class="number">999</span>)</span><br><span class="line">    set_1.update(set_2)</span><br><span class="line">    print(<span class="string">'set_1 = &#123;&#125;'</span>.format(set_1))</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'按元素删除'</span>)</span><br><span class="line">    set_1.remove(<span class="number">999</span>)</span><br><span class="line">    print(<span class="string">'set_1 = &#123;&#125;'</span>.format(set_1))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    list_demo()</span><br><span class="line">    print(<span class="string">''</span>.center(<span class="number">100</span>, <span class="string">'-'</span>))</span><br><span class="line">    dict_demo()</span><br><span class="line">    print(<span class="string">''</span>.center(<span class="number">100</span>, <span class="string">'-'</span>))</span><br><span class="line">    set_demo()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/07/06/python_list_dict_set/" data-id="ckmleadls0049skw2uerv3iaf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-shell_bg" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/09/shell_bg/" class="article-date">
+  <time datetime="2020-04-08T16:00:00.000Z" itemprop="datePublished">2020-04-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/shell_bg/">Shell后台运行</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>使用<code>nohup</code>和<code>&amp;</code>来执行some_cmd</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nohup some_cmd &gt;out 2&gt;&amp;1 &amp;</span><br><span class="line"></span><br><span class="line">ps -ef | grep some_cmd</span><br></pre></td></tr></table></figure>
+<p>原理：<br>后台执行的进程，其父进程还是当前终端shell的进程，而一旦父进程退出，则会发送hangup信号给所有子进程，子进程收到hangup以后也会退出。<br>如果我们要在退出shell的时候继续运行进程，则需要使用nohup忽略hangup信号（或者setsid将将父进程设为init进程，进程号为1）。</p>
+<p>脚本中示例：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"><span class="meta">#</span> run two processes in the background and wait for them to finish</span><br><span class="line"></span><br><span class="line">nohup sleep 3 &amp;</span><br><span class="line">nohup sleep 10 &amp;</span><br><span class="line"></span><br><span class="line">echo "This will wait until both are done"</span><br><span class="line">date</span><br><span class="line">wait</span><br><span class="line">date</span><br><span class="line">echo "Done"</span><br></pre></td></tr></table></figure></p>
+<p>注意，可以使用wait等待脚本当前产生所有子进程结束。</p>
+<ul>
+<li>对已经跑起来的some_cmd</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">some_cmd</span><br><span class="line">Ctrl + Z</span><br><span class="line">bg 1</span><br><span class="line"></span><br><span class="line">jobs</span><br><span class="line">fg 1</span><br></pre></td></tr></table></figure>
+<p>但这样问题是，终端（意外）退出，该进程会被关闭。</p>
+<ul>
+<li>可以使用<code>disown</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">some_cmd</span><br><span class="line">Ctrl + Z</span><br><span class="line">bg 1</span><br><span class="line">disown -h %1</span><br><span class="line"></span><br><span class="line">ps -ef | grep some_cmd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>还有一个关于subshell的小技巧</li>
+</ul>
+<p>我们知道，将一个或多个命名包含在<code>()</code>中就能让这些命令在子shell中运行。<br>当我们将<code>&amp;</code>也放入<code>()</code>内之后，新提交的进程的父ID（PPID）为1（init 进程的 PID），并不是当前终端的进程 ID。<br>因此并不属于当前终端的子进程，从而也就不会受到当前终端的hangup信号的影响了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/09/shell_bg/" data-id="ckmleadmj005uskw2zki7fav4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shell/">Shell</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-pytorch_cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/25/pytorch_cheatsheet/" class="article-date">
+  <time datetime="2019-12-24T16:00:00.000Z" itemprop="datePublished">2019-12-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Tensor"><a href="#Tensor" class="headerlink" title="Tensor"></a>Tensor</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">x = torch.Tensor(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 构造一个未初始化的5*3的矩阵</span></span><br><span class="line">x = torch.rand(<span class="number">5</span>, <span class="number">3</span>)  <span class="comment"># 构造一个随机初始化的矩阵</span></span><br><span class="line">x <span class="comment"># 此处在notebook中输出x的值来查看具体的x内容</span></span><br><span class="line">x.size()</span><br><span class="line"></span><br><span class="line"><span class="comment">#<span class="doctag">NOTE:</span> torch.Size 事实上是一个tuple, 所以其支持相关的操作*</span></span><br><span class="line">y = torch.rand(<span class="number">5</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#此处 将两个同形矩阵相加有两种语法结构</span></span><br><span class="line">x + y <span class="comment"># 语法一</span></span><br><span class="line">torch.add(x, y) <span class="comment"># 语法二</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外输出tensor也有两种写法</span></span><br><span class="line">result = torch.Tensor(<span class="number">5</span>, <span class="number">3</span>) <span class="comment"># 语法一</span></span><br><span class="line">torch.add(x, y, out=result) <span class="comment"># 语法二</span></span><br><span class="line">y.add_(x) <span class="comment"># 将y与x相加，inplace</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 特别注明：任何可以改变tensor内容的操作都会在方法名后加一个下划线'_'</span></span><br><span class="line"><span class="comment"># 例如：x.copy_(y), x.t_(), 这俩都会改变x的值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#另外python中的切片操作也是资次的。</span></span><br><span class="line">x[:,<span class="number">1</span>] <span class="comment">#这一操作会输出x矩阵的第二列的所有值</span></span><br></pre></td></tr></table></figure>
+<h4 id="Tensor与numpy"><a href="#Tensor与numpy" class="headerlink" title="Tensor与numpy"></a>Tensor与numpy</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此处演示tensor和numpy数据结构的相互转换</span></span><br><span class="line">a = torch.ones(<span class="number">5</span>)</span><br><span class="line">b = a.numpy()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处演示当修改numpy数组之后,与之相关联的tensor也会相应的被修改</span></span><br><span class="line">a.add_(<span class="number">1</span>)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将numpy的Array转换为torch的Tensor</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.ones(<span class="number">5</span>)</span><br><span class="line">b = torch.from_numpy(a)</span><br><span class="line">np.add(a, <span class="number">1</span>, out=a)</span><br><span class="line">print(a)</span><br><span class="line">print(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另外除了CharTensor之外，所有的tensor都可以在CPU运算和GPU预算之间相互转换</span></span><br><span class="line"><span class="comment"># 使用CUDA函数来将Tensor移动到GPU上</span></span><br><span class="line"><span class="comment"># 当CUDA可用时会进行GPU的运算</span></span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    x = x.cuda()</span><br><span class="line">    y = y.cuda()</span><br><span class="line">    x + y</span><br></pre></td></tr></table></figure>
+<h4 id="Autograd"><a href="#Autograd" class="headerlink" title="Autograd"></a>Autograd</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">x = Variable(torch.ones(<span class="number">2</span>, <span class="number">2</span>), requires_grad = <span class="keyword">True</span>)</span><br><span class="line">y = x + <span class="number">2</span></span><br><span class="line">y.creator</span><br><span class="line"></span><br><span class="line"><span class="comment"># y 是作为一个操作的结果创建的因此y有一个creator</span></span><br><span class="line">z = y * y * <span class="number">3</span></span><br><span class="line">out = z.mean()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在我们来使用反向传播</span></span><br><span class="line">out.backward()</span><br><span class="line"></span><br><span class="line"><span class="comment"># out.backward()和操作out.backward(torch.Tensor([1.0]))是等价的</span></span><br><span class="line"><span class="comment"># 在此处输出 d(out)/dx</span></span><br><span class="line">x.grad</span><br></pre></td></tr></table></figure>
+<h4 id="Neural-Network"><a href="#Neural-Network" class="headerlink" title="Neural Network"></a>Neural Network</h4><ul>
+<li>定义一个有着可学习的参数（或者权重）的神经网络</li>
+<li>对着一个输入的数据集进行迭代:<ul>
+<li>用神经网络对输入进行处理</li>
+<li>计算代价值 (对输出值的修正到底有多少)</li>
+<li>将梯度传播回神经网络的参数中</li>
+<li>更新网络中的权重<ul>
+<li>通常使用简单的更新规则: weight = weight + learning_rate * gradient</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>定义网络<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LRModel</span><span class="params">(torch.nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        <span class="comment"># linear内置了参数初始化方法，此处无需显式指定</span></span><br><span class="line">        self.linear = torch.nn.Linear(<span class="number">2</span>, <span class="number">1</span>) <span class="comment"># 2 in, 1 out</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        y_pred = F.sigmoid(self.linear(x))</span><br><span class="line">        <span class="keyword">return</span> y_pred</span><br></pre></td></tr></table></figure></p>
+<p>仅仅需要定义一个forward函数就可以了，backward会自动地生成。<br>你可以在forward函数中使用所有的Tensor中的操作。<br>模型中可学习的参数会由net.parameters()返回。</p>
+<p>定义loss与optimizer<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">criterion = torch.nn.BCELoss()</span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure></p>
+<p>训练迭代<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">x_data = Variable(torch.Tensor(X))</span><br><span class="line">y_data = Variable(torch.Tensor(T))</span><br><span class="line"></span><br><span class="line">model = LRModel()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    <span class="comment"># Forward pass: Compute predicted y by passing x to the model</span></span><br><span class="line">    y_pred = model(x_data)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compute and print loss</span></span><br><span class="line">    loss = criterion(y_pred, y_data)</span><br><span class="line">    print(epoch, loss.data[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Zero gradients, perform a backward pass, and update the weights.</span></span><br><span class="line">    optimizer.zero_grad()</span><br><span class="line">    loss.backward()</span><br><span class="line">    optimizer.step()</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/12/25/pytorch_cheatsheet/" data-id="ckmleadm60053skw2guiba6zd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PyTorch/">PyTorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-deep_cxr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/05/deep_cxr/" class="article-date">
+  <time datetime="2019-12-04T16:00:00.000Z" itemprop="datePublished">2019-12-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/05/deep_cxr/">Deep CXR</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="0-Naive-Method"><a href="#0-Naive-Method" class="headerlink" title="0. Naive Method"></a>0. Naive Method</h3><ul>
+<li>categorical fields -&gt; one-hot encoding</li>
+<li>上面直接堆叠deep，deep一般是MLP，multi-layer perceptron</li>
+</ul>
+<h3 id="1-对高维稀疏特征进行embedding"><a href="#1-对高维稀疏特征进行embedding" class="headerlink" title="1. 对高维稀疏特征进行embedding"></a>1. 对高维稀疏特征进行embedding</h3><p>one-hotted features高维稀疏，这对LR可以勉强忍受，但对DNN计算开销太大，拖低了模型性能effectiveness &amp; efficiency。<br>对此，将各个field进行embedding，即将一个高维稀疏向量（one-hot），映射为一个低维稠密向量（real values）。</p>
+<h4 id="Deep-Crossing"><a href="#Deep-Crossing" class="headerlink" title="Deep Crossing"></a><a href="Deep Crossing Web-Scale Modeling without Manually Crafted Combinatorial Features.pdf">Deep Crossing</a></h4><ul>
+<li>Microsoft 2016</li>
+<li>embedding：通过dense，将各个稀疏域转化为低维稠密特征向量并concat在一起</li>
+<li>deep：5层残差网络（何恺明ResNet），避免梯度爆炸、消失</li>
+</ul>
+<h3 id="2-交叉特征与低维特征"><a href="#2-交叉特征与低维特征" class="headerlink" title="2. 交叉特征与低维特征"></a>2. 交叉特征与低维特征</h3><p>DNN的优势在于能够自动学得高抽象层次（high-level）的特征，这些特征在而CV、NLP中往往是非常有用的，因为CV、NLP往往解决的是human替代任务，即模型代替人工进行工作。<br>但CXR预估并不是一个human替代任务，因而除了DNN能够隐式学得的高抽象层次特征，还应该尝试向模型中引入一些其他的特征来提升模型性能。<br>引入点包括：1)交叉特征；2)低抽象层次特征。</p>
+<p>对于交叉特征，由于DNN的节点计算方式（对输入加权求和，再套一个非线性，不存在特征间相乘），对feature interactions并不能很好的描述。<br>为此，可以主动做特征交叉，补充到模型中，以增加模型对于特征间interactions的表达能力。<br>模型结构调整方式：生成的交叉特征，可以作为deep的input的补充，输入到deep中（串行结构）；也可以concat在deep旁边，与deep结果一起进入最终预测节点（并行结构）。</p>
+<p>对于低抽象层次特征，由于我们的CXR预估任务并不是只关注于高抽象层次，故模型不仅使用DNN的高抽象层次特征对应结果，还应该考虑引入低抽象层次特征，综合两种层次的特征来生成结果。<br>模型结构调整方式：低抽象层次特征，concat在deep的低抽象层次特征旁边，与一起进入最终预测节点（并行结构）。</p>
+<h4 id="2-1-引入FM对特征做embedding-描述feature-interactions"><a href="#2-1-引入FM对特征做embedding-描述feature-interactions" class="headerlink" title="2.1. 引入FM对特征做embedding [描述feature interactions]"></a>2.1. 引入FM对特征做embedding [描述feature interactions]</h4><ul>
+<li>FM的特异之处：<ul>
+<li>FM基于隐向量，可以学得数据集中出现次数较少、或根本未出现的特征组合</li>
+<li>使用FM进行embedding，尤其对于高维稀疏的one-hotted features，能通过2阶交叉特征的引入，增强模型的预测能力</li>
+<li>当然，FM的shortcomings也很明显：1）linear model；2）at most 2-order features</li>
+</ul>
+</li>
+</ul>
+<h4 id="FNN"><a href="#FNN" class="headerlink" title="FNN"></a><a href="%28FNN%29 Deep Learning over Multi-field Categorical Data – A Case Study on User Response Prediction.pdf">FNN</a></h4><ul>
+<li>2016</li>
+<li>pretrain一个基于Dense的FM，做embedding层，上面叠加deep<ul>
+<li>embedding层包含FM一阶、二阶部分（将u_units看做<script type="math/tex">1+k</script>，即1个一阶参数，u_units - 1个二阶参数）</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-在embedding和deep之间插入“特征交互描述”层-描述feature-interactions"><a href="#2-2-在embedding和deep之间插入“特征交互描述”层-描述feature-interactions" class="headerlink" title="2.2. 在embedding和deep之间插入“特征交互描述”层 [描述feature interactions]"></a>2.2. 在embedding和deep之间插入“特征交互描述”层 [描述feature interactions]</h4><p>我们知道基于dense做embedding、然后进行concat、然后上面堆叠deep，并不能描述feature interactions。<br>对此，在embedding和deep之间插入“特征交互描述”层，来专门描述feature interactions。</p>
+<h4 id="PNN"><a href="#PNN" class="headerlink" title="PNN"></a><a href="%28PNN%29 Product-based Neural Networks for User Response Prediction.pdf">PNN</a></h4><ul>
+<li>2016</li>
+<li>在embedding和deep之间加入了product layer进行不同field之间特征交叉</li>
+<li>使用inner product、outer product<ul>
+<li>inner product相当于引入了FM的内积部分</li>
+<li>outer product会得到一个矩阵，而非像inner product得到一个数。向后进入deep在一个unit中加权求和时，与一个数操作类似，只不过是对矩阵各个元素加权求和</li>
+<li>product得到的结果（一系列数值），同时concat一阶特征，作为deep输入</li>
+</ul>
+</li>
+<li>不是被动通过deep学习特征之间关系，而是强制通过product层引入field之间特征交叉</li>
+</ul>
+<h4 id="NFM"><a href="#NFM" class="headerlink" title="NFM"></a><a href="Neural Factorization Machines for Sparse Predictive Analytics.pdf">NFM</a></h4><ul>
+<li>2017</li>
+<li>NFM中使用：<script type="math/tex">y(\mathbf{x}) = w_0 + \sum_{i=1}^{n}w_ix_i + f(\mathbf{x})</script></li>
+<li><script type="math/tex">f(\mathbf{x})</script>，即文中所谓Bi-Interaction，本质上是一个pooling，对得到的embeddings进行了encode而非concat：<ul>
+<li>1）embedding层，隐向量<script type="math/tex">\times</script>feat_val（因为不只one-hot输入，还有real-value输入），获取embeddings<script type="math/tex">= [\mathbf{e_1}, \mathbf{e_2}, \mathbf{e_3}, ...]</script>；</li>
+<li>2）<script type="math/tex">\text{Bi-Interaction Sum Pooling} = \sum_{i=1}\sum_{j=i+1}\mathbf{e_i} \text{  element-wise product  } \mathbf{e_j}</script>，即“各种<script type="math/tex">\mathbf{e_i}, \mathbf{e_j}</script>组合的元素乘”的向量和，此结果shape与<script type="math/tex">\mathbf{e_i}</script>的shape相同，都是embedding_size</li>
+<li>这个结果encode了embedding space的2-order feature interactions，作为“将feature embeddings进行concat”的替代</li>
+<li>3）上面再堆叠deep</li>
+</ul>
+</li>
+<li>相较于FNN，NFM的网络结构中多了一个Bi-Interaction - sum pooling，形式上更像FM（但element-wise product后未将向量各元素累加，仍保留向量形式，所以还不是内积）</li>
+<li>相较于PNN，PNN也是不想直接将embeddings concat后输入到deep中，觉得会欠缺feature interactions，对此PNN的做法是各两个embeddings内积得到一个数之后，再将各个数concat在一起，再concat上一阶特征，输入到DNN中；而NFM则不是对各两个embeddings做内积，而是做元素乘，然后sum pooling</li>
+<li>相较于Wide &amp; Deep（或DeepFM）,NFM不通过joint一个Wide来引入cross features，而是在embedding与deep之间加一个Bi-Interaction pooling来描述特征交叉（in the low level）</li>
+<li>NFM更像FNN、PNN，但也可看成是下文Wide &amp; Deep的一种改进形式（因为一阶特征未进入deep，而是进入了最终结果层）</li>
+</ul>
+<h4 id="AFM"><a href="#AFM" class="headerlink" title="AFM"></a><a href="Attentional Factorization Machines Learning the Weight of Feature Interactions via Attention Networks.pdf">AFM</a></h4><ul>
+<li>2017</li>
+<li>AFM是在NFM基础上改的，作者中包含NFM的作者</li>
+<li>加入了attention机制，即，Pire-wise Interaction之后，根据<script type="math/tex">ij</script>组合不同，后续操作时分配不同的权重</li>
+<li>即在Interaction Layer中，sum pooling时，为每个“<script type="math/tex">\mathbf{e_i}, \mathbf{e_j}</script>组合的元素乘”分配一个权重，再做向量和。（此结果shape与<script type="math/tex">\mathbf{e_i}</script>的shape相同）</li>
+<li>这个attention weight是不好学习的：<script type="math/tex">n^2</script>数量级、有可能组合未出现过。对此参数的学习，单独使用一个所谓的attention network<ul>
+<li>attention network输入为各种“<script type="math/tex">\mathbf{e_i}, \mathbf{e_j}</script>组合的元素乘，输出维度为各组合数量的softmax。这样对于某个<script type="math/tex">i,j</script>，我们将该网络的结果<script type="math/tex">ij</script>项作为attention weight</li>
+</ul>
+</li>
+<li>Interaction Layer之后，原文的AFM没有再堆叠deep了</li>
+</ul>
+<h4 id="2-3-为deep-joint一个wide结构-同时考虑低抽象层次特征"><a href="#2-3-为deep-joint一个wide结构-同时考虑低抽象层次特征" class="headerlink" title="2.3. 为deep joint一个wide结构 [同时考虑低抽象层次特征]"></a>2.3. 为deep joint一个wide结构 [同时考虑低抽象层次特征]</h4><h4 id="Wide-amp-Deep"><a href="#Wide-amp-Deep" class="headerlink" title="Wide &amp; Deep"></a><a href="Wide &amp; Deep Learning for Recommender Systems.pdf">Wide &amp; Deep</a></h4><ul>
+<li>Google 2016</li>
+<li>Wide部分：直接对原始特征、交叉特征（人工选择）做linear</li>
+<li>Deep部分：先用Dense做embedding，然后上面叠加deep<ul>
+<li>Deep部分的参数使用随机初始化，未pretrain</li>
+</ul>
+</li>
+<li>joint train Wide部分和Deep部分，即，两部分做linear后，套一个sigmoid，作为结果，使用一个loss做优化<ul>
+<li>Wide部分本身就是linear，所以两部分做linear时不需要再乘一个权重，只给Deep部分结果乘一个权重即可</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-3-1-在wide中考虑特征交叉-同时考虑低抽象层次特征、描述feature-interactions"><a href="#2-3-1-在wide中考虑特征交叉-同时考虑低抽象层次特征、描述feature-interactions" class="headerlink" title="2.3.1. 在wide中考虑特征交叉 [同时考虑低抽象层次特征、描述feature interactions]"></a>2.3.1. 在wide中考虑特征交叉 [同时考虑低抽象层次特征、描述feature interactions]</h4><h4 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a><a href="DeepFM A Factorization-Machine based Neural Network for CTR Prediction.pdf">DeepFM</a></h4><ul>
+<li>Huawei 2017</li>
+<li>对Wide &amp; Deep引入FM进行优化</li>
+<li>最底层使用Dense<ul>
+<li>Wide部分：使用FM（包含一阶、二阶、常数项，Dense作为FM的二阶部分）的结果，作为低抽象层次特征</li>
+<li>Deep部分：使用Dense（FM的二阶部分）作为embedding层</li>
+<li>Dense、FM的参数使用随机初始化，未pretrain（若做pretrain，label其实与overall network的label相同，所以无需做pretrain，直接end-to-end训练）</li>
+</ul>
+</li>
+</ul>
+<h4 id="DCN"><a href="#DCN" class="headerlink" title="DCN"></a><a href="Deep &amp; Cross Network for Ad Click Predictions.pdf">DCN</a></h4><ul>
+<li>Google 2017</li>
+<li>Wide部分 -&gt; Cross部分：N层可显式的表示到N阶的特征交叉<ul>
+<li>每层为一个变换节点，为<script type="math/tex">x^{[l+1]} = w^{[l]}({x^{[0]}}^T x^{[l]}) + b^{[l]} + x^{[l]}</script></li>
+<li><script type="math/tex; mode=display">x^{[l]}\text{.shape} = (1, d)</script></li>
+<li><script type="math/tex">{x^{[0]}}^T x^{[l]}</script>是个矩阵，使得交叉特征阶数+1，<script type="math/tex">+ x^{[l]}</script>则保存了之前所有低阶交叉特征</li>
+<li>最后层的输出，相当于各阶交叉特征加权求和</li>
+</ul>
+</li>
+</ul>
+<h4 id="xDeepFM"><a href="#xDeepFM" class="headerlink" title="xDeepFM"></a><a href="xDeepFM Combining Explicit and Implicit Feature Interactions for Recommender Systems.pdf">xDeepFM</a></h4><ul>
+<li>Microsoft 2018</li>
+<li>对比其他<ul>
+<li>Wide &amp; Deep的deep结构中，将隐向量的各个bit进行交互。这是有一定问题的：这种交互是bit-wise描述的，它意识不到field隐向量的概念。并且在multi-hot的field中，同一隐向量内各个bit也会各自影响。这些与FM的初衷是不一致的。</li>
+<li>DeepFM的wide结构中，倒是引入了vector-wise的交互描述。但它只有2阶。</li>
+<li>DCN在wide结构中，同样引入了vector-wise的交互描述，并且阶数可由网络层数指定。但其只能学习某特定形式的高阶交互，并且也是bit-wise描述的。</li>
+</ul>
+</li>
+<li>xDeepFM的wide结构中，cross方式（Compressed Interaction Network，CIN）：<ul>
+<li>令<script type="math/tex">\mathbf{X}^k \in \mathbb{R}^{H_k \times D}</script>表示第<script type="math/tex">k</script>层的输出，其中<script type="math/tex">H_k</script>表示第<script type="math/tex">k</script>层的vector个数（n_units），vecor维度始终为<script type="math/tex">D</script>，保持和输入层一致（vector-wise操作）。具体地，第<script type="math/tex">H_k</script>层每个vector的计算方式为：</li>
+<li><script type="math/tex; mode=display">\mathbf{X}^k_{h,*} =  \sum^{H_{k-1}}_{i=1} \sum^{m}_{j=1} \mathbf{W}^{k,h}_{ij}(\mathbf{X}^{k-1}_{i,*} \circ \mathbf{X}^{0}_{j,*}) \in \mathbb{R}^{1 \times D}, ~~~~~~ where~~ 1 \le h \le H_k</script></li>
+<li>其中<script type="math/tex">\mathbf{W}^{k,h}  \in  \mathbb{R}^{H_{k-1} \ times m}</script>表示第<script type="math/tex">k</script>层的第<script type="math/tex">h</script>个vector（或者理解成DNN一层中的一个unit）的权重矩阵，<script type="math/tex">\circ</script>表示元素乘<ul>
+<li>其实就是：取前一层<script type="math/tex">\mathbf{X}^{k-1} \in \mathbb{R}^{H_{k-1} \times D}</script>中的<script type="math/tex">H_{k-1}</script>个vector，与输入层<script type="math/tex">\mathbf{X}^{0} \in \mathbb{R}^{m \times D}</script>中的<script type="math/tex">m</script>个vector，进行两两元素乘运算，得到<script type="math/tex">H_{k-1} \times m</script>个vector。然后<script type="math/tex">H_k</script>个unit有<script type="math/tex">H_k</script>个权重矩阵<script type="math/tex">\mathbf{W}</script>，每个unit中的<script type="math/tex">H_{k-1} \times m</script>个vector，乘以相应的权重矩阵后相加（加权求和）。这样，每个unit输出1个维度为<script type="math/tex">D</script>的vector，本层输出为<script type="math/tex">\mathbf{X}^{k} \in \mathbb{R}^{H_k \times D}</script></li>
+</ul>
+</li>
+<li>这样，在第<script type="math/tex">l</script>层，CIN只包含<script type="math/tex">l+1</script>阶的组合特征。最终，需要CIN将每层的中间结果都输出出来<ul>
+<li>sum pooling：<script type="math/tex">p_i^k = \sum_{i=1}^D \mathbf{X}_{i, j}^k</script>，即将第<script type="math/tex">k</script>层中，<script type="math/tex">H_k</script>个units中，各vector的bit进行累加。注意，这隐含着内积的思想。最终，对于该层，会得到<script type="math/tex">H_k</script>个数，作为一个vector<script type="math/tex">\mathbf{p}^k=[p_1^k, p_2^k, ..., p_{H_k}^k]</script></li>
+<li>最终，将各层<script type="math/tex">\mathbf{p}^k</script>concat在一起，作为CIN输出，（并且concat上raw，作为wide输出）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>concat上deep（MLP）的结果，作为最终预测层输入</li>
+</ul>
+<h3 id="3-加入attention机制"><a href="#3-加入attention机制" class="headerlink" title="3. 加入attention机制"></a>3. 加入attention机制</h3><h4 id="DIN"><a href="#DIN" class="headerlink" title="DIN"></a><a href="Deep Interest Network for Click-Through Rate Prediction.pdf">DIN</a></h4><ul>
+<li>Ali 2018</li>
+<li>对于“用户的历史商品列表”这个multi-hot特征，在embedding后得到不定个数的embeddings向量。通常做法是将这项向量sum pooling或avg pooling，然后concat到其他特征embeddings，输入给deep。进一步，在做sum pooling时引入weights，表现不同的历史兴趣item，重要性不同<ul>
+<li>在遇见sum pooling、avg pooling这种东西时，都可以考虑进一步引入weights</li>
+<li>如果只是加一个general weights，其描述的“不同item的重要程度”是固定的，不会区分场景。再进一步，对于不同candidate ad，可以让weights不同，即，对于不同的ad，商品embeddings的weights是不同的，然后再weighted sum pooling，获取基于历史信息的、用户对该商品的兴趣表达，即引入了attention机制</li>
+<li>理解一下，attention不仅仅是加weights，还需要对于不同的query，使用的是一组不同的weights（一个query对应一组weights）</li>
+<li>recall一下AFM，其实是在其设计的NFM的interaction layer中出现了sum pooling，就向其中进一步引入了weights，从而声称使用了attention机制（但其实并没有query的概念，也就没有为每个query生成不同的weights组的概念，仅是一个general的weightes进行sum pooling）</li>
+</ul>
+</li>
+<li>attention weights的计算：local activation unit<ul>
+<li>某item embedding（待weighted项）与ad embedding（query）进行element-wise product，然后concat两个embeddings，输入一层deep（输出未进行softmax，想描述weights的绝对差异）（u_units对齐embedding_size，保证weight能element-wise product上去）（end-to-end training）</li>
+</ul>
+</li>
+</ul>
+<h4 id="DIEN"><a href="#DIEN" class="headerlink" title="DIEN"></a><a href="Deep Interest Evolution Network for Click-Through Rate Prediction.pdf">DIEN</a></h4><ul>
+<li>Ali 2018</li>
+<li>本深度模型关注点，不同域之间的特征交互描述 -&gt; 用户兴趣表示</li>
+<li>对于“行为列表”这类特征，考虑时序，使用seq模型<ul>
+<li>不同于DIN中，用户行为列表是没有顺序的，故使用multi-hot</li>
+<li>对用户interest的representation，往往直接使用用户行为（embedding &amp; pooling）；DIEN尝试通过显示的用户行为，提取隐含的用户当前兴趣表示、及兴趣发展趋势</li>
+</ul>
+</li>
+<li>时序兴趣特征提取：<ul>
+<li>GRU，使用下一动作作为监督信号</li>
+<li>描述特征之间的影响</li>
+</ul>
+</li>
+<li>兴趣发展进程：<ul>
+<li>Attention Update GRU</li>
+<li>描述与target AD相关的interest</li>
+</ul>
+</li>
+</ul>
+<h4 id="DSIN"><a href="#DSIN" class="headerlink" title="[DSIN]"></a>[DSIN]</h4><ul>
+<li>Ali 2019</li>
+<li>以session为粒度</li>
+</ul>
+<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><p>xDeepFM<br>FiBiNet</p>
+<p>Behavior Sequence Transformer<br>Deep Spatio-Temporal Neural Networks for Click-Through Rate Prediction<br>ATRank: An Attention-Based User Behavior Modeling Framework for Recommendation</p>
+<p>AutoInt</p>
+<p>CNN系CCPM、FGCNN</p>
+<hr>
+<h3 id="4-多任务学习"><a href="#4-多任务学习" class="headerlink" title="4. 多任务学习"></a>4. 多任务学习</h3><p>通常来说，如果你发现你需要的不止一个损失函数，你就是在做多任务学习。</p>
+<ul>
+<li>MTL可以有效增加用于模型训练的样本量</li>
+<li>学到更好的特征表示、关系</li>
+<li>约束参数适应于各个子任务，降低过拟合风险</li>
+<li>其实感觉实际上更多是：1）为了获取更通用的特征表达，对各个任务都有利；2）单独某个任务比较困难，可能是样本不够，需要其他的任务带一带。</li>
+</ul>
+<h4 id="4-1-解决“训练数据空间”与“预测数据空间”不一致的问题"><a href="#4-1-解决“训练数据空间”与“预测数据空间”不一致的问题" class="headerlink" title="4.1. 解决“训练数据空间”与“预测数据空间”不一致的问题"></a>4.1. 解决“训练数据空间”与“预测数据空间”不一致的问题</h4><h4 id="ESMM"><a href="#ESMM" class="headerlink" title="ESMM"></a><a href="Entire Space Multi-Task Model An Effective Approach for Estimating Post-Click Conversion Rate.pdf">ESMM</a></h4><ul>
+<li>Ali 2018</li>
+<li>pCVR的问题：<strong>Sample Selection Bias</strong>，即pCVR训练基于点击数据，推理却基于曝光数据<ul>
+<li>现在想对pCVR使用全特征域（曝光数据）学习</li>
+</ul>
+</li>
+<li>分析：<script type="math/tex">\text{pCTCVR} = \text{pCTR} \times \text{pCVR}</script><ul>
+<li>其中，<script type="math/tex">\text{pCTCVR}</script>与<script type="math/tex">\text{pCTR}</script>是可以通过全特征域学习的</li>
+<li>故，可以引入<strong>多任务学习</strong>MTL，使用全域特征显示学习<script type="math/tex">\text{pCTCVR}</script>与<script type="math/tex">\text{pCTR}</script>，同时隐式学习<script type="math/tex">\text{pCVR}</script></li>
+</ul>
+</li>
+<li>模型关键：<ul>
+<li>一个<script type="math/tex">\text{pCVR}</script>网络、一个<script type="math/tex">\text{pCTR}</script>网络（网络结构为简单的embedding+MLP），结果相乘得到<script type="math/tex">\text{pCTCVR}</script></li>
+<li>loss精巧设计，显示的、joint训练<script type="math/tex">\text{pCTR}</script>与<script type="math/tex">\text{pCTCVR}</script>，这两部分都可以通过全域特征进行训练，一定程度的消除了Sample Selection Bias<script type="math/tex; mode=display">
+\begin{aligned}
+loss &= L_{pCTR} + L_{pCTCVR} \\
+&= L(\theta_{pCTR}, \theta_{pCVR}) \\
+&= \sum_{i=1}^{N}l(y_i,f(\mathbf{x}_i;\theta_{pCTR})) + \sum_{i=1}^{N}l(y_i\&z_i),f(\mathbf{x}_i;\theta_{pCTR})*f(\mathbf{x}_i;\theta_{pCVR}))
+\end{aligned}</script></li>
+<li>loss由两部分组成，即显示学习、joint训练的pCTR部分和pCTCVR部分。而pCVR只能隐式学习，因为1）loss中各任务应该是基于全域特征学习的；2）其负样本标注是有些问题的。在loss中，要保证label都是准的。所以，pCVR不适合基于全域特征，在loss中直接进行监督<ul>
+<li>pCVR使用全域特征，隐含了一个负样本标注的问题：“<strong>CVR预估到底要预估什么</strong>”，论文虽未明确提及，但理解这个问题才能真正理解CVR预估困境的本质。想象一个场景，一个item，由于某些原因，例如在feeds中的展示头图很丑，它被某个user点击的概率很低，但这个item内容本身完美符合这个user的偏好，若user点击进去，那么此item被user转化的概率极高。CVR预估模型，预估的正是这个转化概率，<strong>它与CTR没有绝对的关系，很多人有一个先入为主的认知，即若user对某item的点击概率很低，则user对这个item的转化概率也肯定低，这是不成立的。更准确的说，CVR预估模型的本质，不是预测“item被点击，然后被转化”的概率（CTCVR），而是“假设item被点击，那么它被转化”的概率（CVR）。</strong>这就是不能直接使用全部样本训练CVR模型的原因，因为咱们压根不知道这个信息：那些unclicked的item，假设他们被user点击了，它们是否会被转化。<strong>如果直接使用0作为它们的label，会很大程度上误导CVR模型的学习。</strong></li>
+</ul>
+</li>
+<li>注意，loss虽然是对pCTR部分和pCTCVR部分的描述，但其参数还是来自于pCTR网络和pCVR网络的，即<script type="math/tex">\theta_{pCTR}, \theta_{pCVR}</script></li>
+<li><script type="math/tex">y</script>是点击label，<script type="math/tex">z</script>是转化label，<script type="math/tex">l</script>是单独一个网络的loss函数（交叉熵），<script type="math/tex">f</script>是模型函数</li>
+<li>此外，两个网络共享embedding，joint学习，这也解决了转化正样本稀疏的问题，<strong>Data Sparsity</strong><ul>
+<li>当然，pCVR网络的训练、推理，都使用全域特征了哦。即，隐式学得了一个输入全域特征，预测<script type="math/tex">pCVR</script>的子网络</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>为什么使用乘法形式，而不使用除法形式，即<script type="math/tex">\text{pCVR} = \frac{\text{pCTCVR}}{\text{pCTR}}</script>？<ul>
+<li>因为<script type="math/tex">pCTR</script>数值往往较小，容易造成数值溢出</li>
+</ul>
+</li>
+</ul>
+<h4 id="ESM2"><a href="#ESM2" class="headerlink" title="ESM2"></a>ESM2</h4><h4 id="DUPN"><a href="#DUPN" class="headerlink" title="DUPN"></a>DUPN</h4><h4 id="Modeling-Task-Relationships-in-Multi-task-Learning-with-Multi-gate-Mixture-of-Experts"><a href="#Modeling-Task-Relationships-in-Multi-task-Learning-with-Multi-gate-Mixture-of-Experts" class="headerlink" title="Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts"></a>Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/12/05/deep_cxr/" data-id="ckmleadjr000yskw28fujd0xo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-negative_sampling_ctr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/12/02/negative_sampling_ctr/" class="article-date">
+  <time datetime="2019-12-01T16:00:00.000Z" itemprop="datePublished">2019-12-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="负采样"><a href="#负采样" class="headerlink" title="负采样"></a>负采样</h2><p>CTR预估中，负类（label==0）的样本数往往远大于正类。<br>为了解决样本不均匀的问题，往往对负类进行采样，就是所谓的负采样。</p>
+<p>但需要注意的是，负采样后的结果，会使得测试集中CTR被高估：</p>
+<ul>
+<li>相当于将训练集中一部分真实的负例排除掉了，使得模型获取的信息不足，并不能准确地识别出（这些）负例，从而在测试集中将一部分负类向正类预测，即CTR被（整体）高估。</li>
+</ul>
+<p>这在CTR预估中是有问题的，涉及到“保序”与“保距”的概念：</p>
+<ul>
+<li>假设我们有这么一个序列“牛 500KG,羊100KG，兔子 5kg”，我们有一个模型，输入这些动物之后，根据体重排序，并且出一个体重的预估值。如果模型只是采用AUC这个指标的话，那么我们模型输出“牛 100kg，羊 20 kg，兔子1kg”，这样的结果是没问题的，但是这只是做到了保序，但是他们之间的差值变小了，没有做到保距。</li>
+<li>在CTR预估中，比如我们有这么一些广告，A的实际点击率是10%，B的实际点击率是5%，C的实际点击率是1%，但是A B C的点击收益分别是2，5，10，如果我们的模型没有做到保距，那么输出的预估值是5%，1%，0.5%，这样的话AUC的排序指标是满足了，但是实际收益并不是最优的。</li>
+</ul>
+<p>因此需要对负采样后的CTR预估值进行校准，使得整体CTR距离真实值越近越好。</p>
+<h2 id="修正方法"><a href="#修正方法" class="headerlink" title="修正方法"></a>修正方法</h2><script type="math/tex; mode=display">
+q=\frac{p}{p+(1-p)/w}</script><p>$p$为负采样后预测值，$w$为采样率$[0,1]$，$q$为修正后的预测概率。</p>
+<p><strong>推导</strong>：</p>
+<p>假设输入向量$x$，预测标签$C_k$，那么可以用条件概率表示，即计算$p(C_k|x)$的概率。根据贝叶斯公式，条件概率：</p>
+<script type="math/tex; mode=display">
+p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}</script><p>上面是没有做重采样时，得到概率。<br>当做重采样时，只是改变了标签$C_k$的先验概率$p(C_k)$，即将$p(C_k)$变为$p′(C_k)$（$C_k$的先验分布改变）。而$p(x)$是条件$x$发生的概率，不会变化。$p(x|C_k)$是后验概率，也不会变化。（假设均匀采样，不改变样本中正样本分布）</p>
+<p>对负样本进行抽样，比例为$w$，则$n’(0)=n(0)\times w$，$n’(1)=n(1)$，则先验概率$p(1)$与$p′(1)$的关系为：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p(1) = \frac{n(1)}{n(1)+n(0)} &= \frac{n’(1)}{n’(1)+n’(0)/ w} \\
+&= \frac{\frac{n’(1)}{n’(1)+n’(0)}}{\frac{n’(1)}{n’(1)+n’(0)}+\frac{n’(0)}{n’(1)+n’(0)}/w} \\
+&= \frac{p’(1)}{p’(1)+(1-p’(1))/w}
+\end{align*}</script><p>由此，若想修正$p(C_k|x)$，则：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+p(1|x) = \frac{p(x|1)p(1)}{p(x)} &= \frac{p(x|1)p’(1)p(1)}{p(x)p’(1)} \\
+&= p’(1|x)\frac{p(1)}{p’(1)} \\
+&= p’(1|x)\frac{\frac{p’(1)}{p’(1)+(1-p’(1))/w}}{p’(1)} \\
+&= p’(1|x)\frac{1}{p’(1)+(1-p’(1))/w}
+\end{align*}</script><p>由于预测时并不能获知正样本比例$p’(1)$，则令$p’(1) \approx p’(1|x)$<br>群体比例由单体概率估算</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/12/02/negative_sampling_ctr/" data-id="ckmleadlh003lskw2j3bdhxwc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Data-Analysis/">Data Analysis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Program-Development/">Program Development</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Technique-Research/">Technique Research</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Computational-Advertising/">Computational Advertising</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hyperspectral/">Hyperspectral</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/KPI-Check/">KPI Check</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model/">Model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Model-Futsion/">Model Futsion</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PyTorch/">PyTorch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SQL/">SQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Scala/">Scala</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spark/">Spark</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Underlying/">Underlying</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Algorithm/" style="font-size: 17.14px;">Algorithm</a> <a href="/tags/Computational-Advertising/" style="font-size: 10px;">Computational Advertising</a> <a href="/tags/Credit-Scoring/" style="font-size: 10px;">Credit Scoring</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/Hyperspectral/" style="font-size: 10px;">Hyperspectral</a> <a href="/tags/Java/" style="font-size: 14.29px;">Java</a> <a href="/tags/KPI-Check/" style="font-size: 10px;">KPI Check</a> <a href="/tags/Model/" style="font-size: 18.57px;">Model</a> <a href="/tags/Model-Futsion/" style="font-size: 10px;">Model Futsion</a> <a href="/tags/PyTorch/" style="font-size: 10px;">PyTorch</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/SQL/" style="font-size: 10px;">SQL</a> <a href="/tags/Scala/" style="font-size: 11.43px;">Scala</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Spark/" style="font-size: 15.71px;">Spark</a> <a href="/tags/Tensorflow/" style="font-size: 12.86px;">Tensorflow</a> <a href="/tags/Underlying/" style="font-size: 10px;">Underlying</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/07/06/python_list_dict_set/">Python - list、dict、set常用操作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/09/shell_bg/">Shell后台运行</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/25/pytorch_cheatsheet/">PyTorch Cheatsheet</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/05/deep_cxr/">Deep CXR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/02/negative_sampling_ctr/">CTR预估中负采样修正</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 lichenyu<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav>
+    <!-- totop start -->
+<div id="totop">
+<a title="totop"><img src="/img/scrollup.png"/></a>
+</div>
+<!-- totop end -->
+
+
+<script src="//cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
