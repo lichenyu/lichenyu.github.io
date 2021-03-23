@@ -19,9 +19,10 @@ tags:
 `git fetch <remote_repo_name>`
 - （本地）重命名远端仓库
 `git remote rename <old_name> <new_name>`
+- （本地）重设远端仓库URL
+`git remote set-url <remote_repo_name> <new_url>`
 - （本地）删除远端仓库
 `git remote rm <remote_repo_name>`
-
 ---
 
 - 列出本地分支
