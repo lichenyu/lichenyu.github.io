@@ -71,50 +71,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-spark_filter_dataframe" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/12/spark_filter_dataframe/" class="article-date">
-  <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/spark_filter_dataframe/">Spark - 过滤DataFrame</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用when"><a href="#使用when" class="headerlink" title="使用when"></a>使用when</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterDataframe</span></span>(df: <span class="type">DataFrame</span>, featureCols: <span class="type">Array</span>[<span class="type">String</span>],</span><br><span class="line">                            diskrwInfo: (<span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>),</span><br><span class="line">                            timestampInfo: (<span class="type">String</span>, <span class="type">Int</span>)): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">var</span> newDf = df.withColumn(<span class="string">"invalidFlag"</span>, lit(<span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 特征不能都接近0</span></span><br><span class="line">    <span class="keyword">for</span> (c &lt;- featureCols) &#123;</span><br><span class="line">        newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(c) &gt; <span class="number">0.001</span>, <span class="literal">false</span>)</span><br><span class="line">                                                .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 磁盘读写之和不能小于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(diskrwInfo._1) + col(diskrwInfo._2) &lt; diskrwInfo._3, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 时间戳不能早于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(timestampInfo._1) % (<span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>) &lt; timestampInfo._2 * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    newDf = newDf.filter(<span class="string">"invalidFlag = false"</span>).drop(col(<span class="string">"invalidFlag"</span>))</span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用UDF"><a href="#使用UDF" class="headerlink" title="使用UDF"></a>使用UDF</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterOutliers</span></span>(featureVecDf: <span class="type">DataFrame</span>, quantileThrArr: <span class="type">Array</span>[<span class="type">Double</span>]): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> filterUdf = udf((featureVec: <span class="type">Vector</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> (i &lt;- quantileThrArr.indices) &#123;</span><br><span class="line">            <span class="keyword">if</span> (featureVec(i) &gt; quantileThrArr(i))</span><br><span class="line">                flag = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        flag</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">val</span> newDf = featureVecDf.withColumn(<span class="string">"flag"</span>, filterUdf(col($(featureVecCol))))</span><br><span class="line">            .filter(<span class="string">"flag = false"</span>)</span><br><span class="line">            .drop(col(<span class="string">"flag"</span>))</span><br><span class="line"></span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用filter，多条件"><a href="#使用filter，多条件" class="headerlink" title="使用filter，多条件"></a>使用filter，多条件</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">featureDf = featureDf.filter(featureList.map(f =&gt; col(f) &gt;= <span class="number">0.001</span>).reduce(_ or _))</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_filter_dataframe/" data-id="ckmmr2evs005rg0w2celyp8pp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-spark_dataframe_udf_returns_multi_cols" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/12/spark_dataframe_udf_returns_multi_cols/" class="article-date">
@@ -153,7 +109,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_dataframe_udf_returns_multi_cols/" data-id="ckmmr2evv005yg0w2ui3mld7p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_dataframe_udf_returns_multi_cols/" data-id="ckmmr3xzs0066ycw2m76wz6b5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -165,9 +121,9 @@
 
 
   
-    <article id="post-spark_split_dataframe_vector_column" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-spark_filter_dataframe" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/11/12/spark_split_dataframe_vector_column/" class="article-date">
+    <a href="/2018/11/12/spark_filter_dataframe/" class="article-date">
   <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
 </a>
     
@@ -183,7 +139,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/spark_split_dataframe_vector_column/">Spark - 将DataFrame中的Vector col切分</a>
+      <a class="article-title" href="/2018/11/12/spark_filter_dataframe/">Spark - 过滤DataFrame</a>
     </h1>
   
 
@@ -191,12 +147,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">splitVectorCol</span></span>(df: <span class="type">DataFrame</span>, append: <span class="type">Boolean</span> = <span class="literal">false</span>): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">lazy</span> <span class="keyword">val</span> first = df.first()(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">val</span> numAttrs = first.asInstanceOf[<span class="type">Vector</span>].size</span><br><span class="line">    <span class="keyword">val</span> attrs = <span class="type">Array</span>.tabulate(numAttrs)(n =&gt; <span class="string">"feature_"</span> + n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> vecToArray = udf((featureVec: <span class="type">Vector</span>) =&gt; featureVec.toArray)</span><br><span class="line">    <span class="keyword">val</span> dfArr = df.withColumn(<span class="string">"featureArr"</span>, vecToArray(col(df.schema.head.name)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a SQL-like expression using the array</span></span><br><span class="line">    <span class="keyword">val</span> sqlExpr = attrs.zipWithIndex.map &#123; <span class="keyword">case</span> (alias, idx) =&gt; col(<span class="string">"featureArr"</span>).getItem(idx).as(alias) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Extract Elements from dfArr</span></span><br><span class="line">    <span class="keyword">if</span> (append)</span><br><span class="line">        dfArr.select(col(<span class="string">"*"</span>) +: sqlExpr : _*)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        dfArr.select(sqlExpr: _*)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        <h2 id="使用when"><a href="#使用when" class="headerlink" title="使用when"></a>使用when</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterDataframe</span></span>(df: <span class="type">DataFrame</span>, featureCols: <span class="type">Array</span>[<span class="type">String</span>],</span><br><span class="line">                            diskrwInfo: (<span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>),</span><br><span class="line">                            timestampInfo: (<span class="type">String</span>, <span class="type">Int</span>)): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">var</span> newDf = df.withColumn(<span class="string">"invalidFlag"</span>, lit(<span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 特征不能都接近0</span></span><br><span class="line">    <span class="keyword">for</span> (c &lt;- featureCols) &#123;</span><br><span class="line">        newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(c) &gt; <span class="number">0.001</span>, <span class="literal">false</span>)</span><br><span class="line">                                                .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 磁盘读写之和不能小于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(diskrwInfo._1) + col(diskrwInfo._2) &lt; diskrwInfo._3, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 时间戳不能早于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(timestampInfo._1) % (<span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>) &lt; timestampInfo._2 * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    newDf = newDf.filter(<span class="string">"invalidFlag = false"</span>).drop(col(<span class="string">"invalidFlag"</span>))</span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用UDF"><a href="#使用UDF" class="headerlink" title="使用UDF"></a>使用UDF</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterOutliers</span></span>(featureVecDf: <span class="type">DataFrame</span>, quantileThrArr: <span class="type">Array</span>[<span class="type">Double</span>]): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> filterUdf = udf((featureVec: <span class="type">Vector</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> (i &lt;- quantileThrArr.indices) &#123;</span><br><span class="line">            <span class="keyword">if</span> (featureVec(i) &gt; quantileThrArr(i))</span><br><span class="line">                flag = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        flag</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">val</span> newDf = featureVecDf.withColumn(<span class="string">"flag"</span>, filterUdf(col($(featureVecCol))))</span><br><span class="line">            .filter(<span class="string">"flag = false"</span>)</span><br><span class="line">            .drop(col(<span class="string">"flag"</span>))</span><br><span class="line"></span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用filter，多条件"><a href="#使用filter，多条件" class="headerlink" title="使用filter，多条件"></a>使用filter，多条件</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">featureDf = featureDf.filter(featureList.map(f =&gt; col(f) &gt;= <span class="number">0.001</span>).reduce(_ or _))</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_split_dataframe_vector_column/" data-id="ckmmr2evy0065g0w2r3v80o4x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_filter_dataframe/" data-id="ckmmr3xzt006aycw21h11ub0t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -239,7 +196,50 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_split_get_udf_dynamically/" data-id="ckmmr2evz0068g0w2vji55mgg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_split_get_udf_dynamically/" data-id="ckmmr3xzy006kycw262pe6ihy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-spark_split_dataframe_vector_column" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/12/spark_split_dataframe_vector_column/" class="article-date">
+  <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/12/spark_split_dataframe_vector_column/">Spark - 将DataFrame中的Vector col切分</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">splitVectorCol</span></span>(df: <span class="type">DataFrame</span>, append: <span class="type">Boolean</span> = <span class="literal">false</span>): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">lazy</span> <span class="keyword">val</span> first = df.first()(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">val</span> numAttrs = first.asInstanceOf[<span class="type">Vector</span>].size</span><br><span class="line">    <span class="keyword">val</span> attrs = <span class="type">Array</span>.tabulate(numAttrs)(n =&gt; <span class="string">"feature_"</span> + n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> vecToArray = udf((featureVec: <span class="type">Vector</span>) =&gt; featureVec.toArray)</span><br><span class="line">    <span class="keyword">val</span> dfArr = df.withColumn(<span class="string">"featureArr"</span>, vecToArray(col(df.schema.head.name)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a SQL-like expression using the array</span></span><br><span class="line">    <span class="keyword">val</span> sqlExpr = attrs.zipWithIndex.map &#123; <span class="keyword">case</span> (alias, idx) =&gt; col(<span class="string">"featureArr"</span>).getItem(idx).as(alias) &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Extract Elements from dfArr</span></span><br><span class="line">    <span class="keyword">if</span> (append)</span><br><span class="line">        dfArr.select(col(<span class="string">"*"</span>) +: sqlExpr : _*)</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        dfArr.select(sqlExpr: _*)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/12/spark_split_dataframe_vector_column/" data-id="ckmmr3xzz006nycw26r5o9323" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -285,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/29/chi2_test_diagnose/" data-id="ckmmr2et5000dg0w2mj3vc5fm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/29/chi2_test_diagnose/" data-id="ckmmr3xwh000bycw2mipz9t9n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
