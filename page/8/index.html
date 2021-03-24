@@ -106,7 +106,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/29/python_dir/" data-id="ckmmqjhok004kc8w21jfau6ha" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/29/python_dir/" data-id="ckmmr2euv003qg0w29dbfznlc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -149,7 +149,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/29/python_xmeans/" data-id="ckmmqjhp0005hc8w2daei0q7f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/29/python_xmeans/" data-id="ckmmr2ev8004og0w2l8zjxw79" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -198,7 +198,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/18/next_power_of_two/" data-id="ckmmqjhoe0046c8w24crm6j06" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/18/next_power_of_two/" data-id="ckmmr2eun0038g0w263u7cl5b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
@@ -249,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/15/fft_convolution/" data-id="ckmmqjhmo001cc8w2uazk449i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/15/fft_convolution/" data-id="ckmmr2etw001ng0w2n699muzq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
@@ -287,7 +287,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>以下根据统计定义，暂不考虑概率论定义。<br>$A<em>{t} = A</em>{1}, A<em>{2}, …, A</em>{n}$表示一组数据（时间序列）。</p>
+        <p>以下根据统计定义，暂不考虑概率论定义。<br>$A_{t} = A_{1}, A_{2}, …, A_{n}$表示一组数据（时间序列）。</p>
 <h2 id="均值"><a href="#均值" class="headerlink" title="均值"></a>均值</h2><p>平均数</p>
 <span>$$\begin{aligned}
 \mu = E(A_{t}) = \frac{\sum_{i=1}^{n}A_{i}}{n}
@@ -310,7 +310,7 @@
 r = cov(A_{t}, B_{t}) = E((A_{t} - \mu)(B_{t} - \nu)) = \frac{\sum_{i=1}^{n}(A_{i} - \mu )(B_{i} - \nu)}{n}
 \end{aligned}$$</span><!-- Has MathJax -->
 <p><strong>协方差中除以n和除以n-1的区别，与方差相同</strong></p>
-<p>上述为二维数据（两组）。若数据为多维，则需要计算多个协方差。使用矩阵来组织这些协方差，给出协方差矩阵的定义$c<em>{i,j} = cov(Dom</em>{i}, Dom_{j})$。</p>
+<p>上述为二维数据（两组）。若数据为多维，则需要计算多个协方差。使用矩阵来组织这些协方差，给出协方差矩阵的定义$c_{i,j} = cov(Dom_{i}, Dom_{j})$。</p>
 <h2 id="相关系数"><a href="#相关系数" class="headerlink" title="相关系数"></a>相关系数</h2><p><em>皮尔逊相关系数</em><br>将协方差去除量纲影响，进行标准化。</p>
 <span>$$\begin{aligned}
 \rho = \frac{cov(A_{t}, B_{t})}{\sigma_{A} \sigma_{B}}
@@ -321,7 +321,7 @@ r = cov(A_{t}, B_{t}) = E((A_{t} - \mu)(B_{t} - \nu)) = \frac{\sum_{i=1}^{n}(A_{
 &amp;r_{k} = cov(A_{t}, A_{t + k}) = E((A_{t} - \mu)(A_{t + k} - \mu)) = \frac{\sum_{i=1}^{n - k}(A_{i} - \mu )(A_{i + k} - \mu)}{n - k}\\
 &amp;k = 0,1, ..., n-1
 \end{aligned}$$</span><!-- Has MathJax -->
-<p>平移后，参与自协方差计算的数据长度为$n-k$。<br>将$k$视为变量，则$r<em>{k}， k = 0,1, …, n-1$为<strong>自协方差函数</strong>。<br>当$k=0$时，$r</em>{0} = \sigma^{2}$。</p>
+<p>平移后，参与自协方差计算的数据长度为$n-k$。<br>将$k$视为变量，则$r_{k}， k = 0,1, …, n-1$为<strong>自协方差函数</strong>。<br>当$k=0$时，$r_{0} = \sigma^{2}$。</p>
 <h2 id="自相关系数"><a href="#自相关系数" class="headerlink" title="自相关系数"></a>自相关系数</h2><p>将自协方差去除量纲影响，进行标准化。</p>
 <span>$$\begin{aligned}
 &amp;\rho_{k} = \frac{cov(A_{t}, A_{t + k})}{\sigma^{2}} = \frac{r_{k}}{r_{0}}\\
@@ -355,7 +355,7 @@ r_{k} = \frac{\sum_{i=0}^{n-k-1} y(i)\bar{y}(i+k)}{n-k}, k = 0,1, ..., n-1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/11/autocorrelation/" data-id="ckmmqjhm2000bc8w2bybviach" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/11/autocorrelation/" data-id="ckmmr2et10007g0w2kouqsl57" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>

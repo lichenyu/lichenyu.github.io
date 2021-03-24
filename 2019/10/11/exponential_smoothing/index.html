@@ -124,14 +124,14 @@ s_i &= \alpha x_i + (1 - \alpha) s_{i-1} \\
 \end{align*}</script><p>可以看出，在指数平滑法中，所有先前的观测值都对当前的平滑值产生了影响，但它们所起的作用随着参数$\alpha$的幂的增大而逐渐减小。即，那些相对较早的观测值所起的作用相对较小。因此，称$\alpha$为记忆“衰减因子”可能更合适：因为$\alpha$的值越大，模型对历史数据“遗忘”的就越快。从某种程度来说，指数平滑法就像是拥有无限记忆（平滑窗口足够大）且权值呈指数级递减的移动平均法。</p>
 <p>一次指数平滑所得的计算结果可以在数据集及范围之外进行扩展，因此也就可以用来进行预测。<br>预测时：</p>
 <script type="math/tex; mode=display">
-x_{i+1} = s_i</script><p>$s<em>i$是最后一个已经算出来的平滑值。$x</em>{i+1}$代表预测的下一个值。<br>即，将当前时刻的平滑值，作为对下一时刻值的预测。</p>
-<h2 id="二次指数平滑"><a href="#二次指数平滑" class="headerlink" title="二次指数平滑"></a>二次指数平滑</h2><p>在介绍二次指数平滑前介绍一下趋势的概念。<br>趋势，或者说斜率的定义很简单：$b = \Delta y / \Delta x$，其中$\Delta x$为两点在X坐标轴的变化值，而对于一个序列而言，相邻两个点$\Delta x = 1$，因此$b = \Delta y = y<em>x - y</em>{x-1}$。<br>除了用点的增长量表示，也可以用二者的比值表示趋势。比如可以说一个物品比另一个贵20块钱，等价地也可以说贵了5%，前者称为可加的（addtive），后者称为可乘的（multiplicative）。在实际应用中，可乘的模型预测稳定性更佳，但是为了便于理解，我们在这以可加的模型为例进行推导。</p>
+x_{i+1} = s_i</script><p>$s_i$是最后一个已经算出来的平滑值。$x_{i+1}$代表预测的下一个值。<br>即，将当前时刻的平滑值，作为对下一时刻值的预测。</p>
+<h2 id="二次指数平滑"><a href="#二次指数平滑" class="headerlink" title="二次指数平滑"></a>二次指数平滑</h2><p>在介绍二次指数平滑前介绍一下趋势的概念。<br>趋势，或者说斜率的定义很简单：$b = \Delta y / \Delta x$，其中$\Delta x$为两点在X坐标轴的变化值，而对于一个序列而言，相邻两个点$\Delta x = 1$，因此$b = \Delta y = y_x - y_{x-1}$。<br>除了用点的增长量表示，也可以用二者的比值表示趋势。比如可以说一个物品比另一个贵20块钱，等价地也可以说贵了5%，前者称为可加的（addtive），后者称为可乘的（multiplicative）。在实际应用中，可乘的模型预测稳定性更佳，但是为了便于理解，我们在这以可加的模型为例进行推导。</p>
 <p>指数平滑考虑的是数据的baseline，二次指数平滑在此基础上将趋势作为一个额外考量，保留了趋势的详细信息。即我们保留并更新两个量的状态：平滑后的信号和平滑后的趋势。公式如下：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 s_i &= \alpha x_i + (1 - \alpha) (s_{i-1} + t_{i-1}) \\
 t_i &= \beta (s_i - s_{i-1}) + (1 - \beta)t_{i-1}
-\end{align*}</script><p>第二个等式描述了平滑后的趋势。当前的未平滑趋势，是当前平滑值（$s<em>i$）和上一个平滑值（$s</em>{i-1}$）的差；也就是说，当前趋势告诉我们，在上一个时间步长中，平滑信号改变了多少。要想使趋势平滑，我们用一次指数平滑法对趋势进行处理，并使用参数$\beta$（地位类似$\alpha$）。</p>
+\end{align*}</script><p>第二个等式描述了平滑后的趋势。当前的未平滑趋势，是当前平滑值（$s_i$）和上一个平滑值（$s_{i-1}$）的差；也就是说，当前趋势告诉我们，在上一个时间步长中，平滑信号改变了多少。要想使趋势平滑，我们用一次指数平滑法对趋势进行处理，并使用参数$\beta$（地位类似$\alpha$）。</p>
 <p>为获得平滑信号，我们像上次那样进行一次混合，但要同时考虑到上一个平滑信号及趋势。假设单个步长时间内保持着上一个趋势（增加一些），那么第一个等式的最后那项就可以对当前平滑信号进行估计。</p>
 <p>预测时：</p>
 <script type="math/tex; mode=display">
@@ -153,7 +153,7 @@ x_{i+h} = s_i + ht_i + p_{i-L+(h \text{ mod } L)}</script><p><em>上述公式为
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/11/exponential_smoothing/" data-id="ckmmqjhmp001ec8w2scakiqxj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/10/11/exponential_smoothing/" data-id="ckmmr2ett001gg0w2xkrweo5n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>

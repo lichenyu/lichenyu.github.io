@@ -102,7 +102,7 @@
       
         <h2 id="weight-of-evidence-WOE"><a href="#weight-of-evidence-WOE" class="headerlink" title="weight of evidence (WOE)"></a>weight of evidence (WOE)</h2><p>woe编码可对标于dummy变量，对一个<strong>类别型</strong>特征进行<strong>编码</strong>，转换成一个数值型变量。<br>例如，在credit scoring的case中，label是一个binary的值（Good，Bad）。则，对于某一个类别型特征（或数值型特征分箱后），其各类别的woe可定义为：</p>
 <script type="math/tex; mode=display">
-WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac{\#G_{i}}{\#B_{i}}}{\frac{\#G}{\#B}}}</script><p>其中，$\#G<em>{i}$为该类别Good数量，$\#G$为总Good数量，$\#B</em>{i}$为该类别Bad数量，$\#B$为总Bad数量。<br>可以看出，$\ln$中的值在描述“本类别的G、B分布比例，与总体的G、B分布比例，是否相似”。<br>若本类别的分布极为特殊，则woe值较大，表明本类别具有较强的区分性；若本类别的分布与总体基本一致，则woe近似为0，表明本类别区分性较弱。</p>
+WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac{\#G_{i}}{\#B_{i}}}{\frac{\#G}{\#B}}}</script><p>其中，$\#G_{i}$为该类别Good数量，$\#G$为总Good数量，$\#B_{i}$为该类别Bad数量，$\#B$为总Bad数量。<br>可以看出，$\ln$中的值在描述“本类别的G、B分布比例，与总体的G、B分布比例，是否相似”。<br>若本类别的分布极为特殊，则woe值较大，表明本类别具有较强的区分性；若本类别的分布与总体基本一致，则woe近似为0，表明本类别区分性较弱。</p>
 <p><strong>基于WOE分箱：</strong></p>
 <ul>
 <li>For continuous independent variables: First, create 10 or 20 bins (categories / groups) for a continuous independent variable and then combine categories with similar WOE values and replace categories with WOE values. Use WOE values rather than input values in your model.</li>
@@ -111,7 +111,7 @@ WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac
 <p><strong>基于WOE分箱-指导规则：</strong></p>
 <ul>
 <li>Each category (bin) should have at least 5% of the observations.</li>
-<li>Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G<em>{i} + 0.5$, $\#B</em>{i} + 0.5$</li>
+<li>Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G_{i} + 0.5$, $\#B_{i} + 0.5$</li>
 <li>The WOE should be distinct for each category. Similar groups should be aggregated.</li>
 <li>For logistic regression, the WOE should be monotonic, i.e. either growing or decreasing with the groupings. (It is because logistic regression assumes there must be a linear relationship between logit function and independent variable.) 最好满足</li>
 <li>Missing values are binned separately. 若未做缺失值预处理</li>
@@ -134,7 +134,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmmqjhq3007gc8w2bn9umarp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmmr2ewd0079g0w2x4zqz19m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>

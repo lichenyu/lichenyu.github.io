@@ -7,18 +7,18 @@
   
   <title>FM embedding | ChenyuShuxin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="FM模型Factorization Machines 一般的线性模型：  \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i线性模型压根没有考虑特征间的关联。  为了表述特征间的相关性，我们采用多项式模型。 $xi$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w{ij}$即为我们学习的参数  Po">
+  <meta name="description" content="FM模型Factorization Machines 一般的线性模型：  \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i线性模型压根没有考虑特征间的关联。  为了表述特征间的相关性，我们采用多项式模型。 $x_i$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w_{ij}$即为我们学习的参数">
 <meta name="keywords" content="Model">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FM embedding">
 <meta property="og:url" content="http://yoursite.com/2019/11/08/fm_embedding/index.html">
 <meta property="og:site_name" content="ChenyuShuxin">
-<meta property="og:description" content="FM模型Factorization Machines 一般的线性模型：  \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i线性模型压根没有考虑特征间的关联。  为了表述特征间的相关性，我们采用多项式模型。 $xi$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w{ij}$即为我们学习的参数  Po">
+<meta property="og:description" content="FM模型Factorization Machines 一般的线性模型：  \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i线性模型压根没有考虑特征间的关联。  为了表述特征间的相关性，我们采用多项式模型。 $x_i$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w_{ij}$即为我们学习的参数">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-11-19T06:37:45.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FM embedding">
-<meta name="twitter:description" content="FM模型Factorization Machines 一般的线性模型：  \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i线性模型压根没有考虑特征间的关联。  为了表述特征间的相关性，我们采用多项式模型。 $xi$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w{ij}$即为我们学习的参数  Po">
+<meta name="twitter:description" content="FM模型Factorization Machines 一般的线性模型：  \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i线性模型压根没有考虑特征间的关联。  为了表述特征间的相关性，我们采用多项式模型。 $x_i$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w_{ij}$即为我们学习的参数">
   
     <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
   
@@ -106,25 +106,25 @@
 \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i</script><p>线性模型压根没有考虑特征间的关联。</p>
 <ul>
 <li>为了表述特征间的相关性，我们采用多项式模型。</li>
-<li>$x<em>i$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w</em>{ij}$即为我们学习的参数</li>
+<li>$x_i$为第$i$个特征，$x_ix_j$（相乘，得到一个数）表示特征$x_i$和$x_j$的特征组合，其系数$w_{ij}$即为我们学习的参数</li>
 </ul>
 <p><strong>Poly2模型</strong>：</p>
 <script type="math/tex; mode=display">
 \hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d w_{ij} x_i x_j</script><p>但这个模型有些问题：</p>
 <ul>
 <li>参数的个数是非常的多。$d$为特征数量（注意，one-hot后每个为单独一类，因此特征数量大大增加），对于参数数量：一次项有$d+1$个，二次项（即组合特征的参数）共有$\frac{d(d−1)}{2}$个。</li>
-<li>参数与参数之间被认为彼此独立，在<strong>稀疏场景下</strong>（one-hot）二次项的训练是很困难的。因为要训练$w<em>{ij}$，需要有大量的$x_i$和$x_j$都非零的样本（只有非零组合才有意义）。而样本本身是稀疏的，满足$x_i x_j \ne 0$的样本会非常少，样本少则难以估计参数$w</em>{ij}$，训练出来容易导致模型的过拟合。</li>
+<li>参数与参数之间被认为彼此独立，在<strong>稀疏场景下</strong>（one-hot）二次项的训练是很困难的。因为要训练$w_{ij}$，需要有大量的$x_i$和$x_j$都非零的样本（只有非零组合才有意义）。而样本本身是稀疏的，满足$x_i x_j \ne 0$的样本会非常少，样本少则难以估计参数$w_{ij}$，训练出来容易导致模型的过拟合。</li>
 </ul>
-<p>为解决这些问题，提出了FM模型。<br>上文Poly2模型，对于不同的特征对$x<em>i,x_j$和$x_i,x_k$认为是完全独立的，对参数$w</em>{ij}$和$w_{ik}$分别进行训练。<br>而实际上并非如此，不同的特征之间进行组合并非完全独立。</p>
+<p>为解决这些问题，提出了FM模型。<br>上文Poly2模型，对于不同的特征对$x_i,x_j$和$x_i,x_k$认为是完全独立的，对参数$w_{ij}$和$w_{ik}$分别进行训练。<br>而实际上并非如此，不同的特征之间进行组合并非完全独立。</p>
 <ul>
-<li>因此，对所有的$i$、$j$求$w<em>{ij}$，也就是一个矩阵$W</em>{ij}$时（$shape=(d,d)$），可以分解成两个矩阵相乘$\mathbf{V}^T\mathbf{V}$（$shape=(d,k)*(k,d)$）。</li>
+<li>因此，对所有的$i$、$j$求$w_{ij}$，也就是一个矩阵$W_{ij}$时（$shape=(d,d)$），可以分解成两个矩阵相乘$\mathbf{V}^T\mathbf{V}$（$shape=(d,k)*(k,d)$）。</li>
 <li>这样，在求某个$w_{ij}$时，可以分解成两个向量内积$(\mathbf{v}_i \cdot \mathbf{v}_j)$。其中，$\mathbf{v}_i$作为特征$i$的隐向量，就是$\mathbf{V}$的第$i$列，是对特征$i$的描述（可理解成类似专用于求二次项时$x_i$的权重），长度为$k$。</li>
 <li>换句话说，一个（one-hot后布尔型）特征$i$，对应一个隐向量$\mathbf{v}_i$。</li>
 </ul>
 <p>怎么解决上述问题的？<br>1）只学隐向量，参数少；2）对于几乎不出现或者很少出现的$i,j$组合，可以通过包含$i$和包含$j$的其他组合的数据，学到隐向量$\mathbf{v}_i$、$\mathbf{v}_j$就够了，反正计算时直接使用隐向量内积</p>
 <p><strong>FM模型</strong>：</p>
 <script type="math/tex; mode=display">
-\hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d ( \mathbf{v}_i \cdot \mathbf{v}_j ) x_i x_j</script><p>隐向量长度为$k\ll d$。$(\mathbf{v}<em>i \cdot \mathbf{v}_j)$为内积，其乘积为原来的$w</em>{ij}$，即$w<em>{ij} = ( \mathbf{v}_i \cdot \mathbf{v}_j ) = \sum</em>{t=1}^kv<em>{i,t} \cdot v</em>{j,t}$<br>二次项参数个数减少为$kd$个，$d$为特征数量（one-hot每个为一类），$k$为隐向量长度。</p>
+\hat y(\mathbf{x}) = w_0+ \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d ( \mathbf{v}_i \cdot \mathbf{v}_j ) x_i x_j</script><p>隐向量长度为$k\ll d$。$(\mathbf{v}_i \cdot \mathbf{v}_j)$为内积，其乘积为原来的$w_{ij}$，即$w_{ij} = ( \mathbf{v}_i \cdot \mathbf{v}_j ) = \sum_{t=1}^kv_{i,t} \cdot v_{j,t}$<br>二次项参数个数减少为$kd$个，$d$为特征数量（one-hot每个为一类），$k$为隐向量长度。</p>
 <p><strong>FFM模型</strong>：</p>
 <script type="math/tex; mode=display">
 \hat y(\mathbf{x}) = w_0 + \sum_{i=1}^d w_i x_i + \sum_{i=1}^d \sum_{j=i+1}^d (\mathbf{v}_{i, f_j} \cdot \mathbf{v}_{j, f_i}) x_i x_j</script><p>FM模型不区分$x_i,x_j$组合和$x_k,x_j$组合中$x_j$的区别，集，使用同一个隐向量$\mathbf{v}_j$来对应特征$x_j$，与不同的$x_i$、$x_k$相乘。<br>而FFM则认为，对于特征$x_j$的隐向量，计算二次项系数时，对于不同的两种field组合，应该使用（各自）不同field的隐向量。<br>这样一来，若field有$f$个，则每个特征提供的隐向量就应该有$f$个（对应相乘特征所属field有$f$个）（而FM中只有1个哦，不区分field）。<br>而对于二次项参数数量，FFM模型相当于比FM模型，多了$f$倍，$f \times kd$。</p>
@@ -142,7 +142,7 @@ w_i \qquad \mathbf{v}_i \qquad \text{for all }i\text{ in } d,\quad x_i \ne 0</sc
 </li>
 </ul>
 <p>所以，对于一个one-hot，或者说对于一个field，特征维度从“类别数量”降至$k$。</p>
-<p>即，一组同一个field的特征，对于该field的参数矩阵$\mathbf{V<em>{this_field}}$只取一列。$\mathbf{V} = [\mathbf{V</em>{field1}}, \mathbf{V<em>{field2}}, \mathbf{V</em>{field3}}, …]$<br>我们看到，降维是以field为粒度的，所以这也是后文NN结构中，对同一个field专用一个FC连接的原因。</p>
+<p>即，一组同一个field的特征，对于该field的参数矩阵$\mathbf{V_{this_field}}$只取一列。$\mathbf{V} = [\mathbf{V_{field1}}, \mathbf{V_{field2}}, \mathbf{V_{field3}}, …]$<br>我们看到，降维是以field为粒度的，所以这也是后文NN结构中，对同一个field专用一个FC连接的原因。</p>
 <p><strong>FM中二次项求算方法</strong>：</p>
 <p>对$d^2$种组合，求算$k$长度的内积，复杂度为$O(kd^2)$<br>下面方法，可以将复杂度降低到$O(kd)$</p>
 <script type="math/tex; mode=display">
@@ -155,8 +155,8 @@ w_i \qquad \mathbf{v}_i \qquad \text{for all }i\text{ in } d,\quad x_i \ne 0</sc
 \end{align*}</script><p>定义前向网络计算方式时，使用这种方法</p>
 <h2 id="利用NN的FM-embedding"><a href="#利用NN的FM-embedding" class="headerlink" title="利用NN的FM embedding"></a>利用NN的FM embedding</h2><p>对每个field，连接一个（只对本field的）FC层，神经元数量即为$k$隐向量长度。<br>一个field，对应其下one-hot的多个特征，即，这些特征使用了一个FC层。<br>值得注意的是，即使各个field的维度（one-hot转化出的特征的数量）是不一样的，但是它们embedding后长度均为$k$。</p>
 <ul>
-<li>这样做是因为，本层的参数$W$（$shape=(k,\text{n<em>one-hot_features}))$）相当于上文的$\mathbf{V</em>{this_field}}$</li>
-<li>区分各个field，是为了利用one-hot的特性，由仅有1个“1”从$\mathbf{V<em>{this_field}}$只取出<strong>一个</strong>隐向量（“1”所在的位置，指定选哪列）（否则所有$d$个特征连接同一个FC层，会有多个“1”，会从$\mathbf{V} = [\mathbf{V</em>{field1}}, \mathbf{V<em>{field2}}, \mathbf{V</em>{field3}}, …]$中取出多个隐向量，并各元素加在一起）（但如果同field中就是有多个“1”，不是one-hot，那就确实需要同field中取多个隐向量，按各元素加在一起）</li>
+<li>这样做是因为，本层的参数$W$（$shape=(k,\text{n_one-hot_features}))$）相当于上文的$\mathbf{V_{this_field}}$</li>
+<li>区分各个field，是为了利用one-hot的特性，由仅有1个“1”从$\mathbf{V_{this_field}}$只取出<strong>一个</strong>隐向量（“1”所在的位置，指定选哪列）（否则所有$d$个特征连接同一个FC层，会有多个“1”，会从$\mathbf{V} = [\mathbf{V_{field1}}, \mathbf{V_{field2}}, \mathbf{V_{field3}}, …]$中取出多个隐向量，并各元素加在一起）（但如果同field中就是有多个“1”，不是one-hot，那就确实需要同field中取多个隐向量，按各元素加在一起）</li>
 <li>此外，也是避免全局全连接，造成参数数量太多的问题。</li>
 </ul>
 <p><strong>怎么训练</strong>：<br>按FM公式，求预测值；数据中有真实值；梯度下降求模型参数<br>EM embedding时，可以锁或不锁embedding层的参数</p>
@@ -164,7 +164,7 @@ w_i \qquad \mathbf{v}_i \qquad \text{for all }i\text{ in } d,\quad x_i \ne 0</sc
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/08/fm_embedding/" data-id="ckmmqjhms001lc8w2412qat3d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/08/fm_embedding/" data-id="ckmmr2ety001rg0w2mex4iwz0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

@@ -134,9 +134,9 @@ w_{3,1} & w_{3,2} & w_{3,3}
 <p><strong>图像$n \times n$，filter $f \times f$，padding $p$，步长$s$，则输出维度为：$\left \lfloor \frac{n+2p-f}{s} + 1 \right \rfloor$</strong></p>
 <p><strong>multiple filters卷积</strong></p>
 <ul>
-<li>维度：$(n \times n \times n<em>{c}) * (f \times f \times n</em>{c})$ —&gt; $((n - f + 1) \times (n - f + 1) \times n<em>{f})$，其中$n</em>{c}$为chanel数，$n_{f}$为卷积filter数<ul>
+<li>维度：$(n \times n \times n_{c}) * (f \times f \times n_{c})$ —&gt; $((n - f + 1) \times (n - f + 1) \times n_{f})$，其中$n_{c}$为chanel数，$n_{f}$为卷积filter数<ul>
 <li>使用一个$f \times f \times n_{c}$卷积，得到$((n - f + 1) \times (n - f + 1))$</li>
-<li>使用$n<em>{f}$个$f \times f \times n</em>{c}$卷积，将结果堆叠，得到$((n - f + 1) \times (n - f + 1) \times n_{f})$</li>
+<li>使用$n_{f}$个$f \times f \times n_{c}$卷积，将结果堆叠，得到$((n - f + 1) \times (n - f + 1) \times n_{f})$</li>
 </ul>
 </li>
 </ul>
@@ -152,7 +152,7 @@ w_{3,1} & w_{3,2} & w_{3,3}
 <p>可知关系</p>
 <ul>
 <li>$n^{[l]} = \left \lfloor \frac{n^{[l-1]}+2p^{[l]}-f^{[l]}}{s^{[l]}} + 1 \right \rfloor$</li>
-<li>$n<em>{c}^{[l]}$：本层filter数量（$n</em>{c}^{[0]}$原始图像chanel数）</li>
+<li>$n_{c}^{[l]}$：本层filter数量（$n_{c}^{[0]}$原始图像chanel数）</li>
 <li>本层filter的维度：$f^{[l]} \times f^{[l]} \times n_{c}^{[l-1]}$</li>
 </ul>
 <p><strong>activation</strong></p>
@@ -191,7 +191,7 @@ a^{[l+2]} = g(z^{[l+1]} + a^{[l]})</script><h3 id="1-times-1-conv"><a href="#1-t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmmqjhme000sc8w225eb4gs9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmmr2eth000xg0w2v2kqftwt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

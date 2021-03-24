@@ -162,13 +162,13 @@
 <p><strong>Q值的更新</strong>：</p>
 <script type="math/tex; mode=display">
 Q(S,a) := (1-\alpha) \times Q(S,a) + \alpha \times [R(S,a) + \gamma \max_{a_i}Q(S', a_i)]</script><p>其中等号$Q(S,a)$为旧值，$\alpha$为学习速率（learning rate），$\gamma$为折扣因子（discount factor）。根据公式可以看出，<br>学习速率$\alpha$越大，保留之前训练的效果就越少。<br>折扣因子$\gamma$越大，$\max_{a_i}Q(S’, a_i)$所起到的作用就越大。</p>
-<p>但$\max<em>{a_i}Q(S’, a_i)$指什么呢？<br>小鸟在对状态进行更新时，会关心到眼前利益$R(S, a)$，和记忆中的利益$\max</em>{a<em>i}Q(S’, a_i)$。<br>$\max</em>{a<em>i}Q(S’, a_i)$是记忆中的利益，即小鸟记忆中新位置$S’$能给出的最大效用值。<br>如果小鸟在过去的游戏中于位置$S’$的某个动作上吃过甜头（例如选择了某个动作之后获得了50的奖赏），这个公式就可以让它提早地得知这个消息，以便使下回再通过位置$S$时选择正确的动作继续进入这个后续吃甜头的位置$S’$。<br>可以看出，$\gamma$越大，小鸟就会越重视“后续利益的以往经验”$\max</em>{a_i}Q(S’, a_i)$，$\gamma$越小，小鸟只重视“眼前利益”$R(S, a)$。</p>
+<p>但$\max_{a_i}Q(S’, a_i)$指什么呢？<br>小鸟在对状态进行更新时，会关心到眼前利益$R(S, a)$，和记忆中的利益$\max_{a_i}Q(S’, a_i)$。<br>$\max_{a_i}Q(S’, a_i)$是记忆中的利益，即小鸟记忆中新位置$S’$能给出的最大效用值。<br>如果小鸟在过去的游戏中于位置$S’$的某个动作上吃过甜头（例如选择了某个动作之后获得了50的奖赏），这个公式就可以让它提早地得知这个消息，以便使下回再通过位置$S$时选择正确的动作继续进入这个后续吃甜头的位置$S’$。<br>可以看出，$\gamma$越大，小鸟就会越重视“后续利益的以往经验”$\max_{a_i}Q(S’, a_i)$，$\gamma$越小，小鸟只重视“眼前利益”$R(S, a)$。</p>
 <p>$R(S, a)$由训练时交互获取，$\alpha$、$\gamma$为超参，$Q(S,a)$为学到的模型参数。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/rl_q_learning/" data-id="ckmmqjhp6005rc8w2bjsbgwes" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/rl_q_learning/" data-id="ckmmr2evd004xg0w20fdnn8fi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

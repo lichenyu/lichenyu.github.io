@@ -71,6 +71,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-spark_filter_dataframe" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/12/spark_filter_dataframe/" class="article-date">
+  <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/12/spark_filter_dataframe/">Spark - 过滤DataFrame</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="使用when"><a href="#使用when" class="headerlink" title="使用when"></a>使用when</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterDataframe</span></span>(df: <span class="type">DataFrame</span>, featureCols: <span class="type">Array</span>[<span class="type">String</span>],</span><br><span class="line">                            diskrwInfo: (<span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>),</span><br><span class="line">                            timestampInfo: (<span class="type">String</span>, <span class="type">Int</span>)): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">var</span> newDf = df.withColumn(<span class="string">"invalidFlag"</span>, lit(<span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 特征不能都接近0</span></span><br><span class="line">    <span class="keyword">for</span> (c &lt;- featureCols) &#123;</span><br><span class="line">        newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(c) &gt; <span class="number">0.001</span>, <span class="literal">false</span>)</span><br><span class="line">                                                .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 磁盘读写之和不能小于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(diskrwInfo._1) + col(diskrwInfo._2) &lt; diskrwInfo._3, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 时间戳不能早于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(timestampInfo._1) % (<span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>) &lt; timestampInfo._2 * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    newDf = newDf.filter(<span class="string">"invalidFlag = false"</span>).drop(col(<span class="string">"invalidFlag"</span>))</span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用UDF"><a href="#使用UDF" class="headerlink" title="使用UDF"></a>使用UDF</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterOutliers</span></span>(featureVecDf: <span class="type">DataFrame</span>, quantileThrArr: <span class="type">Array</span>[<span class="type">Double</span>]): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> filterUdf = udf((featureVec: <span class="type">Vector</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> (i &lt;- quantileThrArr.indices) &#123;</span><br><span class="line">            <span class="keyword">if</span> (featureVec(i) &gt; quantileThrArr(i))</span><br><span class="line">                flag = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        flag</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">val</span> newDf = featureVecDf.withColumn(<span class="string">"flag"</span>, filterUdf(col($(featureVecCol))))</span><br><span class="line">            .filter(<span class="string">"flag = false"</span>)</span><br><span class="line">            .drop(col(<span class="string">"flag"</span>))</span><br><span class="line"></span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用filter，多条件"><a href="#使用filter，多条件" class="headerlink" title="使用filter，多条件"></a>使用filter，多条件</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">featureDf = featureDf.filter(featureList.map(f =&gt; col(f) &gt;= <span class="number">0.001</span>).reduce(_ or _))</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/12/spark_filter_dataframe/" data-id="ckmmr2evs005rg0w2celyp8pp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-spark_dataframe_udf_returns_multi_cols" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/12/spark_dataframe_udf_returns_multi_cols/" class="article-date">
@@ -109,51 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_dataframe_udf_returns_multi_cols/" data-id="ckmmqjhpj006fc8w25ueud1x8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-spark_filter_dataframe" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/12/spark_filter_dataframe/" class="article-date">
-  <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/spark_filter_dataframe/">Spark - 过滤DataFrame</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="使用when"><a href="#使用when" class="headerlink" title="使用when"></a>使用when</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterDataframe</span></span>(df: <span class="type">DataFrame</span>, featureCols: <span class="type">Array</span>[<span class="type">String</span>],</span><br><span class="line">                            diskrwInfo: (<span class="type">String</span>, <span class="type">String</span>, <span class="type">Double</span>),</span><br><span class="line">                            timestampInfo: (<span class="type">String</span>, <span class="type">Int</span>)): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">var</span> newDf = df.withColumn(<span class="string">"invalidFlag"</span>, lit(<span class="literal">true</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 特征不能都接近0</span></span><br><span class="line">    <span class="keyword">for</span> (c &lt;- featureCols) &#123;</span><br><span class="line">        newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(c) &gt; <span class="number">0.001</span>, <span class="literal">false</span>)</span><br><span class="line">                                                .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 磁盘读写之和不能小于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(diskrwInfo._1) + col(diskrwInfo._2) &lt; diskrwInfo._3, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 时间戳不能早于阈值</span></span><br><span class="line">    newDf = newDf.withColumn(<span class="string">"invalidFlag"</span>, when(col(timestampInfo._1) % (<span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>) &lt; timestampInfo._2 * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="literal">true</span>)</span><br><span class="line">                                            .otherwise(col(<span class="string">"invalidFlag"</span>)))</span><br><span class="line"></span><br><span class="line">    newDf = newDf.filter(<span class="string">"invalidFlag = false"</span>).drop(col(<span class="string">"invalidFlag"</span>))</span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用UDF"><a href="#使用UDF" class="headerlink" title="使用UDF"></a>使用UDF</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filterOutliers</span></span>(featureVecDf: <span class="type">DataFrame</span>, quantileThrArr: <span class="type">Array</span>[<span class="type">Double</span>]): <span class="type">DataFrame</span> = &#123;</span><br><span class="line">    <span class="keyword">val</span> filterUdf = udf((featureVec: <span class="type">Vector</span>) =&gt; &#123;</span><br><span class="line">        <span class="keyword">var</span> flag = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">for</span> (i &lt;- quantileThrArr.indices) &#123;</span><br><span class="line">            <span class="keyword">if</span> (featureVec(i) &gt; quantileThrArr(i))</span><br><span class="line">                flag = <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">        flag</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">val</span> newDf = featureVecDf.withColumn(<span class="string">"flag"</span>, filterUdf(col($(featureVecCol))))</span><br><span class="line">            .filter(<span class="string">"flag = false"</span>)</span><br><span class="line">            .drop(col(<span class="string">"flag"</span>))</span><br><span class="line"></span><br><span class="line">    newDf</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用filter，多条件"><a href="#使用filter，多条件" class="headerlink" title="使用filter，多条件"></a>使用filter，多条件</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">featureDf = featureDf.filter(featureList.map(f =&gt; col(f) &gt;= <span class="number">0.001</span>).reduce(_ or _))</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_filter_dataframe/" data-id="ckmmqjhpq006qc8w2yqg48hqj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_dataframe_udf_returns_multi_cols/" data-id="ckmmr2evv005yg0w2ui3mld7p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -196,7 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_split_dataframe_vector_column/" data-id="ckmmqjhpr006tc8w2rfnaqy74" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_split_dataframe_vector_column/" data-id="ckmmr2evy0065g0w2r3v80o4x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -239,7 +239,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_split_get_udf_dynamically/" data-id="ckmmqjhpu006zc8w240gebvn1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_split_get_udf_dynamically/" data-id="ckmmr2evz0068g0w2vji55mgg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -279,13 +279,13 @@
       
         <p>卡方检验常用于检查某序列是否属于某分布。<br>计算（整体）卡方值，如果卡方值较大，则认为不属于同一分布。<br><span>$$\begin{aligned}
 \chi^{2} = \sum \frac{(A-E)^{2}}{E} = \sum_{i=1}^{k}\frac{(A_{i}-E_{i})^{2}}{E_{i}}
-\end{aligned}$$</span><!-- Has MathJax --><br>其中，$A<em>{i}$为各点（指标）出现频次，$E</em>{i}$为期望。</p>
+\end{aligned}$$</span><!-- Has MathJax --><br>其中，$A_{i}$为各点（指标）出现频次，$E_{i}$为期望。</p>
 <p>检验两序列是否来自同一分布的常用场景为：一个序列为训练集累加获取的基线序列（因为是对分布情况的分析，累加即可无需平均）；而另一个序列为待检验的测试序列。<br>期望使用两序列频次求和后平均来计算。<br>对各点求算两序列的卡方值（之和），较大的点为异常指标点。<br>也可直接对序列的所有点卡方值累加，比较各点卡方值之和，如果检测序列的各点sum值较大，则认为检测序列整体上分布于训练模板不同。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc_chi2_value</span><span class="params">(data)</span>:</span></span><br><span class="line">    S = data.values.sum()</span><br><span class="line">    <span class="comment"># SA = data.iloc[:, 0].sum()</span></span><br><span class="line">    <span class="comment"># SB = data.iloc[:, 1].sum()</span></span><br><span class="line">    <span class="comment"># A、B出现错误码总数</span></span><br><span class="line">    SA, SB = data.sum()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># A、B出现错误码总数比例</span></span><br><span class="line">    PA = SA / (S * <span class="number">1.0</span>)</span><br><span class="line">    PB = SB / (S * <span class="number">1.0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 各错误码出现总数list</span></span><br><span class="line">    Si = data.sum(axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># A、B各错误码出现总数预期</span></span><br><span class="line">    EAi = Si * PA</span><br><span class="line">    EBi = Si * PB</span><br><span class="line"></span><br><span class="line">    E = np.hstack((EAi.values.reshape(EAi.shape[<span class="number">0</span>], <span class="number">1</span>), EBi.values.reshape(EBi.shape[<span class="number">0</span>], <span class="number">1</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对A、B各点计算卡方值</span></span><br><span class="line">    chis = (data - E) * (data - E) / E</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 各个错误码</span></span><br><span class="line">    CHIi = np.nansum(chis, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    chi_values = pd.DataFrame(CHIi, columns=[<span class="string">"value"</span>], index=data.index)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chi_values</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chi2</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, topk=<span class="number">10</span>)</span>:</span></span><br><span class="line">        self.topk = topk</span><br><span class="line">        self.base_value = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    the base matrix.</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">    data: one column dataframe</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        self.base_value = data</span><br><span class="line"></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    the data matrix</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">    data: one column dataframe</span></span><br><span class="line"><span class="string">    return the chi2 values for each sample.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        ch_matrix = pd.concat([self.base_value, data], axis=<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> calc_chi2_value(ch_matrix)</span><br><span class="line"></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">      the data matrix</span></span><br><span class="line"><span class="string">  </span></span><br><span class="line"><span class="string">      data: one column dataframe</span></span><br><span class="line"><span class="string">      return the chi2 values for each sample and the index of the topk</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict_topk</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        chi_values = self.predict(data)</span><br><span class="line">        ranks = chi_values[<span class="string">'value'</span>].rank(ascending=<span class="keyword">False</span>)</span><br><span class="line">        topk_index = ranks &lt;= self.topk</span><br><span class="line">        <span class="keyword">return</span> chi_values, topk_index</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    df = pd.DataFrame(np.arange(<span class="number">20</span>).reshape((<span class="number">10</span>, <span class="number">2</span>)))</span><br><span class="line"></span><br><span class="line">    chi2 = Chi2(<span class="number">2</span>)</span><br><span class="line">    chi2.train(pd.DataFrame([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]))</span><br><span class="line"></span><br><span class="line">    chi_values, ranks = chi2.predict_topk(pd.DataFrame([<span class="number">12</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>]))</span><br><span class="line">    print(chi_values)</span><br><span class="line">    print(ranks)</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/29/chi2_test_diagnose/" data-id="ckmmqjhlz0006c8w2w6wuuknl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/29/chi2_test_diagnose/" data-id="ckmmr2et5000dg0w2mj3vc5fm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>

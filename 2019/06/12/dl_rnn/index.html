@@ -7,18 +7,18 @@
   
   <title>RNN | ChenyuShuxin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T{x} \rangle}$，长度为$T{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输出长">
+  <meta name="description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T_{x} \rangle}$，长度为$T_{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输">
 <meta name="keywords" content="Model">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RNN">
 <meta property="og:url" content="http://yoursite.com/2019/06/12/dl_rnn/index.html">
 <meta property="og:site_name" content="ChenyuShuxin">
-<meta property="og:description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T{x} \rangle}$，长度为$T{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输出长">
+<meta property="og:description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T_{x} \rangle}$，长度为$T_{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RNN">
-<meta name="twitter:description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T{x} \rangle}$，长度为$T{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输出长">
+<meta name="twitter:description" content="序列数据一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T_{x} \rangle}$，长度为$T_{x}$  $x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示  RNN结构输入输">
   
     <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
   
@@ -100,7 +100,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="序列数据"><a href="#序列数据" class="headerlink" title="序列数据"></a>序列数据</h2><p>一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T<em>{x} \rangle}$，长度为$T</em>{x}$</p>
+        <h2 id="序列数据"><a href="#序列数据" class="headerlink" title="序列数据"></a>序列数据</h2><p>一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T_{x} \rangle}$，长度为$T_{x}$</p>
 <ul>
 <li>$x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示</li>
 </ul>
@@ -109,7 +109,7 @@
 a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\
 \hat{y}^{\langle t \rangle} = g_{2}(W_{y}a^{\langle t \rangle} + b_{y})</script><ul>
 <li>parameters第一个下标，表示该p是用于计算谁的系数；第二个下标，表示该p是谁前面的系数</li>
-<li>$W<em>{a}$为$W</em>{aa},W_{ax}$横向拼接；$[a^{\langle t-1 \rangle},x^{\langle t \rangle}]$为$a^{\langle t-1 \rangle},x^{\langle t \rangle}$纵向拼接</li>
+<li>$W_{a}$为$W_{aa},W_{ax}$横向拼接；$[a^{\langle t-1 \rangle},x^{\langle t \rangle}]$为$a^{\langle t-1 \rangle},x^{\langle t \rangle}$纵向拼接</li>
 <li>相当于$x^{\langle t \rangle}$位于输入层，$a^{\langle t \rangle}$位于（一层）隐藏层，$\hat{y}^{\langle t \rangle}$位于输出层</li>
 </ul>
 <p>一些其他结构的RNN包括：</p>
@@ -147,10 +147,10 @@ a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t
 <hr>
 <p>而<strong>GRU</strong>，引入记忆细胞$c^{\langle t \rangle}$，相当于$a^{\langle t \rangle}$<br>由此，关键在于通过$c^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}$</p>
 <ul>
-<li>若按naive计算，$\tilde{c}^{\langle t \rangle} = g<em>{1}(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b<em>{c}) = tanh(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$</li>
+<li>若按naive计算，$\tilde{c}^{\langle t \rangle} = g_{1}(W_{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) = tanh(W_{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$</li>
 <li>或者直接透传，即本层不进行计算，直接输出$c^{\langle t-1 \rangle}$</li>
 </ul>
-<p>进一步定义一个门，update gate, $\Gamma<em>{u} = \sigma(W</em>{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$</p>
+<p>进一步定义一个门，update gate, $\Gamma_{u} = \sigma(W_{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$</p>
 <ul>
 <li>由于使用sigmoid，$\Gamma_{u}$的值，大多数情形下，或者极为接近0，或者极为接近1</li>
 <li>$\Gamma_{u}$决定使用按naive计算（遗忘），还是直接透传（记忆）</li>
@@ -183,11 +183,11 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
 </ul>
 <h2 id="双向RNN"><a href="#双向RNN" class="headerlink" title="双向RNN"></a>双向RNN</h2><ul>
 <li>$a^{\langle t \rangle}$分为$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$</li>
-<li>先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T<em>{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T</em>{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$<ul>
+<li>先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T_{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T_{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$<ul>
 <li>可将初始化$\overrightarrow{a}^{\langle 0 \rangle}$和$\overrightarrow{a}^{\langle T_{x}+1 \rangle}$都设为0</li>
 </ul>
 </li>
-<li>$\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W<em>{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b</em>{y}$）</li>
+<li>$\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W_{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b_{y}$）</li>
 </ul>
 <h2 id="Deep-RNN"><a href="#Deep-RNN" class="headerlink" title="Deep RNN"></a>Deep RNN</h2><ul>
 <li>隐藏层有多层，注意Deep RNN的隐藏层是要引入了前一时刻的activation的！<ul>
@@ -200,7 +200,7 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmmqjhmm0018c8w2rqrzn14n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmmr2etn0019g0w2y89zlgz1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

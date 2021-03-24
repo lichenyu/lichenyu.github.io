@@ -206,13 +206,13 @@
 Score &= A + B \times \ln(\frac{p}{1-p})\\
 &= A + B \times (w_{0} + w_{1}x_{1} + ... + w_{0}x_{n})\\
 &=(A + Bw_{0}) + Bw_{1}x_{1} + Bw_{2}x_{2} + ... + Bw_{n}x_{n}
-\end{align*}</script><p>$x<em>{1}, …, x</em>{n}$是各维特征的WOE编码。为了容易看出评分卡的求算，不妨将各维特征的分箱展开，则上式为：</p>
+\end{align*}</script><p>$x_{1}, …, x_{n}$是各维特征的WOE编码。为了容易看出评分卡的求算，不妨将各维特征的分箱展开，则上式为：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2} + ... + Bw_{1}WOE_{1,p}\sigma_{1,p}\\
 &+ Bw_{2}WOE_{2,1}\sigma_{2,1} + Bw_{2}WOE_{2,2}\sigma_{2,2} + ... + Bw_{2}WOE_{2,q}\sigma_{2,q}\\
 &+ ...
-\end{align*}</script><p>其中，$WOE<em>{1,2}$为第1个特征第2个分箱的WOE值，$\sigma</em>{1,2}$是一个取值为0、1的指示变量，$\sigma<em>{1,1}, \sigma</em>{1,2}, …, \sigma_{1,p}$只能有一个为1。<br>由此，填充评分卡。注意，评分卡的输入变量，只能是$\sigma$指示变量，即WOE要提出去。</p>
+\end{align*}</script><p>其中，$WOE_{1,2}$为第1个特征第2个分箱的WOE值，$\sigma_{1,2}$是一个取值为0、1的指示变量，$\sigma_{1,1}, \sigma_{1,2}, …, \sigma_{1,p}$只能有一个为1。<br>由此，填充评分卡。注意，评分卡的输入变量，只能是$\sigma$指示变量，即WOE要提出去。</p>
 <div class="table-container">
 <table>
 <thead>
@@ -231,12 +231,12 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 <tr>
 <td>特征1</td>
 <td>分箱1</td>
-<td>$Bw<em>{1}WOE</em>{1,1}$</td>
+<td>$Bw_{1}WOE_{1,1}$</td>
 </tr>
 <tr>
 <td></td>
 <td>分箱2</td>
-<td>$Bw<em>{1}WOE</em>{1,2}$</td>
+<td>$Bw_{1}WOE_{1,2}$</td>
 </tr>
 <tr>
 <td></td>
@@ -246,17 +246,17 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 <tr>
 <td></td>
 <td>分箱p</td>
-<td>$Bw<em>{1}WOE</em>{1,p}$</td>
+<td>$Bw_{1}WOE_{1,p}$</td>
 </tr>
 <tr>
 <td>特征2</td>
 <td>分箱1</td>
-<td>$Bw<em>{2}WOE</em>{2,1}$</td>
+<td>$Bw_{2}WOE_{2,1}$</td>
 </tr>
 <tr>
 <td></td>
 <td>分箱2</td>
-<td>$Bw<em>{2}WOE</em>{2,2}$</td>
+<td>$Bw_{2}WOE_{2,2}$</td>
 </tr>
 <tr>
 <td></td>
@@ -266,7 +266,7 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 <tr>
 <td></td>
 <td>分箱q</td>
-<td>$Bw<em>{2}WOE</em>{2,q}$</td>
+<td>$Bw_{2}WOE_{2,q}$</td>
 </tr>
 <tr>
 <td>…</td>
@@ -278,7 +278,7 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 </div>
 <p>上面卡片中，$w$由逻辑回归模型得出，WOE由特征分箱求算，剩下的$A, B$可以看做超参数，预先定义。<br>由于</p>
 <script type="math/tex; mode=display">
-Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场景条件：当$odds = \theta<em>{0}$时，$Score = P</em>{0}$；当$odds = 2\theta<em>{0}$翻倍时，$Score = P</em>{0} + PDO$，以此来求得$A, B$。</p>
+Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场景条件：当$odds = \theta_{0}$时，$Score = P_{0}$；当$odds = 2\theta_{0}$翻倍时，$Score = P_{0} + PDO$，以此来求得$A, B$。</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 &P_{0} = A + B \times \ln(\theta_{0})\\
@@ -288,12 +288,12 @@ Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场�
 \begin{align*}
 &B = \frac{PDO}{\ln2}\\
 &A = P_{0} - B\ln(\theta_{0})
-\end{align*}</script><p>一般行业规则：当$odds = \theta<em>{0} = 50$时，$Score = 600$；当$odds$翻倍时，$Score = P</em>{0} + 20$。</p>
+\end{align*}</script><p>一般行业规则：当$odds = \theta_{0} = 50$时，$Score = 600$；当$odds$翻倍时，$Score = P_{0} + 20$。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmmqjhm5000gc8w2sy2quztt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmmr2et8000ig0w2yabwxsy9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li></ul>
@@ -333,7 +333,7 @@ Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场�
       
         <h2 id="weight-of-evidence-WOE"><a href="#weight-of-evidence-WOE" class="headerlink" title="weight of evidence (WOE)"></a>weight of evidence (WOE)</h2><p>woe编码可对标于dummy变量，对一个<strong>类别型</strong>特征进行<strong>编码</strong>，转换成一个数值型变量。<br>例如，在credit scoring的case中，label是一个binary的值（Good，Bad）。则，对于某一个类别型特征（或数值型特征分箱后），其各类别的woe可定义为：</p>
 <script type="math/tex; mode=display">
-WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac{\#G_{i}}{\#B_{i}}}{\frac{\#G}{\#B}}}</script><p>其中，$\#G<em>{i}$为该类别Good数量，$\#G$为总Good数量，$\#B</em>{i}$为该类别Bad数量，$\#B$为总Bad数量。<br>可以看出，$\ln$中的值在描述“本类别的G、B分布比例，与总体的G、B分布比例，是否相似”。<br>若本类别的分布极为特殊，则woe值较大，表明本类别具有较强的区分性；若本类别的分布与总体基本一致，则woe近似为0，表明本类别区分性较弱。</p>
+WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac{\#G_{i}}{\#B_{i}}}{\frac{\#G}{\#B}}}</script><p>其中，$\#G_{i}$为该类别Good数量，$\#G$为总Good数量，$\#B_{i}$为该类别Bad数量，$\#B$为总Bad数量。<br>可以看出，$\ln$中的值在描述“本类别的G、B分布比例，与总体的G、B分布比例，是否相似”。<br>若本类别的分布极为特殊，则woe值较大，表明本类别具有较强的区分性；若本类别的分布与总体基本一致，则woe近似为0，表明本类别区分性较弱。</p>
 <p><strong>基于WOE分箱：</strong></p>
 <ul>
 <li>For continuous independent variables: First, create 10 or 20 bins (categories / groups) for a continuous independent variable and then combine categories with similar WOE values and replace categories with WOE values. Use WOE values rather than input values in your model.</li>
@@ -342,7 +342,7 @@ WOE_{i} = \ln{\frac{\frac{\#G_{i}}{\#G}}{\frac{\#B_{i}}{\#B}}} = \ln{\frac{\frac
 <p><strong>基于WOE分箱-指导规则：</strong></p>
 <ul>
 <li>Each category (bin) should have at least 5% of the observations.</li>
-<li>Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G<em>{i} + 0.5$, $\#B</em>{i} + 0.5$</li>
+<li>Each category (bin) should be non-zero for both non-events and events. 最好满足 If not, you can add 0.5 to the number of events and non-events in a group. $\#G_{i} + 0.5$, $\#B_{i} + 0.5$</li>
 <li>The WOE should be distinct for each category. Similar groups should be aggregated.</li>
 <li>For logistic regression, the WOE should be monotonic, i.e. either growing or decreasing with the groupings. (It is because logistic regression assumes there must be a linear relationship between logit function and independent variable.) 最好满足</li>
 <li>Missing values are binned separately. 若未做缺失值预处理</li>
@@ -365,7 +365,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmmqjhq3007gc8w2bn9umarp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmmr2ewd0079g0w2x4zqz19m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
@@ -780,7 +780,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/17/python_pandas/" data-id="ckmmqjhox005bc8w22n1oy8go" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/17/python_pandas/" data-id="ckmmr2ev6004ig0w2wu5zag5v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -825,7 +825,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/17/python_scipy/" data-id="ckmmqjhoy005ec8w2k5hro6z4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/17/python_scipy/" data-id="ckmmr2eva004rg0w211a60qgc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -1297,7 +1297,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/15/python_numpy/" data-id="ckmmqjhou0055c8w28e7yf1su" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/15/python_numpy/" data-id="ckmmr2ev5004eg0w2n4kvlxhf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>

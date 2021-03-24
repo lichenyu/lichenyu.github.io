@@ -132,7 +132,7 @@
 </ul>
 <p>（若使用了length normalization，则对比length normalization之后的P）</p>
 <p>汇总所有labeled data的对比结果，看看RNN还是beam search有问题<br>若RNN有问题，则进一步bias variance分析；若beam search有问题，考虑增大$B$</p>
-<h2 id="attention模型"><a href="#attention模型" class="headerlink" title="attention模型"></a>attention模型</h2><p>对于<strong>seq2seq</strong>模型，<br>encoder由$a^{\langle 0 \rangle} = 0$初始化，每次用$a^{\langle t’-1 \rangle}$、$x^{\langle t’ \rangle}$计算$a^{\langle t’ \rangle}$，最终将$a^{\langle T<em>{x} \rangle}$传给decoder<br>decoder由$a^{\langle T</em>{x} \rangle}$初始化，每次用$a^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$计算$\hat{y}^{\langle t \rangle}$</p>
+<h2 id="attention模型"><a href="#attention模型" class="headerlink" title="attention模型"></a>attention模型</h2><p>对于<strong>seq2seq</strong>模型，<br>encoder由$a^{\langle 0 \rangle} = 0$初始化，每次用$a^{\langle t’-1 \rangle}$、$x^{\langle t’ \rangle}$计算$a^{\langle t’ \rangle}$，最终将$a^{\langle T_{x} \rangle}$传给decoder<br>decoder由$a^{\langle T_{x} \rangle}$初始化，每次用$a^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$计算$\hat{y}^{\langle t \rangle}$</p>
 <ul>
 <li>计算的unit可以是naive RNN、GRU、LSTM</li>
 </ul>
@@ -147,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/14/dl_seq2seq/" data-id="ckmmqjhml0016c8w2szty7kzm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/14/dl_seq2seq/" data-id="ckmmr2etp001dg0w2jn42a8i4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

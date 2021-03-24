@@ -7,18 +7,18 @@
   
   <title>目标检测 object detection | ChenyuShuxin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题分析输出：给出是否存在object的概率$p{c}$，object的中心点$b{x},b{y}$和宽高$b{w},b{h}$，以及object属于哪个具体类别的指示$c{1},c{2},c{3},…$ $(p{c},b{x},b{y},b{w},b{h},c{1},c{2},c{3},…)$ 问题处理 sliding windows 训练：closely cropped data；检测：sli">
+  <meta name="description" content="问题分析输出：给出是否存在object的概率$p_{c}$，object的中心点$b_{x},b_{y}$和宽高$b_{w},b_{h}$，以及object属于哪个具体类别的指示$c_{1},c_{2},c_{3},…$ $(p_{c},b_{x},b_{y},b_{w},b_{h},c_{1},c_{2},c_{3},…)$ 问题处理 sliding windows 训练：closely cro">
 <meta name="keywords" content="Model">
 <meta property="og:type" content="article">
 <meta property="og:title" content="目标检测 object detection">
 <meta property="og:url" content="http://yoursite.com/2019/06/11/dl_object_detection/index.html">
 <meta property="og:site_name" content="ChenyuShuxin">
-<meta property="og:description" content="问题分析输出：给出是否存在object的概率$p{c}$，object的中心点$b{x},b{y}$和宽高$b{w},b{h}$，以及object属于哪个具体类别的指示$c{1},c{2},c{3},…$ $(p{c},b{x},b{y},b{w},b{h},c{1},c{2},c{3},…)$ 问题处理 sliding windows 训练：closely cropped data；检测：sli">
+<meta property="og:description" content="问题分析输出：给出是否存在object的概率$p_{c}$，object的中心点$b_{x},b_{y}$和宽高$b_{w},b_{h}$，以及object属于哪个具体类别的指示$c_{1},c_{2},c_{3},…$ $(p_{c},b_{x},b_{y},b_{w},b_{h},c_{1},c_{2},c_{3},…)$ 问题处理 sliding windows 训练：closely cro">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-10-22T11:15:28.739Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测 object detection">
-<meta name="twitter:description" content="问题分析输出：给出是否存在object的概率$p{c}$，object的中心点$b{x},b{y}$和宽高$b{w},b{h}$，以及object属于哪个具体类别的指示$c{1},c{2},c{3},…$ $(p{c},b{x},b{y},b{w},b{h},c{1},c{2},c{3},…)$ 问题处理 sliding windows 训练：closely cropped data；检测：sli">
+<meta name="twitter:description" content="问题分析输出：给出是否存在object的概率$p_{c}$，object的中心点$b_{x},b_{y}$和宽高$b_{w},b_{h}$，以及object属于哪个具体类别的指示$c_{1},c_{2},c_{3},…$ $(p_{c},b_{x},b_{y},b_{w},b_{h},c_{1},c_{2},c_{3},…)$ 问题处理 sliding windows 训练：closely cro">
   
     <link rel="alternate" href="/atom.xml" title="ChenyuShuxin" type="application/atom+xml">
   
@@ -100,8 +100,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p<em>{c}$，object的中心点$b</em>{x},b<em>{y}$和宽高$b</em>{w},b<em>{h}$，以及object属于哪个具体类别的指示$c</em>{1},c<em>{2},c</em>{3},…$</p>
-<p>$(p<em>{c},b</em>{x},b<em>{y},b</em>{w},b<em>{h},c</em>{1},c<em>{2},c</em>{3},…)$</p>
+        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p_{c}$，object的中心点$b_{x},b_{y}$和宽高$b_{w},b_{h}$，以及object属于哪个具体类别的指示$c_{1},c_{2},c_{3},…$</p>
+<p>$(p_{c},b_{x},b_{y},b_{w},b_{h},c_{1},c_{2},c_{3},…)$</p>
 <h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ul>
 <li>sliding windows<ul>
 <li>训练：closely cropped data；检测：sliding windows with different sizes</li>
@@ -111,7 +111,7 @@
 </li>
 <li>YOLO<ul>
 <li>输入打格子，不做滑动，每个格子粒度构建label训练、检测</li>
-<li>$b<em>{w},b</em>{h}$可能大于1（跨格子）</li>
+<li>$b_{w},b_{h}$可能大于1（跨格子）</li>
 <li>非最大值抑制 non-max suppression：高IoU的一系列格子，只选$p_{c}$最大的</li>
 <li>多object在同一个grid：anchor box预定义bounding box形状，来区分不同的object<ul>
 <li>使用前：各object &lt;-&gt; grid cell</li>
@@ -128,7 +128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmmqjhmj0012c8w2f3p1chho" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmmr2etk0014g0w29ec2o7xk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

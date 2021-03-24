@@ -209,13 +209,13 @@
 Score &= A + B \times \ln(\frac{p}{1-p})\\
 &= A + B \times (w_{0} + w_{1}x_{1} + ... + w_{0}x_{n})\\
 &=(A + Bw_{0}) + Bw_{1}x_{1} + Bw_{2}x_{2} + ... + Bw_{n}x_{n}
-\end{align*}</script><p>$x<em>{1}, …, x</em>{n}$是各维特征的WOE编码。为了容易看出评分卡的求算，不妨将各维特征的分箱展开，则上式为：</p>
+\end{align*}</script><p>$x_{1}, …, x_{n}$是各维特征的WOE编码。为了容易看出评分卡的求算，不妨将各维特征的分箱展开，则上式为：</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2} + ... + Bw_{1}WOE_{1,p}\sigma_{1,p}\\
 &+ Bw_{2}WOE_{2,1}\sigma_{2,1} + Bw_{2}WOE_{2,2}\sigma_{2,2} + ... + Bw_{2}WOE_{2,q}\sigma_{2,q}\\
 &+ ...
-\end{align*}</script><p>其中，$WOE<em>{1,2}$为第1个特征第2个分箱的WOE值，$\sigma</em>{1,2}$是一个取值为0、1的指示变量，$\sigma<em>{1,1}, \sigma</em>{1,2}, …, \sigma_{1,p}$只能有一个为1。<br>由此，填充评分卡。注意，评分卡的输入变量，只能是$\sigma$指示变量，即WOE要提出去。</p>
+\end{align*}</script><p>其中，$WOE_{1,2}$为第1个特征第2个分箱的WOE值，$\sigma_{1,2}$是一个取值为0、1的指示变量，$\sigma_{1,1}, \sigma_{1,2}, …, \sigma_{1,p}$只能有一个为1。<br>由此，填充评分卡。注意，评分卡的输入变量，只能是$\sigma$指示变量，即WOE要提出去。</p>
 <div class="table-container">
 <table>
 <thead>
@@ -234,12 +234,12 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 <tr>
 <td>特征1</td>
 <td>分箱1</td>
-<td>$Bw<em>{1}WOE</em>{1,1}$</td>
+<td>$Bw_{1}WOE_{1,1}$</td>
 </tr>
 <tr>
 <td></td>
 <td>分箱2</td>
-<td>$Bw<em>{1}WOE</em>{1,2}$</td>
+<td>$Bw_{1}WOE_{1,2}$</td>
 </tr>
 <tr>
 <td></td>
@@ -249,17 +249,17 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 <tr>
 <td></td>
 <td>分箱p</td>
-<td>$Bw<em>{1}WOE</em>{1,p}$</td>
+<td>$Bw_{1}WOE_{1,p}$</td>
 </tr>
 <tr>
 <td>特征2</td>
 <td>分箱1</td>
-<td>$Bw<em>{2}WOE</em>{2,1}$</td>
+<td>$Bw_{2}WOE_{2,1}$</td>
 </tr>
 <tr>
 <td></td>
 <td>分箱2</td>
-<td>$Bw<em>{2}WOE</em>{2,2}$</td>
+<td>$Bw_{2}WOE_{2,2}$</td>
 </tr>
 <tr>
 <td></td>
@@ -269,7 +269,7 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 <tr>
 <td></td>
 <td>分箱q</td>
-<td>$Bw<em>{2}WOE</em>{2,q}$</td>
+<td>$Bw_{2}WOE_{2,q}$</td>
 </tr>
 <tr>
 <td>…</td>
@@ -281,7 +281,7 @@ Score = (A + Bw_{0}) &+ Bw_{1}WOE_{1,1}\sigma_{1,1} + Bw_{1}WOE_{1,2}\sigma_{1,2
 </div>
 <p>上面卡片中，$w$由逻辑回归模型得出，WOE由特征分箱求算，剩下的$A, B$可以看做超参数，预先定义。<br>由于</p>
 <script type="math/tex; mode=display">
-Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场景条件：当$odds = \theta<em>{0}$时，$Score = P</em>{0}$；当$odds = 2\theta<em>{0}$翻倍时，$Score = P</em>{0} + PDO$，以此来求得$A, B$。</p>
+Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场景条件：当$odds = \theta_{0}$时，$Score = P_{0}$；当$odds = 2\theta_{0}$翻倍时，$Score = P_{0} + PDO$，以此来求得$A, B$。</p>
 <script type="math/tex; mode=display">
 \begin{align*}
 &P_{0} = A + B \times \ln(\theta_{0})\\
@@ -291,12 +291,12 @@ Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场�
 \begin{align*}
 &B = \frac{PDO}{\ln2}\\
 &A = P_{0} - B\ln(\theta_{0})
-\end{align*}</script><p>一般行业规则：当$odds = \theta<em>{0} = 50$时，$Score = 600$；当$odds$翻倍时，$Score = P</em>{0} + 20$。</p>
+\end{align*}</script><p>一般行业规则：当$odds = \theta_{0} = 50$时，$Score = 600$；当$odds$翻倍时，$Score = P_{0} + 20$。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmmqjhm5000gc8w2sy2quztt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmmr2et8000ig0w2yabwxsy9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li></ul>

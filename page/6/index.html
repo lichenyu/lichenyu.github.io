@@ -102,7 +102,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/05/tf_seq2seq_en2cn/" data-id="ckmmqjhq00079c8w2ez17tns1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/05/tf_seq2seq_en2cn/" data-id="ckmmr2ew6006og0w2wopeljmi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
@@ -153,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/01/tf_process/" data-id="ckmmqjhpx0076c8w2wnh8kqpp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/01/tf_process/" data-id="ckmmr2ew3006ig0w2dkiodqp7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
@@ -222,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/20/tf_cheatsheet/" data-id="ckmmqjhpw0073c8w2uu27bwy8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/20/tf_cheatsheet/" data-id="ckmmr2ew1006eg0w24gzlemju" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
@@ -270,7 +270,7 @@
 <li>表征：[feature1, feature2, …]对应一个词（好处是可以计算各个词之间的距离，识别相似的词）（如何将词映射为一个特征向量？：是学来的）</li>
 <li>word embedding含义是，将各个词embed嵌入到n维特征空间中去</li>
 <li>有点类似人类识别中，将图像encoding</li>
-<li>cosine similarity $sim(u,v) = \frac{u^{T}v}{| u |<em>{2} | v |</em>{2}}$</li>
+<li>cosine similarity $sim(u,v) = \frac{u^{T}v}{| u |_{2} | v |_{2}}$</li>
 </ul>
 </li>
 </ul>
@@ -281,7 +281,7 @@
 <li>而context的选择，则需要特别设计，避免频繁sample无意义的词</li>
 </ul>
 <script type="math/tex; mode=display">
-o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow softmax \rightarrow \hat{o}_{target}</script><p>目标是通过训练这个映射关系，学习到embedding matrix $E = [e<em>{1}, e</em>{2}, e_{3}, …]$</p>
+o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow softmax \rightarrow \hat{o}_{target}</script><p>目标是通过训练这个映射关系，学习到embedding matrix $E = [e_{1}, e_{2}, e_{3}, …]$</p>
 <ul>
 <li>$o_{context}$是context的one-hot表示</li>
 <li>$E$的各列，为词汇表中各个词的embedding；各行则为embedding的各个特征维度</li>
@@ -304,7 +304,7 @@ o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow \tex
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/14/dl_nlp/" data-id="ckmmqjhmi000zc8w2qph36djr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/14/dl_nlp/" data-id="ckmmr2etm0017g0w2vwn2fdj6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -374,7 +374,7 @@ o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow \tex
 </ul>
 <p>（若使用了length normalization，则对比length normalization之后的P）</p>
 <p>汇总所有labeled data的对比结果，看看RNN还是beam search有问题<br>若RNN有问题，则进一步bias variance分析；若beam search有问题，考虑增大$B$</p>
-<h2 id="attention模型"><a href="#attention模型" class="headerlink" title="attention模型"></a>attention模型</h2><p>对于<strong>seq2seq</strong>模型，<br>encoder由$a^{\langle 0 \rangle} = 0$初始化，每次用$a^{\langle t’-1 \rangle}$、$x^{\langle t’ \rangle}$计算$a^{\langle t’ \rangle}$，最终将$a^{\langle T<em>{x} \rangle}$传给decoder<br>decoder由$a^{\langle T</em>{x} \rangle}$初始化，每次用$a^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$计算$\hat{y}^{\langle t \rangle}$</p>
+<h2 id="attention模型"><a href="#attention模型" class="headerlink" title="attention模型"></a>attention模型</h2><p>对于<strong>seq2seq</strong>模型，<br>encoder由$a^{\langle 0 \rangle} = 0$初始化，每次用$a^{\langle t’-1 \rangle}$、$x^{\langle t’ \rangle}$计算$a^{\langle t’ \rangle}$，最终将$a^{\langle T_{x} \rangle}$传给decoder<br>decoder由$a^{\langle T_{x} \rangle}$初始化，每次用$a^{\langle t-1 \rangle}$、$\hat{y}^{\langle t-1 \rangle}$计算$\hat{y}^{\langle t \rangle}$</p>
 <ul>
 <li>计算的unit可以是naive RNN、GRU、LSTM</li>
 </ul>
@@ -389,7 +389,7 @@ o_{context} \overset{E}{\rightarrow} e_{context} = Eo_{context} \rightarrow \tex
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/14/dl_seq2seq/" data-id="ckmmqjhml0016c8w2szty7kzm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/14/dl_seq2seq/" data-id="ckmmr2etp001dg0w2jn42a8i4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

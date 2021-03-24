@@ -214,9 +214,9 @@ w^{[l]} = w^{[l]} - \alpha \  dw^{[l]}</script><ul>
 <li>tanh：$W^{[l]} = np.random.rand(W^{[l]}.shape) * np.sqrt(\frac{1}{n^{[l-1]}})$</li>
 </ul>
 <h3 id="梯度检查-grad-check"><a href="#梯度检查-grad-check" class="headerlink" title="梯度检查 grad check"></a>梯度检查 grad check</h3><ol>
-<li>已知的$J(W, b)$看做$\theta<em>{i}$的函数，$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, …) = J(\theta</em>{1}, \theta<em>{2}, \theta</em>{3}, \theta_{4}, …)$</li>
+<li>已知的$J(W, b)$看做$\theta_{i}$的函数，$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, …) = J(\theta_{1}, \theta_{2}, \theta_{3}, \theta_{4}, …)$</li>
 <li>已知的$dW, db$看做$d\theta_{i}$</li>
-<li>对于每一个$i$，计算$d\theta<em>{approx}[i]$，最终得到$d\theta</em>{approx}$，对比$d\theta_{approx}$和$d\theta$<script type="math/tex; mode=display">
+<li>对于每一个$i$，计算$d\theta_{approx}[i]$，最终得到$d\theta_{approx}$，对比$d\theta_{approx}$和$d\theta$<script type="math/tex; mode=display">
 d\theta_{approx}[i] = \frac{J(\theta_{1}, \theta_{2}, ..., \theta_{i}+\epsilon, ...) - J(\theta_{1}, \theta_{2}, ..., \theta_{i}-\epsilon, ...)}{2\epsilon} \\
 d\theta_{approx} \ ?\approx \ d\theta \\
 check \ \frac{\left \| d\theta_{approx} - d\theta \right \|_{2}}{\left \| d\theta_{approx} \right \|_{2} + \left \| d\theta \right \|_{2}}</script></li>
@@ -232,7 +232,7 @@ v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\
 <p>迭代获取：</p>
 <ol>
 <li>$v_{\theta} = 0$</li>
-<li><code>repeat:</code> 获取下一个$\theta<em>{t}$，$v</em>{\theta} = \beta v<em>{\theta} + (1-\beta) \theta</em>{t}$</li>
+<li><code>repeat:</code> 获取下一个$\theta_{t}$，$v_{\theta} = \beta v_{\theta} + (1-\beta) \theta_{t}$</li>
 </ol>
 <p>偏差修正（修正冷启动）：</p>
 <script type="math/tex; mode=display">
@@ -240,8 +240,8 @@ v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\
 <p>on iteration $t$</p>
 <ul>
 <li>compute $dw$, $db$ on current mini-batch</li>
-<li>$v<em>{dw} = \beta v</em>{dw} + (1 - \beta)dw$</li>
-<li>$v<em>{db} = \beta v</em>{db} + (1 - \beta)db$</li>
+<li>$v_{dw} = \beta v_{dw} + (1 - \beta)dw$</li>
+<li>$v_{db} = \beta v_{db} + (1 - \beta)db$</li>
 <li>$w = w - \alpha \ v_{dw}$</li>
 <li>$b = b - \alpha \ v_{db}$</li>
 </ul>
@@ -249,25 +249,25 @@ v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\
 <p>on iteration $t$</p>
 <ul>
 <li>compute $dw$, $db$ on current mini-batch</li>
-<li>$s<em>{dw} = \beta s</em>{dw} + (1 - \beta)dw^{2}$</li>
-<li>$s<em>{db} = \beta s</em>{db} + (1 - \beta)db^{2}$</li>
+<li>$s_{dw} = \beta s_{dw} + (1 - \beta)dw^{2}$</li>
+<li>$s_{db} = \beta s_{db} + (1 - \beta)db^{2}$</li>
 <li>$w = w - \alpha \frac{dw}{\sqrt{s_{dw}}}$</li>
 <li>$b = b - \alpha \frac{db}{\sqrt{s_{db}}}$</li>
 </ul>
-<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>结合momentum、RMSprop（$\beta<em>{1}=0.9, \beta</em>{2}=0.999$）</p>
+<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>结合momentum、RMSprop（$\beta_{1}=0.9, \beta_{2}=0.999$）</p>
 <p>on iteration $t$</p>
 <ul>
 <li>compute $dw$, $db$ on current mini-batch</li>
-<li>$v<em>{dw} = \beta</em>{1} v<em>{dw} + (1 - \beta</em>{1})dw$</li>
-<li>$v<em>{db} = \beta</em>{1} v<em>{db} + (1 - \beta</em>{1})db$</li>
-<li>$s<em>{dw} = \beta</em>{2} s<em>{dw} + (1 - \beta</em>{2})dw^{2}$</li>
-<li>$s<em>{db} = \beta</em>{2} s<em>{db} + (1 - \beta</em>{2})db^{2}$</li>
-<li>$V^{corrected}<em>{dw} = \frac{v</em>{dw}}{1 - \beta_{1}^{t}}$</li>
-<li>$V^{corrected}<em>{db} = \frac{v</em>{db}}{1 - \beta_{1}^{t}}$</li>
-<li>$S^{corrected}<em>{dw} = \frac{s</em>{dw}}{1 - \beta_{2}^{t}}$</li>
-<li>$S^{corrected}<em>{db} = \frac{s</em>{db}}{1 - \beta_{2}^{t}}$</li>
-<li>$w = w - \alpha \frac{V^{corrected}<em>{dw}}{\sqrt{S^{corrected}</em>{dw}}}$</li>
-<li>$b = b - \alpha \frac{V^{corrected}<em>{db}}{\sqrt{S^{corrected}</em>{db}}}$</li>
+<li>$v_{dw} = \beta_{1} v_{dw} + (1 - \beta_{1})dw$</li>
+<li>$v_{db} = \beta_{1} v_{db} + (1 - \beta_{1})db$</li>
+<li>$s_{dw} = \beta_{2} s_{dw} + (1 - \beta_{2})dw^{2}$</li>
+<li>$s_{db} = \beta_{2} s_{db} + (1 - \beta_{2})db^{2}$</li>
+<li>$V^{corrected}_{dw} = \frac{v_{dw}}{1 - \beta_{1}^{t}}$</li>
+<li>$V^{corrected}_{db} = \frac{v_{db}}{1 - \beta_{1}^{t}}$</li>
+<li>$S^{corrected}_{dw} = \frac{s_{dw}}{1 - \beta_{2}^{t}}$</li>
+<li>$S^{corrected}_{db} = \frac{s_{db}}{1 - \beta_{2}^{t}}$</li>
+<li>$w = w - \alpha \frac{V^{corrected}_{dw}}{\sqrt{S^{corrected}_{dw}}}$</li>
+<li>$b = b - \alpha \frac{V^{corrected}_{db}}{\sqrt{S^{corrected}_{db}}}$</li>
 </ul>
 <h3 id="学习率衰减-learning-rate-dacay"><a href="#学习率衰减-learning-rate-dacay" class="headerlink" title="学习率衰减 learning rate dacay"></a>学习率衰减 learning rate dacay</h3><p>学习率随epoch进行而衰减</p>
 <script type="math/tex; mode=display">
@@ -282,7 +282,7 @@ X = X / \sigma</script><p>激活函数输入正则化</p>
 <script type="math/tex; mode=display">
 \mu = \frac{1}{m}\sum z^{(i)} \\
 \sigma^{2} = \frac{1}{m}\sum {(z^{(i)} - \mu)}^{2} \\
-z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>进一步设定均值、标准差，对$z^{(i)}<em>{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}</em>{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数<br>$\gamma$、$\beta$为参数<br>此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$</p>
+z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>进一步设定均值、标准差，对$z^{(i)}_{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}_{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数<br>$\gamma$、$\beta$为参数<br>此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$</p>
 <ul>
 <li>batch nrom不仅能加速训练（最优求解过程），在covariate shift问题（例如检测对象从“黑猫”偏移至“橘猫”）上也能一定程度上提升模型性能（限定了稳定的均值和标准差，前层输出变动，对后层输入影响较小）</li>
 <li>mini-batch训练时，batch norm的均值、标准差计算，使用current mini-batch的数据</li>
@@ -381,7 +381,7 @@ z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmmqjhmc000oc8w2gz1ci3gz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmmr2etf000tg0w2rurr0c4r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>

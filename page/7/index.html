@@ -97,7 +97,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="序列数据"><a href="#序列数据" class="headerlink" title="序列数据"></a>序列数据</h2><p>一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T<em>{x} \rangle}$，长度为$T</em>{x}$</p>
+        <h2 id="序列数据"><a href="#序列数据" class="headerlink" title="序列数据"></a>序列数据</h2><p>一个序列$x^{\langle 1 \rangle}, x^{\langle 2 \rangle}, …, x^{\langle t \rangle}, …, x^{\langle T_{x} \rangle}$，长度为$T_{x}$</p>
 <ul>
 <li>$x^{\langle t \rangle}$可使用vocabulary中的形如$[0,0,0,…,1,…,0]$的one-hot表示</li>
 </ul>
@@ -106,7 +106,7 @@
 a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t \rangle} + b_{a}) = g_{1}(W_{a}[a^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{a})\\
 \hat{y}^{\langle t \rangle} = g_{2}(W_{y}a^{\langle t \rangle} + b_{y})</script><ul>
 <li>parameters第一个下标，表示该p是用于计算谁的系数；第二个下标，表示该p是谁前面的系数</li>
-<li>$W<em>{a}$为$W</em>{aa},W_{ax}$横向拼接；$[a^{\langle t-1 \rangle},x^{\langle t \rangle}]$为$a^{\langle t-1 \rangle},x^{\langle t \rangle}$纵向拼接</li>
+<li>$W_{a}$为$W_{aa},W_{ax}$横向拼接；$[a^{\langle t-1 \rangle},x^{\langle t \rangle}]$为$a^{\langle t-1 \rangle},x^{\langle t \rangle}$纵向拼接</li>
 <li>相当于$x^{\langle t \rangle}$位于输入层，$a^{\langle t \rangle}$位于（一层）隐藏层，$\hat{y}^{\langle t \rangle}$位于输出层</li>
 </ul>
 <p>一些其他结构的RNN包括：</p>
@@ -144,10 +144,10 @@ a^{\langle t \rangle} = g_{1}(W_{aa}a^{\langle t-1 \rangle} + W_{ax}x^{\langle t
 <hr>
 <p>而<strong>GRU</strong>，引入记忆细胞$c^{\langle t \rangle}$，相当于$a^{\langle t \rangle}$<br>由此，关键在于通过$c^{\langle t-1 \rangle}, x^{\langle t \rangle}$，如何求算$c^{\langle t \rangle}$</p>
 <ul>
-<li>若按naive计算，$\tilde{c}^{\langle t \rangle} = g<em>{1}(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b<em>{c}) = tanh(W</em>{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$</li>
+<li>若按naive计算，$\tilde{c}^{\langle t \rangle} = g_{1}(W_{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c}) = tanh(W_{c}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{c})$</li>
 <li>或者直接透传，即本层不进行计算，直接输出$c^{\langle t-1 \rangle}$</li>
 </ul>
-<p>进一步定义一个门，update gate, $\Gamma<em>{u} = \sigma(W</em>{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$</p>
+<p>进一步定义一个门，update gate, $\Gamma_{u} = \sigma(W_{u}[c^{\langle t-1 \rangle},x^{\langle t \rangle}] + b_{u})$</p>
 <ul>
 <li>由于使用sigmoid，$\Gamma_{u}$的值，大多数情形下，或者极为接近0，或者极为接近1</li>
 <li>$\Gamma_{u}$决定使用按naive计算（遗忘），还是直接透传（记忆）</li>
@@ -180,11 +180,11 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
 </ul>
 <h2 id="双向RNN"><a href="#双向RNN" class="headerlink" title="双向RNN"></a>双向RNN</h2><ul>
 <li>$a^{\langle t \rangle}$分为$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$</li>
-<li>先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T<em>{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T</em>{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$<ul>
+<li>先正向计算从$\overrightarrow{a}^{\langle 1 \rangle}$至$\overrightarrow{a}^{\langle T_{x} \rangle}$；再反向计算$\overleftarrow{a}^{\langle T_{x} \rangle}$至$\overleftarrow{a}^{\langle 1 \rangle}$<ul>
 <li>可将初始化$\overrightarrow{a}^{\langle 0 \rangle}$和$\overrightarrow{a}^{\langle T_{x}+1 \rangle}$都设为0</li>
 </ul>
 </li>
-<li>$\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W<em>{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b</em>{y}$）</li>
+<li>$\hat{y}^{\langle t \rangle}$由$\overrightarrow{a}^{\langle t \rangle}$和$\overleftarrow{a}^{\langle t \rangle}$算出，（如naiveRNN，$g(W_{y}[\overrightarrow{a}^{\langle t \rangle},\overleftarrow{a}^{\langle t \rangle}]) + b_{y}$）</li>
 </ul>
 <h2 id="Deep-RNN"><a href="#Deep-RNN" class="headerlink" title="Deep RNN"></a>Deep RNN</h2><ul>
 <li>隐藏层有多层，注意Deep RNN的隐藏层是要引入了前一时刻的activation的！<ul>
@@ -197,7 +197,7 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmmqjhmm0018c8w2rqrzn14n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmmr2etn0019g0w2y89zlgz1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -264,7 +264,7 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/11/dl_face_validation/" data-id="ckmmqjhmf000vc8w2w4f1yj38" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/11/dl_face_validation/" data-id="ckmmr2eti0010g0w2uzycdptp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -302,8 +302,8 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p<em>{c}$，object的中心点$b</em>{x},b<em>{y}$和宽高$b</em>{w},b<em>{h}$，以及object属于哪个具体类别的指示$c</em>{1},c<em>{2},c</em>{3},…$</p>
-<p>$(p<em>{c},b</em>{x},b<em>{y},b</em>{w},b<em>{h},c</em>{1},c<em>{2},c</em>{3},…)$</p>
+        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p_{c}$，object的中心点$b_{x},b_{y}$和宽高$b_{w},b_{h}$，以及object属于哪个具体类别的指示$c_{1},c_{2},c_{3},…$</p>
+<p>$(p_{c},b_{x},b_{y},b_{w},b_{h},c_{1},c_{2},c_{3},…)$</p>
 <h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ul>
 <li>sliding windows<ul>
 <li>训练：closely cropped data；检测：sliding windows with different sizes</li>
@@ -313,7 +313,7 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
 </li>
 <li>YOLO<ul>
 <li>输入打格子，不做滑动，每个格子粒度构建label训练、检测</li>
-<li>$b<em>{w},b</em>{h}$可能大于1（跨格子）</li>
+<li>$b_{w},b_{h}$可能大于1（跨格子）</li>
 <li>非最大值抑制 non-max suppression：高IoU的一系列格子，只选$p_{c}$最大的</li>
 <li>多object在同一个grid：anchor box预定义bounding box形状，来区分不同的object<ul>
 <li>使用前：各object &lt;-&gt; grid cell</li>
@@ -330,7 +330,7 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmmqjhmj0012c8w2f3p1chho" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmmr2etk0014g0w29ec2o7xk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -402,9 +402,9 @@ w_{3,1} & w_{3,2} & w_{3,3}
 <p><strong>图像$n \times n$，filter $f \times f$，padding $p$，步长$s$，则输出维度为：$\left \lfloor \frac{n+2p-f}{s} + 1 \right \rfloor$</strong></p>
 <p><strong>multiple filters卷积</strong></p>
 <ul>
-<li>维度：$(n \times n \times n<em>{c}) * (f \times f \times n</em>{c})$ —&gt; $((n - f + 1) \times (n - f + 1) \times n<em>{f})$，其中$n</em>{c}$为chanel数，$n_{f}$为卷积filter数<ul>
+<li>维度：$(n \times n \times n_{c}) * (f \times f \times n_{c})$ —&gt; $((n - f + 1) \times (n - f + 1) \times n_{f})$，其中$n_{c}$为chanel数，$n_{f}$为卷积filter数<ul>
 <li>使用一个$f \times f \times n_{c}$卷积，得到$((n - f + 1) \times (n - f + 1))$</li>
-<li>使用$n<em>{f}$个$f \times f \times n</em>{c}$卷积，将结果堆叠，得到$((n - f + 1) \times (n - f + 1) \times n_{f})$</li>
+<li>使用$n_{f}$个$f \times f \times n_{c}$卷积，将结果堆叠，得到$((n - f + 1) \times (n - f + 1) \times n_{f})$</li>
 </ul>
 </li>
 </ul>
@@ -420,7 +420,7 @@ w_{3,1} & w_{3,2} & w_{3,3}
 <p>可知关系</p>
 <ul>
 <li>$n^{[l]} = \left \lfloor \frac{n^{[l-1]}+2p^{[l]}-f^{[l]}}{s^{[l]}} + 1 \right \rfloor$</li>
-<li>$n<em>{c}^{[l]}$：本层filter数量（$n</em>{c}^{[0]}$原始图像chanel数）</li>
+<li>$n_{c}^{[l]}$：本层filter数量（$n_{c}^{[0]}$原始图像chanel数）</li>
 <li>本层filter的维度：$f^{[l]} \times f^{[l]} \times n_{c}^{[l-1]}$</li>
 </ul>
 <p><strong>activation</strong></p>
@@ -459,7 +459,7 @@ a^{[l+2]} = g(z^{[l+1]} + a^{[l]})</script><h3 id="1-times-1-conv"><a href="#1-t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmmqjhme000sc8w225eb4gs9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmmr2eth000xg0w2v2kqftwt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -611,9 +611,9 @@ w^{[l]} = w^{[l]} - \alpha \  dw^{[l]}</script><ul>
 <li>tanh：$W^{[l]} = np.random.rand(W^{[l]}.shape) * np.sqrt(\frac{1}{n^{[l-1]}})$</li>
 </ul>
 <h3 id="梯度检查-grad-check"><a href="#梯度检查-grad-check" class="headerlink" title="梯度检查 grad check"></a>梯度检查 grad check</h3><ol>
-<li>已知的$J(W, b)$看做$\theta<em>{i}$的函数，$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, …) = J(\theta</em>{1}, \theta<em>{2}, \theta</em>{3}, \theta_{4}, …)$</li>
+<li>已知的$J(W, b)$看做$\theta_{i}$的函数，$J(W^{[1]}, b^{[1]}, W^{[2]}, b^{[2]}, …) = J(\theta_{1}, \theta_{2}, \theta_{3}, \theta_{4}, …)$</li>
 <li>已知的$dW, db$看做$d\theta_{i}$</li>
-<li>对于每一个$i$，计算$d\theta<em>{approx}[i]$，最终得到$d\theta</em>{approx}$，对比$d\theta_{approx}$和$d\theta$<script type="math/tex; mode=display">
+<li>对于每一个$i$，计算$d\theta_{approx}[i]$，最终得到$d\theta_{approx}$，对比$d\theta_{approx}$和$d\theta$<script type="math/tex; mode=display">
 d\theta_{approx}[i] = \frac{J(\theta_{1}, \theta_{2}, ..., \theta_{i}+\epsilon, ...) - J(\theta_{1}, \theta_{2}, ..., \theta_{i}-\epsilon, ...)}{2\epsilon} \\
 d\theta_{approx} \ ?\approx \ d\theta \\
 check \ \frac{\left \| d\theta_{approx} - d\theta \right \|_{2}}{\left \| d\theta_{approx} \right \|_{2} + \left \| d\theta \right \|_{2}}</script></li>
@@ -629,7 +629,7 @@ v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\
 <p>迭代获取：</p>
 <ol>
 <li>$v_{\theta} = 0$</li>
-<li><code>repeat:</code> 获取下一个$\theta<em>{t}$，$v</em>{\theta} = \beta v<em>{\theta} + (1-\beta) \theta</em>{t}$</li>
+<li><code>repeat:</code> 获取下一个$\theta_{t}$，$v_{\theta} = \beta v_{\theta} + (1-\beta) \theta_{t}$</li>
 </ol>
 <p>偏差修正（修正冷启动）：</p>
 <script type="math/tex; mode=display">
@@ -637,8 +637,8 @@ v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\
 <p>on iteration $t$</p>
 <ul>
 <li>compute $dw$, $db$ on current mini-batch</li>
-<li>$v<em>{dw} = \beta v</em>{dw} + (1 - \beta)dw$</li>
-<li>$v<em>{db} = \beta v</em>{db} + (1 - \beta)db$</li>
+<li>$v_{dw} = \beta v_{dw} + (1 - \beta)dw$</li>
+<li>$v_{db} = \beta v_{db} + (1 - \beta)db$</li>
 <li>$w = w - \alpha \ v_{dw}$</li>
 <li>$b = b - \alpha \ v_{db}$</li>
 </ul>
@@ -646,25 +646,25 @@ v_t = \beta v_{t-1} + (1-\beta) \theta_{t}</script><p>效果接近于每次对$\
 <p>on iteration $t$</p>
 <ul>
 <li>compute $dw$, $db$ on current mini-batch</li>
-<li>$s<em>{dw} = \beta s</em>{dw} + (1 - \beta)dw^{2}$</li>
-<li>$s<em>{db} = \beta s</em>{db} + (1 - \beta)db^{2}$</li>
+<li>$s_{dw} = \beta s_{dw} + (1 - \beta)dw^{2}$</li>
+<li>$s_{db} = \beta s_{db} + (1 - \beta)db^{2}$</li>
 <li>$w = w - \alpha \frac{dw}{\sqrt{s_{dw}}}$</li>
 <li>$b = b - \alpha \frac{db}{\sqrt{s_{db}}}$</li>
 </ul>
-<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>结合momentum、RMSprop（$\beta<em>{1}=0.9, \beta</em>{2}=0.999$）</p>
+<h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>结合momentum、RMSprop（$\beta_{1}=0.9, \beta_{2}=0.999$）</p>
 <p>on iteration $t$</p>
 <ul>
 <li>compute $dw$, $db$ on current mini-batch</li>
-<li>$v<em>{dw} = \beta</em>{1} v<em>{dw} + (1 - \beta</em>{1})dw$</li>
-<li>$v<em>{db} = \beta</em>{1} v<em>{db} + (1 - \beta</em>{1})db$</li>
-<li>$s<em>{dw} = \beta</em>{2} s<em>{dw} + (1 - \beta</em>{2})dw^{2}$</li>
-<li>$s<em>{db} = \beta</em>{2} s<em>{db} + (1 - \beta</em>{2})db^{2}$</li>
-<li>$V^{corrected}<em>{dw} = \frac{v</em>{dw}}{1 - \beta_{1}^{t}}$</li>
-<li>$V^{corrected}<em>{db} = \frac{v</em>{db}}{1 - \beta_{1}^{t}}$</li>
-<li>$S^{corrected}<em>{dw} = \frac{s</em>{dw}}{1 - \beta_{2}^{t}}$</li>
-<li>$S^{corrected}<em>{db} = \frac{s</em>{db}}{1 - \beta_{2}^{t}}$</li>
-<li>$w = w - \alpha \frac{V^{corrected}<em>{dw}}{\sqrt{S^{corrected}</em>{dw}}}$</li>
-<li>$b = b - \alpha \frac{V^{corrected}<em>{db}}{\sqrt{S^{corrected}</em>{db}}}$</li>
+<li>$v_{dw} = \beta_{1} v_{dw} + (1 - \beta_{1})dw$</li>
+<li>$v_{db} = \beta_{1} v_{db} + (1 - \beta_{1})db$</li>
+<li>$s_{dw} = \beta_{2} s_{dw} + (1 - \beta_{2})dw^{2}$</li>
+<li>$s_{db} = \beta_{2} s_{db} + (1 - \beta_{2})db^{2}$</li>
+<li>$V^{corrected}_{dw} = \frac{v_{dw}}{1 - \beta_{1}^{t}}$</li>
+<li>$V^{corrected}_{db} = \frac{v_{db}}{1 - \beta_{1}^{t}}$</li>
+<li>$S^{corrected}_{dw} = \frac{s_{dw}}{1 - \beta_{2}^{t}}$</li>
+<li>$S^{corrected}_{db} = \frac{s_{db}}{1 - \beta_{2}^{t}}$</li>
+<li>$w = w - \alpha \frac{V^{corrected}_{dw}}{\sqrt{S^{corrected}_{dw}}}$</li>
+<li>$b = b - \alpha \frac{V^{corrected}_{db}}{\sqrt{S^{corrected}_{db}}}$</li>
 </ul>
 <h3 id="学习率衰减-learning-rate-dacay"><a href="#学习率衰减-learning-rate-dacay" class="headerlink" title="学习率衰减 learning rate dacay"></a>学习率衰减 learning rate dacay</h3><p>学习率随epoch进行而衰减</p>
 <script type="math/tex; mode=display">
@@ -679,7 +679,7 @@ X = X / \sigma</script><p>激活函数输入正则化</p>
 <script type="math/tex; mode=display">
 \mu = \frac{1}{m}\sum z^{(i)} \\
 \sigma^{2} = \frac{1}{m}\sum {(z^{(i)} - \mu)}^{2} \\
-z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>进一步设定均值、标准差，对$z^{(i)}<em>{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}</em>{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数<br>$\gamma$、$\beta$为参数<br>此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$</p>
+z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>进一步设定均值、标准差，对$z^{(i)}_{nrom}$进行变换，$\tilde{z}^{(i)} = \gamma z^{(i)}_{nrom} + \beta$，使用$\tilde{z}^{(i)}$代替$z^{(i)}$输入激活函数<br>$\gamma$、$\beta$为参数<br>此外，batch nrom会消除参数$b$，即模型参数为$w, \gamma, \beta$</p>
 <ul>
 <li>batch nrom不仅能加速训练（最优求解过程），在covariate shift问题（例如检测对象从“黑猫”偏移至“橘猫”）上也能一定程度上提升模型性能（限定了稳定的均值和标准差，前层输出变动，对后层输入影响较小）</li>
 <li>mini-batch训练时，batch norm的均值、标准差计算，使用current mini-batch的数据</li>
@@ -778,7 +778,7 @@ z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmmqjhmc000oc8w2gz1ci3gz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmmr2etf000tg0w2rurr0c4r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
