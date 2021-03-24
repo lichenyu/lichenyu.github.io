@@ -293,7 +293,7 @@ Score = A + B \times \ln(odds)</script><p>可以进行设置，给出两个场�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmleadjf000iskw2u6cqb89q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/25/credit_scorecard/" data-id="ckmmqf48o000bf4w2vpu1bvif" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Credit-Scoring/">Credit Scoring</a></li></ul>
@@ -365,10 +365,55 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmleadn20072skw296ydif3y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/24/weight_of_evidence/" data-id="ckmmqf4ch007af4w2auw93cck" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python_scipy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/17/python_scipy/" class="article-date">
+  <time datetime="2019-07-16T16:00:00.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/17/python_scipy/">Python Scipy</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><h3 id="FFT"><a href="#FFT" class="headerlink" title="FFT"></a>FFT</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.fftpack <span class="keyword">import</span> fft, ifft</span><br><span class="line"></span><br><span class="line">a = np.arange(<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">fa = fft(a)</span><br><span class="line">print(fa)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[120. +0.j          -8.+40.21871594j  -8.+19.3137085j   -8.+11.9728461j</span></span><br><span class="line"><span class="string">  -8. +8.j          -8. +5.3454291j   -8. +3.3137085j   -8. +1.59129894j</span></span><br><span class="line"><span class="string">  -8. +0.j          -8. -1.59129894j  -8. -3.3137085j   -8. -5.3454291j</span></span><br><span class="line"><span class="string">  -8. -8.j          -8.-11.9728461j   -8.-19.3137085j   -8.-40.21871594j]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">aa = ifft(fa)</span><br><span class="line">print(aa.real)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[ 0.  1.  2.  3.  4.  5.  6.  7.  8.  9. 10. 11. 12. 13. 14. 15.]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h3 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a>线性插值</h3><h4 id="scipy-interpolate-interp1d-x-y-kind-39-linear-39"><a href="#scipy-interpolate-interp1d-x-y-kind-39-linear-39" class="headerlink" title="scipy.interpolate.interp1d(x, y, kind=&#39;linear&#39;"></a><code>scipy.interpolate.interp1d(x, y, kind=&#39;linear&#39;</code></h4><p>returns a function whose call method uses interpolation to find the value of new points</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> interpolate</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">y = np.exp(-x/<span class="number">3.0</span>)</span><br><span class="line">f = interpolate.interp1d(x, y)</span><br><span class="line"></span><br><span class="line">xnew = np.arange(<span class="number">0</span>, <span class="number">9</span>, <span class="number">0.1</span>)</span><br><span class="line">ynew = f(xnew)   <span class="comment"># use interpolation function returned by `interp1d`</span></span><br><span class="line">print(ynew)</span><br><span class="line">plt.plot(x, y, <span class="string">'o'</span>, xnew, ynew, <span class="string">'-'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/17/python_scipy/" data-id="ckmmqf4bc0056f4w2inphjsnt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
     </footer>
   </div>
@@ -780,52 +825,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/17/python_pandas/" data-id="ckmleadlz004oskw2rmeb901q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python_scipy" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/07/17/python_scipy/" class="article-date">
-  <time datetime="2019-07-16T16:00:00.000Z" itemprop="datePublished">2019-07-17</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/17/python_scipy/">Python Scipy</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><h3 id="FFT"><a href="#FFT" class="headerlink" title="FFT"></a>FFT</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.fftpack <span class="keyword">import</span> fft, ifft</span><br><span class="line"></span><br><span class="line">a = np.arange(<span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">fa = fft(a)</span><br><span class="line">print(fa)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[120. +0.j          -8.+40.21871594j  -8.+19.3137085j   -8.+11.9728461j</span></span><br><span class="line"><span class="string">  -8. +8.j          -8. +5.3454291j   -8. +3.3137085j   -8. +1.59129894j</span></span><br><span class="line"><span class="string">  -8. +0.j          -8. -1.59129894j  -8. -3.3137085j   -8. -5.3454291j</span></span><br><span class="line"><span class="string">  -8. -8.j          -8.-11.9728461j   -8.-19.3137085j   -8.-40.21871594j]</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line">aa = ifft(fa)</span><br><span class="line">print(aa.real)</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">[ 0.  1.  2.  3.  4.  5.  6.  7.  8.  9. 10. 11. 12. 13. 14. 15.]</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
-<h3 id="线性插值"><a href="#线性插值" class="headerlink" title="线性插值"></a>线性插值</h3><h4 id="scipy-interpolate-interp1d-x-y-kind-39-linear-39"><a href="#scipy-interpolate-interp1d-x-y-kind-39-linear-39" class="headerlink" title="scipy.interpolate.interp1d(x, y, kind=&#39;linear&#39;"></a><code>scipy.interpolate.interp1d(x, y, kind=&#39;linear&#39;</code></h4><p>returns a function whose call method uses interpolation to find the value of new points</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> interpolate</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">x = np.arange(<span class="number">0</span>, <span class="number">10</span>)</span><br><span class="line">y = np.exp(-x/<span class="number">3.0</span>)</span><br><span class="line">f = interpolate.interp1d(x, y)</span><br><span class="line"></span><br><span class="line">xnew = np.arange(<span class="number">0</span>, <span class="number">9</span>, <span class="number">0.1</span>)</span><br><span class="line">ynew = f(xnew)   <span class="comment"># use interpolation function returned by `interp1d`</span></span><br><span class="line">print(ynew)</span><br><span class="line">plt.plot(x, y, <span class="string">'o'</span>, xnew, ynew, <span class="string">'-'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/17/python_scipy/" data-id="ckmleadm2004uskw2w0xv5xlc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/17/python_pandas/" data-id="ckmmqf4bf005cf4w2bdesadfy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -1297,7 +1297,7 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/15/python_numpy/" data-id="ckmleadm1004rskw2k72y9kwp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/07/15/python_numpy/" data-id="ckmmqf4b6004uf4w2hycsktwy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -1430,7 +1430,22 @@ IV = \sum_{i}(\frac{\#G_{i}}{\#G} - \frac{\#B_{i}}{\#B}) \times WOE_{}i</script>
 
 
 
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config("");
 </script>

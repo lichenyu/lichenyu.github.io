@@ -109,50 +109,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_dataframe_udf_returns_multi_cols/" data-id="ckmleadmn0061skw2l90gm169" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-spark_split_get_udf_dynamically" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/12/spark_split_get_udf_dynamically/" class="article-date">
-  <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/12/spark_split_get_udf_dynamically/">Spark - 动态获取UDF</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getPreprocessFunc</span></span>(meanList: <span class="type">List</span>[<span class="type">Double</span>], stdList: <span class="type">List</span>[<span class="type">Double</span>]): <span class="type">Vector</span> =&gt; <span class="type">Vector</span> = (featureVec: <span class="type">Vector</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> featureListBuffer = <span class="keyword">new</span> <span class="type">ListBuffer</span>[<span class="type">Double</span>]()</span><br><span class="line">    <span class="keyword">for</span> (i &lt;- <span class="number">0</span> until featureVec.size)&#123;</span><br><span class="line">        <span class="keyword">if</span> (stdList(i) &gt; <span class="number">0</span>)</span><br><span class="line">            featureListBuffer += (featureVec(i) - meanList(i)) / stdList(i)</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            featureListBuffer += featureVec(i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">Vectors</span>.dense(featureListBuffer.toList.toArray)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> preprocessUdf = udf(getPreprocessFunc(meanList, stdList))</span><br><span class="line">df.withColumn(<span class="string">"featureVecCol"</span>, preprocessUdf(col(<span class="string">"featureVecCol"</span>)))</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_split_get_udf_dynamically/" data-id="ckmleadmt006eskw2gfzmokhs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_dataframe_udf_returns_multi_cols/" data-id="ckmmqf4bu0066f4w2oyl9nics" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -196,7 +153,50 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_filter_dataframe/" data-id="ckmleadmw006lskw2agusii8o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_filter_dataframe/" data-id="ckmmqf4bz006gf4w25ka2rew6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-spark_split_get_udf_dynamically" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/12/spark_split_get_udf_dynamically/" class="article-date">
+  <time datetime="2018-11-11T16:00:00.000Z" itemprop="datePublished">2018-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/12/spark_split_get_udf_dynamically/">Spark - 动态获取UDF</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getPreprocessFunc</span></span>(meanList: <span class="type">List</span>[<span class="type">Double</span>], stdList: <span class="type">List</span>[<span class="type">Double</span>]): <span class="type">Vector</span> =&gt; <span class="type">Vector</span> = (featureVec: <span class="type">Vector</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> featureListBuffer = <span class="keyword">new</span> <span class="type">ListBuffer</span>[<span class="type">Double</span>]()</span><br><span class="line">    <span class="keyword">for</span> (i &lt;- <span class="number">0</span> until featureVec.size)&#123;</span><br><span class="line">        <span class="keyword">if</span> (stdList(i) &gt; <span class="number">0</span>)</span><br><span class="line">            featureListBuffer += (featureVec(i) - meanList(i)) / stdList(i)</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            featureListBuffer += featureVec(i)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">Vectors</span>.dense(featureListBuffer.toList.toArray)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> preprocessUdf = udf(getPreprocessFunc(meanList, stdList))</span><br><span class="line">df.withColumn(<span class="string">"featureVecCol"</span>, preprocessUdf(col(<span class="string">"featureVecCol"</span>)))</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/12/spark_split_get_udf_dynamically/" data-id="ckmmqf4c4006nf4w26ppb6jis" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -239,7 +239,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/12/spark_split_dataframe_vector_column/" data-id="ckmleadmz006sskw2ucn0tj3j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/11/12/spark_split_dataframe_vector_column/" data-id="ckmmqf4c5006qf4w241rlxbxo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Spark/">Spark</a></li></ul>
@@ -285,7 +285,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/10/29/chi2_test_diagnose/" data-id="ckmleadjb000bskw2sgib8t8m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/10/29/chi2_test_diagnose/" data-id="ckmmqf48r000gf4w21wwnlutf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
@@ -418,7 +418,22 @@
 
 
 
-  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config("");
 </script>

@@ -107,7 +107,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/11/periodicity_detection/" data-id="ckmleadlk003pskw2cj541s1r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/11/periodicity_detection/" data-id="ckmmqf4a40037f4w28naqry3t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithm/">Algorithm</a></li></ul>
@@ -150,53 +150,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/11/python_autocorrelation_is_periodic/" data-id="ckmleadll003sskw2u3qmfri2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/11/python_autocorrelation_is_periodic/" data-id="ckmmqf4a7003ef4w2stywcade" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-java_xmlparser_demo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/22/java_xmlparser_demo/" class="article-date">
-  <time datetime="2019-03-21T16:00:00.000Z" itemprop="datePublished">2019-03-22</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/22/java_xmlparser_demo/">Java - XML解析示例</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilder;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Element;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Node;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.NodeList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XmlParserDemo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="comment">&lt;routetable&gt;</span></span><br><span class="line"><span class="comment">    &lt;route&gt;</span></span><br><span class="line"><span class="comment">        &lt;da&gt;138517&lt;/da&gt;</span></span><br><span class="line"><span class="comment">        &lt;ne&gt;SMSC1&lt;/ne&gt;</span></span><br><span class="line"><span class="comment">    &lt;/route&gt;</span></span><br><span class="line"><span class="comment">    &lt;route&gt;</span></span><br><span class="line"><span class="comment">        &lt;da&gt;139139&lt;/da&gt;</span></span><br><span class="line"><span class="comment">        &lt;ne&gt; SMSC2&lt;/ne&gt;</span></span><br><span class="line"><span class="comment">    &lt;/route&gt;</span></span><br><span class="line"><span class="comment">&lt;/routetable&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String xmlString = <span class="string">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;routetable&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;route&gt;&lt;da&gt;138517&lt;/da&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;ne&gt;SMSC1&lt;/ne&gt;&lt;/route&gt;"</span> </span><br><span class="line">                                                + <span class="string">"&lt;route&gt;&lt;da&gt;139139&lt;/da&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;ne&gt;SMSC2&lt;/ne&gt;&lt;/route&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;/routetable&gt;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">         <span class="comment">// 生成一个Dom解析器</span></span><br><span class="line">            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span><br><span class="line">            DocumentBuilder db = dbf.newDocumentBuilder();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 解析XML</span></span><br><span class="line">            <span class="comment">//Document document = db.parse(new File("test.xml"));</span></span><br><span class="line">            Document document = db.parse(<span class="keyword">new</span> ByteArrayInputStream(xmlString.getBytes()));</span><br><span class="line">            document.getDocumentElement().normalize();</span><br><span class="line">            </span><br><span class="line">            NodeList table = document.getElementsByTagName(<span class="string">"routetable"</span>);</span><br><span class="line">            System.out.println(<span class="string">"routetable list len = "</span> + table.getLength());</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; table.getLength(); ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                System.out.println(<span class="string">"routetable "</span> + i + <span class="string">" name = "</span> + table.item(i).getNodeName());</span><br><span class="line">                NodeList list = table.item(i).getChildNodes();</span><br><span class="line">                System.out.println(<span class="string">"route list len = "</span> + list.getLength());</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            System.out.println();</span><br><span class="line">            </span><br><span class="line">            NodeList routeList = document.getElementsByTagName(<span class="string">"route"</span>);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; routeList.getLength(); ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                Node route = routeList.item(i);</span><br><span class="line">                <span class="keyword">if</span>(route.getNodeType() == Node.ELEMENT_NODE)</span><br><span class="line">                &#123;</span><br><span class="line">                    Element element = (Element) route;</span><br><span class="line">                    System.out.println(<span class="string">"id = "</span> + (element.getAttribute(<span class="string">"id"</span>).isEmpty() ? <span class="string">"no ID"</span> : element.getAttribute(<span class="string">"id"</span>)));</span><br><span class="line">                    System.out.println(<span class="string">"da -&gt; "</span> + element.getElementsByTagName(<span class="string">"da"</span>).item(<span class="number">0</span>).getTextContent());</span><br><span class="line">                    System.out.println(<span class="string">"ne -&gt; "</span> + element.getElementsByTagName(<span class="string">"ne"</span>).item(<span class="number">0</span>).getTextContent());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/22/java_xmlparser_demo/" data-id="ckmleadl4002sskw21y3s30vs" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
 
     </footer>
   </div>
@@ -236,7 +193,50 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/22/java_regex_demo/" data-id="ckmleadla0034skw2g2ikkq3m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/22/java_regex_demo/" data-id="ckmmqf49u002kf4w2xddc2gms" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java_xmlparser_demo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/22/java_xmlparser_demo/" class="article-date">
+  <time datetime="2019-03-21T16:00:00.000Z" itemprop="datePublished">2019-03-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Program-Development/">Program Development</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/22/java_xmlparser_demo/">Java - XML解析示例</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.ByteArrayInputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilder;</span><br><span class="line"><span class="keyword">import</span> javax.xml.parsers.DocumentBuilderFactory;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Document;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Element;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.Node;</span><br><span class="line"><span class="keyword">import</span> org.w3c.dom.NodeList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XmlParserDemo</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="comment">&lt;routetable&gt;</span></span><br><span class="line"><span class="comment">    &lt;route&gt;</span></span><br><span class="line"><span class="comment">        &lt;da&gt;138517&lt;/da&gt;</span></span><br><span class="line"><span class="comment">        &lt;ne&gt;SMSC1&lt;/ne&gt;</span></span><br><span class="line"><span class="comment">    &lt;/route&gt;</span></span><br><span class="line"><span class="comment">    &lt;route&gt;</span></span><br><span class="line"><span class="comment">        &lt;da&gt;139139&lt;/da&gt;</span></span><br><span class="line"><span class="comment">        &lt;ne&gt; SMSC2&lt;/ne&gt;</span></span><br><span class="line"><span class="comment">    &lt;/route&gt;</span></span><br><span class="line"><span class="comment">&lt;/routetable&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String xmlString = <span class="string">"&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;routetable&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;route&gt;&lt;da&gt;138517&lt;/da&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;ne&gt;SMSC1&lt;/ne&gt;&lt;/route&gt;"</span> </span><br><span class="line">                                                + <span class="string">"&lt;route&gt;&lt;da&gt;139139&lt;/da&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;ne&gt;SMSC2&lt;/ne&gt;&lt;/route&gt;"</span></span><br><span class="line">                                                + <span class="string">"&lt;/routetable&gt;"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">         <span class="comment">// 生成一个Dom解析器</span></span><br><span class="line">            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();</span><br><span class="line">            DocumentBuilder db = dbf.newDocumentBuilder();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 解析XML</span></span><br><span class="line">            <span class="comment">//Document document = db.parse(new File("test.xml"));</span></span><br><span class="line">            Document document = db.parse(<span class="keyword">new</span> ByteArrayInputStream(xmlString.getBytes()));</span><br><span class="line">            document.getDocumentElement().normalize();</span><br><span class="line">            </span><br><span class="line">            NodeList table = document.getElementsByTagName(<span class="string">"routetable"</span>);</span><br><span class="line">            System.out.println(<span class="string">"routetable list len = "</span> + table.getLength());</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; table.getLength(); ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                System.out.println(<span class="string">"routetable "</span> + i + <span class="string">" name = "</span> + table.item(i).getNodeName());</span><br><span class="line">                NodeList list = table.item(i).getChildNodes();</span><br><span class="line">                System.out.println(<span class="string">"route list len = "</span> + list.getLength());</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            System.out.println();</span><br><span class="line">            </span><br><span class="line">            NodeList routeList = document.getElementsByTagName(<span class="string">"route"</span>);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; routeList.getLength(); ++i)</span><br><span class="line">            &#123;</span><br><span class="line">                Node route = routeList.item(i);</span><br><span class="line">                <span class="keyword">if</span>(route.getNodeType() == Node.ELEMENT_NODE)</span><br><span class="line">                &#123;</span><br><span class="line">                    Element element = (Element) route;</span><br><span class="line">                    System.out.println(<span class="string">"id = "</span> + (element.getAttribute(<span class="string">"id"</span>).isEmpty() ? <span class="string">"no ID"</span> : element.getAttribute(<span class="string">"id"</span>)));</span><br><span class="line">                    System.out.println(<span class="string">"da -&gt; "</span> + element.getElementsByTagName(<span class="string">"da"</span>).item(<span class="number">0</span>).getTextContent());</span><br><span class="line">                    System.out.println(<span class="string">"ne -&gt; "</span> + element.getElementsByTagName(<span class="string">"ne"</span>).item(<span class="number">0</span>).getTextContent());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span>(Exception e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/22/java_xmlparser_demo/" data-id="ckmmqf49v002nf4w26n4xu6di" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
@@ -279,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/21/java_collections_demo/" data-id="ckmleadl1002mskw2epjb8el4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/21/java_collections_demo/" data-id="ckmmqf49m0028f4w2zp3d0ze4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li></ul>
@@ -412,6 +412,38 @@
 
 
 
-  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.staticfile.org/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 </body>
 </html>
