@@ -197,73 +197,7 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmmqf4950018f4w2gxk4n4vy" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-dl_object_detection" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/06/11/dl_object_detection/" class="article-date">
-  <time datetime="2019-06-10T16:00:00.000Z" itemprop="datePublished">2019-06-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/11/dl_object_detection/">目标检测 object detection</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p<em>{c}$，object的中心点$b</em>{x},b<em>{y}$和宽高$b</em>{w},b<em>{h}$，以及object属于哪个具体类别的指示$c</em>{1},c<em>{2},c</em>{3},…$</p>
-<p>$(p<em>{c},b</em>{x},b<em>{y},b</em>{w},b<em>{h},c</em>{1},c<em>{2},c</em>{3},…)$</p>
-<h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ul>
-<li>sliding windows<ul>
-<li>训练：closely cropped data；检测：sliding windows with different sizes</li>
-<li>sliding windows计算效率较低</li>
-<li>使用卷积替代FC，使得图像整体输入处理，即可得到sliding windows结果（提高计算效率）</li>
-</ul>
-</li>
-<li>YOLO<ul>
-<li>输入打格子，不做滑动，每个格子粒度构建label训练、检测</li>
-<li>$b<em>{w},b</em>{h}$可能大于1（跨格子）</li>
-<li>非最大值抑制 non-max suppression：高IoU的一系列格子，只选$p_{c}$最大的</li>
-<li>多object在同一个grid：anchor box预定义bounding box形状，来区分不同的object<ul>
-<li>使用前：各object &lt;-&gt; grid cell</li>
-<li>使用后：各object &lt;-&gt; (grid cell, bounding box)</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><ul>
-<li>交并比 intersection over union，IoU</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmmqf4920011f4w216d8630n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/12/dl_rnn/" data-id="ckmmqixg30018dkw2nt3k9ebr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -330,7 +264,73 @@ a^{\langle t \rangle} = \Gamma_{o} * tanh(c^{\langle t \rangle})</script><ul>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/11/dl_face_validation/" data-id="ckmmqf4930014f4w2g9q6t9up" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/11/dl_face_validation/" data-id="ckmmqixfx000wdkw2wewgeaw9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dl_object_detection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/11/dl_object_detection/" class="article-date">
+  <time datetime="2019-06-10T16:00:00.000Z" itemprop="datePublished">2019-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/11/dl_object_detection/">目标检测 object detection</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>输出：给出是否存在object的概率$p<em>{c}$，object的中心点$b</em>{x},b<em>{y}$和宽高$b</em>{w},b<em>{h}$，以及object属于哪个具体类别的指示$c</em>{1},c<em>{2},c</em>{3},…$</p>
+<p>$(p<em>{c},b</em>{x},b<em>{y},b</em>{w},b<em>{h},c</em>{1},c<em>{2},c</em>{3},…)$</p>
+<h2 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h2><ul>
+<li>sliding windows<ul>
+<li>训练：closely cropped data；检测：sliding windows with different sizes</li>
+<li>sliding windows计算效率较低</li>
+<li>使用卷积替代FC，使得图像整体输入处理，即可得到sliding windows结果（提高计算效率）</li>
+</ul>
+</li>
+<li>YOLO<ul>
+<li>输入打格子，不做滑动，每个格子粒度构建label训练、检测</li>
+<li>$b<em>{w},b</em>{h}$可能大于1（跨格子）</li>
+<li>非最大值抑制 non-max suppression：高IoU的一系列格子，只选$p_{c}$最大的</li>
+<li>多object在同一个grid：anchor box预定义bounding box形状，来区分不同的object<ul>
+<li>使用前：各object &lt;-&gt; grid cell</li>
+<li>使用后：各object &lt;-&gt; (grid cell, bounding box)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="评价指标"><a href="#评价指标" class="headerlink" title="评价指标"></a>评价指标</h2><ul>
+<li>交并比 intersection over union，IoU</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/06/11/dl_object_detection/" data-id="ckmmqixg20016dkw21egthq2v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -459,7 +459,7 @@ a^{[l+2]} = g(z^{[l+1]} + a^{[l]})</script><h3 id="1-times-1-conv"><a href="#1-t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmmqf48z000uf4w2v47rruil" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/06/dl_cnn/" data-id="ckmmqixfy000zdkw2y3eizc68" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
@@ -778,7 +778,7 @@ z^{(i)}_{nrom} = \frac{z^{(i)} - \mu}{\sqrt{\sigma^{2} + \epsilon}}</script><p>�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmmqf48x000qf4w2zpgaxs0c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/06/03/deep_learning_basic/" data-id="ckmmqixfv000rdkw2eqx1j2ru" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Model/">Model</a></li></ul>
